@@ -50,6 +50,10 @@ const DfpAds:NextPage<Props> = function(props) {
         let {customDimension, currMsid, customSlot, } = adInfo;
         let objVc = {
             dfp: {
+                homepage: {
+                    adSize: "[[1003, 90],[970,90],[728, 90]]",
+                    adSlot: "/7176/Economictimes/ET_Home/ET_Home_Home/ET_HP_ATF_728"
+                },
                 atf: {
                 adSize: "[[320,50]]",
                 adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_ATF"

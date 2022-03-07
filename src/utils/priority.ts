@@ -13,6 +13,7 @@ export function InitialJsOnAppLoad(): void {
       ga.gaObserverInit();
     });
     ga.growthRxInit();
+    // ga.GTMInit();
   } catch (error) {
     console.error("Error in InitialJsOnAppLoad: ", error);
   }

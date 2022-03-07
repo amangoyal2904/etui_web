@@ -1,10 +1,15 @@
 import * as Config from './common';
+import * as utils from './utils';
+import config from '../../jest.config';
+
 declare global {
   interface Window { 
     updateGAObserver: any;
     ga: any;
     grxEvent: any;
     grx: any;
+    gtag: any;
+    dataLayer: [];
     customDimension: any;
   }
 }
@@ -96,6 +101,16 @@ export const gaObserverInit = (newImpressionNodes = [], newClickNodes = []) => {
   }
 }
 
+/* export const GTMInit = () => {
+  utils.loadAssets("https://www.googletagmanager.com/gtag/js?id=AW-1012951608", 'js', 'defer', "head", function(){
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){
+        window.dataLayer.push(arguments);
+      }
+      gtag('js', new Date());  
+      gtag('config', Config.GA.GTM_ID);
+  });
+} */
 export const growthRxInit = () => {
     (function (g, r, o, w, t, h, rx) {
         g[t] = g[t] || function () {(g[t].q = g[t].q || []).push(arguments)

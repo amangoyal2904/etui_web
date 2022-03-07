@@ -27,7 +27,7 @@ const HeaderAuth = () => {
     			</div>
     			<div className="soWrapper">
     			    {/* <include-html>/prime_campaign.cms?msid=81429572&amp;bannertype=top</include-html> */}
-                    Super Saver Sale
+                    <span className="hdr_spcl_ofr">Super Saver Sale</span>
     			</div> 
             </div>
         </header>

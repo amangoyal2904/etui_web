@@ -5,10 +5,7 @@ import useRequest from 'network/service'
 import Loading from 'components/Loading';
 
 const SampleListing: FC = () => {
-    const { data, isLoading, error } = useRequest<{
-        searchResult: Array<Object>,
-        parameters: Object
-    }>({
+    const { data, isLoading, error } = useRequest<{searchResult: Array<Object>,parameters: Object}>({
         url: "request",
         params: { type: "plist", "msid": 2146843 }
     })

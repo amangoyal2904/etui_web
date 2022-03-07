@@ -188,6 +188,21 @@ export const removeBackSlash = val => {
   return val;
 };
 
+export const loadAssets = (filename, fileType, attrType, position, cb, attr?, attrVal?, objAttr?) => { 
+  try { 
+    if(filename){ 
+      let fileRef: any = '';
+      if (fileType == "js") { 
+        fileRef = document.createElement('script'); 
+        fileRef.setAttribute("type", "text/javascript"); 
+        fileRef.setAttribute("src", filename); 
+        if (attrType) { 
+          fileRef.setAttribute(attrType, attrType); 
+        } 
+        if (attr && attrVal) { 
+          fileRef.setAttribute(attr, attrVal); 
+        } if (typeof objAttr == "undefined") { objAttr = {}; } if (Object.keys(objAttr).length > 0 && objAttr.constructor === Object) { for (var key in objAttr) { fileRef.setAttribute(key, objAttr[key]); } } if (typeof cb == "function") { fileRef.addEventListener("load", cb); } } else if (fileType == "css") { fileRef = document.createElement("link"); fileRef.setAttribute("rel", "stylesheet"); fileRef.setAttribute("type", "text/css"); fileRef.setAttribute("href", filename) } if (typeof fileRef != "undefined") { var positionToAppend = position ? position : "head"; document.getElementsByTagName(positionToAppend)[0].appendChild(fileRef); } } } catch (e) { console.log("loadAssets:", e) } }
+
 let output = {removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
 
 

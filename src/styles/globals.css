@@ -16,6 +16,18 @@ a {
 }
 
 /* Generic Style */
+body{overflow:visible !important;font:12px 'Montserrat', sans-serif;}
+.pageHolder{background:#fff; margin:0 auto; width:1003px;}
+.pageHolder .main_container{padding:20px 0;}
+.pageHolder #pageContent{width: 640px;padding-left: 10px;float:left;}
+.pageHolder #pageContent.fullwidth{width: 100%;float: none;}
+.pageHolder #sideBar{width:320px;float:right;padding:0;}
+.contentwrapper, .brcmb_wrapper.coinKuber {margin: 0 auto; width: 1003px}
+.pageHolder.fullWidth{width:100%;}   
+@media screen and (max-width: 1023px) {
+    .pageHolder.fullWidth{width:1003px;}   
+}
+
 .flt, .lft {float:left}
 .flr, .rgt {float:right}
 .clr{clear:both}
