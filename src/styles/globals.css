@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+.h1Title {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 36px;
+  margin:0;
+  margin-bottom: 10px;
+}
+.flt {
+  float: left;
+}
+.clr {
+  clear: both;
+}
+.clr:before, .clr:after, .clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}

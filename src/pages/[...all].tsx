@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 
 const ArticleList = dynamic(() => import('containers/ArticleList'))
 const ArticleShow = dynamic(() => import('containers/ArticleShow'))
+const VideoShow = dynamic(() => import('containers/VideoShow/VideoShow'))
 
 interface Query {
   all: string[]
@@ -25,6 +26,8 @@ export default function All() {
 
   if(/^[0-9]+\.cms$/.test(lastUrlComponent) && secondLastUrlComponent==='articleshow') {
     return <ArticleShow query={all} />;
+  }else if(/^[0-9]+\.cms$/.test(lastUrlComponent) && secondLastUrlComponent==='videoshow'){
+    return <VideoShow query={all} />;
   } else {
     return <ArticleList query={all} />;
   }

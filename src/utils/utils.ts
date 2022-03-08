@@ -60,6 +60,8 @@ export const pageType = pathurl => {
     return "primehome";
   } else if (pathurl.indexOf("/et-tech") != -1) {
     return "techhome";
+  }else if (pathurl.indexOf("/videoshow/") != -1) {
+      return "videoshow";
   } else if (pathurl.indexOf("/topic/") != -1) {
     return "topic";
   } else {
