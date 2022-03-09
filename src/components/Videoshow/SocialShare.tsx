@@ -4,13 +4,18 @@ import Share from "../Share";
 
 
 const SocialShare: NextPage = (props) => {  
-  const _data = {
-    iconClass:'fb', 
-    title : 'Russia-Ukraine crisis: Ukraine says Russian forces seize Zaporizhzhia nuclear plant'
-  }
   return (
     <>      
-        <Share data={_data}/>
+        <Share />
+        <div className="codeMailVideo">
+          <span className="email socialSprite" title="Email this video"></span>
+        </div>
+        <div className="codeVideo">
+          <span>Copy URL</span>
+        </div>
+        <div className="codeVideo">
+          <span>Embed</span>
+        </div>
     </>
   );
 };

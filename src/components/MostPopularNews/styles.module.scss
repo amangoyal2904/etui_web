@@ -1,0 +1,52 @@
+.mostPopularNews{
+    margin-top: 20px;
+    .head4{
+        font-weight: 700;
+        padding: 14px 0 10px 0;
+        border-top: 2px solid #000;
+        font-size: 20px;
+    }
+    .listing{
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        li{
+            position: relative;
+            counter-increment: list;
+            list-style: none;
+            &::before{
+                content: counter(list) ".";
+                font-weight: 700;
+                color: #d0d0d0;
+                font-size: 25px;
+                vertical-align: top;
+                width: 27px;
+            }
+            .text,.img{
+                display: inline-block;
+                vertical-align: top;
+            }
+            .text{
+                width: 174px;
+                margin-right: 10px;
+                margin-left: 10px;
+                font-size: 15px;
+                font-weight: 500;
+                padding-top: 2px;
+            }
+            .img{
+                width: 100px;
+            }
+            a{
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+        li + li{
+            border-top: 1px solid #e4e4e4;
+            padding-top: 11px;
+            margin-top: 15px;       
+        }
+    }
+}

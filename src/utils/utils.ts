@@ -190,7 +190,19 @@ export const removeBackSlash = val => {
   return val;
 };
 
-let output = {removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
+export const socialUrl = {
+  fb: "https://www.facebook.com/sharer.php",
+  twt: "https://twitter.com/share?",
+  gp: "https://plus.google.com/share?url=",
+  lin: "https://www.linkedin.com/cws/share?url=",
+  whatsapp: "whatsapp://send?text=",
+  //message: 'sms:' + (navigator.userAgent.toLowerCase().indexOf('iphone') != -1 ? '&body=' :'?body='),
+  pinit: "https://pinterest.com/pin/create/link/?url=",
+  openerName: "sharer",
+  popUpSettings: "toolbar=0,status=0,width=626,height=436"
+};
+
+let output = {socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
 
 
 export default output

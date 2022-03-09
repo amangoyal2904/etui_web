@@ -6,14 +6,15 @@ const ArticleShow = dynamic(() => import('containers/ArticleShow'))
 const VideoShow = dynamic(() => import('containers/VideoShow/VideoShow'))
 
 interface Query {
-  all: string[]
+  all: string[],
+  apiData:any
 }
 
-export default function All() {
+export default function All(props:any) {
 
   const router = useRouter();
   const { all } = router.query;
-
+  
   /**
    * check if articleshow
    * 
@@ -25,9 +26,9 @@ export default function All() {
   const secondLastUrlComponent: string = all.slice(-2, -1).toString();
 
   if(/^[0-9]+\.cms$/.test(lastUrlComponent) && secondLastUrlComponent==='articleshow') {
-    return <ArticleShow query={all} />;
+    return <ArticleShow query={all}  />;
   }else if(/^[0-9]+\.cms$/.test(lastUrlComponent) && secondLastUrlComponent==='videoshow'){
-    return <VideoShow query={all} />;
+    return <VideoShow query={all} apiData={props.videoShowAPIData} />;
   } else {
     return <ArticleList query={all} />;
   }
@@ -35,5 +36,15 @@ export default function All() {
 }
 
 export async function getServerSideProps({ params, req, res, query, preview, previewData, resolvedUrl, locale, locales, defaultLocale }) {
-  return { props: {} }
+  //console.log('pageMsid')
+  let url = 'https://etdev8243.indiatimes.com/reactfeed_videoshowweb.cms?feedtype=etjson&msid=90093673&showjcmserror=1&showxslterror=1';
+  let  data = await fetch(url,{mode: 'no-cors'});
+  let  _res =  await data.json();
+  return {
+    props:{
+      videoShowAPIData: _res
+    }
+  }
+
+  //return { props: {} }
 }   

@@ -67,13 +67,13 @@
             }
         }
         .videoWrap{
-            margin:0;
+            margin:17px 0 0 0;
             .videoShareSec{
                 background: #f5f5f5;
                 display: inline-block;
                 vertical-align: top;
                 min-height: 420px;
-                width: 75px;
+                width: 78px;
                 z-index: 10;
                 position: relative;
             }
@@ -83,6 +83,15 @@
                 vertical-align: top;
                 height: 420px;
                 width: 560px;
+            }
+            .videoDesc{
+                background-color: #000;
+    color: #FFF;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 2px;
+    min-height: 54px;
+    padding: 12px;
             }
         }
     }
