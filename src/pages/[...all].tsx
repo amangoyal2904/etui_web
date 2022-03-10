@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 
+import {videoShowDataAPICall} from '../utils/apiCallFun';
+
 const ArticleList = dynamic(() => import('containers/ArticleList'))
 const ArticleShow = dynamic(() => import('containers/ArticleShow'))
 const VideoShow = dynamic(() => import('containers/VideoShow/VideoShow'))
@@ -36,13 +38,18 @@ export default function All(props:any) {
 }
 
 export async function getServerSideProps({ params, req, res, query, preview, previewData, resolvedUrl, locale, locales, defaultLocale }) {
-  //console.log('pageMsid')
-  let url = 'https://etdev8243.indiatimes.com/reactfeed_videoshowweb.cms?feedtype=etjson&msid=90093673&showjcmserror=1&showxslterror=1';
-  let  data = await fetch(url,{mode: 'no-cors'});
-  let  _res =  await data.json();
+  console.log('query', query)
+  
+  // if  videshow url  in param than call to this  function in server side props
+  let checkVideoShowUrl = query.all.includes('videoshow');
+  let videoShowData = '';
+  if(checkVideoShowUrl){
+    videoShowData = await videoShowDataAPICall(query.all)
+  }
+// end videoshow api function here 
   return {
     props:{
-      videoShowAPIData: _res
+      videoShowAPIData: videoShowData
     }
   }
 

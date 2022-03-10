@@ -26,7 +26,7 @@ interface Props {
 const VideoShow = (props:Props ) => {
   const _data = props && props.apiData &&  props.apiData.searchResult ?  props.apiData.searchResult : '';
   const videoData =  _data 
-  console.log('______Videos Show Tsx file Props___videoData', videoData)
+  //console.log('______Videos Show Tsx file Props___videoData', videoData)
   const pageHead = videoData[0].data[0].title;
   const pageTime = videoData[0].data[0].dtline;
   const pageAgency = videoData[0].data[0].ag;

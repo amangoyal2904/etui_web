@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const VideoListing: NextPage<any> = (props) => {  
   let listingData = props.relatedVideo;
-  console.log('__VideoListing components__', listingData);
+  //console.log('__VideoListing components__', listingData);
   const title = listingData.title;
   const relatedVideoData = listingData.data ? listingData.data : '';
   const relatedVideoHandler = ()=>{

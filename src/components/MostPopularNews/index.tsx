@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const MostPopularNews: NextPage<any> = (props) => {  
     let listingData = props.viewVideos;
-    console.log('__MostPopularNews components__', listingData);
+    //console.log('__MostPopularNews components__', listingData);
     const title = listingData.title;
     const relatedVideoData = listingData.data ? listingData.data : '';
     const relatedVideoHandler = ()=>{
