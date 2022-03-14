@@ -7,6 +7,7 @@ import styles from "./Header.module.scss";
 
 const MarketsBand = () => {
     const marketArr = [1,2,3];
+    const [marketWatchData, setMarketWatchData] = useState([]);
 
     const mouseEnter = () => {
         /* const { data, isLoading, error } = useRequest({
@@ -35,18 +36,18 @@ const MarketsBand = () => {
                     <div className="flipWrapper flt">
                         <div className="mkt_indices_band clearfix">
                             {marketArr.map(item => { return (
-                                <div className="band-items band-item-sm" id={`S${item}_box`}>
+                                <div key={item} className="band-items band-item-sm" id={`S${item}_box`}>
                                     <div className="band-item clearfix">
                                         <div className="band-content">
                                             <div className="head">
-                                                <Link href="abc.com">
+                                                <Link href="#">
                                                     <a target="_blank">
                                                         Benchmark
                                                     </a>
                                                 </Link>
                                             </div>
                                             <div className="values">
-                                                <Link href="acc.cmom">
+                                                <Link href="#">
                                                     <a target="_blank" className="wname">
                                                         Sensex
                                                     </a>
@@ -65,7 +66,15 @@ const MarketsBand = () => {
                             <Link href="/marketstats/pid-0,pageno-1,sortby-percentchange,sortorder-desc,sort-intraday.cms?marketcap=largecap%252Cmidcap">
                                 <a className="mktWatch" target="_blank">Market Watch</a>
                             </Link>
-                            <div className="stats_list"></div>
+                            <div className="stats_list">
+                                <ul>
+                                    {marketWatchData.length && marketWatchData.map(item => { return (
+                                        <li className='level_0' key={item?.title}>
+                                            {item.title}
+                                        </li>
+                                    )})}
+                                </ul>
+                            </div>
                         </div>
         	        </div>
                 </div>

@@ -22,5 +22,5 @@ export function InitialJsOnAppLoad(): void {
 export function callJsOnRouteChange(url?): void {
   console.log("callJsOnRouteChange called");
   window.adDivIds = [];
-  ga.pageview(url);
+  // ga.pageview(url);
 }

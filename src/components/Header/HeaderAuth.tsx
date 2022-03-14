@@ -2,8 +2,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import * as config from './../../utils/common';
+import { useState, useEffect } from 'react';
+import useRequest from 'network/service';
+import Loading from 'components/Loading';
 
 const HeaderAuth = () => {
+    const [offerData, setOfferData] = useState({});
+
+    // const fetchData = () => {
+        // const { data, isLoading, error } = useRequest<{offerTitle: Object,offerLink: Object}>({
+        //     url: "/api/headsale"
+        // })
+        // if (isLoading) return <Loading />
+        // if (error) return <div>Please try again!</div>
+        // console.log(data, 'Data for OFfer');
+        // setOfferData(data);
+    // }
+
     return (
         <header className="header clearfix">
             <div className="dtc vam logoPart tac">
@@ -23,10 +38,9 @@ const HeaderAuth = () => {
             <div className="flr subSign">
                 <a className="dib subScribe" href="/plans.cms" data-ga-onclick="Subscription Flow#SYFT#ATF - url">Subscribe</a>
                 <div className="dib signInOut prel signIn">
-    			    <a className="signInLink" href="javascript:objUser.login()" data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url">Sign In</a>
+    			    <a className="signInLink" data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url">Sign In</a>
     			</div>
     			<div className="soWrapper">
-    			    {/* <include-html>/prime_campaign.cms?msid=81429572&amp;bannertype=top</include-html> */}
                     <span className="hdr_spcl_ofr">Super Saver Sale</span>
     			</div> 
             </div>
