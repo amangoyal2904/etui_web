@@ -41,7 +41,7 @@ const VideoShow = (props:Props ) => {
     lang: _seoData.lang,
     title: _seoData.title ? _seoData.title : 'Title VideoShow ',
     url: 'https://economictimes.com/xyz',
-    actualURL: '',
+    actualURL: _seoData.actualURL ?  _seoData.actualURL : '' ,
     canonical: _seoData.canonical ?  _seoData.canonical :'',
     type: 'videoshow',
     description: _seoData.description ?  _seoData.description : 'Page description',
@@ -97,7 +97,7 @@ const VideoShow = (props:Props ) => {
                 <div className="clr"></div>
                 <div className={styles.videoWrap}>
                     <div className={styles.videoShareSec}>
-                        <SocialShare />
+                        <SocialShare url={seoData.actualURL} />
                     </div>
                     <div className={styles.videoEmbedSec}>
                         <VideoEmbed iframeData={iframeData} />
