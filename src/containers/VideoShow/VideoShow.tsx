@@ -35,14 +35,16 @@ const VideoShow = (props:Props ) => {
   const relatedVideo = videoData[1];
   const _mostViewedVideos = videoData[2];
   const _mostPopularNews = videoData[3];
+  const _seoData =  videoData[4].data;
+  //console.log('_seoData', _seoData)
   const seoData = {
-    lang: 'en',
-    title: pageHead ? pageHead : 'Title VideoShow ',
+    lang: _seoData.lang,
+    title: _seoData.title ? _seoData.title : 'Title VideoShow ',
     url: 'https://economictimes.com/xyz',
     actualURL: '',
-    canonical: '',
+    canonical: _seoData.canonical ?  _seoData.canonical :'',
     type: 'videoshow',
-    description: 'Page description',
+    description: _seoData.description ?  _seoData.description : 'Page description',
     image: 'https://img.etimg.com/thumb/msid-89883381,width-300,imgsize-48776,,resizemode-4,quality-100/nutella.jpg',
     inLanguage: 'en',
     authors: [],
@@ -55,8 +57,8 @@ const VideoShow = (props:Props ) => {
     hostid: 317,
     langInfo: [],
     ampURL: '',
-    keywords: '',
-    news_keywords: '',
+    keywords: _seoData.keywords ?  _seoData.keywords :'',
+    news_keywords: _seoData.news_keywords ?  _seoData.news_keywords :'',
     noindex: 1,
     noindexFollow: 0,
     expiry: '',
