@@ -146,12 +146,7 @@ const MailSendTemplate: NextPage<any> = (props) => {
                 {
                     loading !== 'no' ? <div className={styles.loading}>
                         <div className={styles.loader}>
-                            <div className={styles.loader__bar}></div>
-                            <div className={styles.loader__bar}></div>
-                            <div className={styles.loader__bar}></div>
-                            <div className={styles.loader__bar}></div>
-                            <div className={styles.loader__bar}></div>
-                            <div className={styles.loader__ball}></div>
+                            
                         </div>
                         <p>Please wait...</p>
                     </div> : ''

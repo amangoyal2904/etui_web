@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Share from "../Share";
 import {useState} from 'react';
 import MailSendTemplate from '../MailSend';
-
+import styles from './styles.module.scss';
 
 
 const SocialShare: NextPage = (props:any) => {  
@@ -34,29 +34,29 @@ const SocialShare: NextPage = (props:any) => {
   return (
     <>      
         <Share />
-        <div className="codeMailVideo">
-          <span onClick={()=>{setShowMail('yes')}} className="email socialSprite" title="Email this video"></span>
+        <div className={styles.codeMailVideo}>
+          <span onClick={()=>{setShowMail('yes')}} className={styles.email} title="Email this video"></span>
           {
             showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
           }
         </div>
-        <div className="codeVideo">
+        <div className={styles.codeVideo}>
           <span onClick={()=>{showHandlerModule('url')}}>Copy URL</span>
           {
-            showUrl === 'yes' ?  <span className="copyUrlSec">
-            <input readOnly type="text" value={url} className="readUrl" />
-            <i  className="close" onClick={closeHandler}></i>
+            showUrl === 'yes' ?  <span className={styles.copyUrlSec}>
+            <input readOnly type="text" value={url} className={styles.readUrl} />
+            <i  className={styles.close} onClick={closeHandler}></i>
           </span> : ''
           }
         </div>
-        <div className="codeVideo">
+        <div className={styles.codeVideo}>
           <span onClick={()=>{showHandlerModule('embed')}}>Embed</span>
           {
-            showEmbed === 'yes' ? <span className="copyUrlSec">
+            showEmbed === 'yes' ? <span className={styles.copyUrlSec}>
             <textarea readOnly defaultValue={`<iframe mozallowfullscreen="true" webkitallowfullscreen="true" allowfullscreen="true" width="560" height="420" frameborder="0" defaultValue=${url} src=${url}></iframe>`}>{
               
             }</textarea>
-            <i  className="close" onClick={closeHandler}></i>
+            <i  className={styles.close} onClick={closeHandler}></i>
           </span> : ''
           }
           
