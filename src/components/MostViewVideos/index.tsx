@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import styles from './styles.module.scss'
 import Image from "next/image";
 
-const MostViewViedeos: NextPage<any> = (props) => {  
+const MostViewVideos: NextPage<any> = (props) => {  
     let listingData = props.viewVideos;
     //console.log('__MostViewViedeos components__', listingData);
     const title = listingData.title;
@@ -39,4 +39,4 @@ const MostViewViedeos: NextPage<any> = (props) => {
     );
   };
   
-  export default MostViewViedeos;
+  export default MostViewVideos;

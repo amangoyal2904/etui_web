@@ -1,14 +1,16 @@
 import { NextPage } from "next";
 import Share from "../Share";
 import {useState} from 'react';
+import MailSendTemplate from '../MailSend';
 
 
 
 const SocialShare: NextPage = (props:any) => {  
-  const url = props.url && props.url != '' ? props.url : ''
+  const url = props.mailData.url && props.mailData.url != '' ? props.mailData.url : ''
   const [showUrl, setShowUrl] = useState('no');
   const [showEmbed, setShowEmbed] = useState('no');
-  const mailUrl = 'https://economictimes.indiatimes.com/mail_send.cms?temp_id=mailHtml&msid=90215467&type=5&language='
+  const [showMail, setShowMail] = useState('no');
+  
   const showHandlerModule = (val:string)=>{
     let _url = '';
     let _embed = '';
@@ -26,14 +28,17 @@ const SocialShare: NextPage = (props:any) => {
     setShowUrl('no');
     setShowEmbed('no')
   }
-  const mailHandlerClick = () =>{
-    
+  const closeMailHandler = ()=>{
+    setShowMail('no')
   }
   return (
     <>      
         <Share />
         <div className="codeMailVideo">
-          <span onClick={mailHandlerClick} className="email socialSprite" title="Email this video"></span>
+          <span onClick={()=>{setShowMail('yes')}} className="email socialSprite" title="Email this video"></span>
+          {
+            showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
+          }
         </div>
         <div className="codeVideo">
           <span onClick={()=>{showHandlerModule('url')}}>Copy URL</span>

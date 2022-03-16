@@ -20,7 +20,17 @@ export const videoShowDataAPICall = async (queryObj:any)=> {
     return _res;
   };
   
-  
-  let outputItem = {videoShowDataAPICall}
+export  const mailSendAPICall = async (data:any)=>{
+    let url = `https://economictimes.indiatimes.com/json/postmail.cms?recaptcha=1`;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    }
+    let  _data = await fetch(url,requestOptions);
+    let  _res =  await _data.json();
+    return _res;
+} 
+  let outputItem = {videoShowDataAPICall, mailSendAPICall}
   
   export default outputItem

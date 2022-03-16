@@ -5,10 +5,11 @@ import DfpAds from 'components/Ad/DfpAds';
 import SEO from 'components/SEO';
 import SocialShare from 'components/Videoshow/SocialShare';
 import VideoEmbed from 'components/Videoshow/VideoEmbed';
-import VideoListing from 'components/Videoshow/VideoListing';
+import VideoListing from 'components/VideoListing';
 import ReadMore from 'components/ReadMore';;
-import MostViewViedeos from 'components/Videoshow/MostViewedVideos';
+import MostViewVideos from 'components/MostViewVideos';
 import MostPopularNews from 'components/MostPopularNews';
+import {mailSendProps} from './types';
 
 interface PageProps {
   query: string | string[]
@@ -77,7 +78,14 @@ const VideoShow = (props:Props ) => {
     seoschema: {},
     articleSection: "Airlines / Aviation", //fetchImmediateSubsec(seoData.subsecnames),
   };
-
+  const _mailData:mailSendProps = {
+    url:_seoData.actualURL ?  _seoData.actualURL : '',
+    msid:_seoData.msid ?  _seoData.msid : '',
+    articlelink:`${_seoData.actualURL}?frm=mailtofriend&intenttarget=no`,
+    syn:_seoData.description ?  _seoData.description : 'Page description',
+    pageTitle:_seoData.title ? _seoData.title : 'Title VideoShow ',
+    subject:`Economictimes.com: ${_seoData.title}`
+  }
   return (
     <div className={styles.header}>
       <div className={styles.videoshow}>
@@ -97,7 +105,7 @@ const VideoShow = (props:Props ) => {
                 <div className="clr"></div>
                 <div className={styles.videoWrap}>
                     <div className={styles.videoShareSec}>
-                        <SocialShare url={seoData.actualURL} />
+                        <SocialShare mailData={_mailData} />
                     </div>
                     <div className={styles.videoEmbedSec}>
                         <VideoEmbed iframeData={iframeData} />
@@ -116,7 +124,7 @@ const VideoShow = (props:Props ) => {
             </div>
         </section>
         <aside className={styles.sideBar}>
-            <MostViewViedeos viewVideos={_mostViewedVideos} />
+            <MostViewVideos viewVideos={_mostViewedVideos} />
             <MostPopularNews viewVideos={_mostPopularNews}/>
         </aside>
       </div>
