@@ -1,7 +1,8 @@
 import { NextPage } from "next";
+import Link from "next/link"
 import styles from './styles.module.scss'
 import Image from "next/image";
-import {ImageClickHandler} from '../../utils/utils';
+import {ImageClickHandler,  urlValidation} from '../../utils/utils';
 
 const MostViewVideos: NextPage<any> = (props) => {  
     let listingData = props.viewVideos;
@@ -12,11 +13,14 @@ const MostViewVideos: NextPage<any> = (props) => {
       let htmlListData = []
       if(relatedVideoData){
         relatedVideoData.map((item, index)=>{
+          let _urlVal = urlValidation(item.url)
           let _genHtml = <li key={index} attr-data-position={index}>
             <div className={styles.text}>
-              <a href={item.url}>
-                {item.title}
-              </a>
+            <Link href={_urlVal}>
+                <a>
+                  {item.title}
+                </a>
+            </Link>
             </div>
             <div className={styles.img}>
               <Image onClick={()=>{ImageClickHandler(item.url)}} src={item.img} width="80" height="60" alt={item.title} title={item.title}/>
