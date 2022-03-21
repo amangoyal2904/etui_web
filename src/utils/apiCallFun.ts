@@ -1,3 +1,4 @@
+const apiURL = 'https://etdev8243.indiatimes.com/reactfeed.cms?'
 const findMsid = (arrayVal:any[])=>{
     let arrayList = arrayVal;
     let msidHash = '';
@@ -14,14 +15,14 @@ const findMsid = (arrayVal:any[])=>{
 
 export const videoShowDataAPICall = async (queryObj:any)=> {
     let  msid = findMsid(queryObj);
-    let url = `https://etdev8243.indiatimes.com/reactfeed_videoshowweb.cms?feedtype=etjson&msid=${msid}&showjcmserror=1&showxslterror=1`;
+    let url =`${apiURL}feedtype=etjson&type=videoshow&msid=${msid}`
     let  data = await fetch(url,{mode: 'no-cors'});
     let  _res =  await data.json();
     return _res;
   };
   
 export  const mailSendAPICall = async (data:any)=>{
-    let url = `https://economictimes.indiatimes.com/json/postmail.cms?recaptcha=1`;
+    let url = `https://economictimes.indiatimes.com/json/postmail.cms`;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import styles from './styles.module.scss'
 import Image from "next/image";
+import {ImageClickHandler} from '../../utils/utils';
 
 const MostPopularNews: NextPage<any> = (props) => {  
     let listingData = props.viewVideos;
@@ -13,12 +14,12 @@ const MostPopularNews: NextPage<any> = (props) => {
         relatedVideoData.map((item, index)=>{
           let _genHtml = <li key={index} attr-data-position={index}>
             <div className={styles.text}>
-              <a href={item.webUrl}>
+              <a href={item.url}>
                 {item.title}
               </a>
             </div>
             <div className={styles.img}>
-              <Image src={item.img} width="100" height="75" alt={item.title} title={item.title}/>
+              <Image onClick={()=>{ImageClickHandler(item.url)}} src={item.img} width="100" height="75" alt={item.title} title={item.title}/>
                 <span className={styles.timeFrame}>
                     <span>{item.duration}</span>
                 </span>

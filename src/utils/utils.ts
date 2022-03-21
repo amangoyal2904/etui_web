@@ -202,7 +202,13 @@ export const socialUrl = {
   popUpSettings: "toolbar=0,status=0,width=626,height=436"
 };
 
-let output = {socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
+export const ImageClickHandler = (url:string)=>{
+  if(url && url !==  ''){
+    window.location.href = url
+  }
+}
+
+let output = {ImageClickHandler, socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
 
 
 export default output

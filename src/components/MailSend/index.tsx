@@ -6,6 +6,8 @@ import {mailSendAPICall} from '../../utils/apiCallFun';
 
 // open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
 const MailSendTemplate: NextPage<any> = (props) => { 
+    const siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+    // 6Le_434UAAAAAO2v9F1iJlM9Gxht1RVivI5vmgY9  // original site key
     const [loading, setlLoading] = useState('no');
     const [thanksMessage, setThanksMessage] = useState('no'); 
     const [username, setUsename] = useState('');
@@ -175,7 +177,7 @@ const MailSendTemplate: NextPage<any> = (props) => {
                                 <div className={styles.captchaSec}>
                                     <div className={styles.capthcaResize}>
                                     <ReCAPTCHA
-                                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                        sitekey={siteKey}
                                         onChange={captchaHandler}
                                     />
                                         {/* <div className="g-recaptcha" data-sitekey="6Le_434UAAAAAO2v9F1iJlM9Gxht1RVivI5vmgY9"></div> */}

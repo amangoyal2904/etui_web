@@ -28,11 +28,12 @@ const VideoShow = (props:Props ) => {
   const _data = props && props.apiData &&  props.apiData.searchResult ?  props.apiData.searchResult : '';
   const videoData =  _data 
   //console.log('______Videos Show Tsx file Props___videoData', videoData)
-  const pageHead = videoData[0].data[0].title;
-  const pageTime = videoData[0].data[0].dtline;
-  const pageAgency = videoData[0].data[0].ag;
-  let readMoreText = videoData[0].data[0].relKeywords;
-  const iframeData = videoData[0].data[0].embedFrame;
+  const pageHead = videoData[0].data.title;
+  const pageTime = videoData[0].data.date;
+  const pageSyn = videoData[0].data.synopsis
+  const pageAgency = videoData[0].data.agency;
+  let readMoreText = videoData[0].data.relKeywords;
+  const iframeData = videoData[0].data.embedFrame;
   const relatedVideo = videoData[1];
   const _mostViewedVideos = videoData[2];
   const _mostPopularNews = videoData[3];
@@ -111,7 +112,7 @@ const VideoShow = (props:Props ) => {
                         <VideoEmbed iframeData={iframeData} />
                     </div>
                     <div className={styles.videoDesc}>
-                    Apple on Tuesday unveiled a new version of its budget-priced iPhone that's capable of connecting to ultrafast 5G wireless networks, an upgrade that's already been available on the company's upscale models for more than a year. The latest iPhone SE marks the first upgrade to the bare-bones version of Apple's most popular product in nearly two years.
+                      {pageSyn} <a href="https://twitter.com/EconomicTimes" rel="nofollow" className={styles.twitterFollowButton} data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
                     </div>
                     <ReadMore readMoreText={readMoreText}/>
                 </div>
