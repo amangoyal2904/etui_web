@@ -1,3 +1,6 @@
+import os from "os";
+const serverHost = os.hostname() || "";
+
 declare global {
     interface Window { 
       geolocation: any;
@@ -188,7 +191,60 @@ export const removeBackSlash = val => {
   return val;
 };
 
+export const loadAssets = (filename, fileType, attrType, position, cb, attr?, attrVal?, objAttr?) => { 
+  try { 
+    if(filename){ 
+      let fileRef: any = '';
+      if (fileType == "js") { 
+        fileRef = document.createElement('script'); 
+        fileRef.setAttribute("type", "text/javascript"); 
+        fileRef.setAttribute("src", filename); 
+        if (attrType) { 
+          fileRef.setAttribute(attrType, attrType); 
+        } 
+        if (attr && attrVal) { 
+          fileRef.setAttribute(attr, attrVal); 
+        } if (typeof objAttr == "undefined") { objAttr = {}; } if (Object.keys(objAttr).length > 0 && objAttr.constructor === Object) { for (var key in objAttr) { fileRef.setAttribute(key, objAttr[key]); } } if (typeof cb == "function") { fileRef.addEventListener("load", cb); } } else if (fileType == "css") { fileRef = document.createElement("link"); fileRef.setAttribute("rel", "stylesheet"); fileRef.setAttribute("type", "text/css"); fileRef.setAttribute("href", filename) } if (typeof fileRef != "undefined") { var positionToAppend = position ? position : "head"; document.getElementsByTagName(positionToAppend)[0].appendChild(fileRef); } } } catch (e) { console.log("loadAssets:", e) } }
+
 let output = {removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
+
+export const encodeQueryData = data => {
+  const ret = [];
+  for (let d in data)
+    ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+  return ret.join("&");
+};
+
+export const getApiUrl = (api, param, index, apidomain = '') => {
+  let env = '';
+  if (typeof(window) == "undefined") {
+    // env = window.__APP && window.__APP.env;
+  } else {
+    env = process.env.NODE_ENV.toLowerCase();
+  }
+  let domain = "";
+  if (api.dns) {
+    domain = api.dns[env][index] ? api.dns[env][index] : api.dns[env][0];
+  }
+
+  const path = api.path;
+  if (path.indexOf("request") > -1) {
+    domain = apidomain ? apidomain : domain;
+  }
+  const querystring = encodeQueryData(param);
+  let url = domain + path;
+  if (querystring) {
+    url = `${url}?${querystring}`;
+  }
+  return url;
+};
+
+export const isHostPreprod = () => {
+  return serverHost.indexOf("3632") > -1
+          || serverHost.indexOf("3633") > -1
+          || serverHost.indexOf("13120") > -1
+          || serverHost.indexOf("35115") > -1;
+}
 
 
 export default output

@@ -27,7 +27,8 @@ export const SiteConfig = {
     "business news, personal finance, nse, bse, financial news,share market news india,stock market news",
   title:
     "Business News Live, Share Market News - Read Latest Finance News, IPO, Mutual Funds News",
-  publisherLogo: "https://img.etimg.com/photo/msid-76191298/76191298.jpg"
+  publisherLogo: "https://img.etimg.com/photo/msid-76191298/76191298.jpg",
+  imgDomain: "https://img.etimg.com"
 };
 
 export const GA = {
