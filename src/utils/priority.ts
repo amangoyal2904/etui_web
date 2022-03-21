@@ -13,6 +13,7 @@ export function InitialJsOnAppLoad(): void {
       ga.gaObserverInit();
     });
     ga.growthRxInit();
+    // ga.GTMInit();
   } catch (error) {
     console.error("Error in InitialJsOnAppLoad: ", error);
   }
@@ -21,5 +22,5 @@ export function InitialJsOnAppLoad(): void {
 export function callJsOnRouteChange(url?): void {
   console.log("callJsOnRouteChange called");
   window.adDivIds = [];
-  ga.pageview(url);
+  // ga.pageview(url);
 }

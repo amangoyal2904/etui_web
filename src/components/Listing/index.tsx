@@ -1,19 +1,24 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from "./styles.module.scss";
 import useRequest from 'network/service'
 import Loading from 'components/Loading';
+import APIS_CONFIG from "network/config.json";
+import Service from 'network/service';
 
 const SampleListing: FC = () => {
-    const { data, isLoading, error } = useRequest<{
-        searchResult: Array<Object>,
-        parameters: Object
-    }>({
-        url: "request",
-        params: { type: "plist", "msid": 2146843 }
-    })
-    if (isLoading) return <Loading />
-    if (error) return <div>Please try again!</div>
+    let [data, setData]:any = useState({});
+    useEffect(() => {
+        let url = APIS_CONFIG.REQUEST;
+            let params = {
+                type: "plist", "msid": 2146843
+            };
+            Service.get(url, params)
+            .then(res => {
+                setData(res.data || {});
+                console.log(res.data,"DataArticles");
+            })
+    }, []);
 
     const listData = data?.searchResult?.[0]?.["data"] || [];
     return (
