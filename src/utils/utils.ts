@@ -1,5 +1,6 @@
 import os from "os";
 const serverHost = os.hostname() || "";
+import Router from 'next/router'
 
 declare global {
     interface Window { 
@@ -63,6 +64,8 @@ export const pageType = pathurl => {
     return "primehome";
   } else if (pathurl.indexOf("/et-tech") != -1) {
     return "techhome";
+  }else if (pathurl.indexOf("/videoshow/") != -1) {
+      return "videoshow";
   } else if (pathurl.indexOf("/topic/") != -1) {
     return "topic";
   } else {
@@ -206,7 +209,29 @@ export const loadAssets = (filename, fileType, attrType, position, cb, attr?, at
           fileRef.setAttribute(attr, attrVal); 
         } if (typeof objAttr == "undefined") { objAttr = {}; } if (Object.keys(objAttr).length > 0 && objAttr.constructor === Object) { for (var key in objAttr) { fileRef.setAttribute(key, objAttr[key]); } } if (typeof cb == "function") { fileRef.addEventListener("load", cb); } } else if (fileType == "css") { fileRef = document.createElement("link"); fileRef.setAttribute("rel", "stylesheet"); fileRef.setAttribute("type", "text/css"); fileRef.setAttribute("href", filename) } if (typeof fileRef != "undefined") { var positionToAppend = position ? position : "head"; document.getElementsByTagName(positionToAppend)[0].appendChild(fileRef); } } } catch (e) { console.log("loadAssets:", e) } }
 
-let output = {removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
+
+export const socialUrl = {
+  fb: "https://www.facebook.com/sharer.php",
+  twt: "https://twitter.com/share?",
+  gp: "https://plus.google.com/share?url=",
+  lin: "https://www.linkedin.com/cws/share?url=",
+  whatsapp: "whatsapp://send?text=",
+  //message: 'sms:' + (navigator.userAgent.toLowerCase().indexOf('iphone') != -1 ? '&body=' :'?body='),
+  pinit: "https://pinterest.com/pin/create/link/?url=",
+  openerName: "sharer",
+  popUpSettings: "toolbar=0,status=0,width=626,height=436"
+};
+
+export const ImageClickHandler = (url:string)=>{
+  let _url = url;
+  let checkVideoUrl = _url.indexOf('/videoshow/') !== -1 && _url.indexOf('economictimes.indiatimes.com') !== -1
+  if(checkVideoUrl){
+    let videoShowurl = _url.split("https://economictimes.indiatimes.com").pop()
+    return Router.push(videoShowurl)
+  }
+  return window.location.href = url
+}
+
 
 export const encodeQueryData = data => {
   const ret = [];
@@ -246,5 +271,15 @@ export const isHostPreprod = () => {
           || serverHost.indexOf("35115") > -1;
 }
 
+export const urlValidation = (url:string) =>{
+  let _url = url;
+  let checkVideoUrl = _url.indexOf('/videoshow/') !== -1 && _url.indexOf('economictimes.indiatimes.com') !== -1
+  if(checkVideoUrl){
+    return _url.split("https://economictimes.indiatimes.com").pop()
+  }
+  return url;
+}
+
+let output = {urlValidation,ImageClickHandler, socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
 
 export default output

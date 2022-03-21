@@ -17,6 +17,24 @@
             },
             "path": "request"
     },
+    "WEBAPI": {
+        "dns": {
+            "development": [
+                "https://etdev8243.indiatimes.com/reactfeed.cms?",
+                "https://etdev8243.indiatimes.com/reactfeed.cms?",
+                "https://etdev8243.indiatimes.com/reactfeed.cms?"
+            ],
+            "staging": [
+                "https://etdev8243.indiatimes.com/reactfeed.cms?",
+                "https://etdev8243.indiatimes.com/reactfeed.cms?"
+            ],
+            "production": [
+                "https://economictimes.indiatimes.com/reactfeed.cms?",
+                "https://economictimes.indiatimes.com/reactfeed.cms?"
+            ]
+        },
+        "path": "webapi"
+    },
     "USER_ACTIVITY": {
         "dns": {
             "development": ["https://etua-stg.economictimes.indiatimes.com/personalization/logdata/et/ua"],
