@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script'
 
-import * as Config from './../utils/common';
+import * as Config from '../utils/common';
 
 interface Props {
   isprimeuser?: number
