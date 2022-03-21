@@ -1,8 +1,9 @@
 import Link from "next/link"
 import Image from "next/image"
-import useRequest from "network/service";
-import { FC, useState } from "react";
+import { useState, useEffect } from "react";
 import Loading from "components/Loading";
+import APIS_CONFIG from "network/config.json";
+import Service from 'network/service';
 
 interface MenuSecProps {
     title: string;
@@ -25,16 +26,19 @@ const HeaderNav = () => {
         setSubNavData(subNav || []);
         console.log(this);
     }
-    const { data, isLoading, error } = useRequest<{
-        searchResult: MenuProps,
-        parameters: Object
-      }>({
-        url: "request",
-        params: { type: "menu1" }
-      });
-      if (isLoading) return <Loading />
-      if (error) return <div>Please try again!</div>
-      console.log(data.searchResult[0].sec, 'Menu Data');
+
+    let [data, setData]:any = useState({});
+    useEffect(() => {
+        let url = APIS_CONFIG.REQUEST;
+            let params = {
+                type: "menu",
+            };
+            Service.get(url, params)
+            .then(res => {
+                setData(res.data || {});
+                console.log(res.data,"Data");
+            })
+    }, []);
 
     return (
         <div>
@@ -49,7 +53,7 @@ const HeaderNav = () => {
                             <a className={activeNav == "home" ? 'current': ""} >Home</a>
                         </Link>
                     </div>
-                    {data && data.searchResult[0] && data.searchResult[0].sec.map((ele,i) =>  {
+                    {data && data.searchResult && data.searchResult[0] && data.searchResult[0].sec.map((ele,i) =>  {
                         if (i<15) {
                             return (
                                 <div  onClick={() => handleNavClick(ele?.sec, ele?.title)} key={ele.title}>

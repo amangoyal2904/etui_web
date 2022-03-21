@@ -1,4 +1,4 @@
-@import './../../styles/variables.scss';
+@import 'styles/variables.scss';
 
 .Msprite, .cSprite, .cSprite_a:after, .cSprite_b:before{background: url($img_domain + '/photo/msid-87973699,quality-100/common-sprite.jpg') no-repeat;display: inline-block;background-size: 500px;}
 #topAd, .topAd{margin:auto;text-align:center;background-color: #f7f7f7;}

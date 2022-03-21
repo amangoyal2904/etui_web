@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import Utility from "../../utils/utils"
+import Utility from "utils/utils"
 import { useRouter } from 'next/router';
 import styles from "./styles.module.scss";
 import {

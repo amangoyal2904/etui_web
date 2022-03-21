@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-import useRequest from 'network/service';
 import DfpAds from "components/Ad/DfpAds"
 import styles from "./Header.module.scss";
 

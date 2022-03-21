@@ -1,23 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import * as config from './../../utils/common';
+import * as config from 'utils/common';
 import { useState, useEffect } from 'react';
-import useRequest from 'network/service';
 import Loading from 'components/Loading';
+import APIS_CONFIG from "network/config.json";
+import Service from 'network/service';
 
 const HeaderAuth = () => {
-    const [offerData, setOfferData] = useState({});
-
-    // const fetchData = () => {
-        // const { data, isLoading, error } = useRequest<{offerTitle: Object,offerLink: Object}>({
-        //     url: "/api/headsale"
-        // })
-        // if (isLoading) return <Loading />
-        // if (error) return <div>Please try again!</div>
-        // console.log(data, 'Data for OFfer');
-        // setOfferData(data);
-    // }
+    /* let [offerData, setOfferData]:any = useState({});
+    useEffect(() => {
+        let url = "/api/headsale";
+            Service.get(url, {})
+            .then(res => {
+                setOfferData(res.data || {});
+                console.log(res.data,"offerData");
+            })
+            .catch(error => {console.log(error);})
+    }, []); */
 
     return (
         <header className="header clearfix">

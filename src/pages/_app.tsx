@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import './../components/Header/Header.scss';
+import 'components/Header/Header.scss';
 
 import {useEffect} from 'react';
 import { Provider } from 'react-redux';
