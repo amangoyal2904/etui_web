@@ -39,17 +39,13 @@ const MarketsBand = () => {
                                     <div className="band-item clearfix">
                                         <div className="band-content">
                                             <div className="head">
-                                                <Link href="#">
-                                                    <a target="_blank">
-                                                        Benchmark
-                                                    </a>
+                                                <Link href="#" target="_blank">
+                                                    Benchmark                                                    
                                                 </Link>
                                             </div>
                                             <div className="values">
-                                                <Link href="#">
-                                                    <a target="_blank" className="wname">
-                                                        Sensex
-                                                    </a>
+                                                <Link href="#" target="_blank" className="wname">
+                                                    Sensex
                                                 </Link>
                                                 <span className="num">223,23,23</span>
                                                 <span className="per cSprite_b ">loss</span>
@@ -62,8 +58,7 @@ const MarketsBand = () => {
                     </div>
                     <div className="band-items grey">
                         <div className="stats_btn" onMouseEnter={mouseEnter}>
-                            <Link href="/marketstats/pid-0,pageno-1,sortby-percentchange,sortorder-desc,sort-intraday.cms?marketcap=largecap%252Cmidcap">
-                                <a className="mktWatch" target="_blank">Market Watch</a>
+                            <Link href="/marketstats/pid-0,pageno-1,sortby-percentchange,sortorder-desc,sort-intraday.cms?marketcap=largecap%252Cmidcap" className="mktWatch" target="_blank">Market Watch
                             </Link>
                             <div className="stats_list">
                                 <ul>

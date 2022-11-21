@@ -42,9 +42,9 @@ const Home: FC = () => {
       </div>
       <div>
         <Link href="/news/economy/indicators/goodbye-easy-money-as-hawkish-central-banks-speed-up-rate-hikes/articleshow/89379056.cms">
-          <a>
+          
           Go to Articleshow
-          </a>
+          
         </Link>
         <p data-ga-impression={`Crypto Corner#Impression 1#url`}>
           <button data-ga-onclick="ET_Sale_PWA#ONClick#url">Click me for GA Events</button>

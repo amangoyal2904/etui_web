@@ -1,57 +1,60 @@
-import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
+import { pageType, getMSID, prepareMoreParams } from "utils";
+import Service from "network/service";
+import APIS_CONFIG from "network/config.json";
 
-import {videoShowDataAPICall} from '../utils/apiCallFun';
+const All = () => null;
+const expiryTime = 10 * 60;
 
-const ArticleList = dynamic(() => import('containers/ArticleList'))
-const ArticleShow = dynamic(() => import('containers/ArticleShow'))
-const VideoShow = dynamic(() => import('containers/VideoShow/VideoShow'))
+export async function getServerSideProps({ req, res, params, resolvedUrl }) {
+  const isprimeuser = req.headers?.primetemplate ? 1 : 0;
+  const { all = [] } = params;
+  const lastUrlPart: string = all?.slice(-1).toString();
+  let page = pageType(resolvedUrl);
+  const api = APIS_CONFIG.FEED;
 
-interface Query {
-  all: string[],
-  apiData:any
-}
+  let extraParams = {},
+    response: any = {};
 
-export default function All(props:any) {
+  if (page !== "notfound") {
+    const msid = getMSID(lastUrlPart);
+    const moreParams = prepareMoreParams({ all, page, msid });
 
-  const router = useRouter();
-  const { all } = router.query;
-  
-  /**
-   * check if articleshow
-   * 
-   * Articleshow pattern consists of:
-   * a. 89622565.cms as last url comonent
-   * b. articleshow as the second last url component
-   */    
-  const lastUrlComponent: string = all.slice(-1).toString();
-  const secondLastUrlComponent: string = all.slice(-2, -1).toString();
+    //==== gets page data =====
+    const apiType = page === "videoshownew" ? "videoshow" : page;
+    const result = await Service.get({
+      api,
+      params: { type: apiType, platform: "wap", feedtype: "etjson", ...moreParams }
+    });
+    response = result.data;
+    const { subsecnames = {} } = response.seo;
+    extraParams = subsecnames
+      ? {
+          subsec1: subsecnames.subsec1,
+          subsec2: subsecnames.subsec2
+        }
+      : {};
 
-  if(/^[0-9]+\.cms$/.test(lastUrlComponent) && secondLastUrlComponent==='articleshow') {
-    return <ArticleShow query={all}  />;
-  }else if(/^[0-9]+\.cms$/.test(lastUrlComponent) && secondLastUrlComponent==='videoshow'){
-    return <VideoShow query={all} apiData={props.videoShowAPIData} />;
-  } else {
-    return <ArticleList query={all} />;
+    if (response && response.error) page = "notfound";
   }
 
-}
+  //==== gets dyanmic footer data =====
+  const footerMenu = await Service.get({
+    api,
+    params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page }
+  });
+  const dynamicFooterData = footerMenu.data || {};
 
-export async function getServerSideProps({ params, req, res, query, preview, previewData, resolvedUrl, locale, locales, defaultLocale }) {
-  console.log('query', query)
-  
-  // if  videshow url  in param than call to this  function in server side props
-  let checkVideoShowUrl = query.all.includes('videoshow');
-  let videoShowData = '';
-  if(checkVideoShowUrl){
-    videoShowData = await videoShowDataAPICall(query.all)
-  }
-// end videoshow api function here 
+  //==== sets response headers =====
+  res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
+  res.setHeader("Expires", new Date(new Date().getTime() + expiryTime * 1000).toUTCString());
+
   return {
-    props:{
-      videoShowAPIData: videoShowData
+    props: {
+      page,
+      response,
+      isprimeuser,
+      dynamicFooterData
     }
-  }
-
-  //return { props: {} }
-}   
+  };
+}
+export default All;

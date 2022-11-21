@@ -1,145 +1,90 @@
-import { NextPage } from 'next';
-import Link from 'next/link';
-import styles from './VideoShow.module.scss';
-import DfpAds from 'components/Ad/DfpAds';
-import SEO from 'components/SEO';
-import SocialShare from 'components/Videoshow/SocialShare';
-import VideoEmbed from 'components/Videoshow/VideoEmbed';
-import VideoListing from 'components/VideoListing';
-import ReadMore from 'components/ReadMore';;
-import MostViewVideos from 'components/MostViewVideos';
-import MostPopularNews from 'components/MostPopularNews';
-import {mailSendProps} from './types';
+import styles from "./VideoShow.module.scss";
+// import SocialShare from "components/SocialShare";
+// import VideoEmbed from "components/VideoEmbed";
+// import SeoWidget from "components/SeoWidget";
+import DfpAds from "components/Ad/DfpAds";
+import { useEffect, useState, Fragment, FC } from "react";
+import { useSelector } from "react-redux";
+// import AppDownloadWidget from "components/AppDownloadWidget";
+import SEO from "components/SEO";
+// import { PageProps, VideoShowProps, OtherVidsProps } from "types/videoshow";
+// import BreadCrumb from "components/BreadCrumb";
+import Listing from "components/Listing";
+// import GreyDivider from "components/GreyDivider";
+import { AppState } from "app/store";
+import { getPageSpecificDimensions } from "utils";
+import { ET_WAP_URL } from "utils/common";
 
-interface PageProps {
-  query: string | string[]
-}
+const VideoShow: FC<PageProps> = (props) => {
+  const { seo = {}, version_control, parameters } = props;
+  const seoData = { ...seo, ...version_control?.seo };
+  const { msid } = parameters;
+  const { cpd_wap = "0" } = version_control;
+  const loginState = useSelector((state: AppState) => state.login);
 
-const fetchImmediateSubsec = (objSec) => {
-  return  objSec.subsecname4 ? objSec.subsecname4 : objSec.subsecname3 ? objSec.subsecname3 : objSec.subsecname2 ? objSec.subsecname2 : objSec.subsecname1 ? objSec.subsecname1 : '';
-}
+  useEffect(() => {
+    // set page specific customDimensions
+    const payload = getPageSpecificDimensions(seo);
+    window.customDimension = { ...window.customDimension, ...payload };
+  }, [props]);
 
+  const VideoContainer = () => {
+    {
+      return props?.searchResult?.map((item) => {
+        if (item.name === "videoshow") {
+          const result = item.data;
+          const url = `${result.iframeUrl}&skipad=${loginState.isprimeuser}`;
+          return (
+            <Fragment key={item.name}>
+              <div className={styles.videoshow}>
+                {/* <VideoEmbed url={url} /> */}
 
-interface Props {
-  apiData: any,
-  query:any
-}
-const VideoShow = (props:Props ) => {
-  const _data = props && props.apiData &&  props.apiData.searchResult ?  props.apiData.searchResult : '';
-  const videoData =  _data 
-  //console.log('______Videos Show Tsx file Props___videoData', videoData)
-  const pageHead = videoData[0].data.title;
-  const pageTime = videoData[0].data.date;
-  const pageSyn = videoData[0].data.synopsis
-  const pageAgency = videoData[0].data.agency;
-  let readMoreText = videoData[0].data.relKeywords;
-  const iframeData = videoData[0].data.embedFrame;
-  const relatedVideo = videoData[1];
-  const _mostViewedVideos = videoData[2];
-  const _mostPopularNews = videoData[3];
-  const _seoData =  videoData[4].data;
-  //console.log('_seoData', _seoData)
-  const seoData = {
-    lang: _seoData.lang,
-    title: _seoData.title ? _seoData.title : 'Title VideoShow ',
-    url: 'https://economictimes.com/xyz',
-    actualURL: _seoData.actualURL ?  _seoData.actualURL : '' ,
-    canonical: _seoData.canonical ?  _seoData.canonical :'',
-    type: 'videoshow',
-    description: _seoData.description ?  _seoData.description : 'Page description',
-    image: 'https://img.etimg.com/thumb/msid-89883381,width-300,imgsize-48776,,resizemode-4,quality-100/nutella.jpg',
-    inLanguage: 'en',
-    authors: [],
-    agency: [],
-    date: '27 Feb, 2022',
-    updated: '27 Feb, 2022 09:40',
-    story: 'story excerpt goes here',
-    remove_paywall_schema: 0,
-    behindLogin: 0,
-    hostid: 317,
-    langInfo: [],
-    ampURL: '',
-    keywords: _seoData.keywords ?  _seoData.keywords :'',
-    news_keywords: _seoData.news_keywords ?  _seoData.news_keywords :'',
-    noindex: 1,
-    noindexFollow: 0,
-    expiry: '',
-    sponsored: 0,
-    maxImgPreview: 0,
-    isPrime: 1,
-    schemaType: 'videoshow',
-    subsecnames: {
-      "subsec1": 13352306,
-      "subsecname1": "Industry",
-      "subsec2": 13353990,
-      "subsecname2": "Transportation",
-      "subsec3": 13354027,
-      "subsecname3": "Airlines / Aviation"
-    },
-    seoschema: {},
-    articleSection: "Airlines / Aviation", //fetchImmediateSubsec(seoData.subsecnames),
+                <div className={styles.wrap}>
+                  <h1 role="heading">{result.title}</h1>
+                  <div className={styles.synopsis}>
+                    <p>{result.synopsis}</p>
+                  </div>
+                  <div className={styles.date}>
+                    {result.agency} | {result.date}
+                  </div>
+                </div>
+                {/* <SocialShare
+                  shareParam={{
+                    shareUrl: ET_WAP_URL + result.url,
+                    title: result.title,
+                    msid: result.msid,
+                    hostId: result.hostid,
+                    type: "5"
+                  }}
+                /> */}
+              </div>
+              {/* <SeoWidget data={result.relKeywords} title="READ MORE" /> */}
+            </Fragment>
+          );
+        } else if (item.name === "other_videos" && Array.isArray(item.data)) {
+          const otherVids = item as OtherVidsProps;
+          // return <Listing type="grid" title={otherVids.title} data={otherVids} key={item.name} />;
+        }
+      });
+    }
   };
-  const _mailData:mailSendProps = {
-    url:_seoData.actualURL ?  _seoData.actualURL : '',
-    msid:_seoData.msid ?  _seoData.msid : '',
-    articlelink:`${_seoData.actualURL}?frm=mailtofriend&intenttarget=no`,
-    syn:_seoData.description ?  _seoData.description : 'Page description',
-    pageTitle:_seoData.title ? _seoData.title : 'Title VideoShow ',
-    subject:`Economictimes.com: ${_seoData.title}`
-  }
   return (
-    <div className={styles.header}>
-      <div className={styles.videoshow}>
-        <section className={styles.pageContent}>
-        <h1  className="h1Title">{pageHead}</h1>
-            <div className={styles.bylineFull}>
-                <div className={`${styles.byline} flt`}>
-                    {pageAgency} | 
-                  <time> {pageTime}</time>
-                </div>
-                <div className={styles.cmtLinks}>
-                    <a data-track="newPostComment" className={styles.postComment}>Post a Comment</a>
-                </div>
-                <div className={styles.videoBookmark}>
-                    <a data-msid="89989081" data-arttype="5" title="Bookmark this Video" className={styles.bookmarkIcon} ></a>
-                </div>
-                <div className="clr"></div>
-                <div className={styles.videoWrap}>
-                    <div className={styles.videoShareSec}>
-                        <SocialShare mailData={_mailData} />
-                    </div>
-                    <div className={styles.videoEmbedSec}>
-                        <VideoEmbed iframeData={iframeData} />
-                    </div>
-                    <div className={styles.videoDesc}>
-                      {pageSyn} <a href="https://twitter.com/EconomicTimes" rel="nofollow" className={styles.twitterFollowButton} data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
-                    </div>
-                    <ReadMore readMoreText={readMoreText}/>
-                </div>
-                <div className={`${styles.hdAdContainer} adContainer`}>
-                  <DfpAds adInfo={{ "key": "atf" }} />
-                </div>
-                <div className={styles.videoListSec}>
-                    <VideoListing relatedVideo={relatedVideo}/>
-                </div>
-            </div>
-        </section>
-        <aside className={styles.sideBar}>
-            <MostViewVideos viewVideos={_mostViewedVideos} />
-            <MostPopularNews viewVideos={_mostPopularNews}/>
-        </aside>
+    <>
+      <div className={styles.mainContent}>
+        <div className={`${styles.hdAdContainer} adContainer expando_${cpd_wap}`}>
+          {/* <DfpAds adInfo={{ key: "atf", subsecnames: seo.subsecnames || {} }} identifier={msid} /> */}
+        </div>
+        {VideoContainer()}
+        {/* <SEO {...seoData} /> */}
+        {/* <GreyDivider />
+        <AppDownloadWidget tpName="videoshow" />
+        <BreadCrumb data={seoData.breadcrumb} /> */}
+        <div className={`${styles.footerAd} adContainer`}>
+          {/* <DfpAds adInfo={{ key: "fbn", subsecnames: seo.subsecnames || {} }} identifier={msid} /> */}
+        </div>
       </div>
-      
-      <div>
-        <Link href="/">
-          <a>
-            Back Home
-          </a>
-        </Link>
-      </div>
-      <SEO data={seoData} page="videoshow"/>
-    </div>
-  )
-}
+    </>
+  );
+};
 
 export default VideoShow;

@@ -22,9 +22,9 @@ const VideoListing: NextPage<any> = (props) => {
           <div className={styles.text}>
             
             <Link href={_urlVal}>
-                <a>
+                
                   {item.title}
-                </a>
+                
             </Link>
               <span className={styles.view}>Views: {item.views}</span>
           </div>

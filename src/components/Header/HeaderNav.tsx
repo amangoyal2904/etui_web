@@ -1,7 +1,5 @@
 import Link from "next/link"
-import Image from "next/image"
 import { useState, useEffect } from "react";
-import Loading from "components/Loading";
 import APIS_CONFIG from "network/config.json";
 import Service from 'network/service';
 
@@ -29,15 +27,15 @@ const HeaderNav = () => {
 
     let [data, setData]:any = useState({});
     useEffect(() => {
-        let url = APIS_CONFIG.REQUEST;
-            let params = {
-                type: "menu",
-            };
-            Service.get(url, params)
-            .then(res => {
-                setData(res.data || {});
-                console.log(res.data,"Data");
-            })
+        // let url = APIS_CONFIG.REQUEST;
+        //     let params = {
+        //         type: "menu",
+        //     };
+        //     Service.get(url, params)
+        //     .then(res => {
+        //         setData(res.data || {});
+        //         console.log(res.data,"Data");
+        //     })
     }, []);
 
     return (
@@ -49,27 +47,21 @@ const HeaderNav = () => {
                         <nav id="sideBarNav" className="ddNav"/>
                     </div>
                     <div>
-                        <Link href="/">
-                            <a className={activeNav == "home" ? 'current': ""} >Home</a>
-                        </Link>
+                        <Link href="/" className={activeNav == "home" ? 'current': ""} >Home</Link>
                     </div>
                     {data && data.searchResult && data.searchResult[0] && data.searchResult[0].sec.map((ele,i) =>  {
                         if (i<15) {
                             return (
                                 <div  onClick={() => handleNavClick(ele?.sec, ele?.title)} key={ele.title}>
-                                    <Link href="/">
-                                        <a className={activeNav == ele.title ? 'current': null}>{ele.title}</a>
-                                    </Link>
+                                    <Link href="/" className={activeNav == ele.title ? 'current': null}>{ele.title}</Link>
                                 </div>
                             )
                         }
                     })}
                     <div>
-                        <Link href="/">
-                            <a>
+                        <Link href="/">                            
                                 More
-                                <span className="downArw"></span>
-                            </a>
+                                <span className="downArw"></span>                            
                         </Link>
                     </div>
                     <div id="searchBar" className="flr sections"><span className="searchIcon cSprite"></span></div>
@@ -82,7 +74,7 @@ const HeaderNav = () => {
                             return (
                                 <div>
                                     <Link href="/" key={ele.title}>
-                                        <a>{ele.title}</a>
+                                        {ele.title}
                                     </Link>
                                 </div>
                             )

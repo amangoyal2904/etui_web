@@ -1,10 +1,15 @@
 // components/Layout.js
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import Headers from './Head';
 import Header from './Header';
 
-const Layout:FC = (props) => {
-  const { children } = props;
+interface PageProps {
+  page: string;
+  dynamicFooterData: any;
+  children: ReactElement;
+}
+
+const Layout:FC<PageProps> = ({ page, dynamicFooterData, children }) => {  
   return (
       <>
       <Headers />  

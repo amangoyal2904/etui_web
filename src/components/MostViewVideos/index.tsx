@@ -17,9 +17,9 @@ const MostViewVideos: NextPage<any> = (props) => {
           let _genHtml = <li key={index} attr-data-position={index}>
             <div className={styles.text}>
             <Link href={_urlVal}>
-                <a>
+                
                   {item.title}
-                </a>
+                
             </Link>
             </div>
             <div className={styles.img}>

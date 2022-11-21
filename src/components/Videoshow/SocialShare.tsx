@@ -1,9 +1,7 @@
 import { NextPage } from "next";
 import Share from "../Share";
 import {useState} from 'react';
-import MailSendTemplate from '../MailSend';
 import styles from './styles.module.scss';
-
 
 const SocialShare: NextPage = (props:any) => {  
   const url = props.mailData.url && props.mailData.url != '' ? props.mailData.url : ''
@@ -37,7 +35,7 @@ const SocialShare: NextPage = (props:any) => {
         <div className={styles.codeMailVideo}>
           <span onClick={()=>{setShowMail('yes')}} className={styles.email} title="Email this video"></span>
           {
-            showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
+            //showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
           }
         </div>
         <div className={styles.codeVideo}>
