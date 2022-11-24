@@ -72,11 +72,9 @@ const HeaderNav = () => {
                     {subNavData.length && subNavData.map((ele,i) =>  {
                         if (i<12) {
                             return (
-                                <div>
-                                    <Link href="/" key={ele.title}>
-                                        {ele.title}
-                                    </Link>
-                                </div>
+                                <Link href="/" key={ele.title}>
+                                    {ele.title}
+                                </Link>
                             )
                         }
                     })}

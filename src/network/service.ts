@@ -5,6 +5,7 @@ import { isBrowser } from "utils";
 const headerWhiteList = ["X-FORWARDED-FOR", "X-ISBOT", "fullcontent"];
 
 const getApiUrl = (config, index) => {
+  console.log("APP_ENV---", APP_ENV)
   const { api = {}, url, params } = config;
   const { type = "" } = params;
   const { path } = api;

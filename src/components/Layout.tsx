@@ -6,14 +6,15 @@ import Header from './Header';
 interface PageProps {
   page: string;
   dynamicFooterData: any;
+  menuData: any;
   children: ReactElement;
 }
 
-const Layout:FC<PageProps> = ({ page, dynamicFooterData, children }) => {  
+const Layout:FC<PageProps> = ({ page, dynamicFooterData, menuData, children }) => {  
   return (
       <>
       <Headers />  
-      <Header />
+      <Header menuData={menuData} />
       <div className='layout'>
         {children}
       </div>

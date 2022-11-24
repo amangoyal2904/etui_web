@@ -10,7 +10,8 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
   const { all = [] } = params;
   const lastUrlPart: string = all?.slice(-1).toString();
   let page = pageType(resolvedUrl);
-  const api = APIS_CONFIG.FEED;
+  const api = APIS_CONFIG.FEED,
+  REQUEST = APIS_CONFIG.REQUEST;
 
   let extraParams = {},
     response: any = {};
@@ -44,6 +45,16 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
   });
   const dynamicFooterData = footerMenu.data || {};
 
+  //==== gets meuu data =====
+  const navBar = await Service.get({
+    api: REQUEST,
+    params: { type: "menu" }
+  });
+  const {data} = navBar,
+  menuData  = (data.searchResult && data.searchResult[0]) || {};
+
+ 
+
   //==== sets response headers =====
   res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
   res.setHeader("Expires", new Date(new Date().getTime() + expiryTime * 1000).toUTCString());
@@ -53,7 +64,8 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
       page,
       response,
       isprimeuser,
-      dynamicFooterData
+      dynamicFooterData,
+      menuData
     }
   };
 }
