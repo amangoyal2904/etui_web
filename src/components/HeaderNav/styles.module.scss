@@ -1,0 +1,160 @@
+@import "../../styles/variables.scss";
+
+.nav_block{
+  background: #ffe9e2;
+  width: 1003px; //100%;
+  margin: 0 auto;
+  .topnav{
+    & > .sec_1{
+      position: relative;
+      cursor: pointer;
+      padding-top: 2px;
+      display: inline-block;
+      vertical-align: top;
+      a{
+        font-size: 13px;
+        padding: 7px 4px 8px 4px;
+        line-height: 17px;
+        display: block;
+        position: relative;
+        border: 1px solid transparent;
+        border-bottom: 0; 
+        .downArw {
+          border-left: 3px solid transparent;
+          border-right: 3px solid transparent;
+          display: inline-block;
+          border-top: 4px solid #ed193b;
+          margin: 0 0 0 5px;
+          vertical-align: middle;
+          padding: 0;
+          width: 0;
+          height: 0;
+          margin-bottom: 3px;
+        } 
+      }
+    }
+    .hamberMenu{
+      text-align: center;
+      height: 33px;
+      width: 35px;
+      .hamberIcon{
+        display: inline-block;
+        background-position: -232px -52px;
+        width: 17px;
+        height: 14px;
+        margin-top: 8px;
+      }
+    }
+    .search_bar{
+      float: right;
+      background-color: #FFF3F0;
+      text-align: center;
+      height: 33px;
+      width: 35px;
+      cursor: pointer;
+      .search_icon{
+        background-position: -277px -52px;
+        width: 14px;
+        height: 14px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.sbnv_wrapper {
+  border-color: #6d6d6d;
+  width: 1003px; //100%;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+  border-width: 3px;
+  border-style: double;
+  border-right: 0;
+  border-left: 0;
+  border-top: 0;
+  .subsec_nav {
+    background-color: #FFF;
+    box-sizing: border-box;
+    position: relative;
+    & > div{
+      position: relative;
+      cursor: pointer;
+      padding-top: 2px;
+      display: inline-block;
+      vertical-align: top;
+      &:hover .miniMenu{
+        display: block;
+      }
+      a{
+        position: relative;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        line-height: 17px;
+        display: inline-block;
+        font-size: 12px;
+        padding: 6px 5px 9px 5px;
+        vertical-align: top;
+
+        .downArw {
+          border-left: 3px solid transparent;
+          border-right: 3px solid transparent;
+          display: inline-block;
+          border-top: 4px solid #ed193b;
+          margin: 0 0 0 5px;
+          vertical-align: middle;
+          padding: 0;
+          width: 0;
+          height: 0;
+          margin-bottom: 3px;
+        }
+      }
+    }
+    .subLevel{
+      & > div {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        padding-top: 2px;
+        vertical-align: top;
+      }  
+      .miniMenu {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        background-color: #fff8f6;
+        z-index: 913;
+        font-weight: 400;
+        border: 1px solid #ead8d2;
+        display: none;
+        padding: 10px 18px 18px 18px;
+        cursor: auto;
+        width: 185px;
+        border-top: 0;
+        box-shadow: 0 -1px 24px 0 rgb(0 0 0 / 17%);
+        max-height: 600px;
+        overflow: auto;
+        .subsec1{
+          font-weight: 600;
+          padding: 15px 0 6px 0;
+          display: block;
+          text-transform: capitalize;
+          border-bottom: 1px solid #000;
+          font-size: 13px;
+        }
+        .subsec2{
+          padding-left: 0;
+          white-space: normal;  
+        }
+      } 
+      &:hover > a{
+        background-color: #fff8f6;
+        border: 1px solid #ead8d2;
+        color: #ed193b;
+        text-decoration: none;
+        border-bottom: 0;
+        z-index: 914;
+      }
+    }
+  }
+}

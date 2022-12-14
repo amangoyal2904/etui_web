@@ -1,20 +1,21 @@
-import MarketsBand from './MarketsBand';
-import HeaderAuth from './HeaderAuth';
-import HeaderNav from './HeaderNav';
-import HeaderLogo from 'components/HeaderLogo';
-import { json } from 'stream/consumers';
+import HeaderLogo from "components/HeaderLogo";
+import HeaderNav from "components/HeaderNav";
+
+interface PageProps {
+  page: string;
+  subsecnames: any;
+  menuData: any;
+}
 
 const Header = (props) => {
-    console.log(props);
-    return (
-        <header>
-            {/* <MarketsBand /> */}
-            <HeaderLogo />
-            <pre>{JSON.stringify(props.menuData, null, 2)}</pre>
-            {/* <HeaderAuth />
-            <HeaderNav /> */}
-        </header>
-    )
+const { page, menuData, subsecnames } = props;
+  return (
+    <header>
+      <HeaderLogo page={page} subsecnames={subsecnames} />
+      <HeaderNav menuData={menuData} subsecnames={subsecnames}/>
+      <pre>{JSON.stringify(props.menuData, null, 2)}</pre>
+    </header>
+  )
 }
 
 export default Header

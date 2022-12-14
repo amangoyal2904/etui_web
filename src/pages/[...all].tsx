@@ -45,13 +45,13 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
   });
   const dynamicFooterData = footerMenu.data || {};
 
-  //==== gets meuu data =====
+  //==== gets menu data =====
   const navBar = await Service.get({
-    api: REQUEST,
-    params: { type: "menu" }
+    api,
+    params: { type: "menu", feedtype: "etjson", msid: extraParams?.subsec1 }
   });
-  const {data} = navBar,
-  menuData  = (data.searchResult && data.searchResult[0]) || {};
+  const {data} = navBar;
+  const menuData = data;
 
  
 
