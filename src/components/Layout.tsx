@@ -1,5 +1,6 @@
 // components/Layout.js
 import { FC, ReactElement } from 'react';
+import Footer from './Footer';
 import Headers from './Head';
 import Header from './Header';
 
@@ -17,6 +18,7 @@ const Layout:FC<PageProps> = ({ page, dynamicFooterData, children }) => {
       <div className='layout'>
         {children}
       </div>
+      <Footer dynamicFooterData={dynamicFooterData} />
       </>
     );
 }
