@@ -163,5 +163,51 @@
         text-align: center;
         height: 50px;
       }
-    }
+      .browseCompany{
+        border-bottom: 1px solid #3a3a3a;
+        padding: 17px 0;
+        .browse{
+         margin: 0 auto;
+         width: 990px;
+          .browseTitle{
+            display: inline-block;
+            span{
+              font-weight: 600;
+              text-transform: uppercase;
+            }
+            &:first-child{
+              font-size: 18px;
+            }
+            .comp{
+              display: block;
+              font-size: 13px;
+            }
+          }
+         .compList{
+            display: inline-block;
+            border-left: 2px solid #373737;
+            padding-left: 14px;
+            margin-left: 8px;
+            a{
+              color: #9a9a9a;
+              font-size: 14px;
+              background-color: #191919;
+              border: 1px solid #333;
+              border-radius: 50%;
+              display: inline-block;
+              margin-right: 4px;
+              width: 24px;
+              height: 24px;
+              text-align: center;
+              line-height: 24px;
+            }
+            div{
+              &:last-child{
+                margin-top: 10px;
+              }
+            }
+          }
+        }
+      }
+}
     
