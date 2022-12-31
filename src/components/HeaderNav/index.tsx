@@ -1,7 +1,9 @@
 import SearchBar from "components/SearchBar";
 import SideNav from "components/SideNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
+import Service from "network/service";
+import APIS_CONFIG from "network/config.json";
 
 const subSecNavHtml = (data, index) => {
   return (
@@ -74,14 +76,74 @@ const subSecNav = (subSectionList) => {
   )
 }
 
+const handleHoverSecHtml = (elm) => {
+  return (
+    <>
+      {
+        elm.sec && elm.sec.map((l1, index) => {
+          return (
+            <>
+              <div>
+                <a href={l1.link} className={styles.subsec1}>{l1.nm}</a>
+              </div>
+              {l1.sec && l1.sec.map((l2, index) => {
+                return (
+                  <>
+                    <div>
+                      <a href={l1.link} className={styles.subsec2}>{l2.nm}</a>
+                    </div>  
+                  </>
+                )
+              })}
+            </>
+          )
+        })
+      }
+    </>
+  )
+}
+
 const HeaderNav = (props) => {
   const [searchBar, setSearchBar] = useState(false),
+  [hoverSubSec, setHoverSubSec] = useState([]),
   { menuData, subsecnames } = props,
-    sectionList = menuData.sec;
+    sectionList = menuData.sec; 
+
+  
+  useEffect(() => {
+    document.addEventListener('mousemove', handleHoverSubSec);
+  }, []);
+
+  const handleHoverSubSec = () => {
+    document.removeEventListener('mousemove', handleHoverSubSec);  
+
+    const api = APIS_CONFIG.FEED;
+    Service.get({
+      api,
+      params: { type: "menu", feedtype: "etjson", pos: "navhover"}
+    }).then(res => {
+      res.data && setHoverSubSec(res.data);
+    }).catch(err => {
+      console.error(`error in handleHoverSubSec catch`, err);
+    });
+  }
+
   console.log(subsecnames)
   const subSectionList = sectionList.filter((sec) => {
     return sec?.sec;
   });
+
+  const handleHoverNav = (elm) => {
+    let secName = elm.nm;
+    switch(secName){
+      case "More":
+        break;
+      case "Jobs":
+        break;  
+      default:
+        return handleHoverSecHtml(elm);
+    }
+  }
 
   console.log("subSectionList....", subSectionList)
   return (
@@ -93,10 +155,23 @@ const HeaderNav = (props) => {
           {sectionList.map((data, index) => {
             return (
               <>
-                <div key={`l1_${index}`} className={styles.sec_1} data-id={data.msid}>
+                <div key={`l1_${index}`} className={styles.sec_1} data-l1={data.nm} data-id={data.msid}>
                   <a href={data.link} data-ga-onclick={data.link}>{data.nm}
                   {data.nm == 'More' && <span className={styles.downArw}></span>}
                   </a>
+                  {
+                    data.hovernav && <div className={styles.subsecnav}>
+                      {
+                        hoverSubSec?.map((elm, index) => {
+                          return (
+                            <>
+                              {elm.nm == data.nm && handleHoverNav(elm)}
+                            </>
+                          )
+                        })
+                      }
+                    </div>
+                  }
                 </div>
               </>
             )
