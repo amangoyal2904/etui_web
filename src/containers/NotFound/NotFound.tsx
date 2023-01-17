@@ -3,6 +3,9 @@ import styles from "./NotFound.module.scss";
 import { FC, Fragment, useEffect } from "react";
 import { grxEvent } from "utils/ga";
 import DfpAds from "components/Ad/DfpAds";
+import PostComments from "components/Comments/PostComments";
+import PopulateComment from "components/Comments/PopulateComment";
+import OffensiveCommentBox from "components/Comments/OffensiveCommentBox";
 interface PageProps {
   searchResult: object[];
   parameters: object;
@@ -67,7 +70,10 @@ const NotFound: FC<PageProps> = (props) => {
 
   return (
     <>
-      <div className={`${styles.hdAdContainer} adContainer expando_1`}>
+      <PostComments/>
+      <PopulateComment/>
+      <OffensiveCommentBox/>
+      {/* <div className={`${styles.hdAdContainer} adContainer expando_1`}>
         <DfpAds adInfo={{ key: "atf" }} identifier="NotFoundPage" />
       </div>
       <div className={styles.notFound}>
@@ -82,7 +88,7 @@ const NotFound: FC<PageProps> = (props) => {
       </div>
       <div className={`${styles.footerAd} adContainer`}>
         <DfpAds adInfo={{ key: "fbn" }} identifier="floatingAd" />
-      </div>
+      </div> */}
     </>
   );
 };
