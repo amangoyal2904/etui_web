@@ -1,26 +1,26 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './styles.module.scss'
 const PostComments:FC = (props) => {
-    const [openPostCommentBox, setPostCommentBox] = useState(false);
+    const [openPostCommentBox, setOpenPostCommentBox] = useState(false);
     const [openThankYouBox, setOpenThankYouBox] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({});
     const [isLoggedIn,setIsLoggedIn] = useState(false);
 
     const openCommentBox = () => {
-        setPostCommentBox(true);
+        setOpenPostCommentBox(true);
     }
     const closeCommentBox = () => {
-        setPostCommentBox(false);
+        setOpenPostCommentBox(false);
     }
 
     const closeThankYouBox = () => {
         setOpenThankYouBox(false);
     }
 
-    const handleChange = (event) => {
+    const handleCommentChange = (event) => {
         const charLength = event.target.value.length;
-        if(charLength > 2){
+        if(charLength == 3){
             console.log("greater than 2");
             setShowForm(true);
         }
@@ -32,44 +32,39 @@ const PostComments:FC = (props) => {
             [event.target.name]: event.target.value,
         });
     };
-    // fetch("https://economictimes.indiatimes.com/post_comment.cms?feedtype=json", {
-    // "headers": {
-    //     "accept": "*/*",
-    //     "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-    //     "cache-control": "no-cache",
-    //     "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-    //     "pragma": "no-cache",
-    //     "sec-ch-ua": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\"",
-    //     "sec-ch-ua-mobile": "?0",
-    //     "sec-ch-ua-model": "",
-    //     "sec-ch-ua-platform": "\"macOS\"",
-    //     "sec-ch-ua-platform-version": "\"12.6.1\"",
-    //     "sec-fetch-dest": "empty",
-    //     "sec-fetch-mode": "cors",
-    //     "sec-fetch-site": "same-origin",
-    //     "x-requested-with": "XMLHttpRequest"
-    // },
-    // "referrer": "https://economictimes.indiatimes.com/news/india/we-have-opened-more-bank-accounts-than-americas-population-since-2014-pm-modi-in-bali/videoshow/95532873.cms",
-    // "referrerPolicy": "strict-origin-when-cross-origin",
-    // "body": "fromname=Dayanidhi+Gupta&fromaddress=dayanidhi.gupta%40timesinternet.in&location=&message=more+accounts+opening&ArticleID=95532873&msid=95532873&userid=dayanidhi.gupta%40timesinternet.in&loggedstatus=1&uid=13m5au00issy12epvvdfef92s&configid=48112188&redirectionurl=https%3A%2F%2Feconomictimes.indiatimes.com%2Fnews%2Findia%2Fwe-have-opened-more-bank-accounts-than-americas-population-since-2014-pm-modi-in-bali%2Fvideoshow%2F95532873.cms&appkey=ET",
-    // "method": "POST",
-    // "mode": "cors",
-    // "credentials": "include"
-    // });
-    const handleSubmit = (event) => {
-        event.preventDefault();
+
+    const handleFormChange = (event) => {
+        
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value,
+        });
+    };
+   
+    const handleSubmit = (e) => {
+        e.preventDefault();
         closeCommentBox();
         setOpenThankYouBox(true);
-        // fetch("https://economictimes.indiatimes.com/post_comment.cms?feedtype=json", {
-        //     method: 'POST',
-        //     body: JSON.stringify(formData),
-        //     headers: { 'Content-Type': 'application/' },
-        //   })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //       console.log(data);
-        //     });
-        console.log("formData",formData);
+
+        // console.log("formData",JSON.stringify(formData));
+        let formPayLoad = Object.keys(formData).map(function(k) {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(formData[k])
+          }).join('&');
+        formPayLoad = formPayLoad + "&ArticleID=95532873&msid=95532873&userid=dayanidhi.gupta%40timesinternet.in&loggedstatus=1&uid=13m5au00issy12epvvdfef92s&configid=48112188&appkey=ET";
+        fetch('https://economictimes.indiatimes.com/post_comment.cms?feedtype=json', {
+            method: 'POST',
+            headers : {
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            body: formPayLoad
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            console.log('Success:', data);
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            });
     };
     return (
         <>
@@ -79,7 +74,7 @@ const PostComments:FC = (props) => {
         {openPostCommentBox && (<div id={styles.postCommentBox}>
             <form onSubmit={handleSubmit} className={styles.commentForm}>
                  <h5>Have something to say? <b>Post your comment</b></h5>
-                 <textarea name="message" placeholder="Your comment" onChange={handleChange}></textarea>
+                 <textarea name="message" placeholder="Your comment" onChange={handleCommentChange}></textarea>
                  {showForm && <div>
                     <div className={isLoggedIn && styles.logged}>
                         <h4>To post this comment you must</h4>
@@ -95,15 +90,15 @@ const PostComments:FC = (props) => {
                         <div className={isLoggedIn ? styles.logged : `${styles.commentInfo} ${styles.nonLogged} ${styles.floatLeft}`}>
                             <h3>Fill in your details:</h3>
                             <label className={styles.nonLogged} style={{display: "block"}}>
-                                <input onChange={handleChange} name="fromname" maxLength={20} placeholder="Name" type="text"/>
+                                <input onChange={handleFormChange} name="fromname" maxLength={20} placeholder="Name" type="text"/>
                                 <p>Will be displayed</p>
                             </label>
                             <label className={styles.nonLogged}>
-                                <input onChange={handleChange} name="fromaddress"  maxLength={40} placeholder="Email" type="text"/>
+                                <input onChange={handleFormChange} name="fromaddress"  maxLength={40} placeholder="Email" type="text"/>
                                 <p>Will not be displayed</p>
                             </label>
                             <label style={{margin: "0"}}>
-                                <input onChange={handleChange} name="location" maxLength={20} placeholder="Location" type="text"/>
+                                <input onChange={handleFormChange} name="location" maxLength={20} placeholder="Location" type="text"/>
                                 <p>Will be displayed</p>
                             </label>
                         </div>
@@ -132,7 +127,7 @@ const PostComments:FC = (props) => {
         {openThankYouBox && (<div id={styles.postCommentBox} className={styles.commentMessage}>
             <h6 className={styles.thankText}>Thank you!</h6>
             <p className={styles.thankText}>We appreciate you taking time to post your opinion on this article.</p>
-            <span  onClick={closeThankYouBox} className={styles.close}></span>
+            <span onClick={closeThankYouBox} className={styles.close}></span>
         </div>)}
         </>
     );

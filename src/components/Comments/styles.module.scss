@@ -306,6 +306,10 @@ p.thankText + p.thankText{margin-bottom:130px}
             position: relative;
             display: inline-block;
         }
+        &.commentGray {
+            background: #f5f5f5;
+            padding-left: 25px;
+        }
     }
 }
 
