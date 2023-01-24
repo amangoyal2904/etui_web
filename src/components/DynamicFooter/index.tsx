@@ -132,38 +132,39 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
   };
 
    const browseCompany = () =>{
-    const browseCompData = dynamicFooterData?.widgets.filter((data)=>data.title == "Browse Company");
-    console.log("###",browseCompData[0].data.map(a=>a.title));
-    return(
-      <div className={styles.browseCompany}>
-        <div className={styles.browse}>
-          <div className={styles.browseTitle}>
-              <span>Browse</span>
-              <span className={styles.comp}>Companies:</span>
-          </div>
-          <div className={styles.compList}>
-              <div>
-                  {
-                    browseCompData[0].data.map(comp=>{
-                      return(
-                        <a> {comp.title}</a>
-                      )                      
-                    })
-                  }
-              </div>
-              <div>
-                    {
-                      browseCompData[0].Numdata.map(comp=>{
-                        return(
-                          <a> {comp.title}</a>
-                        )                      
-                      })
-                    }
-              </div>
-          </div>
-      </div>
-    </div>
-    )
+     const browseCompData = dynamicFooterData?.widgets.filter((data) => data.title == "Browse Company");
+     if (browseCompData[0] && browseCompData[0].data && browseCompData[0].data.length) {
+       return (
+         <div className={styles.browseCompany}>
+           <div className={styles.browse}>
+             <div className={styles.browseTitle}>
+               <span>Browse</span>
+               <span className={styles.comp}>Companies:</span>
+             </div>
+             <div className={styles.compList}>
+               <div>
+                 {
+                   browseCompData[0]?.data.map(comp => {
+                     return (
+                       <a href={comp.url}> {comp.title}</a>
+                     )
+                   })
+                 }
+               </div>
+               <div>
+                 {
+                   browseCompData[0].Numdata.map(comp => {
+                     return (
+                       <a href={comp.url}> {comp.title}</a>
+                     )
+                   })
+                 }
+               </div>
+             </div>
+           </div>
+         </div>
+       )
+     }
    }
   return (
     <div id="footer" className={hide_footer ? styles.hide_footer : ""}>
