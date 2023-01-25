@@ -66,6 +66,9 @@ const PostComments:FC = (props) => {
             console.error('Error:', error);
             });
     };
+    const openWindow = (width, height, url) => {
+        window.open(url, '_blank', `width=${width},height=${height}`);
+    }
     return (
         <>
         <div className={styles.postButton}>
@@ -80,16 +83,16 @@ const PostComments:FC = (props) => {
                         <h4>To post this comment you must</h4>
                         <div className={styles.loginButtons}>
                             <p className={styles.floatLeft}>Log In/Connect with:</p>
-                            <a className={`${styles.floatLeft} ${styles.shareSprite} ${styles.fbLogin}`}></a>
-                            <a className={`${styles.floatLeft} ${styles.shareSprite} ${styles.gpLogin}`}></a>
-                            <a className={`${styles.floatLeft} ${styles.moreLoginOpt}`}>Indiatimes Network</a>
+                            <a href="#" onClick={()=>openWindow(600,600,"https://jsso.indiatimes.com/sso/identity/login/socialLogin?channel=et&oauthsiteid=facebook")} className={`${styles.floatLeft} ${styles.shareSprite} ${styles.fbLogin}`}></a>
+                            <a href="#" onClick={()=>openWindow(600,600,"https://jsso.indiatimes.com/sso/identity/login/socialLogin?channel=et&oauthsiteid=googleplus")} className={`${styles.floatLeft} ${styles.shareSprite} ${styles.gpLogin}`}></a>
+                            <a href='#' className={`${styles.floatLeft} ${styles.moreLoginOpt}`}>Indiatimes Network</a>
                         </div>
                     </div>
                     
                     <div style={{margin:" 0px -15px -15px",display: "inline-block"}} className={styles.userInfo}>
                         <div className={isLoggedIn ? styles.logged : `${styles.commentInfo} ${styles.nonLogged} ${styles.floatLeft}`}>
                             <h3>Fill in your details:</h3>
-                            <label className={styles.nonLogged} style={{display: "block"}}>
+                            <label className={styles.nonLogged}>
                                 <input onChange={handleFormChange} name="fromname" maxLength={20} placeholder="Name" type="text"/>
                                 <p>Will be displayed</p>
                             </label>
@@ -97,7 +100,7 @@ const PostComments:FC = (props) => {
                                 <input onChange={handleFormChange} name="fromaddress"  maxLength={40} placeholder="Email" type="text"/>
                                 <p>Will not be displayed</p>
                             </label>
-                            <label style={{margin: "0"}}>
+                            <label>
                                 <input onChange={handleFormChange} name="location" maxLength={20} placeholder="Location" type="text"/>
                                 <p>Will be displayed</p>
                             </label>

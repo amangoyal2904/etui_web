@@ -3,9 +3,6 @@ import styles from "./NotFound.module.scss";
 import { FC, Fragment, useEffect, useState } from "react";
 import { grxEvent } from "utils/ga";
 import DfpAds from "components/Ad/DfpAds";
-import PostComments from "components/Comments/PostComments";
-import PopulateComment from "components/Comments/PopulateComment";
-import OffensiveCommentBox from "components/Comments/OffensiveCommentBox";
 interface PageProps {
   searchResult: object[];
   parameters: object;
@@ -42,7 +39,6 @@ const dfpAdSlots = {
   }
 };
 const NotFound: FC<PageProps> = (props) => {
-  const [commentsData,setCommentsData] = useState([]);
   useEffect(() => {
     window.objVc = dfpAdSlots;
     const handleGaLoaded = () => {
@@ -63,18 +59,6 @@ const NotFound: FC<PageProps> = (props) => {
 
     document.addEventListener("gaLoaded", handleGaLoaded);
     document.addEventListener("objIntsLoaded", handleoObjIntsLoaded);
-    
-    fetch("https://economictimes.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true&msid=95532873&pagenum=1&size=25", {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log("comments data",data);
-        setCommentsData(data);
-      })
-      .catch(err => {
-        console.log('error: ', err);
-      })
     return () => {
       document.removeEventListener("gaLoaded", handleGaLoaded);
       document.removeEventListener("objIntsLoaded", handleoObjIntsLoaded);
@@ -83,9 +67,6 @@ const NotFound: FC<PageProps> = (props) => {
 
   return (
     <>
-      <PostComments/>
-      {commentsData && <PopulateComment commentsData={commentsData}/>}
-      <OffensiveCommentBox/>
       {/* <div className={`${styles.hdAdContainer} adContainer expando_1`}>
         <DfpAds adInfo={{ key: "atf" }} identifier="NotFoundPage" />
       </div>

@@ -3,14 +3,14 @@ import Service from 'network/service';
 import APIS_CONFIG from "network/config.json";
 import styles from './styles.module.scss'
 import CommentCard from './CommentCard';
-interface commentType {
+interface commentsProps {
   commentsData:object[]
 }
 
-const PopulateComment:FC<commentType> = ({commentsData}) => {
-  // const {totalcount}:any = commentsData[0];
-  console.log(commentsData[0]);
-  // const recentMessageCount:any = totalcount;
+
+const PopulateComment:FC<commentsProps> = ({commentsData}) => {
+  const commentCount:any = commentsData[0];
+  const recentMessageCount = commentCount?.totalcount;
   function populate(cards,level=1){
     let commentList = [];
     cards.forEach((item,index)=>{
@@ -24,7 +24,7 @@ const PopulateComment:FC<commentType> = ({commentsData}) => {
   return (
     <div id={styles.populateComment}>
       <div className={styles.commentTitle}>
-        <h4>Recent Messages (7)</h4>
+        <h4>Recent Messages ({recentMessageCount})</h4>
       </div>
       {populate(commentsData.slice(1))}
     </div>

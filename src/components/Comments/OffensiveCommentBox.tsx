@@ -41,7 +41,7 @@ function OffensiveCommentBox() {
                 <span>Others</span>
               </label>
               <div className="clr" />
-              <textarea className={styles.hidden} value="" name="offensiveother" style={{ display: "none" }} defaultValue={""}/>
+              {/* <textarea className={styles.hidden} value="" name="offensiveother" style={{ display: "none" }} defaultValue={""}/> */}
               <input defaultValue="Report this!" onClick={handleSubmit} type="button"/>
               <input className={styles.closeBtn} defaultValue="Close" type="button" />
             </div>

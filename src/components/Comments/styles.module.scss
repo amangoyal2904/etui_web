@@ -1,5 +1,5 @@
 /* Post Comment Box styling */ 
-
+$sprite: url("https://img.etimg.com/photo/47784794.cms") no-repeat;
 .postButton {
     float: right;
     padding: 4px 7px;
@@ -238,6 +238,35 @@ p.thankText + p.thankText{margin-bottom:130px}
             margin-bottom: 15px;
         }
     }
+    .commentSprite {
+        background: $sprite
+    }
+    ._tpbar {
+        background: 0;
+        margin-left: 10px;
+        span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    .tpbarBronze, .tpbarSilver, .tpbarGold, .tpbarPlatinum, .tpbarDiamond {
+        font-weight: 700;
+        line-height: 21px;
+        position: relative;
+        text-align: center;
+        width: auto;
+        background: 0;
+        color: #888;
+    }
+    
+    .tpbarBronze .crown {
+        background-position: -330px -130px;
+    }
+    .userDetails .crown {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+    }
     .commentBox {
         border-bottom: 1px solid #CCC;
         padding: 12px 0 12px 0;
@@ -250,7 +279,7 @@ p.thankText + p.thankText{margin-bottom:130px}
             margin: 5px 10px 0 0;
         }
         .followbtn {
-            background: url(https://img.etimg.com/photo/47784794.cms) no-repeat scroll left top transparent;
+            background: $sprite scroll left top transparent;
             height: 16px;
             width: 50px;
             background-position: -338px -92px;
@@ -301,6 +330,42 @@ p.thankText + p.thankText{margin-bottom:130px}
             font-size: 11px;
             padding-left: 0;
             margin-top: 5px;
+            .offensive {
+                display: block;
+                float: left;
+                padding: 0 0 5px 8px;
+                color: #888;
+                text-decoration: none;
+                position: relative;
+            }
+            a {
+                display: block;
+                float: left;
+                padding: 0 0 5px 8px;
+                color: #888;
+                text-decoration: none;
+                position: relative;
+
+                &.agree span {
+                    background-position: -272px -111px;
+                }
+                &.disagree span {
+                    background-position: -288px -111px;
+                }
+                &._reply span {
+                    background-position: -300px -110px;
+                }
+                &.offensive span {
+                    background-position: -300px -110px;
+                }
+                span.commentSprite {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 3px;
+                    vertical-align: middle;
+                    display: inline-block;
+                }
+            }
         }
         .offensive_wrap {
             position: relative;
@@ -311,37 +376,6 @@ p.thankText + p.thankText{margin-bottom:130px}
             padding-left: 25px;
         }
     }
-}
-
-
-._tpbar {
-    background: 0;
-    margin-left: 10px;
-    span {
-        display: inline-block;
-        vertical-align: middle;
-    }
-}
-.tpbarBronze, .tpbarSilver, .tpbarGold, .tpbarPlatinum, .tpbarDiamond {
-    font-weight: 700;
-    line-height: 21px;
-    position: relative;
-    text-align: center;
-    width: auto;
-    background: 0;
-    color: #888;
-}
-
-.tpbarBronze .crown {
-    background-position: -330px -130px;
-}
-.userDetails .crown {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-}
-.commentSprite {
-    background: url(https://img.etimg.com/photo/47784794.cms) no-repeat;
 }
 
 .cmtReplier {
