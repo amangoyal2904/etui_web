@@ -107,23 +107,24 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
 
   const Interlinking = () => {
     let interLinkingData = dynamicFooterData?.widgets || [];
-    interLinkingData.splice(interLinkingData.findIndex(data => data.title == "Browse Company"),1);
     const interLinkingList = interLinkingData?.map((i, index) => (
       <div data-attr="interlinking" className={styles.category} key={`inkl_${index}`}>
         {interLinkingData[index]["data"] && Array.isArray(interLinkingData[index]["data"]) && (
-          <>
-            <p>{interLinkingData[index].title}</p>
-            <div className={styles.content}>
-              {interLinkingData[index]["data"]?.map((item, key) => {
-                const noFollow = isNoFollow(item.url) && item.noFollow != "false" ? { rel: "nofollow" } : {};
-                return (
-                  <a href={item.url} {...noFollow} className={styles.ellipsis} data-ga-onclick={`Web Footer Link Click#${item.title}#${interLinkingData[index].title}-${item.url}`}>
-                    {item.title}
-                  </a>
-                );
-              })}
-            </div>
-          </>
+          interLinkingData[index].title != "Browse Company" ?
+            <>
+              <p>{interLinkingData[index].title}</p>
+              <div className={styles.content}>
+                {interLinkingData[index]["data"]?.map((item, key) => {
+                  const noFollow = isNoFollow(item.url) && item.noFollow != "false" ? { rel: "nofollow" } : {};
+                  return (
+                    <a href={item.url} {...noFollow} className={styles.ellipsis} data-ga-onclick={`Web Footer Link Click#${item.title}#${interLinkingData[index].title}-${item.url}`}>
+                      {item.title}
+                    </a>
+                  );
+                })}
+              </div>
+            </>
+            : ""
         )}
       </div>
     ));
