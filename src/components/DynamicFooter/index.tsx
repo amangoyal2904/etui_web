@@ -133,7 +133,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
 
    const browseCompany = () =>{
      const browseCompData = dynamicFooterData?.widgets.filter((data) => data.title == "Browse Company");
-     if (browseCompData[0] && browseCompData[0].data && browseCompData[0].data.length) {
+     if (browseCompData && browseCompData[0] && browseCompData[0].data && browseCompData[0].data.length) {
        return (
          <div className={styles.browseCompany}>
            <div className={styles.browse}>
