@@ -107,7 +107,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
 
   const Interlinking = () => {
     let interLinkingData = dynamicFooterData?.widgets || [];
-    // interLinkingData.splice(interLinkingData.findIndex(data => data.title == "Browse Company"),1);
+    interLinkingData.splice(interLinkingData.findIndex(data => data.title == "Browse Company"),1);
     const interLinkingList = interLinkingData?.map((i, index) => (
       <div data-attr="interlinking" className={styles.category} key={`inkl_${index}`}>
         {interLinkingData[index]["data"] && Array.isArray(interLinkingData[index]["data"]) && (
