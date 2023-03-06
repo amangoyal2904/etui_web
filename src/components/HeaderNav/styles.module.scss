@@ -11,6 +11,16 @@
       padding-top: 2px;
       display: inline-block;
       vertical-align: top;
+      &[data-id="1715249553"] .subsecnav{
+        width:615px;
+      }
+      &[data-id="13352306"] .subsecnav{
+        width: 818px;
+      }
+      &[data-id="837555174"] .subsecnav{
+        width:830px;
+        left:-233px;
+      }
       a{
         font-size: 13px;
         padding: 7px 4px 8px 4px;
@@ -48,17 +58,27 @@
         box-shadow: 0 -1px 24px 0 rgb(0 0 0 / 17%);
         max-height: 600px;
         overflow: auto;
+        box-sizing: unset;
+        .flt{
+          position: relative;
+          width:185px;
+          float: left;
+        }
+        .flt + .flt{
+          margin-left: 20px;
+        }
         .subsec1 {
           font-weight: 600;
           padding: 15px 0 6px 0;
           display: block;
           text-transform: capitalize;
-          border-bottom: 1px solid #000;
+          border-bottom: 0px solid #000;
+          font-size: 14px;
         }
         .subsec2{
           line-height: 1.92;
           font-weight: 400;
-          padding-left: 5px;
+          padding: 0 0 0 5px;
           display: block;
           font-size: 13px;
           &.cart:after {
@@ -73,7 +93,7 @@
           }
         }
         .subsec3{
-          line-height: 1.92;
+          line-height: 0.82;
           font-weight: 400;
           padding-left: 15px;
           display: inline-block;
