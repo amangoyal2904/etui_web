@@ -1,58 +1,80 @@
-import React from 'react'
+import React from 'react';
 import styles from "./styles.module.scss";
 
-const MoreNav = (props) => {
-  const {nm, sec} = props.sec;
-  console.log("sec========", sec)
+// define the props interface
+interface MoreNavProps {
+  sec: {
+    nm: string;
+    link: string;
+    rel?: string;
+    sec?: {
+      nm: string;
+      link: string;
+      rel?: string;
+      im?: string;
+    }[];
+  }[];
+}
+
+// define the MoreNav functional component
+const MoreNav: React.FC<MoreNavProps> = ({ sec }) => {
+  // use destructuring to extract the "sec" prop
+  // and rename it to "nm" for readability
   return (
     <>
       <div className={styles.flt}>
-        {
-          sec.map((elm, index) => {
+        {sec?.map((nmSection, index) => {
+          // use destructuring to extract "nm" and "sec" properties
+          const { nm, sec: subSec } = nmSection;
+
+          // check if "nm" is not "Brand Solutions"
+          if (nm !== "Brand Solutions") {
             return (
-              <>
-                {elm.nm != "Brand Solutions" && <a href={elm.link} className={styles.subsec1} rel={elm.rel && elm.rel}>{elm.nm}</a>}
-                {
-                  elm.nm != "Brand Solutions" && elm.sec && elm.sec.map((elm2, index) => {
-                    return (
-                      <>
-                        <a href={elm2.link} className={styles.subsec2} rel={elm2.rel && elm2.rel}>{elm2.nm}</a> 
-                      </>
-                    )
-                  })
-                }
-              </>
+              <React.Fragment key={`more-nav-${index}`}>
+                <a href={nmSection.link} className={styles.subsec1} rel={nmSection.rel}>{nmSection.nm}</a>
+                {/* only render sub-sections if they exist */}
+                {subSec && subSec.map((subSection, index2) => {
+                  return (
+                    <React.Fragment key={`more-nav-${index}-${index2}`}>
+                      <a href={subSection.link} className={styles.subsec2} rel={subSection.rel}>{subSection.nm}</a> 
+                    </React.Fragment>
+                  )
+                })}
+              </React.Fragment>
             )
-          })
-        } 
+          }
+        })}
       </div> 
-      <div className={styles.flt}>
-        {
-          sec.map((elm, index) => {
+
+      <div className={`${styles.flt} ${styles.brandSolution}`}>
+        {sec?.map((nmSection, index) => {
+          const { nm, sec: subSec } = nmSection;
+
+          // check if "nm" is "Brand Solutions"
+          if (nm === "Brand Solutions") {
             return (
-              <>
-                {elm.nm == "Brand Solutions" && <div className={styles.subsec1}>{elm.nm}</div>}
-                {
-                  elm.nm == "Brand Solutions" && elm.sec && elm.sec.map((elm2, index) => {
-                    return (
-                      <div key={`${index}`} className={styles.flt}>
-                        <a href={elm2.link} className={styles.subsec2} target="_blank" rel={`noreferrer ${elm2.rel && elm2.rel}`}>
-                          <img src={elm2.im} width="77" height="63" alt={elm2.nm} />
-                        </a>
-                        <h5>
-                          <a href={elm2.link} className={styles.subsec2} target="_blank" rel={`noreferrer ${elm2.rel && elm2.rel}`}>{elm2.nm}</a>
-                        </h5>
-                      </div>
-                    )
-                  })
-                }
-              </>
+              <React.Fragment key={`brand-solution-${index}`}>
+                <div className={`${styles.subsec1} ${styles.brand_heading}`}>{nmSection.nm}</div>
+                {subSec && subSec.map((subSection, index2) => {
+                  return (
+                    <div key={`brand-solution-${index}-${index2}`} className={`${styles.BSChild}`}>
+                      {/* only render the image if the "im" property exists */}
+                      {subSection.im && <a href={subSection.link} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>
+                        <img src={subSection.im} width="77" height="63" alt={subSection.nm} />
+                      </a>}
+                      <h5>
+                        <a href={subSection.link} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>{subSection.nm}</a>
+                      </h5>
+                    </div>
+                  )
+                })}
+              </React.Fragment>
             )
-          })
-        } 
-      </div> 
+          }
+        })}
+      </div>
     </>
   )
 }
 
-export default MoreNav
+export default MoreNav;

@@ -5,7 +5,6 @@ import { isBrowser } from "utils";
 const headerWhiteList = ["X-FORWARDED-FOR", "X-ISBOT", "fullcontent"];
 
 const getApiUrl = (config, index) => {
-  console.log("APP_ENV---", APP_ENV)
   const { api = {}, url, params } = config;
   const { type = "" } = params;
   const { path } = api;
@@ -21,7 +20,6 @@ export const get = (config) => {
  
   try {
     const url = getApiUrl(config, 0);
-    console.log('service get ' + url, config.params.msid, new Date());
     if (!config.headers) {
       config["headers"] = {};
     }
@@ -37,7 +35,6 @@ export const get = (config) => {
 };
 
 export const post = (config) => {
-  console.log('serice post');
   const { payload } = config;
   const url = getApiUrl(config, 0);
   return axios.request({
