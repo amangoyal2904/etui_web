@@ -26,25 +26,10 @@ const VideoShow: FC<PageProps> = (props) => {
   const { msid } = parameters;
   const { cpd_wap = "0" } = version_control;
   const loginState = useSelector((state: AppState) => state.login);
-  const [commentsData,setCommentsData] = useState([]);
   useEffect(() => {
     // set page specific customDimensions
     const payload = getPageSpecificDimensions(seo);
     window.customDimension = { ...window.customDimension, ...payload };
-    console.log("msid",msid)
-    console.log("props",props);
-    const url = `https://economictimes.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true&msid=${msid}&pagenum=1&size=25`;
-    fetch(url, {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log("comments data",data);
-        setCommentsData(data);
-      })
-      .catch(err => {
-        console.log('error: ', err);
-      })
   }, [props]);
 
   const VideoContainer = () => {
@@ -102,7 +87,7 @@ const VideoShow: FC<PageProps> = (props) => {
         </div>
         {VideoContainer()}
         <PostComments />
-        {commentsData.length > 0 && <PopulateComment commentsData={commentsData}/>}
+        <PopulateComment msid={msid}/>
         {/* <SEO {...seoData} /> */}
         {/* <GreyDivider />
         <AppDownloadWidget tpName="videoshow" />

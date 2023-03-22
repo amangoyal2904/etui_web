@@ -320,11 +320,11 @@ p.thankText + p.thankText{margin-bottom:130px}
             width: 90%;
             margin-top: 8px;
             margin-left: 60px;
-            p {
-                color: #666;
-                line-height: 18px;
-                word-wrap: break-word;
-            }
+            // p {
+            //     color: #666;
+            //     line-height: 18px;
+            //     word-wrap: break-word;
+            // }
         }
         .commentUserInputs {
             font-size: 11px;
@@ -378,23 +378,129 @@ p.thankText + p.thankText{margin-bottom:130px}
     }
 }
 
-.cmtReplier {
-    position: relative;
-    clear: both;
-    padding: 10px 0;
-}
-
 /* Offensive Comment Box styling */
 
 #reportAbuseDiv {
     background-color: #fff;
     position: absolute;
-    top: 500px;
-    left: 200px;
+    top: 25px;
     z-index: 12;
     width: 300px;
     box-shadow: 0 0 6px rgb(0 0 0 / 20%);
     border: 1px solid #000;
+    #abuseForm {
+        .head {
+            font-size: 18px;
+            background-color: #000;
+            color: #fff;
+            line-height: 40px;
+            border: 0;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 0 10px;
+        }
+        .container_offensive {
+            padding: 10px;
+            input[type="text"] {
+                width: 95%;
+            }
+
+            .des {
+                display: block;
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: bold;
+                color: #27282a;
+                margin-bottom: 22px;
+            }
+            input[type="text"] {
+                background-position: 0 -81px;
+                border: 1px solid #b3adad;
+                border-radius: 4px;
+                color: #a9abaa;
+                padding: 5px;
+            }
+            input {
+                vertical-align: middle;
+                margin: 0 5px 0 0;
+                width: auto;
+            }
+            textarea {
+                margin: 10px 0;
+                width: 268px;
+            }
+            input[type="button"] {
+                box-shadow: 2px 2px 5px #eee;
+                cursor: pointer;
+                font-weight: 700;
+                padding: 4px 20px;
+                display: inline-block;
+                text-align: center;
+                width: 110px;
+                height: 31px;
+                line-height: 24px !important;
+                color: #fff !important;
+                text-decoration: none;
+                margin: 20px 5px 0 20px;
+                background: #40b2d3;
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border: 0;
+                font-size: 13px;
+            }
+            input[type="button"]+input[type="button"] {
+                margin-left: 15px;
+            }
+            .closeBtn {
+                position: relative;
+                right: 15px;
+                top: 5px;
+                opacity: 1;
+                cursor: pointer;
+                transform: rotate(0);
+                transition: .2s ease all;
+                &:before, &:after {
+                    position: absolute;
+                    left: 5px;
+                    content: ' ';
+                    height: 10px;
+                    width: 2px;
+                    background-color: #333;
+                    transform: rotate(45deg);
+                }
+                &:after {
+                    transform: rotate(-45deg);
+                }
+                .msg {
+                    // display: none;
+                    text-align: center;
+                    p {
+                        font-size: 14px;
+                        font-style: italic;
+                        padding: 50px 0 10px;
+                    }
+                }
+            }
+            .headGrey {
+                color: #b90112;
+                font-size: 12px;
+                font-weight: bold;
+                margin-bottom: 12px;
+            }
+            label {
+                width: 100%;
+                display: block;
+                line-height: 14px;
+                color: #27282a;
+                position: relative;
+                font-weight: normal;
+                list-style: none;
+                margin-bottom: 12px;
+                font-size: 13px;
+            }
+        }
+    }
 }
 #reportAbuseDiv:before {
     content: " ";
@@ -409,123 +515,92 @@ p.thankText + p.thankText{margin-bottom:130px}
     z-index: 100;
 }
 
-#abuseForm .head {
-    font-size: 18px;
-    background-color: #000;
-    color: #fff;
-    line-height: 40px;
-    border: 0;
-    font-weight: bold;
-    text-align: center;
-    margin: 0 0 10px;
-}
 
-.container_offensive {
-    padding: 10px;
-}
-#abuseForm .des {
-    display: block;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: bold;
-    color: #27282a;
-    margin-bottom: 22px;
-}
 #abuseForm .head, #abuseForm .des {
     border: 0;
 }
 
-#abuseForm label {
+
+/* ReplyOnComment styling */
+
+.cmtReplier {
+    position: relative;
+    clear: both;
+    padding: 10px 0;
+}
+.cmtReplier form {
+    position: relative;
     width: 100%;
-    display: block;
-    line-height: 14px;
-    color: #27282a;
-    position: relative;
-    font-weight: normal;
-    list-style: none;
-    margin-bottom: 12px;
-    font-size: 13px;
-}
-.container_offensive input[type="text"] {
-    width: 95%;
-}
-#abuseForm label input {
-    vertical-align: middle;
-    margin: 0 5px 0 0;
-    width: auto;
-}
-#abuseForm input[type="text"] {
-    background-position: 0 -81px;
-    border: 1px solid #b3adad;
-    border-radius: 4px;
-    color: #a9abaa;
-    padding: 5px;
-}
-#abuseForm .headGrey {
-    color: #b90112;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-#abuseForm textarea {
-    margin: 10px 0;
-    width: 268px;
-}
-#abuseForm input[type="button"] {
-    box-shadow: 2px 2px 5px #eee;
-    cursor: pointer;
-    font-weight: 700;
-    padding: 4px 20px;
-    display: inline-block;
-    text-align: center;
-    width: 110px;
-    height: 31px;
-    line-height: 24px !important;
-    color: #fff !important;
-    text-decoration: none;
-    margin: 20px 5px 0 20px;
-    background: #40b2d3;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border: 0;
-    font-size: 13px;
+    h6.thankText {
+        font-size: 16px;
+        padding: 100px 0 10px;
+    }
+    p.thankText {
+        font-size: 14px;
+        padding: 5px 0;
+        vertical-align: middle;
+        a {
+            float: none;
+            display: inline;
+            color: #024d99;
+            padding: 0;
+        }
+    }
+    // p.thankText+p.thankText {
+    //     padding-bottom: 100px;
+    // }
+    // p.thankText {
+    //     font-size: 14px;
+    //     padding: 5px 0;
+    //     vertical-align: middle;
+    // }
+    .thankText {
+        text-align: center;
+    }
+    .closeBtn {
+        background-image: none;
+        cursor: pointer;
+        height: 17px;
+        position: absolute;
+        top: -10px;
+        right: 0;
+        width: 17px;
+        background-color: #fff;
+        color: #888;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 16px;
+        border: 1px solid #888;
+    }
 }
 
-#abuseForm input[type="button"]+input[type="button"] {
-    margin-left: 15px;
-}
 .closeBtn {
-    position: relative;
-    right: 15px;
-    top: 5px;
-    width: 15px;
-    height: 15px;
-    opacity: 1;
     cursor: pointer;
-    transform: rotate(0);
-    transition: .2s ease all;
+    height: 24px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    transform: rotate(0deg);
+    transition: 0.2s ease all;
 }
+
 .closeBtn:before, .closeBtn:after {
     position: absolute;
     left: 5px;
     content: ' ';
     height: 10px;
     width: 2px;
-    background-color: #333;
+    background-color: #333333;
     transform: rotate(45deg);
 }
 
 .closeBtn:after {
     transform: rotate(-45deg);
 }
-#abuseForm .msg {
-    // display: none;
-    text-align: center;
-}
-#abuseForm .msg p {
-    font-size: 14px;
-    font-style: italic;
-    padding: 50px 0 10px;
+
+.chars_remain {
+    color: #aaa;
+    text-align: right;
 }

@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 
 function OffensiveCommentBox() {
-
+    const [openAbuseForm,setOpenAbuseForm] = useState(true);
     const handleSubmit = () => {
 
     }
+    const handleCloseAbuseForm = () => {
+      setOpenAbuseForm(false);
+    }
     return(
-      <div id={styles.reportAbuseDiv}>
+      <>
+        { openAbuseForm && <div id={styles.reportAbuseDiv}>
         <form id={styles.abuseForm}>
           <input defaultValue="fdc9c803-1c41-4b9f-9774-ffb531e06db4" id="_commentId" name="_commentId" type="hidden"/>
           <input defaultValue="reco4fdc9c803-1c41-4b9f-9774-ffb531e06db4" id="cookieValue" name="cookieValue" type="hidden"/>
@@ -18,10 +22,10 @@ function OffensiveCommentBox() {
                 Choose your reason below and click on the Report button. This will
                 alert our moderators to take action
               </p>
-              <label htmlFor="ofusername" style={{ display: "none" }}>
+              <label htmlFor="ofusername">
                 <b>Name</b>
               </label>
-              <input maxLength={100} size={45} id="ofusername" name="ofusername" type="text" style={{ display: "none" }}/>
+              <input maxLength={100} size={45} id="ofusername" name="ofusername" type="text"/>
               <p className={styles.headGrey}>Reason for reporting:</p>
               <input id="ofreason" name="ofreason" type="hidden" defaultValue="" />
               <label>
@@ -43,7 +47,7 @@ function OffensiveCommentBox() {
               <div className="clr" />
               {/* <textarea className={styles.hidden} value="" name="offensiveother" style={{ display: "none" }} defaultValue={""}/> */}
               <input defaultValue="Report this!" onClick={handleSubmit} type="button"/>
-              <input className={styles.closeBtn} defaultValue="Close" type="button" />
+              <input className={styles.closeBtn} defaultValue="Close" type="button" onClick={handleCloseAbuseForm}/>
             </div>
             <input id="ofcommenteroid" name="ofcommenteroid" type="hidden" defaultValue={2645002884}/>
             <input defaultValue={153} id="ofcommenthostid" name="ofcommenthostid" type="hidden"/>
@@ -56,8 +60,8 @@ function OffensiveCommentBox() {
             </div>
           </div>
         </form>
-      </div>
-  
+      </div>}
+      </>
     );
 }
 export default OffensiveCommentBox;

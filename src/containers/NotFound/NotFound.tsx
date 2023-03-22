@@ -67,7 +67,7 @@ const NotFound: FC<PageProps> = (props) => {
 
   return (
     <>
-      {/* <div className={`${styles.hdAdContainer} adContainer expando_1`}>
+      <div className={`${styles.hdAdContainer} adContainer expando_1`}>
         <DfpAds adInfo={{ key: "atf" }} identifier="NotFoundPage" />
       </div>
       <div className={styles.notFound}>
@@ -82,7 +82,7 @@ const NotFound: FC<PageProps> = (props) => {
       </div>
       <div className={`${styles.footerAd} adContainer`}>
         <DfpAds adInfo={{ key: "fbn" }} identifier="floatingAd" />
-      </div> */}
+      </div>
     </>
   );
 };

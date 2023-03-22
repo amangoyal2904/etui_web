@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Service from "network/service";
 import APIS_CONFIG from "network/config.json";
 import styles from "./styles.module.scss";
+import ReplyOnComment from "./ReplyOnComment";
+import OffensiveCommentBox from "./OffensiveCommentBox";
 
 function CommentCard(props) {
-  const { userFullName, commentTime, statusPoints, commentText, level } = props;
+  const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex } = props;
+  
   return (
-    <div className={`${styles.commentBox} ${level > 1 && styles.commentGray}`}>
+    <div className={`${styles.commentBox} ${level > 1 ? styles.commentGray : ""}`}>
       <div className={styles.commentUser}>
         <div className={styles.userImage}>
           <a href="http://mytimes.indiatimes.com/profile/807448453">
@@ -73,17 +76,22 @@ function CommentCard(props) {
               <span className={styles.commentSprite} />
               <span className={styles.val}>0</span>
             </a>{" "}
-            <a className={styles._reply}>
+            <a className={styles._reply} onClick={()=>{
+              (activeIndex["isReplyActive"] != commentCardId ) && setActiveIndex({...activeIndex,"isReplyActive": commentCardId});
+            }}>
               <span className={styles.commentSprite} />
               Reply
             </a>{" "}
             <div className={styles.offensive_wrap}>
-              <a className={styles.offensive}>
+              <a className={styles.offensive} onClick={()=>{
+              (activeIndex["isFlagActive"] != commentCardId ) && setActiveIndex({...activeIndex,"isFlagActive": commentCardId});
+            }}>
                 <span className={styles.commentSprite} />
                 Flag
               </a>
+            {(activeIndex["isFlagActive"] == commentCardId) && <OffensiveCommentBox/>}
             </div>
-            <div className={styles.cmtReplier} />
+            {(activeIndex["isReplyActive"] == commentCardId) && <ReplyOnComment activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} commentCardId = {commentCardId} level={level}/>}
           </div>
         </div>
       </div>
