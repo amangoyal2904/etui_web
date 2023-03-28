@@ -7,7 +7,7 @@ import OffensiveCommentBox from "./OffensiveCommentBox";
 
 function CommentCard(props) {
   const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex } = props;
-  
+  const [showOffensiveMark, setShowOffensiveMark] = useState(false);
   return (
     <div className={`${styles.commentBox} ${level > 1 ? styles.commentGray : ""}`}>
       <div className={styles.commentUser}>
@@ -67,7 +67,7 @@ function CommentCard(props) {
         </div>
         <div className={styles.commentText}>
           <p className="">{commentText}</p>
-          <div className={styles.commentUserInputs}>
+          {showOffensiveMark ? <img src="https://etdev8243.indiatimes.com/photo/5878111.cms" alt=""/> : <div className={styles.commentUserInputs}>
             <a className={styles.agree}>
               <span className={styles.commentSprite} />
               <span className={styles.val}>1</span>
@@ -89,10 +89,10 @@ function CommentCard(props) {
                 <span className={styles.commentSprite} />
                 Flag
               </a>
-            {(activeIndex["isFlagActive"] == commentCardId) && <OffensiveCommentBox/>}
+            {(activeIndex["isFlagActive"] == commentCardId) && <OffensiveCommentBox commentCardId = {commentCardId} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} setShowOffensiveMark = {setShowOffensiveMark}/>}
             </div>
             {(activeIndex["isReplyActive"] == commentCardId) && <ReplyOnComment activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} commentCardId = {commentCardId} level={level}/>}
-          </div>
+          </div>}
         </div>
       </div>
     </div>

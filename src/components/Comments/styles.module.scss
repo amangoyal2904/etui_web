@@ -449,6 +449,25 @@ p.thankText + p.thankText{margin-bottom:130px}
                 border: 0;
                 font-size: 13px;
             }
+            button {
+                box-shadow: 2px 2px 5px #eee;
+                cursor: pointer;
+                font-weight: 700;
+                padding: 4px 20px;
+                display: inline-block;
+                text-align: center;
+                height: 31px;
+                line-height: 24px !important;
+                color: #fff !important;
+                text-decoration: none;
+                margin: 20px 5px 0 20px;
+                background: #40b2d3;
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border: 0;
+                font-size: 13px;
+            }
             input[type="button"]+input[type="button"] {
                 margin-left: 15px;
             }
@@ -514,7 +533,10 @@ p.thankText + p.thankText{margin-bottom:130px}
     top: -13px;
     z-index: 100;
 }
-
+#abuseForm textarea {
+    margin: 10px 0;
+    width: 268px;
+}
 
 #abuseForm .head, #abuseForm .des {
     border: 0;
