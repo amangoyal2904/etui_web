@@ -23,7 +23,7 @@ const Layout:FC<PageProps> = ({ page, dynamicFooterData, menuData, children }) =
   return (
       <div className={isprimeuser ? "primeLayout" : "freeLayout"}>
       <Headers />  
-      <Header page={page} menuData={menuData} subsecnames={data.seo.subsecnames} />
+      <Header page={page} menuData={menuData} subsecnames={data?.seo?.subsecnames} />
       <div className='layout'>
         {children}
       </div>

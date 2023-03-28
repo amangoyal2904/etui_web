@@ -22,3 +22,8 @@ a {
   box-sizing: border-box;
 } */
 .body{width:100%;max-width:1345px;margin:0 auto;position:relative;}
+.freeLayout{
+  background: #fff;
+  margin: 0 auto;
+  width: 1003px;
+}
