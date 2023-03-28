@@ -1,0 +1,129 @@
+@import "../../styles/variables.scss";
+
+.sections{
+  position: relative;
+  cursor: pointer;
+  padding-top: 2px;
+  display: inline-block;
+  vertical-align: top;
+  &.hamberMenu{
+    text-align: center;
+    height: 33px;
+    width: 35px;
+    .hamberIcon{
+      display: inline-block;
+      background-position: -232px -52px;
+      width: 17px;
+      height: 14px;
+      margin-top: 8px;
+    }
+  }
+  &.closeMenu{
+    background-color: #ed193b;  
+    .hamberIcon{
+      width: 13px;
+      height: 13px;
+      margin-top: 10px;
+      background-position: -107px -84px;
+    }
+    .ddNav{
+      display: block;
+    }
+  }
+
+  .ddNav{
+    -webkit-box-shadow: 0 -1px 24px 0 rgb(0 0 0 / 17%);
+    box-shadow: 0 -1px 24px 0 rgb(0 0 0 / 17%);
+    border: solid 1px #ead8d2;
+    background-color: #fff8f6;
+    position: absolute;
+    z-index: 103;
+    font-size: 14px;
+    line-height: 18px;
+    display: none;
+    top: 0;
+    left: 35px;
+    text-align: left;
+    width: 159px;
+    .menuRtArrow {
+      position: relative;
+      top: 10px;
+      width: 7px;
+      height: 12px;
+      float: right;
+      background-position: -370px -58px;
+      right: 7px;
+    }
+    .subMenuTitle {
+      color: #919191;
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+      padding: 10px 10px 5px 10px;
+      word-wrap: break-word;
+      cursor: default;
+    }
+    .l1 > li:hover{
+      .l2{
+        display: block;
+        & > li:hover{
+          .l3{
+            display: block;
+          }
+        }
+      }
+    }
+    .l2, .l3{
+      display: none;
+      position: absolute;
+      left: 155px;
+      top: -25px;
+      width: 200px;
+      border: 1px solid #ead8d2;
+      background-color: #fff8f6;
+      border-radius: 3px;
+      z-index: 98;
+      padding-bottom: 5px;
+      box-shadow: 0 -1px 24px 0 rgb(0 0 0 / 17%);
+    }
+    .l3{
+      left:196px;
+    }
+    .l2 > li,  .l3 > li{word-break: break-all;}
+    .l2[data-msid = '837555174'] {top: -225px;}
+    .l2[data-msid = '359241701'], .l3[data-msid = '13354120'] {top: -150px;}
+    .l2[data-msid = '68004546'] {top: -398px;}
+    .l2[data-msid = '897228639'] {top: -220px;}
+    .l2[data-msid = '7771250'] {top: -100px;}
+    .l2[data-msid = '5575607'] {top: -133px;}
+    .l2[data-msid = '1466318837'] {top: -102px;}
+    .l2[data-msid = '17385924'], .l3[data-msid = '5251408'] {top: -540px;}
+    .l2[data-msid = '4413218'] {top: -528px;}
+    .l3[data-msid = '45228216'] {top: -210px;}
+    .l3[data-msid = '2647163'] {top: -260px;}
+    .l3[data-msid = '58514674'] {top: -263px;}
+    .l3[data-msid = '32897557'] {top: -328px;}
+    .l3[data-msid = '20989204'] {top: -99px;}
+    .l3[data-msid = '57409318'] {top: -170px;}
+    .l3[data-msid = '13353990'] {top: -75px;}
+    .l3[data-msid = '49565481'] {top: -120px;}
+    .l3[data-msid = '50943048'] {top: -95px;}
+
+    ul{
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      li{
+        font-weight: 500;
+        position: relative;
+        a{
+          font-weight: 500;
+          display: block;
+          padding: 7px 0;
+          margin: 0 10px;
+          border-bottom: 1px dotted #c7cacc;
+        }
+      }
+    }
+  }
+}
