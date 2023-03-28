@@ -21,13 +21,14 @@ const Layout:FC<PageProps> = ({ page, dynamicFooterData, menuData, children }) =
   const reqData = router.query;
 
   return (
-      <>
-        <Headers />  
-        <Header page={page} menuData={menuData} subsecnames={data.seo.subsecnames} />
-        <div className='layout'>
-          {children}
-        </div>
-      </>
+      <div className={isprimeuser ? "primeLayout" : "freeLayout"}>
+      <Headers />  
+      <Header page={page} menuData={menuData} subsecnames={data.seo.subsecnames} />
+      <div className='layout'>
+        {children}
+      </div>
+      <Footer dynamicFooterData={dynamicFooterData} />
+      </div>
     );
 }
 
