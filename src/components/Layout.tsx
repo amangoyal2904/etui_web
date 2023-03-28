@@ -8,18 +8,19 @@ interface PageProps {
   page: string;
   dynamicFooterData: any;
   children: ReactElement;
+  isprimeuser:any
 }
 
-const Layout:FC<PageProps> = ({ page, dynamicFooterData, children }) => {  
+const Layout:FC<PageProps> = ({ page, dynamicFooterData,isprimeuser, children }) => {  
   return (
-      <>
+      <div className={isprimeuser ? "primeLayout" : "freeLayout"}>
       <Headers />  
       <Header />
       <div className='layout'>
         {children}
       </div>
       <Footer dynamicFooterData={dynamicFooterData} />
-      </>
+      </div>
     );
 }
 
