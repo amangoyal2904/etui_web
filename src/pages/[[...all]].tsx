@@ -10,8 +10,7 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
   const { all = [] } = params;
   const lastUrlPart: string = all?.slice(-1).toString();
   let page = pageType(resolvedUrl);
-  const api = APIS_CONFIG.FEED,
-  REQUEST = APIS_CONFIG.REQUEST;
+  const api = APIS_CONFIG.FEED;
 
   let extraParams = {},
     response: any = {};
@@ -44,15 +43,6 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
     params: { type: "footermenu", feedtype: "etjson", platform:"web", ...extraParams, template_name: 'default' }
   });
   const dynamicFooterData = footerMenu.data || {};
-  //==== gets menu data =====
-  const navBar = await Service.get({
-    api,
-    params: { type: "menu", feedtype: "etjson", msid: extraParams?.subsec1 }
-  });
-  const {data} = navBar;
-  const menuData = data;
-
- 
 
   //==== sets response headers =====
   res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
@@ -63,8 +53,7 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
       page,
       response,
       isprimeuser,
-      dynamicFooterData,
-      menuData
+      dynamicFooterData
     }
   };
 }

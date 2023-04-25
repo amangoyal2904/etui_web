@@ -20,6 +20,7 @@ export const get = (config) => {
  
   try {
     const url = getApiUrl(config, 0);
+    console.log('service get ' + url, config.params.msid, new Date());
     if (!config.headers) {
       config["headers"] = {};
     }
@@ -35,6 +36,7 @@ export const get = (config) => {
 };
 
 export const post = (config) => {
+  console.log('serice post');
   const { payload } = config;
   const url = getApiUrl(config, 0);
   return axios.request({
