@@ -215,7 +215,7 @@ export const socialUrl = {
   twt: "https://twitter.com/share?",
   gp: "https://plus.google.com/share?url=",
   lin: "https://www.linkedin.com/cws/share?url=",
-  whatsapp: "whatsapp://send?text=",
+  whatsapp: "https://api.whatsapp.com//send?text=",
   //message: 'sms:' + (navigator.userAgent.toLowerCase().indexOf('iphone') != -1 ? '&body=' :'?body='),
   pinit: "https://pinterest.com/pin/create/link/?url=",
   openerName: "sharer",
