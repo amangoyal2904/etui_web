@@ -3,7 +3,7 @@ import styles from './Share.module.scss'
 import SocialShare from "../../utils/socialShare";
 
 
-export default function Share() {
+export default function Share({ children }) {
 	let path = (typeof window !== 'undefined') ? window.location.pathname : '';
 	let shareParam = {
 		title: "",
@@ -17,6 +17,7 @@ export default function Share() {
 				<span className={`${styles.in}  ${styles.socialSprite}`} onClick={e => SocialShare.Share(e, { ...shareParam, type: "lin" })}></span>
 				<span className={`${styles.wa}  ${styles.socialSprite}`} onClick={e => SocialShare.Share(e, { ...shareParam, type: "wa" })}></span>
 			</div>
+			{children}
 		</div>
 	)
 }

@@ -40,7 +40,7 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }) {
   //==== gets dyanmic footer data =====
   const footerMenu = await Service.get({
     api,
-    params: { type: "footermenu", feedtype: "etjson", platform:"web", ...extraParams, template_name: 'default' }
+    params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page }
   });
   const dynamicFooterData = footerMenu.data || {};
 
