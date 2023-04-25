@@ -1,13 +1,12 @@
 import { ET_WAP_URL } from "utils/common";
 import styles from "./NotFound.module.scss";
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { grxEvent } from "utils/ga";
 import DfpAds from "components/Ad/DfpAds";
 interface PageProps {
   searchResult: object[];
   parameters: object;
 }
-
 declare global {
   interface Window {
     saveLogs: any;
@@ -59,6 +58,7 @@ const NotFound: FC<PageProps> = (props) => {
 
     document.addEventListener("gaLoaded", handleGaLoaded);
     document.addEventListener("objIntsLoaded", handleoObjIntsLoaded);
+
     return () => {
       document.removeEventListener("gaLoaded", handleGaLoaded);
       document.removeEventListener("objIntsLoaded", handleoObjIntsLoaded);

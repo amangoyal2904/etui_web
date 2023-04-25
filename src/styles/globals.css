@@ -120,3 +120,8 @@ a:hover{text-decoration:underline}
 .arrowL.disabled, .disabled .arrowL{border-right-color:#808080}
 .arrowR, .arrowR-Disabled{border-left:5px solid #014f99; border-top:5px solid transparent; border-bottom:5px solid transparent; display:block; height:0}
 .arrowR.disabled, .disabled .arrowR{border-left-color:#808080}
+.freeLayout{
+    background: #fff;
+    margin: 0 auto;
+    width: 1003px;
+}
