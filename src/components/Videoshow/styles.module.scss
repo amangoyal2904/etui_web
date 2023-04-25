@@ -68,17 +68,19 @@
   }
 
   .codeMailVideo{
-    text-align: center;
     border-bottom: 1px solid #FFF;
     border-top: 1px solid #FFF;
+    padding: 10px 0;
+    text-align: center;
     .email{
-        background: url(https://img.etimg.com/photo/65289395.cms) no-repeat 0 0;
-        background-position: -1px -367px;
-        width:40px;
-        height: 40px; 
-        display: inline-block;
-        vertical-align: top;
+        background: url(https://img.etimg.com/photo/21021468.cms) no-repeat -150px -296px;
         cursor: pointer;
+        display: inline;
+        display: inline-block;
+        height: 17px;
+        margin: 0 10px;
+        width: 17px;
+        zoom: 1;
       }
   }
 
