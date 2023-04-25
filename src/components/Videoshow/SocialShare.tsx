@@ -3,8 +3,8 @@ import Share from "../Share";
 import {useState} from 'react';
 import styles from './styles.module.scss';
 
-const SocialShare = (props) => {  
-  const url = props.mailData.shareUrl && props.mailData.shareUrl != '' ? props.mailData.shareUrl : ''
+const SocialShare: NextPage = (props:any) => {  
+  const url = props.mailData.url && props.mailData.url != '' ? props.mailData.url : ''
   const [showUrl, setShowUrl] = useState('no');
   const [showEmbed, setShowEmbed] = useState('no');
   const [showMail, setShowMail] = useState('no');
@@ -29,15 +29,13 @@ const SocialShare = (props) => {
   const closeMailHandler = ()=>{
     setShowMail('no')
   }
-  const openMailHandler = () => {
-    setShowMail('yes')
-  }
-  return (  
-    <Share>
+  return (
+    <>      
+        <Share />
         <div className={styles.codeMailVideo}>
-          <span onClick={()=>openMailHandler} className={styles.email} title="Email this video"></span>
+          <span onClick={()=>{setShowMail('yes')}} className={styles.email} title="Email this video"></span>
           {
-            // showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
+            //showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
           }
         </div>
         <div className={styles.codeVideo}>
@@ -61,7 +59,7 @@ const SocialShare = (props) => {
           }
           
         </div>
-    </Share>
+    </>
   );
 };
 

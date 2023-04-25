@@ -14,11 +14,6 @@ import Listing from "components/Listing";
 import { AppState } from "app/store";
 import { getPageSpecificDimensions } from "utils";
 import { ET_WAP_URL } from "utils/common";
-import Service from "network/service";
-import PostComments from "components/Comments/PostComments";
-import PopulateComment from "components/Comments/PopulateComment";
-import Share from "components/Share";
-import SocialShare from "components/Videoshow/SocialShare";
 
 const VideoShow: FC<PageProps> = (props) => {
   const { seo = {}, version_control, parameters } = props;
@@ -26,6 +21,7 @@ const VideoShow: FC<PageProps> = (props) => {
   const { msid } = parameters;
   const { cpd_wap = "0" } = version_control;
   const loginState = useSelector((state: AppState) => state.login);
+
   useEffect(() => {
     // set page specific customDimensions
     const payload = getPageSpecificDimensions(seo);
@@ -61,13 +57,6 @@ const VideoShow: FC<PageProps> = (props) => {
                     type: "5"
                   }}
                 /> */}
-                <SocialShare mailData={{
-                    shareUrl: ET_WAP_URL + result.url,
-                    title: result.title,
-                    msid: result.msid,
-                    hostId: result.hostid,
-                    type: "5"
-                }}/>
               </div>
               {/* <SeoWidget data={result.relKeywords} title="READ MORE" /> */}
             </Fragment>
@@ -86,8 +75,6 @@ const VideoShow: FC<PageProps> = (props) => {
           {/* <DfpAds adInfo={{ key: "atf", subsecnames: seo.subsecnames || {} }} identifier={msid} /> */}
         </div>
         {VideoContainer()}
-        <PostComments />
-        <PopulateComment msid={msid}/>
         {/* <SEO {...seoData} /> */}
         {/* <GreyDivider />
         <AppDownloadWidget tpName="videoshow" />

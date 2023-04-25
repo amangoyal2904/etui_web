@@ -1,0 +1,242 @@
+@import "../../styles/variables.scss";
+
+.dynamicContainer {
+  box-sizing: border-box;
+  border-top: 1px solid #e6e6e6;
+  background-color: $black;
+  color: white;
+
+  .dynamicCategories {
+    padding: 15px;
+
+    .category {
+      p {
+        font-size: 20px;
+        font-weight: 800;
+        text-transform: capitalize;
+        color: #FFF;
+        margin-bottom: 6px;
+        font-family: $Montserrat-font-family;
+      }
+
+      div.content {
+        a {
+          font-size: 13px;
+          line-height: 25px;
+          color: #FFF;
+          display: inline-block;
+          box-sizing: border-box;
+          vertical-align: top;
+          position: relative;
+          line-height: 15px;
+          margin-bottom: 10px;
+          border-right: solid 1px #ddd;
+          margin-right: 10px;
+          padding-right: 10px;
+        }
+
+        a.ellipsis {
+          max-width: 230px;
+          box-sizing: border-box;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .downloadSection {
+    color: $white;
+    padding-bottom: 80px;
+    width: 100%;
+    padding: 0px 10px 0px 10px;
+    border-top: 1px solid #3a3a3a;
+    border-bottom: 1px solid #3a3a3a;
+    text-align: center;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    color: #FFF;
+    min-height: 90px;
+
+    .row {
+      display: inline-block;
+
+      &:nth-child(2) {
+        margin-left: 30px;
+      }
+
+      font-family: $Montserrat-font-family;
+
+      p {
+        text-transform: capitalize;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 0px;
+        text-align: left;
+      }
+
+      .appstoredownload {
+        background-position: -8px -49px;
+        width: 78px;
+        height: 22px;
+        margin-top: 10px;
+        margin-bottom: 12px;
+      }
+
+      .gpdownload {
+        background-position: -102px -50px;
+        width: 85px;
+        height: 22px;
+        margin-left: 10px;
+        margin-bottom: 12px;
+      }
+
+      .subscribe {
+        background-position: -4px -75px;
+        width: 52px;
+        height: 47px;
+      }
+
+      h3 {
+        color: #FFF;
+        text-transform: uppercase;
+        width: 105px;
+        display: inline-block;
+        margin-top: 4px;
+        font-size: 12px;
+        text-align: left;
+      }
+
+      .shareIcons {
+        a {
+          display: inline-block;
+          width: 36px;
+          height: 37px;
+          margin-top: 5px;
+
+          &:not(:first-child) {
+            margin-left: 10px;
+          }
+        }
+
+        .fbShare {
+          background-position: -4px -4px;
+        }
+
+        .twShare {
+          background-position: -48px -4px;
+        }
+
+        .inShare {
+          background-position: -92px -4px;
+        }
+
+        .rss {
+          background-position: -137px -4px;
+        }
+      }
+
+      .primeLogo {
+        width: 160px;
+        height: 50px;
+        background-position: -232px -75px;
+      }
+
+      h4 {
+        color: #FFF;
+        text-transform: uppercase;
+        width: 105px;
+        display: inline-block;
+        margin-top: 4px;
+        text-align: left;
+      }
+
+      .policyTerm {
+        font-size: 0.875em;
+        color: #cccccc;
+      }
+
+      .withPadding {
+        padding: 10px 10px 0;
+      }
+    }
+
+    .contentLeft {
+      float: left;
+    }
+
+    .contentRight {
+      float: right;
+      margin-left: 30px;
+      margin-top: 15px;
+    }
+  }
+
+  .copyright {
+    text-align: center;
+    height: 50px;
+  }
+
+  .browseCompany {
+    border-bottom: 1px solid #3a3a3a;
+    padding: 17px 0;
+
+    .browse {
+      margin: 0 auto;
+      width: 94%;
+
+      .browseTitle {
+        display: inline-block;
+        vertical-align: middle;
+
+        span {
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
+        &:first-child {
+          font-size: 18px;
+        }
+
+        .comp {
+          display: block;
+          font-size: 13px;
+        }
+      }
+
+      .compList {
+        display: inline-block;
+        border-left: 2px solid #373737;
+        padding-left: 14px;
+        margin-left: 8px;
+        vertical-align: middle;
+
+        a {
+          color: #9a9a9a;
+          font-size: 14px;
+          background-color: #191919;
+          border: 1px solid #333;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 4px;
+          width: 26px;
+          height: 26px;
+          text-align: center;
+          line-height: 24px;
+        }
+
+        a:hover {
+          text-decoration: none;
+          background: #333;
+        }
+
+        div {
+          &:last-child {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}
