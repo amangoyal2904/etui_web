@@ -105,7 +105,7 @@ const MyApp = ({ pageProps }: AppProps) => {
           fetchpriority="low"
         />
       </Head>
-      <Layout page={page} dynamicFooterData={dynamicFooterData}>
+      <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData}>
         <Container objVc={versionControl} isprimeuser={isprimeuser} page={page} data={data} />
       </Layout>
     </Provider>

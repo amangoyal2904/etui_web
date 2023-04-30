@@ -21,7 +21,7 @@ interface ChildProps {
   data: any;
 }
 
-const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children, isprimeuser }) => { 
+const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => { 
   const { objVc, isprimeuser, data }: ChildProps = children.props;
 
   const router = useRouter();
