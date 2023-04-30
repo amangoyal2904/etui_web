@@ -1,0 +1,117 @@
+/* Import common styles */
+@import "../../styles/common.scss";
+
+.loginBoxWrap{
+  &:hover{
+    .dd:after {
+      -webkit-transform: rotate(225deg);
+      -ms-transform: rotate(225deg);
+      transform: rotate(225deg);
+      top: 0;
+      bottom: unset;
+    }
+    .signMenu{
+      display: block;
+    }
+  }
+  .dd{
+    min-height: 15px;
+    display: inline-block;
+    &:after {
+      content: '';
+      border: solid #979797;
+      border-width: 0 1.5px 1.5px 0;
+      display: inline-block;
+      padding: 2px;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      position: relative;
+      bottom: 2px;
+      margin-left: 4px;
+    }
+  }
+  .signMenu{
+    display: none;
+    -webkit-box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17);
+    border: solid 1px #e8e8e8;
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 99;
+    top: 15px;
+    width: 160px;
+    right: 0;
+    text-align: left;
+    a{
+      display: block;
+      line-height: 30px;
+      padding: 0 7px;
+      &:before{
+        content: '';
+        margin-right: 7px;
+        position: relative;
+      }
+      &.edit:before{
+        background-position: -231px -6px;
+        width: 11px;
+        height: 13px;
+      }
+      &.subscribe:before{
+        background-position: -211px -6px;
+        width: 15px;
+        height: 13px;
+      }
+      &.mypref:before{
+        background-position: -231px -26px;
+        width: 12px;
+        height: 11px;
+      }
+      &.etBenefits:before{
+        background-position: -268px -26px;
+        width: 15px;
+        height: 11px;
+        zoom: 1.3;
+        margin-right: 2px;
+      }
+      &.newsltr:before{
+        background-position: -211px -26px;
+        width: 15px;
+        height: 11px;
+      }
+      &.wthlist:before{
+        background-position: -248px -28px;
+        width: 16px;
+        height: 10px;
+        margin-right: 5px;
+      }
+      &.savedStories:before{
+        background-position: -267px -7px;
+        width: 9px;
+        height: 14px;
+        margin-left: 3px;
+      }
+      &.rdm_tab:before{
+        background-position: -234px -161px;
+        width: 14px;
+        height: 10px;
+        margin-left: 0;
+      }
+      &.contactus:before{
+        background: url($contactus-sprite);
+        background-size: 100%;
+        width: 14px;
+        height: 15px;
+      }
+      &.logOut:before{
+        background-position: -281px -7px;
+        width: 13px;
+        height: 13px;
+        margin-left: 3px;
+      }
+      & + a{
+        border-top: 1px solid #E8E8E8;
+      }
+    }
+  }
+}
