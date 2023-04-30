@@ -7,7 +7,7 @@ interface PageProps {
   menuData: any;
 }
 
-const Header = (props) => {
+const HeaderMain = (props) => {
 const { page, menuData, subsecnames, sectiondetail } = props;
 console.log("subsecnames", subsecnames)
   return (
@@ -19,4 +19,4 @@ console.log("subsecnames", subsecnames)
   )
 }
 
-export default Header
+export default HeaderMain
