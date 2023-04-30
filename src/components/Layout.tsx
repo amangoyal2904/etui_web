@@ -4,7 +4,7 @@ import Headers from './Head';
 import HeaderMain from './HeaderMain';
 import { useRouter } from 'next/router';
 import Scripts from './Scripts';
-import '../styles/common.scss';
+// import '../styles/common.scss';
 import { useSelector } from 'react-redux';
 import Footer from './Footer';
 

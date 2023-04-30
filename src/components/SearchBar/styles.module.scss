@@ -1,0 +1,54 @@
+.srch_container{
+  position: relative;
+  .srch_overlay_div {
+    background: rgba(0,0,0,0.85);
+    position: absolute;
+    height: 105px;
+    width: 1003px;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    .srch_overlay_content{
+      top: 50%;
+      position: relative;
+      transform: translateY(-50%);
+      text-align: center;
+      max-width: 1003px;
+      margin: 0 auto;
+      .inputBox {
+        background: #fff;
+        width: 432px;
+        height: 40px;
+        font-size: 16px;
+        padding: 0 14px;
+        margin-right: 16px;
+        line-height: 40px;
+      }
+      .srch_btn {
+        width: 124px;
+        background: #ed193b;
+        display: inline-block;
+        height: 40px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        line-height: 40px;
+        text-align: center;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .srch_close {
+        display: inline-block;
+        color: #fff;
+        font-size: 40px;
+        float: right;
+        margin-right: 44px;
+        line-height: 40px;
+        transform: rotate(45deg);
+        cursor: pointer;
+      }
+    }
+  }
+}
