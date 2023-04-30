@@ -1,168 +1,148 @@
-import React, { useEffect, useState, MouseEvent } from 'react';
+import { ReactElement } from "react";
 import styles from "./styles.module.scss";
-import Service from "network/service";
-import APIS_CONFIG from "network/config.json";
-import { APP_ENV } from 'utils';
 
-// Define the type for the props passed to TechNav component
-interface TechNavProps {
-  sec: {
-    nm: string;
-    msid: number;
-    link: string;
-  }[];
-  count: number;
-  msid: number;
+interface Section {
+  link: string;
+  nm: string;
+  msid: string;
+  sec?: Section[];
 }
 
-const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
-  // Use the useState hook to manage the component state
-  const [isLoading, setIsLoading] = useState(false);
-  const [techNavListBlock, settechNavListBlock] = useState([]);
+interface Element {
+  secType: string;
+  elm: ReactElement;
+}
 
-  useEffect(() => {
-    getTechArticleList(78404305)
-  }, []);
+interface Props {
+  sec: Section[];
+  count: number;
+  msid: string;
+}
 
-  const getTechArticleList = (msid) => {
-    const url = APIS_CONFIG.techNavArticleList[APP_ENV];
-      Service.get({
-        url,
-        params: { feedtype: "etjson", msid }
-      })
-      .then((res) => {
-        let articleListObj = [...techNavListBlock,{msid, data: res.data}];
-        settechNavListBlock(articleListObj);
-      })
-      .catch((err) => {
-        console.error(`Error in commodityNewsApi: ${err}`);
-      });
-  }  
+const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
+  // Define color arrays and sub-section arrays
+  const colArr_4 = ["13352306", "2147477890"];
+  const colArr_3 = ["1715249553"];
+  const subSecArr: Element[] = [];
+  const L1: ReactElement[] = [];
+  const L2: ReactElement[] = [];
+  const L3: ReactElement[] = [];
+  const L4: ReactElement[] = [];
 
-  // Define the handleMouseOver function to handle mouseover event on the links
-  const handleMouseOver = (event: MouseEvent<HTMLAnchorElement>) => {
-    try {
-      const targetElement = event.currentTarget;
-      const activeClass = styles["active"];
-      const showClass = styles["show_block"];
-      const targetElementId = targetElement.getAttribute("data-rel-id");
-      
-      // Get the techNavArticleBlock element and its child element with matching data-rel-id attribute
-      const techNavArticleBlock = document.getElementById("technav_art");
-      const targetElement_articleBlock = techNavArticleBlock?.querySelector(`[data-rel-id="${targetElementId}"]`);
+  // Determine the number of elements per column based on the number of sections
+  let perCol: number;
+  if (colArr_4.includes(msid)) {
+    perCol = Math.ceil(count / 4);
+  } else if (colArr_3.includes(msid)) {
+    perCol = Math.ceil(count / 3);
+  } else if (msid === "837555174") {
+    perCol = 16;
+  } else if (msid === "359241701") {
+    perCol = 9;
+  } else if (msid === "94909228") {
+    perCol = 6;
+  } else {
+    perCol = Math.ceil(count / 2);
+  }
 
-      // Add showClass to the targetElement_articleBlock element
-      if (targetElement_articleBlock) {
-        targetElement_articleBlock.classList.add(showClass);
-      }else{
-        getTechArticleList(targetElementId)
-      }
+  // Loop through the first level of sections
+  sec.forEach((l1, index) => {
+    // Add sub-section 1 element to sub-section array
+    subSecArr.push({
+      secType: "subsec1",
+      elm: (
+        <div key={`subsec1_${l1.msid}_${index}`}>
+          <a href={l1.link} className={styles.subsec1}>
+            {l1.nm}
+          </a>
+        </div>
+      ),
+    });
 
-      // Add activeClass to the hovered element
-      targetElement.classList.add(activeClass);
-
-      // Remove activeClass from all the siblings of the hovered element
-      const siblings = targetElement.parentNode?.querySelectorAll(`.${activeClass}`);
-      const siblings_articleBlock = techNavArticleBlock?.querySelectorAll(`.${showClass}`);
-
-      siblings?.forEach((sibling) => {
-        if (sibling !== targetElement) {
-          sibling.classList.remove(activeClass);
+    // Loop through the second level of sections
+    if (l1.sec) {
+      l1.sec.forEach((l2, index) => {
+        // Add sub-section 3 elements to sub-section 2 array
+        const subSecArr_3: ReactElement[] = [];
+        if (l2.sec) {
+          l2.sec.forEach((l3, index) => {
+            subSecArr_3.push(
+              <div key={`subsec3_${l3.msid}_${index}`}>
+                <a href={l3.link} className={styles.subsec3}>
+                  {l3.nm}
+                </a>
+              </div>
+            );
+          });
         }
+        // Add sub-section 2 element with sub-section 3 elements to sub-section array
+        subSecArr.push({
+          secType: "subsec2",
+          elm: (
+            <div>
+              <div key={`subsec2_${l2.msid}_${index}`}>
+                <a href={l2.link} className={styles.subsec2}>
+                  {l2.nm}
+                </a>
+              </div>
+              {subSecArr_3}
+            </div>
+          ),
+        });
       });
-
-      siblings_articleBlock?.forEach((sibling) => {
-        if (sibling !== targetElement_articleBlock) {
-          sibling.classList.remove(showClass);
-        }
-      });
-    } catch (error) {
-      console.error(error);
     }
-  };
+  });
 
+  // Initialize the flags to indicate which column the section belongs to
+  let isL1 = 0;
+  let isL2 = 0;
+  let isL3 = 0;
 
-  // Render the component
+  // Loop through the sub-section array and populate the lists based on their types
+  subSecArr.forEach((sec, index) => {
+
+    if (index < perCol) {
+      L1.push(sec.elm);
+    } else if ((index >= perCol) && index < (perCol * 2)) {
+      if (sec.secType == "subsec1") {
+        isL1 = 1;
+      }
+      if (isL1 == 0) {
+        L1.push(sec.elm);
+      } else {
+        L2.push(sec.elm);
+      }
+    } else if ((index >= (perCol * 2)) && index < (perCol * 3)) {
+      if (sec.secType == "subsec1") {
+        isL2 = 1;
+      }
+      if (isL2 == 0) {
+        L2.push(sec.elm);
+      } else {
+        L3.push(sec.elm);
+      }
+    } else {
+      if (sec.secType == "subsec1") {
+        isL3 = 1;
+      }
+      if (isL3 == 0) {
+        L3.push(sec.elm);
+      } else {
+        L4.push(sec.elm);
+      }
+    }
+  });
+
   return (
     <>
-      <div className={styles.techNav1st}>
-        <a
-          title="Tech"
-          data-ga-onclick="/tech"
-          onMouseOver={(event) => handleMouseOver(event)}
-          href="/tech"
-          className={styles.active}
-          data-rel-id="78404305"
-        >
-          TECH
-        </a>
-        {/* Render the sub-section links */}
-        {sec.map((seclist, index) => {
-          return (
-            <React.Fragment key={`tech_nav_${seclist.msid}_${index}`}>
-              <a
-                href={seclist.link}
-                data-rel-id={seclist.msid == 94028772 ? 94299203 : seclist.msid == 60529947 ? 33112763 : seclist.msid}
-                onMouseOver={(event) => handleMouseOver(event)}
-                className={styles.subsec1}
-              >
-                {seclist.nm}
-              </a>
-            </React.Fragment>
-          )
-        })}
-      </div>
-      {/* Render the data elements */}
-      <div id="technav_art" className={styles.mLast}>
-        {
-          techNavListBlock && techNavListBlock.map((obj, index) => {
-            return (
-              <React.Fragment key={`tech_nav_${obj.msid}_${index}`}>
-                <div data-rel-id={obj.msid} className={styles.show_block}>
-                  {
-                    obj?.data?.slice(0, 1).map((data, index1) => {
-                      return (
-                        <React.Fragment key={`tech_nav_first_${obj.msid}_${index}_${index1}`}>
-                          <div className={styles.first}>
-                            <h3>
-                              <a href={data.link}>{data.stname}</a>
-                            </h3>
-                            <a href={data.link}>
-                              <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname}  />
-                            </a>
-                            <p className={`${styles.wrapLines} ${styles.l5}`}>{data.strsyn}</p>
-                          </div>
-                        </React.Fragment>
-                      )
-                    })
-                  }
-                  <div className={`${styles.other} ${obj.msid == 94299203 && styles.eventsBlockTech}`}>
-                    {
-                      obj?.data?.slice(1).map((data, index1) => {
-                        return (
-                          <React.Fragment key={`tech_nav_other_${obj.msid}_${index}_${index1}`}>
-                            {obj.msid == 94299203 ? 
-                              <div className={styles.navBlock}>
-                                <a target="_blank" rel="noreferrer" href={data.link}>
-                                  <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname}  />
-                                </a>
-                                <a target="_blank" rel="noreferrer" className={styles.eventsBlockTechLinks} href={data.link}>{data.stname}</a> 
-                              </div> :
-                              <a className={styles.subsec3} href={data.link}>{data.stname}</a>  
-                            }
-                          </React.Fragment>
-                        )
-                      })
-                    }
-                  </div>
-                </div>
-              </React.Fragment>   
-            )
-          })
-        }
-      </div>
+      <div className={styles.flt}>{L1}</div>
+      <div className={styles.flt}>{L2}</div>
+      {((msid == "359241701") || (msid == "13352306") || (msid == "2147477890") || (msid == "837555174") || (msid == "1715249553")) && <div className={styles.flt}>{L3}</div>}
+      {((msid == "13352306") || (msid == "2147477890") || (msid == "837555174") || (msid == "1715249553")) && <div className={styles.flt}>{L4}</div>}
+      <div className="clr"></div>
     </>
-  );
-}
+  )
 
-export default TechNav;
+} 
+
+export default HandleHoverSecHtml;
