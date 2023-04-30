@@ -1,0 +1,118 @@
+/* Import common styles */
+@import "../../styles/common.scss";
+
+.logo_part {
+  text-align: center;
+  box-sizing: border-box;
+  padding: 7px 0;
+  z-index: 2;
+  min-height: 110px;
+  position: relative;
+
+  .prime_user{
+    width: 1260px;
+  }
+
+  .sec_logo {
+    margin-left: 10px;
+    border-left: 1px solid #CCC;
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: top;
+    &.head_name{
+      font-size: 40px;
+      line-height: 40px;
+    }
+
+    .sec_name{
+      font-family: $Faustina-font-family;
+    }
+  }
+
+  .edition_wrap{
+    margin-top: 3px;
+    color: #4a4a4a;
+    line-height: 1;
+    & > div {
+      display: inline-block;
+    }
+
+    .editionList{
+      padding:4px;
+      position: relative;
+      display: inline-block;
+      &:hover .edMenu{
+        display: block;
+      }
+  
+      .edMenu{
+        position: absolute;
+        display: none;
+        left: -1px;
+        top: -2px;
+        z-index: 1;
+        width: 100%;
+        background: #FFF;
+        border: 1px solid #c7cacc;
+        box-shadow: 0 3px 5px 0 rgb(0 0 0 / 17%);
+  
+        .ed {
+          padding: 5px 0;
+          display: block;
+          border-bottom: 1px solid #c7cacc;
+  
+          &:after{
+            content: '';
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            display: inline-block;
+            vertical-align: middle;
+            border-top: 4px solid #000;
+            margin: 0 0 0 3px;
+          }
+        }
+
+        .edHin{
+          display: block;
+          padding: 5px 0;
+          border-bottom: 1px solid #c7cacc;
+        }
+      }
+    }
+  }
+
+  .subSign{
+    padding-right: 7px;
+    -webkit-transition: ease all 0.5s;
+    -o-transition: ease all 0.5s;
+    transition: ease all 0.5s;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top:14px;
+
+    .subscribe{
+      padding: 2px 7px 3px 8px;
+      border-radius: 2px;
+      border: solid 1px black;
+      margin-right: 15px;
+      margin-bottom: 5px;
+    }
+
+    .soWrapper {
+      margin: 14px 0;
+      position: relative;
+      .hdr_spcl_ofr {
+        border: 1px solid rgba(237, 25, 59, 0.1);
+        padding: 4px 0;
+        border-right: none;
+        border-left: none;
+        text-align: center;
+        font-weight: bold;
+        color: #ed193b;
+        font-size: 10.5px;
+        cursor: pointer;
+      }
+    }
+  }
+}
