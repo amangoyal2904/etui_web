@@ -1,0 +1,7 @@
+@import "../../styles/variables.scss";
+
+.primeUser {
+  & header{
+    background-color: #ffded4;
+  }
+}
