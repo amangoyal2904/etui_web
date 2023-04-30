@@ -1,6 +1,6 @@
-import { pageType, getMSID, prepareMoreParams } from "utils";
-import Service from "network/service";
-import APIS_CONFIG from "network/config.json";
+import { pageType, getMSID, prepareMoreParams } from "../utils";
+import Service from "../network/service";
+import APIS_CONFIG from "../network/config.json";
 
 interface Props {
 page: string;
@@ -14,17 +14,19 @@ const All = () => null;
 const expiryTime = 10 * 60;
 
 export async function getServerSideProps({ req, res, params, resolvedUrl }): Promise<{ props: Props }> {
+  const isprimeuser = req.headers?.primetemplate ? 1 : 0,
+  { all = [] } = params,
+  lastUrlPart: string = all?.slice(-1).toString(),
+  api = APIS_CONFIG.FEED,
+  REQUEST = APIS_CONFIG.REQUEST;
+
+  let page = pageType(resolvedUrl),
+  extraParams: any = {},
+  response: any = {},
+  menuData: any = {},
+  dynamicFooterData: any = {};
+
   try {
-    const isprimeuser = req.headers?.primetemplate ? 1 : 0;
-    const { all = [] } = params;
-    const lastUrlPart: string = all?.slice(-1).toString();
-    let page = pageType(resolvedUrl);
-    const api = APIS_CONFIG.FEED,
-    REQUEST = APIS_CONFIG.REQUEST;
-
-    let extraParams = {},
-    response: any = {};
-
     if (page !== "notfound") {
       const msid = getMSID(lastUrlPart);
       const moreParams = prepareMoreParams({ all, page, msid });
@@ -35,7 +37,7 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }): Pro
         api,
         params: { type: apiType, platform: "wap", feedtype: "etjson", ...moreParams },
       });
-      response = result.data;
+      response = result?.data || {}; 
       const { subsecnames = {} } = response.seo;
       extraParams = subsecnames
         ? {
@@ -60,25 +62,26 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }): Pro
 
     const [footerMenuResult, navBarResult] = await Promise.all([footerMenuPromise, navBarPromise]);
 
-    const dynamicFooterData = footerMenuResult?.data || {};
-    const menuData = navBarResult?.data;
+    dynamicFooterData = footerMenuResult?.data || {};
+    menuData = navBarResult?.data;
+
+    console.log("menuData---", menuData);
 
     //==== sets response headers =====
     res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
     res.setHeader("Expires", new Date(new Date().getTime() + expiryTime * 1000).toUTCString());
-
-    return {
-      props: {
-        page,
-        response,
-        isprimeuser,
-        dynamicFooterData,
-        menuData,
-      },
-    };
-
   }catch(error){
     console.log("Error: ", error)
   }
+
+  return {
+    props: {
+      page,
+      response,
+      isprimeuser,
+      dynamicFooterData,
+      menuData,
+    },
+  };
 }
 export default All;

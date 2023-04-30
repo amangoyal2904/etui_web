@@ -50,6 +50,7 @@ interface PageProps {
   isprimeuser?: number;
   response?: any;
   dynamicFooterData?: any;
+  menuData?: any;
 }
 
 const Container = (props) => {
@@ -72,7 +73,7 @@ const Container = (props) => {
 };
 
 const MyApp = ({ pageProps }: AppProps) => {
-  const { response, page, isprimeuser, dynamicFooterData }: PageProps = pageProps;
+  const { response, page, isprimeuser, dynamicFooterData, menuData }: PageProps = pageProps;
 
   const data = response || {};
   const versionControl = data?.version_control || {};
