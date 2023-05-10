@@ -45,3 +45,32 @@
   max-width: 1024px;
   margin: 0 auto;
 }
+
+.flt{
+  float: left;
+}
+
+.flr{
+  float: right;
+}
+
+.dib{
+  display: inline-block;
+}
+
+.din{
+  display: inline;
+}
+
+.body{font-size: 12px; font-family: $Montserrat-font-family;}
+.pageHolder{
+  width: 1003px;
+  margin: 0 auto;
+  &.prime_user{
+    width: 100%;
+    header{
+      background-color: #ffded4;
+    }
+  }
+}
+

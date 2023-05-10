@@ -66,10 +66,13 @@ $h5-font-size: 20px;
 $img-loading-path: "https://img.etimg.com/photo/msid-70672355,quality-100.cms";
 $common-sprite-path: "https://img.etimg.com/photo/msid-92575396,quality-100/common-sprite.jpg";
 $home-listing-sprite: "https://img.etimg.com/photo/msid-87756482,quality-100.cms";
+$contactus-sprite: "https://img.etimg.com/photo/94151859.cms";
 
 /* Caution: Common sprite for components importing variables.scss only */
 .commonSprite {
   background: url($common-sprite-path) no-repeat;
   display: inline-block;
-  background-size:500px;
+  background-size: 500px;
 }
+
+.Msprite, .cSprite, .cSprite_a:after, .cSprite_b:before{background: url(https://img.etimg.com/photo/msid-97569360,quality-100/common-sprite.jpg) no-repeat;display: inline-block;background-size: 500px;}
