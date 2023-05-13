@@ -37,7 +37,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => {
   return (
       <>
         <Headers />
-        <main className={`pageHolder ${isPrimeUserCls}`}>
+        <main className={`pageHolder ${isPrimeUserCls} container`}>
           <HeaderMain
             page={page}
             menuData={menuData}
@@ -46,8 +46,8 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => {
           />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
-        </main>
-        <Footer dynamicFooterData={dynamicFooterData} />
+          <Footer dynamicFooterData={dynamicFooterData} />
+        </main>        
       </>
     );
 }

@@ -116,7 +116,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
                 {interLinkingData[index]["data"]?.map((item, key) => {
                   const noFollow = isNoFollow(item.url) && item.noFollow != "false" ? { rel: "nofollow" } : {};
                   return (
-                    <a href={item.url} {...noFollow} className={styles.ellipsis} data-ga-onclick={`Web Footer Link Click#${item.title}#${interLinkingData[index].title}-${item.url}`}>
+                    <a key={`${key}_${index}`} href={item.url} {...noFollow} className={styles.ellipsis} data-ga-onclick={`Web Footer Link Click#${item.title}#${interLinkingData[index].title}-${item.url}`}>
                       {item.title}
                     </a>
                   );

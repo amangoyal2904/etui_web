@@ -42,7 +42,7 @@ const TopSignBlock = () => {
   return (
     <>
       <div className={`${styles.flr} ${styles.subSign}`}>
-        <a data-ga-onclick="Subscription Flow#SYFT#ATF - url" href="javascript://" className={`${styles.subscribe}`}>Subscribe</a>
+        <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`}>Subscribe</span>
         <Login />
         <div className={styles.soWrapper}>
         <a data-url="https://economictimes.indiatimes.com/plans.cms" data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`}>Special Offer on ETPrime</a>
