@@ -6,7 +6,7 @@ const findMsid = (arrayVal:any[])=>{
     let arrayList = arrayVal;
     let msidHash = '';
     let msid =  '';
-    arrayList.map(function(item){
+    arrayList?.map(function(item){
         let _text = item;
         if(_text.indexOf('.cms')){
             return msidHash = _text;

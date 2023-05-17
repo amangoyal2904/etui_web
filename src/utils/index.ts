@@ -149,9 +149,7 @@ export const getParameterByName = (name) => {
 export const processEnv =
   (process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim()) || "production";
 export const queryString = (params) =>
-  Object.keys(params)
-    .map((key) => key + "=" + params[key])
-    .join("&");
+  Object.keys(params)?.map((key) => key + "=" + params[key]).join("&");
 
 export const getMobileOS = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -302,7 +300,7 @@ export const updateDimension = (dimensions = {}, payload = {}) => {
 
 export const prepSeoListData = (data) => {
   let primaryList = data || [];
-  primaryList = primaryList.filter((i) => {
+  primaryList = primaryList?.filter((i) => {
     return i.layoutType && i.layoutType == "break"
       ? false
       : i.type !== "colombia" && i.type !== "liveblog" && i.name !== "dfp";

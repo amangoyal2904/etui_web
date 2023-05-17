@@ -101,24 +101,24 @@ export const gaObserverInit = (newImpressionNodes = [], newClickNodes = []) => {
   }
   try {
     if (newImpressionNodes != null) {
-      if (newImpressionNodes.length > 0) {
+      if (newImpressionNodes?.length > 0) {
         observeNodesImpression(newImpressionNodes);
         return;
       }
       const nodeList = document.querySelectorAll("[data-ga-impression]");
-      nodeList.length > 0 && observeNodesImpression(nodeList);
+      nodeList?.length > 0 && observeNodesImpression(nodeList);
     }
   } catch (e) {
     console.log("Error in intersection observer in data-ga-impression");
   }
   try {
     if (newClickNodes != null) {
-      if (newClickNodes.length > 0) {
+      if (newClickNodes?.length > 0) {
         observeNodesClick(newClickNodes);
         return;
       }
       const nodeList = document.querySelectorAll("[data-ga-onclick]");
-      nodeList.length > 0 && observeNodesClick(nodeList);
+      nodeList?.length > 0 && observeNodesClick(nodeList);
     }
   } catch (e) {
     console.log("error in on click listener data-ga-onclick");

@@ -6,12 +6,6 @@ import { Provider } from "react-redux";
 import { store } from "../../app/store";
 import { data } from "../../testData/videoshow";
 
-jest.mock('fetch', () =>
-  Promise.resolve({
-    json: () => Promise.resolve({ rates: { CAD: 1.42 } }),
-  })
-);
-
 jest.mock(
   "next/image",
   () =>

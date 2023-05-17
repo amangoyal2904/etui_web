@@ -44,7 +44,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       });
   };
 
-  const subSectionList = sectionList.filter((sec) => {
+  const subSectionList = sectionList?.filter((sec) => {
     return sec?.sec;
   });
 
@@ -66,7 +66,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       <div id="topnavBlk" className={styles.nav_block}>
         <nav id="topnav" className={`level1 ${styles.topnav}`}>
           <SideNav />
-          {sectionList.map((data, index) => {
+          {sectionList?.map((data, index) => {
             return (
               <div key={`nav-l1-${index}`} className={styles.sec_1} data-l1={data.nm} data-id={data.msid}>
                 <a href={data.link} data-ga-onclick={data.link}>{data.nm}
@@ -96,7 +96,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
           </div>
         </nav>
       </div>
-      {subSectionList.length > 0 && <SubSecNav subSectionList={subSectionList} />}
+      {subSectionList?.length > 0 && <SubSecNav subSectionList={subSectionList} />}
     </>
   );
 };

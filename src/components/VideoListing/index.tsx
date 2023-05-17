@@ -12,7 +12,7 @@ const VideoListing: NextPage<any> = (props) => {
   const relatedVideoHandler = ()=>{
     let htmlListData = []
     if(relatedVideoData){
-      relatedVideoData.map((item, index)=>{
+      relatedVideoData?.map((item, index)=>{
         let _urlVal = urlValidation(item.url)
         let _genHtml = <li key={index} attr-data-position={index}>
           <div className={styles.img}>

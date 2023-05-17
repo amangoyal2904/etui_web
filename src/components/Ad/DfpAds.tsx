@@ -2,7 +2,8 @@ import { NextPage } from "next";
 import { useEffect, useState } from "react"
 
 interface Props {
-    adInfo?: object
+    adInfo?: object;
+    identifier?: string;
   }
 declare global {
     interface Window {

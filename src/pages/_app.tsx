@@ -74,7 +74,7 @@ const Container = (props) => {
 };
 
 const MyApp = ({ pageProps }: AppProps) => {
-  const { response, page, isprimeuser, dynamicFooterData, menuData }: PageProps = pageProps;
+  const { response, page = 'home', isprimeuser = 0, dynamicFooterData = {}, menuData={} }: PageProps = pageProps;
 
   const data = response || {};
   const versionControl = data?.version_control || {};
@@ -99,13 +99,13 @@ const MyApp = ({ pageProps }: AppProps) => {
   return (
     <Provider store={store}>
       <Head>
-        <link
+        {/* <link
           href="https://m.economictimes.com/et_fonts.cms?minify=1&amp;v=6&amp;type=3"
           type="text/css"
           rel="stylesheet"
           media="all"
           fetchpriority="low"
-        />
+        /> */}
       </Head>
       <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData}>
         <Container objVc={versionControl} isprimeuser={isprimeuser} page={page} data={data} />

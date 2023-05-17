@@ -35,7 +35,7 @@ const SideNav = () => {
       <>
         <ul className={styles.l1}>
           {
-            sideNavData && sideNavData.map((l1, index) => {
+            sideNavData && sideNavData?.map((l1, index) => {
               return (
                 <>
                   <li key={`${l1.nm}_${index}`}>

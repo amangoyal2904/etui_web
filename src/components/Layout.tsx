@@ -9,10 +9,10 @@ import { useSelector } from 'react-redux';
 import Footer from './Footer';
 
 interface Props {
-  page: string;
-  dynamicFooterData: any;
-  menuData: any;
-  children: ReactElement;
+  page?: string;
+  dynamicFooterData?: any;
+  menuData?: any;
+  children?: ReactElement;
 }
 
 interface ChildProps {
@@ -31,7 +31,9 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => {
   const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
 
   if (!data?.seo?.subsecnames || !data?.seo?.sectionDetail) {
-    throw new Error('Invalid data passed to Layout component');
+    data.seo = {};
+    data.seo.subsecnames = {};
+    //throw new Error('Invalid data passed to Layout component');
   }
 
   return (

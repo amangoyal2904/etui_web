@@ -41,7 +41,7 @@ const ReplyOnComment:FC<ReplyOnCommentProps> = (props) => {
         closeReplyForm();
 
         // console.log("formData",JSON.stringify(formData));
-        let formPayLoad = Object.keys(formData).map(function(k) {
+        let formPayLoad = Object.keys(formData)?.map(function(k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(formData[k])
           }).join('&');
         formPayLoad = formPayLoad + `&ArticleID=95532873&msid=95532873&userid=dayanidhi.gupta%40timesinternet.in&loggedstatus=1&uid=13m5au00issy12epvvdfef92s&configid=48112188&appkey=ET&parentid=${commentCardId}&rootid=${commentCardId}`;
