@@ -1,18 +1,14 @@
 import getConfig from "next/config";
 import { pageview } from "./ga";
 
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig = {} } = getConfig();
 export const APP_ENV = (publicRuntimeConfig.APP_ENV && publicRuntimeConfig.APP_ENV.trim()) || "production";
 
 declare global {
   interface Window {
-    geolocation: number;
+    geolocation: any;
     customDimension: object;
-    geoinfo: {
-      CountryCode: string;
-      geolocation: string;
-      region_code: string;
-    };
+    geoinfo: any;
     opera?: string;
     MSStream?: string;
   }

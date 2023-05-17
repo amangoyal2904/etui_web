@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from './styles.module.scss'
 import CommentCard from './CommentCard';
 interface commentsProps {
-  msid:number
+  msid: number | string;
 }
 
 

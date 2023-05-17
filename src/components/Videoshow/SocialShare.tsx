@@ -1,9 +1,18 @@
-import { NextPage } from "next";
-import Share from "../Share";
-import {useState} from 'react';
+import React, {FC, useState} from 'react';
+// import {Share} from "../Share";
 import styles from './styles.module.scss';
 
-const SocialShare = (props) => {  
+interface SocialShareProps {
+  mailData: {
+    shareUrl: string;
+    title: string;
+    msid: number | string;
+    hostId: number | string;
+    type: number | string;
+  }
+}
+
+const SocialShare: FC<SocialShareProps> = (props) => {  
   const url = props.mailData.shareUrl && props.mailData.shareUrl != '' ? props.mailData.shareUrl : ''
   const [showUrl, setShowUrl] = useState('no');
   const [showEmbed, setShowEmbed] = useState('no');
@@ -33,35 +42,36 @@ const SocialShare = (props) => {
     setShowMail('yes')
   }
   return (  
-    <Share>
-        <div className={styles.codeMailVideo}>
-          <span onClick={()=>openMailHandler} className={styles.email} title="Email this video"></span>
-          {
-            // showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
-          }
-        </div>
-        <div className={styles.codeVideo}>
-          <span onClick={()=>{showHandlerModule('url')}}>Copy URL</span>
-          {
-            showUrl === 'yes' ?  <span className={styles.copyUrlSec}>
-            <input readOnly type="text" value={url} className={styles.readUrl} />
-            <i  className={styles.close} onClick={closeHandler}></i>
-          </span> : ''
-          }
-        </div>
-        <div className={styles.codeVideo}>
-          <span onClick={()=>{showHandlerModule('embed')}}>Embed</span>
-          {
-            showEmbed === 'yes' ? <span className={styles.copyUrlSec}>
-            <textarea readOnly defaultValue={`<iframe mozallowfullscreen="true" webkitallowfullscreen="true" allowfullscreen="true" width="560" height="420" frameborder="0" defaultValue=${url} src=${url}></iframe>`}>{
+    // <Share>
+    //     <div className={styles.codeMailVideo}>
+    //       <span onClick={()=>openMailHandler} className={styles.email} title="Email this video"></span>
+    //       {
+    //         // showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
+    //       }
+    //     </div>
+    //     <div className={styles.codeVideo}>
+    //       <span onClick={()=>{showHandlerModule('url')}}>Copy URL</span>
+    //       {
+    //         showUrl === 'yes' ?  <span className={styles.copyUrlSec}>
+    //         <input readOnly type="text" value={url} className={styles.readUrl} />
+    //         <i  className={styles.close} onClick={closeHandler}></i>
+    //       </span> : ''
+    //       }
+    //     </div>
+    //     <div className={styles.codeVideo}>
+    //       <span onClick={()=>{showHandlerModule('embed')}}>Embed</span>
+    //       {
+    //         showEmbed === 'yes' ? <span className={styles.copyUrlSec}>
+    //         <textarea readOnly defaultValue={`<iframe mozallowfullscreen="true" webkitallowfullscreen="true" allowfullscreen="true" width="560" height="420" frameborder="0" defaultValue=${url} src=${url}></iframe>`}>{
               
-            }</textarea>
-            <i  className={styles.close} onClick={closeHandler}></i>
-          </span> : ''
-          }
+    //         }</textarea>
+    //         <i  className={styles.close} onClick={closeHandler}></i>
+    //       </span> : ''
+    //       }
           
-        </div>
-    </Share>
+    //     </div>
+    // </Share>
+    null
   );
 };
 

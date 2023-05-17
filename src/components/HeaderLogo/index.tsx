@@ -68,7 +68,7 @@ const ETSecLogo = (props) => {
   const {subsecnames, sectiondetail} = props;
   const {subsec1, subsec2, subsec3, subsec4, subsec5} = subsecnames;
    
-  console.log(LOGO[subsec1])
+  // console.log(LOGO[subsec1])
   /*if(subsec2 == 1052732854){
     return {title: "Politics", href: "/news/politics-nation"}
   }else if(subsec1 == 1977021501 || subsec2 == 58105720){
@@ -111,7 +111,7 @@ const HeaderLogo = (props) => {
   const loginState = useSelector((state: any) => state.login);
   const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
 
-  console.log(sectiondetail)
+  // console.log(sectiondetail)
   return (
     <div className={styles.logo_part}>
       <div id="headerWrap" className={isPrimeUserCls}>

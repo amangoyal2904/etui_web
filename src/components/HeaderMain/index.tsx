@@ -9,7 +9,7 @@ interface PageProps {
 
 const HeaderMain = (props) => {
 const { page, menuData, subsecnames, sectiondetail } = props;
-console.log("subsecnames", subsecnames)
+// console.log("subsecnames", subsecnames)
   return (
     <header>
       <HeaderLogo page={page} subsecnames={subsecnames} sectiondetail={sectiondetail} />

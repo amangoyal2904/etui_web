@@ -13,10 +13,10 @@ const SampleListing: FC = () => {
             let params = {
                 type: "plist", "msid": 2146843
             };
-            Service.get(url, params)
+            Service.get(url)
             .then(res => {
                 setData(res.data || {});
-                console.log(res.data,"DataArticles");
+                // console.log(res.data,"DataArticles");
             })
     }, []);
 

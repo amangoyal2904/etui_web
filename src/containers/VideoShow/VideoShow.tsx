@@ -1,24 +1,13 @@
 import styles from "./VideoShow.module.scss";
-// import SocialShare from "components/SocialShare";
-// import VideoEmbed from "components/VideoEmbed";
-// import SeoWidget from "components/SeoWidget";
-import DfpAds from "components/Ad/DfpAds";
-import { useEffect, useState, Fragment, FC } from "react";
+import { useEffect, Fragment, FC } from "react";
 import { useSelector } from "react-redux";
-// import AppDownloadWidget from "components/AppDownloadWidget";
-import SEO from "components/SEO";
-// import { PageProps, VideoShowProps, OtherVidsProps } from "types/videoshow";
-// import BreadCrumb from "components/BreadCrumb";
-import Listing from "components/Listing";
-// import GreyDivider from "components/GreyDivider";
+import { PageProps, VideoShowProps, OtherVidsProps } from "types/videoshow";
 import { AppState } from "app/store";
-import { getPageSpecificDimensions } from "utils";
-import { ET_WAP_URL } from "utils/common";
-import Service from "network/service";
-import PostComments from "components/Comments/PostComments";
-import PopulateComment from "components/Comments/PopulateComment";
-import Share from "components/Share";
-import SocialShare from "components/Videoshow/SocialShare";
+import { getPageSpecificDimensions } from "../../utils";
+import { ET_WAP_URL } from "../../utils/common";
+import PostComments from "../../components/Comments/PostComments";
+import PopulateComment from "../../components/Comments/PopulateComment";
+import SocialShare from "../../components/Videoshow/SocialShare";
 
 const VideoShow: FC<PageProps> = (props) => {
   const { seo = {}, version_control, parameters } = props;
@@ -36,7 +25,7 @@ const VideoShow: FC<PageProps> = (props) => {
     {
       return props?.searchResult?.map((item) => {
         if (item.name === "videoshow") {
-          const result = item.data;
+          const result = item.data as VideoShowProps;
           const url = `${result.iframeUrl}&skipad=${loginState.isprimeuser}`;
           return (
             <Fragment key={item.name}>

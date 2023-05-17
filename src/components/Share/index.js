@@ -2,8 +2,7 @@ import React from 'react'
 import styles from './Share.module.scss'
 import SocialShare from "../../utils/socialShare";
 
-
-export default function Share({ children }) {
+export function Share({ children }) {
 	let path = (typeof window !== 'undefined') ? window.location.pathname : '';
 	let shareParam = {
 		title: "",

@@ -65,7 +65,7 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }): Pro
     dynamicFooterData = footerMenuResult?.data || {};
     menuData = navBarResult?.data;
 
-    console.log("menuData---", menuData);
+    // console.log("menuData---", menuData);
 
     //==== sets response headers =====
     res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
