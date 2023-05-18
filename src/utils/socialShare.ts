@@ -37,7 +37,7 @@ export const Share = (evt, shareParam) => {
       shareTitle =
         shareTitle.replace(" - The Economic Times", "") || "";
       shareTitle =
-        shareTitle.length <= 110
+        shareTitle?.length <= 110
           ? shareTitle
           : shareTitle.substring(0, 107) + "...";
 

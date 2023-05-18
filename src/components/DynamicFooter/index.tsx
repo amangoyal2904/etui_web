@@ -132,7 +132,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
   };
 
    const browseCompany = () =>{
-     const browseCompData = dynamicFooterData?.widgets.filter((data) => data.title == "Browse Company");
+     const browseCompData = dynamicFooterData?.widgets?.filter((data) => data.title == "Browse Company");
      if (browseCompData && browseCompData[0] && browseCompData[0].data && browseCompData[0].data.length) {
        return (
          <div className={styles.browseCompany}>
@@ -144,18 +144,18 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
              <div className={styles.compList}>
                <div>
                  {
-                   browseCompData[0]?.data.map(comp => {
+                   browseCompData[0]?.data?.map((comp, i) => {
                      return (
-                       <a href={comp.url}> {comp.title}</a>
+                       <a href={comp.url} key={`comp_${i}`}> {comp.title}</a>
                      )
                    })
                  }
                </div>
                <div>
                  {
-                   browseCompData[0].Numdata.map(comp => {
+                   browseCompData[0]?.Numdata?.map((comp, i) => {
                      return (
-                       <a href={comp.url}> {comp.title}</a>
+                       <a href={comp.url} key={`comp1_${i}`}> {comp.title}</a>
                      )
                    })
                  }

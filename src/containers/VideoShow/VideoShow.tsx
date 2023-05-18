@@ -75,8 +75,8 @@ const VideoShow: FC<PageProps> = (props) => {
           {/* <DfpAds adInfo={{ key: "atf", subsecnames: seo.subsecnames || {} }} identifier={msid} /> */}
         </div>
         {VideoContainer()}
-        <PostComments />
-        <PopulateComment msid={msid}/>
+        {/* <PostComments /> */}
+        {/* <PopulateComment msid={msid}/> */}
         {/* <SEO {...seoData} /> */}
         {/* <GreyDivider />
         <AppDownloadWidget tpName="videoshow" />

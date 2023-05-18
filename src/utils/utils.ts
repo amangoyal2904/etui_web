@@ -140,7 +140,7 @@ export const dateFormat = (dt, format = '%Y-%M-%d') => {
   return newDate;
 };
 export const processEnv = process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim() || "production";
-export const queryString = (params) => Object.keys(params).map(key => key + '=' + params[key]).join('&');
+export const queryString = (params) => Object.keys(params)?.map(key => key + '=' + params[key]).join('&');
 
 export const isProductionEnv = () => {
   const isProd = process.env.NODE_ENV.trim() === "production";

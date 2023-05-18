@@ -34,7 +34,7 @@ const MarketsBand = () => {
                 <div className="contentwrapper bandCont clearfix">
                     <div className="flipWrapper flt">
                         <div className="mkt_indices_band clearfix">
-                            {marketArr.map(item => { return (
+                            {marketArr?.map(item => { return (
                                 <div key={item} className="band-items band-item-sm" id={`S${item}_box`}>
                                     <div className="band-item clearfix">
                                         <div className="band-content">
@@ -62,7 +62,7 @@ const MarketsBand = () => {
                             </Link>
                             <div className="stats_list">
                                 <ul>
-                                    {marketWatchData.length && marketWatchData.map(item => { return (
+                                    {marketWatchData.length && marketWatchData?.map(item => { return (
                                         <li className='level_0' key={item?.title}>
                                             {item.title}
                                         </li>

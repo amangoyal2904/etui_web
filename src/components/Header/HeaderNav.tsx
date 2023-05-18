@@ -49,7 +49,7 @@ const HeaderNav = () => {
                     <div>
                         <Link href="/" className={activeNav == "home" ? 'current': ""} >Home</Link>
                     </div>
-                    {data && data.searchResult && data.searchResult[0] && data.searchResult[0].sec.map((ele,i) =>  {
+                    {data && data.searchResult && data.searchResult[0] && data.searchResult[0]?.sec?.map((ele,i) =>  {
                         if (i<15) {
                             return (
                                 <div  onClick={() => handleNavClick(ele?.sec, ele?.title)} key={ele.title}>
@@ -69,10 +69,10 @@ const HeaderNav = () => {
             </div>
             <div className="sbnv_wrapper w1">
                 <nav id="subnav" className="clr contentwrapper">
-                    {subNavData.length && subNavData.map((ele,i) =>  {
+                    {subNavData?.length && subNavData?.map((ele,i) =>  {
                         if (i<12) {
                             return (
-                                <div>
+                                <div key={`ele_${i}`}>
                                     <Link href="/" key={ele.title}>
                                         {ele.title}
                                     </Link>

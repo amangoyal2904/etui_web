@@ -61,7 +61,7 @@ const OffensiveCommentBox:FC<ReplyOnCommentProps> = (props) => {
   };
     const handleSubmit = (event) => {
       event.preventDefault();
-      let formPayLoad = Object.keys(formData).map(function(k) {
+      let formPayLoad = Object.keys(formData)?.map(function(k) {
         return encodeURIComponent(k) + '=' + encodeURIComponent(formData[k])
       }).join('&');
       console.log("formData",formData);

@@ -293,7 +293,7 @@ const Schema: NextPage<SEOProps> = ({data, page}) => {
           })
         }
       });
-      const hasPartArr = mapdata.map((item, index) => {
+      const hasPartArr = mapdata?.map((item, index) => {
         return {
           "@type": "NewsArticle",
           headline: item.title,

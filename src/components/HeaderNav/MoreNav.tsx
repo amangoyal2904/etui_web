@@ -33,7 +33,7 @@ const MoreNav: React.FC<MoreNavProps> = ({ sec }) => {
               <React.Fragment key={`more-nav-${index}`}>
                 <a href={nmSection.link} className={styles.subsec1} rel={nmSection.rel}>{nmSection.nm}</a>
                 {/* only render sub-sections if they exist */}
-                {subSec && subSec.map((subSection, index2) => {
+                {subSec && subSec?.map((subSection, index2) => {
                   return (
                     <React.Fragment key={`more-nav-${index}-${index2}`}>
                       <a href={subSection.link} className={styles.subsec2} rel={subSection.rel}>{subSection.nm}</a> 

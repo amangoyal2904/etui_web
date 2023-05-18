@@ -10,7 +10,7 @@ const ReadMore: NextPage<any> = (props) => {
     const readMoreHtml = ()=>{
         let _moreNodehtml = []
         if(_readMore){
-            _readMore.map((item:readMoreProps)=>{
+            _readMore?.map((item:readMoreProps)=>{
                return _moreNodehtml.push(<a key={item.title} href={item.url} rel="noreferrer" target="_blank">{item.title}</a>)
             })
         }
