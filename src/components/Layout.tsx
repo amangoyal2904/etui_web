@@ -4,9 +4,9 @@ import Headers from './Head';
 import HeaderMain from './HeaderMain';
 import { useRouter } from 'next/router';
 import Scripts from './Scripts';
-// import '../styles/common.scss';
 import { useSelector } from 'react-redux';
 import Footer from './Footer';
+import BreadCrumb from "components/BreadCrumb";
 
 interface Props {
   page?: string;
@@ -46,6 +46,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => {
             subsecnames={data.seo.subsecnames}
             sectiondetail={data.seo.sectionDetail}
           />
+          <BreadCrumb data={data.seo.breadcrumb} />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           <Footer dynamicFooterData={dynamicFooterData} />
