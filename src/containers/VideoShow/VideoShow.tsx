@@ -69,22 +69,17 @@ const VideoShow: FC<PageProps> = (props) => {
     }
   };
   return (
-    <>
-      <div className={styles.mainContent}>
-        <div className={`${styles.hdAdContainer} adContainer expando_${cpd_wap}`}>
-          {/* <DfpAds adInfo={{ key: "atf", subsecnames: seo.subsecnames || {} }} identifier={msid} /> */}
-        </div>
+    <>      
+      <section className={`${styles.mainContent} col3`}>
         {VideoContainer()}
         {/* <PostComments /> */}
         {/* <PopulateComment msid={msid}/> */}
         {/* <SEO {...seoData} /> */}
         {/* <GreyDivider />
         <AppDownloadWidget tpName="videoshow" />
-        <BreadCrumb data={seoData.breadcrumb} /> */}
-        <div className={`${styles.footerAd} adContainer`}>
-          {/* <DfpAds adInfo={{ key: "fbn", subsecnames: seo.subsecnames || {} }} identifier={msid} /> */}
-        </div>
-      </div>
+         */}
+      </section>
+      <aside className="col1">sidebar</aside>
     </>
   );
 };

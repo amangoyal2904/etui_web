@@ -9,12 +9,17 @@
   font-size: calc(10px + 2vmin);
 }
 
-
 .videoshow{
     font: 12px 'Montserrat',sans-serif;
     background: #fff;
-    margin: 0 auto;
-    width: 1003px;
+    margin: 0 auto;    
+
+    h1 {
+        font-size: 36px;
+        font-weight: 500;
+        line-height: 36px;
+        margin-bottom: 10px;
+    }
     .pageContent{
         width: 660px;
         padding-left: 10px;

@@ -35,7 +35,7 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }): Pro
       const apiType = page === "videoshownew" ? "videoshow" : page;
       const result = await Service.get({
         api,
-        params: { type: apiType, platform: "wap", feedtype: "etjson", ...moreParams },
+        params: { type: apiType, platform: "web", feedtype: "etjson", ...moreParams },
       });
       response = result?.data || {}; 
       const { subsecnames = {} } = response.seo;
