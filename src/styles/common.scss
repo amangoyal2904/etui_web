@@ -46,29 +46,15 @@
 }
 
 .layout {
-  max-width: 1024px;
-  margin: 0 auto;
   display: flex;
 
-  .col1 {
-    width: 25%;
+  .pageContent {
+    width: 640px;
   }
 
-  .col2 {
-    width: 50%;
+  .sidebar {
+    width: 320px;
   }
-
-  .col3 {
-    width: 75%;
-  }
-
-  .col4 {
-    width: 100%;
-  }
-}
-
-.mainContent {
-  min-height: 450px;
 }
 
 .flt{

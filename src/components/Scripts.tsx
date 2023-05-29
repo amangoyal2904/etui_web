@@ -80,7 +80,8 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
             }
 
             if(value) {
-              var comps = value.split(',').map(function(item) { return item.trim(); });                                              
+              var comps = value.split(',')
+              (function(item) { return item.trim(); });                                              
               var map = {'CC': 'CountryCode', 'RC': 'region_code', 'CT': 'city', 'CO': 'Continent', 'GL': 'geolocation'}
               for(var i=0; i<comps.length; i++) {
                 var compSplit = comps[i].split(':');
@@ -164,6 +165,12 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
           />
           <Script strategy="lazyOnload" src="https://agi-static.indiatimes.com/cms-common/ibeat.min.js" />
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
+
+          <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
+		      <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js"  onLoad={() => {
+                  const slikeReady = new Event("slikeReady");
+                  document.dispatchEvent(slikeReady);
+                }}/>
 
           {!isprimeuser && (
             <>

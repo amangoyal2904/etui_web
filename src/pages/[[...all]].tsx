@@ -1,6 +1,7 @@
 import { pageType, getMSID, prepareMoreParams } from "../utils";
 import Service from "../network/service";
 import APIS_CONFIG from "../network/config.json";
+import { log } from "console";
 
 interface Props {
 page: string;
@@ -73,6 +74,9 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }): Pro
   }catch(error){
     console.log("Error: ", error)
   }
+
+  console.log({response});
+  
 
   return {
     props: {
