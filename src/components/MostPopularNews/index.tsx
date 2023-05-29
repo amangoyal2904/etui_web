@@ -4,10 +4,10 @@ import Image from "next/image";
 import {ImageClickHandler} from '../../utils/utils';
 
 const MostPopularNews: NextPage<any> = (props) => {  
-    let listingData = props.data;
+    let listingData = props?.data;
     console.log('__MostPopularNews components__', listingData);
-    const title = listingData.title;
-    const relatedVideoData = listingData.data ? listingData.data : '';
+    const title = listingData?.title;
+    const relatedVideoData = listingData?.data ? listingData?.data : '';
     const relatedVideoHandler = ()=>{
       let htmlListData = []
       if(relatedVideoData){

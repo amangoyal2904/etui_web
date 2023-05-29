@@ -1,7 +1,13 @@
-import { APP_ENV } from "utils";
-import { ET_WAP_URL } from "utils/common";
+import { APP_ENV } from "../utils";
+import { ET_WAP_URL } from "../utils/common";
 
 const env = APP_ENV || "production";
+
+declare global {
+  interface Window {
+    fromIframeNewVideo: any;
+  }
+}
 
 const playerEvents = {
   onPlayerError: (player, eventName, eventData) => {
