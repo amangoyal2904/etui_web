@@ -11,7 +11,7 @@ const MostPopularNews: NextPage<any> = (props) => {
     const relatedVideoHandler = ()=>{
       let htmlListData = []
       if(relatedVideoData){
-        relatedVideoData.map((item, index)=>{
+        relatedVideoData?.map((item, index)=>{
           let _genHtml = <li key={index} attr-data-position={index}>
             <div className={styles.text}>
               <a href={item.url}>
