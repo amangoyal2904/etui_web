@@ -8,7 +8,7 @@ import { ET_WAP_URL, getSubsecString } from "../../utils/common";
 import PostComments from "../../components/Comments/PostComments";
 import PopulateComment from "../../components/Comments/PopulateComment";
 import SocialShare from "../../components/Videoshow/SocialShare";
-import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "utils/slike";
+import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
 import MostPopularNews from "components/MostPopularNews";
 import DfpAds from "components/Ad/DfpAds";
 
