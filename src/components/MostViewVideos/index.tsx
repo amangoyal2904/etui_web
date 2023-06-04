@@ -5,7 +5,7 @@ import Image from "next/image";
 import {ImageClickHandler,  urlValidation} from '../../utils/utils';
 
 const MostViewVideos: NextPage<any> = (props) => {  
-    let listingData = props.viewVideos;
+    let listingData = props.data;
     //console.log('__MostViewViedeos components__', listingData);
     const title = listingData.title;
     const relatedVideoData = listingData.data ? listingData.data : '';

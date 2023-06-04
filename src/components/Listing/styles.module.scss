@@ -1,5 +1,11 @@
-.list{
+.listing{
+    ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
     li {
         font-size: 0.8em;
+        list-style: none;
     }
 }

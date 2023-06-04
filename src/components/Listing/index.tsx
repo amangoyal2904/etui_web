@@ -1,31 +1,39 @@
-import { FC, useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from "next/link";
+import { Fragment } from "react";
 import styles from "./styles.module.scss";
-import useRequest from 'network/service'
-import Loading from 'components/Loading';
-import APIS_CONFIG from "network/config.json";
-import Service from 'network/service';
+import { OtherVidsProps } from "types/videoshow";
 
-const SampleListing: FC = () => {
-    let [data, setData]:any = useState({});
-    useEffect(() => {
-        let url = APIS_CONFIG.REQUEST;
-            let params = {
-                type: "plist", "msid": 2146843
-            };
-            Service.get(url)
-            .then(res => {
-                setData(res.data || {});
-                // console.log(res.data,"DataArticles");
-            })
-    }, []);
-
-    const listData = data?.searchResult?.[0]?.["data"] || [];
-    return (
-        <ul className={styles.list}>
-            {listData && listData.map(item => <li className={styles.list} key={item.msid}><Link href={item.url.replace("https://m.economictimes.com", "")}>{item.title}</Link></li>)}
-        </ul>
-    )
+interface ListProps {
+  type: string;
+  title: string;
+  data: OtherVidsProps | any;
 }
 
-export default SampleListing;
+export default function Listing({ type, title, data }: ListProps) {
+  const grid = () => {
+    return (
+      <Fragment>
+        <div className={styles.listing}>
+          <h2>{title}</h2>
+          <div>
+            <ul>
+              {data.data.map((item, index) => (
+                <li key={type + index}>
+                  <Link href={item.url}>                    
+                      <img src={item.img} alt={item.title} width={135} height={100} />
+                      <p>{item.title}</p>
+                      {item.type === "videoshow" && <span className={styles.slideVidIcon}></span>}                    
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Fragment>
+    );
+  };
+
+  if (type === "grid") {
+    return grid();
+  }
+}

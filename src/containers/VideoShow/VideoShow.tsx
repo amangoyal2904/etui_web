@@ -11,6 +11,9 @@ import SocialShare from "../../components/Videoshow/SocialShare";
 import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
 import MostPopularNews from "../../components/MostPopularNews";
 import DfpAds from "../../components/Ad/DfpAds";
+import Listing from "components/Listing";
+import ReadMore from "components/ReadMore";
+import MostViewVideos from "components/MostViewVideos";
 
 declare global {
   interface Window {
@@ -23,6 +26,8 @@ declare global {
 const VideoShow: FC<PageProps> = (props) => {
   const result = props?.searchResult?.find((item) => item.name === "videoshow")?.data as VideoShowProps;
   const mostPopularNews = props?.searchResult?.find((item) => item.name === "most_popular_news");
+  const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
+  const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
   const { seo = {}, version_control, parameters } = props;
   const seoData = { ...seo, ...version_control?.seo };
   const { msid } = parameters;
@@ -64,6 +69,8 @@ const VideoShow: FC<PageProps> = (props) => {
         <h1>{result.title}</h1>
         <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
         <p>{result.synopsis}</p>
+        <ReadMore readMoreText={result.relKeywords} />
+        <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
         {/* <PostComments /> */}
         {/* <PopulateComment msid={msid}/> */}
         {/* <SEO {...seoData} /> */}
@@ -74,7 +81,8 @@ const VideoShow: FC<PageProps> = (props) => {
       <aside className="sidebar">
         <DfpAds adInfo={{key: "mrec", index: 0}} />
         <DfpAds adInfo={{key: "mrec", index: 1}} />
-        <MostPopularNews data={mostPopularNews}/>
+        <MostViewVideos data={mostViewedVideos} />
+        <MostPopularNews data={mostPopularNews} />
       </aside>
     </>
   );

@@ -1,0 +1,23 @@
+.readMoreSec {
+  display: flex;
+}
+.readMoreText {
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+  padding: 9px 10px 7px 0;
+}
+.readAnchor {
+  a {
+    color: #000;
+    font-size: 11px;
+    text-transform: capitalize;
+    border-radius: 3px;
+    line-height: 1;
+    display: inline-block;
+    border: 1px solid;
+    background: #fff;
+    padding: 9px 10px 7px 10px;
+    margin: 0 0 10px 10px;
+  }
+}

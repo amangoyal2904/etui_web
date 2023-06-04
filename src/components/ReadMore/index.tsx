@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import styles from "./styles.module.scss";
 interface readMoreProps{
     url:string,
     title:string
@@ -11,7 +12,7 @@ const ReadMore: NextPage<any> = (props) => {
         let _moreNodehtml = []
         if(_readMore){
             _readMore?.map((item:readMoreProps)=>{
-               return _moreNodehtml.push(<a key={item.title} href={item.url} rel="noreferrer" target="_blank">{item.title}</a>)
+               return _moreNodehtml.push(<a key={item.title} href={item.url}>{item.title}</a>)
             })
         }
         return _moreNodehtml;
@@ -19,9 +20,9 @@ const ReadMore: NextPage<any> = (props) => {
   return (
     <>   
         {
-            _readMore ? <div className="readMoreSec">
-                            <div className="readMoreText">Read more on</div>
-                            <div className="readanchore">
+            _readMore ? <div className={styles.readMoreSec}>
+                            <div className={styles.readMoreText}>Read more on</div>
+                            <div className={styles.readAnchor}>
                                 {readMoreHtml()}
                             </div>
                         </div>: ''
