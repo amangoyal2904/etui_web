@@ -1,17 +1,20 @@
-// components/Layout.js
+'use client';
+
 import React, {FC, ReactElement } from 'react';
 import Headers from './Head';
 import HeaderMain from './HeaderMain';
-import { useRouter } from 'next/router';
 import Scripts from './Scripts';
-import { useSelector } from 'react-redux';
 import Footer from './Footer';
 import BreadCrumb from "components/BreadCrumb";
+import DfpAds from './Ad/DfpAds';
 
 interface Props {
   page?: string;
   dynamicFooterData?: any;
   menuData?: any;
+  objVc?: any;
+  isprimeuser?: boolean | number;
+  data: any;
   children?: ReactElement;
 }
 
@@ -21,25 +24,23 @@ interface ChildProps {
   data: any;
 }
 
-const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => { 
-  const { objVc, isprimeuser, data }: ChildProps = children.props;
-
-  const router = useRouter();
-  const reqData = router.query;
-
-  const loginState = useSelector((state: any) => state.login);
-  const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
-
+const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children }) => { 
+  
   if (!data?.seo?.subsecnames || !data?.seo?.sectionDetail) {
     data.seo = {};
     data.seo.subsecnames = {};
     //throw new Error('Invalid data passed to Layout component');
   }
 
+  if(typeof window !== 'undefined') {
+    window.objVc = objVc;
+  }
+
   return (
       <>
+        <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
         <Headers />
-        <main className={`pageHolder ${isPrimeUserCls} container`}>
+        <main className={`pageHolder container`}>
           <HeaderMain
             page={page}
             menuData={menuData}
@@ -51,6 +52,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, children }) => {
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           <Footer dynamicFooterData={dynamicFooterData} />
         </main>        
+        <DfpAds adInfo={{key: "skinleft"}} objVc={objVc}/>
       </>
     );
 }

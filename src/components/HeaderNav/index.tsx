@@ -1,3 +1,5 @@
+'use client';
+
 import React, { FC } from "react";
 import SearchBar from "components/SearchBar";
 import SideNav from "components/SideNav";

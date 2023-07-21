@@ -1,8 +1,8 @@
 import getConfig from "next/config";
 import { pageview } from "./ga";
 
-const { publicRuntimeConfig = {} } = getConfig();
-export const APP_ENV = (publicRuntimeConfig.APP_ENV && publicRuntimeConfig.APP_ENV.trim()) || "production";
+// const { publicRuntimeConfig = {} } = getConfig();
+export const APP_ENV = (process.env.APP_ENV && process.env.APP_ENV.trim()) || "production";
 
 declare global {
   interface Window {

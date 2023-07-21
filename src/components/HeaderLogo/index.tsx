@@ -5,7 +5,7 @@ import {dateFormat} from '../../utils/utils';
 import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
 import Login from "../Login";
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const EditionTimeStamp = () => {
   const currentDate = new Date(),
@@ -108,13 +108,13 @@ const HeaderLogo = (props) => {
   const {page, subsecnames, sectiondetail} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
 
-  const loginState = useSelector((state: any) => state.login);
-  const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
+  // const loginState = useSelector((state: any) => state.login);
+  // const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
 
   // console.log(sectiondetail)
   return (
     <div className={styles.logo_part}>
-      <div id="headerWrap" className={isPrimeUserCls}>
+      <div id="headerWrap">
         <a title="The Economic Times" href="/">
           <img src={etLogo} width={etLogoWidth} height={etLogoHeight} className="dib" alt="The Economic Times"/>
         </a>

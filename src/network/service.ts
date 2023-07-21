@@ -19,7 +19,7 @@ export const get = (config) => {
  
  
   try {
-    const url = getApiUrl(config, 0);
+    const url = getApiUrl(config, 0);    
     if (!config.headers) {
       config["headers"] = {};
     }
@@ -28,6 +28,7 @@ export const get = (config) => {
         "Content-Type": "application/json"
       }
     });
+    console.log({url, config});
     return instance.get(url, config);
   } catch (e) {
     console.log("error in get request", e);

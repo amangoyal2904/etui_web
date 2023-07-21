@@ -1,11 +1,14 @@
-import { useRouter } from "next/router";
+'use client';
+
+import { log } from "console";
+import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { FC, useEffect } from "react";
 import { APP_ENV, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 
 interface Props {
-  isprimeuser?: number;
+  isprimeuser?: number | boolean;
   objVc?: object;
 }
 
@@ -29,18 +32,22 @@ declare global {
   }
 }
 
-const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
+const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
+
+  console.log({isprimeuser});
+  
+
   const router = useRouter();
-  const reqData = router.query;
-  const isTopicPage = router.asPath.indexOf("/topic/") !== -1;
-  const isReady = router.isReady;
+  const searchParams = useSearchParams();
+
+  console.log({searchParams});
 
   const minifyJS = APP_ENV === "development" ? 0 : 1;
   const jsDomain = APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
   const jsIntsURL = `${jsDomain}/js_ints.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}`;
 
   useEffect(() => {
-    window.optCheck = router.asPath.indexOf("opt=1") != -1;
+    // window.optCheck = router.asPath.indexOf("opt=1") != -1;
     //updateDimension();
   }, []);
 
@@ -118,7 +125,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
         }}
       />
 
-      {!reqData.opt && isReady && (
+      {!searchParams?.get('opt') && (
         <>
           <Script
             id="google-analytics"
@@ -147,7 +154,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
           />
           <Script
             id="tag-manager"
-            strategy={isTopicPage ? "lazyOnload" : "worker"}
+            strategy="lazyOnload"
             src={`https://www.googletagmanager.com/gtag/js?id=${Config.GA.GTM_KEY}`}
           />
           {/* {isTopicPage ? ( */}
@@ -182,7 +189,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
                   document.dispatchEvent(gptLoaded);
                 }}
               />
-              {router.asPath.indexOf("skip_ctn=1") == -1 && (
+              {searchParams?.get("skip_ctn") == '1' && (
                 <Script src="https://static.clmbtech.com/ad/commons/js/2501/colombia_v2.js" strategy="lazyOnload" />
               )}
             </>

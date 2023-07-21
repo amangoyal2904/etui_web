@@ -10,7 +10,6 @@ import NotFound from "containers/NotFound";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { Provider } from "react-redux";
-import { store } from "app/store";
 
 const VideoShow = dynamic(() => import("containers/VideoShow"));
 const Home = dynamic(() => import("containers/Home"));
@@ -97,7 +96,7 @@ const MyApp = ({ pageProps }: AppProps) => {
   }, []);
 
   return (
-    <Provider store={store}>
+    <>
       <Head>
         {/* <link
           href="https://m.economictimes.com/et_fonts.cms?minify=1&amp;v=6&amp;type=3"
@@ -110,7 +109,7 @@ const MyApp = ({ pageProps }: AppProps) => {
       <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData}>
         <Container objVc={versionControl} isprimeuser={isprimeuser} page={page} data={data} />
       </Layout>
-    </Provider>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import os from "os";
 const serverHost = os.hostname() || "";
-import Router from 'next/router'
+import { useRouter } from 'next/navigation';
 
 declare global {
     interface Window { 
@@ -223,11 +223,12 @@ export const socialUrl = {
 };
 
 export const ImageClickHandler = (url:string)=>{
+  const router = useRouter();
   let _url = url;
   let checkVideoUrl = _url.indexOf('/videoshow/') !== -1 && _url.indexOf('economictimes.indiatimes.com') !== -1
   if(checkVideoUrl){
     let videoShowurl = _url.split("https://economictimes.indiatimes.com").pop()
-    return Router.push(videoShowurl)
+    return router.push(videoShowurl)
   }
   return window.location.href = url
 }

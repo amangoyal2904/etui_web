@@ -1,5 +1,6 @@
+'use client';
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { setLoggedIn, setLoggedOut, setIsPrime } from "../../Slices/login";
 import styles from "./styles.module.scss";
 import Service from "network/service";
@@ -18,21 +19,21 @@ const Login: React.FC<Props> = () => {
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(0);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const loginCallback = () => {
     const objUser = (window.objUser && window.objUser.info) || {};
     if (Object.keys(objUser).length) {
       setUserInfo(objUser);
       setIsLogin(true);
-      dispatch(
-        setLoggedIn({
-          userInfo: objUser,
-          login: true,
-          permissions: [],
-          isprimeuser: 1
-        })
-      );
+      // dispatch(
+      //   setLoggedIn({
+      //     userInfo: objUser,
+      //     login: true,
+      //     permissions: [],
+      //     isprimeuser: 1
+      //   })
+      // );
       window.__APP.login = {
         status: true,
         ssoid: objUser.ssoid,

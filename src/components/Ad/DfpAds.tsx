@@ -1,9 +1,12 @@
+'use client';
+
 import { NextPage } from "next";
 import { useEffect, useState } from "react"
 
 interface Props {
     adInfo?: object;
     identifier?: string;
+    objVc?: any;
   }
 declare global {
     interface Window {
@@ -18,11 +21,24 @@ declare global {
         article: any;
         bl: any;
         spcKeyword: any;
+        customDimension: any;
+        objVc: any;
     }
 }
 
 const DfpAds:NextPage<Props> = function(props) {
     let adInfo:any = props.adInfo;
+
+    let objVc = props.objVc;
+    
+    console.log({adVC: objVc});
+
+    if(typeof window !== 'undefined') {
+        objVc = window.objVc;
+    }
+    console.log({adVC1: objVc});
+    // console.log({objVc});
+    
     let {key, index = 0} = adInfo;
     let divId = key;
     if (key) {
@@ -30,8 +46,19 @@ const DfpAds:NextPage<Props> = function(props) {
             divId = `${key}${index}`;
         }
     }
+
+    let adHeight = 0;
+    if( typeof objVc !== "undefined" && objVc.dfp && objVc.dfp[key] && objVc.dfp[key].adSize) {
+        console.log('what::', objVc?.dfp[key]?.adSize);
+        
+        const adSize = objVc?.dfp[key]?.adSize?.toString().replace(/[\[\]]/g, '');
+        console.log({adSize});
+        
+        adHeight = adSize && adSize.split(',')[1];
+    }
+
     useEffect(() => {
-        if (typeof window !== "undefined") {
+        // if (typeof window !== "undefined") {
             if (window.googletag) {
                 loadDfpAds();
             } else {
@@ -43,40 +70,40 @@ const DfpAds:NextPage<Props> = function(props) {
                 }
                 document.removeEventListener("gptLoaded", loadDfpAds);
             }
-        }
+        // }
     }, []);
     function loadDfpAds() {
         const googleTag = window.googletag;
         let  {adDivIds} = window;
         let {customDimension, currMsid, customSlot, } = adInfo;
-        let objVc = {
-            dfp: {
-                atf: {
-                adSize: "[[320,50]]",
-                adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_ATF"
-                },
-                fbn: {
-                adSize: "[[[320,50]],[[468,60]],[[728,90]]]",
-                adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_FBN"
-                },
-                mrec: {
-                adSize: "[[[300,250],[336,280],[250,250]]]",
-                adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_MTF"
-                },
-                mrec1: {
-                adSize: "[[[300,250],[336,280],[250,250]]]",
-                adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_Mrec1"
-                },
-                mrec2: {
-                adSize: "[[[300,250],[336,280],[250,250]]]",
-                adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_Mrec2"
-                },
-                mrec3: {
-                adSize: "[[[300,250],[336,280],[250,250]]]",
-                adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_Mrec3"
-                }
-            },
-        }
+        // let objVc = {
+        //     dfp: {
+        //         atf: {
+        //         adSize: "[[320,50]]",
+        //         adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_ATF"
+        //         },
+        //         fbn: {
+        //         adSize: "[[[320,50]],[[468,60]],[[728,90]]]",
+        //         adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_FBN"
+        //         },
+        //         mrec: {
+        //         adSize: "[[[300,250],[336,280],[250,250]]]",
+        //         adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_MTF"
+        //         },
+        //         mrec1: {
+        //         adSize: "[[[300,250],[336,280],[250,250]]]",
+        //         adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_Mrec1"
+        //         },
+        //         mrec2: {
+        //         adSize: "[[[300,250],[336,280],[250,250]]]",
+        //         adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_Mrec2"
+        //         },
+        //         mrec3: {
+        //         adSize: "[[[300,250],[336,280],[250,250]]]",
+        //         adSlot: "/7176/ET_MWeb/ET_Mweb_Home/ET_Mweb_HP_PT_Mrec3"
+        //         }
+        //     },
+        // }
         console.log("divid", divId, googleTag);
         if (divId && googleTag) {
             googleTag.cmd.push(() => {
@@ -88,6 +115,7 @@ const DfpAds:NextPage<Props> = function(props) {
                   adSize = adSize && (typeof adSize == 'string' ? JSON.parse(adSize) : adSize);
                   let dimension = customDimension ? JSON.parse(customDimension) : adSize ? adSize : [320, 250];
                   let adSlot = customSlot ? customSlot : objVc.dfp[key] && objVc.dfp[key]["adSlot"];           
+                  adSlot = `/7176/Economictimes${adSlot}`;
                   console.log("adslot", adSlot, Array.isArray(dimension[0]) ? dimension[0]: dimension, divId)
                   slot = googleTag.defineSlot(adSlot, Array.isArray(dimension[0]) ? dimension[0]: dimension, divId);
                   if(divId == "mh"){
@@ -119,14 +147,14 @@ const DfpAds:NextPage<Props> = function(props) {
                   }
                   googleTag
                     .pubads()
-                    .setTargeting("sg", __auds)
-                    .setTargeting("HDL", _hdl)
-                    .setTargeting("ARC1", _arc1)
-                    .setTargeting("Hyp1", _hyp1)
-                    .setTargeting("article", _article)
-                    .setTargeting("BL", _bl + "")
-                    .setTargeting("Keyword", _keyword)
-                    .setTargeting("ArticleID", currMsid);
+                    .setTargeting("sg", __auds || "")
+                    .setTargeting("HDL", _hdl || "")
+                    .setTargeting("ARC1", _arc1 || "")
+                    .setTargeting("Hyp1", _hyp1 || "")
+                    .setTargeting("article", _article || "")
+                    .setTargeting("BL", _bl + "" || "")
+                    .setTargeting("Keyword", _keyword || "")
+                    .setTargeting("ArticleID", currMsid || "");
                     
                     googleTag.pubads().enableSingleRequest();
                     googleTag.enableServices();
@@ -136,8 +164,11 @@ const DfpAds:NextPage<Props> = function(props) {
               });
         }
     }
+
+    const style = adHeight > 0 ? {minHeight: `${adHeight}px`} : {};
+
     return (
-        <div id={divId}></div>
+        <div id={divId} style={style}></div>
     )
 
 }
