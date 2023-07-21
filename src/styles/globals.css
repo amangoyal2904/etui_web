@@ -1,3 +1,20 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-VariableFont_wght.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  font-stretch: 75% 125%;
+}
+
+@font-face {
+  font-family: "Faustina";
+  src: url("/fonts/Faustina-VariableFont_wght.woff2") format("woff2-variations");
+  font-weight: 300 800;
+  font-display: swap;
+  font-style: normal;
+}
+
 /*, sub, sup removed from reset class*/
 /* Reset CSS */
 *, html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,

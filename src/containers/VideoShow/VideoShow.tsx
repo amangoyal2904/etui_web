@@ -1,23 +1,16 @@
 'use client';
 
 import styles from "./VideoShow.module.scss";
-import { useEffect, Fragment, FC, useRef } from "react";
-import { useSelector } from "react-redux";
-import { PageProps, VideoShowProps, OtherVidsProps } from "types/videoshow";
-// import { AppState } from "app/store";
+import { useEffect, FC, useRef } from "react";
+import { PageProps, VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
-import { ET_WAP_URL, getSubsecString } from "../../utils/common";
-import PostComments from "../../components/Comments/PostComments";
-import PopulateComment from "../../components/Comments/PopulateComment";
-import SocialShare from "../../components/Videoshow/SocialShare";
+import { getSubsecString } from "../../utils/common";
 import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
 import MostPopularNews from "../../components/MostPopularNews";
 import DfpAds from "../../components/Ad/DfpAds";
 import Listing from "components/Listing";
 import ReadMore from "components/ReadMore";
 import MostViewVideos from "components/MostViewVideos";
-import { log } from "console";
-import Layout from "components/Layout";
 
 declare global {
   interface Window {
@@ -72,8 +65,22 @@ const VideoShow: FC<PageProps> = (props) => {
       <>
         <section className={`pageContent ${styles.videoshow} col3`}>
           <h1>{result.title}</h1>
+          <div className={styles.byline}>
+            <div>{result.agency} | <time dateTime={result.date}>{result.date}</time></div>
+            <div className={styles.right}>              
+              <span className={styles.bookmarkCta}>
+                <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon"/>
+              </span>
+              <span className={styles.commentCta}>
+                <img src="https://img.etimg.com/photo/57749072.cms" alt="comment icon"/> Post a comment
+              </span>
+            </div>
+          </div>
           <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
-          <p>{result.synopsis}</p>
+          <div className={styles.videoDesc}>
+            <p>{result.synopsis}</p>
+            <a href="https://twitter.com/EconomicTimes" rel="nofollow" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
+          </div>
           <ReadMore readMoreText={result.relKeywords} />
           <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
           {/* <PostComments /> */}
