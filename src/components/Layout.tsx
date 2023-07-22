@@ -50,9 +50,10 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           <BreadCrumb data={data.seo.breadcrumb} />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
+          <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/>
           <Footer dynamicFooterData={dynamicFooterData} />
         </main>        
-        <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/>
+        
         <DfpAds adInfo={{key: "skinleft"}} objVc={objVc}/>
       </>
     );

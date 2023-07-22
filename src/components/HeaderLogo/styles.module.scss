@@ -43,6 +43,21 @@
       &:hover .edMenu{
         display: block;
       }
+
+      &:after, .ed:after{
+        content: '';
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        display: inline-block;
+        vertical-align: middle;
+        border-top: 4px solid #000;
+        margin: 0 0 0 3px;
+      }
+
+      a:hover {
+        background-color: #f4f4f4;
+        text-decoration: underline;
+      }
   
       .edMenu{
         position: absolute;
@@ -58,17 +73,7 @@
         .ed {
           padding: 5px 0;
           display: block;
-          border-bottom: 1px solid #c7cacc;
-  
-          &:after{
-            content: '';
-            border-left: 3px solid transparent;
-            border-right: 3px solid transparent;
-            display: inline-block;
-            vertical-align: middle;
-            border-top: 4px solid #000;
-            margin: 0 0 0 3px;
-          }
+          border-bottom: 1px solid #c7cacc;          
         }
 
         .edHin{
