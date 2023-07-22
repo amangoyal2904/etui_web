@@ -52,6 +52,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           <Footer dynamicFooterData={dynamicFooterData} />
         </main>        
+        <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/>
         <DfpAds adInfo={{key: "skinleft"}} objVc={objVc}/>
       </>
     );

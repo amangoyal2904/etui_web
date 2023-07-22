@@ -43,6 +43,12 @@
 
 .adContainer {
   text-align: center;
+  margin: 10px 0;
+
+  > div {
+    display: inline-block;
+    border: 10px solid #f4f4f4;
+  }
 }
 
 .layout {

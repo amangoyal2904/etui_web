@@ -1,11 +1,50 @@
 .listing{
+    margin-top: 1.5rem;
+
+    h2 {
+        margin: 10px 0 0 0;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
     ul {
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
 
     li {
-        font-size: 0.8em;
+        font-size: 12px;
         list-style: none;
+        display: flex;
+        grid-gap: 10px;
+        padding: 13px 0;
+        position: relative;
+
+        > div:first-child {
+            width: 80px;
+
+            .duration {
+                position: absolute;
+                bottom: -5px;
+                z-index: 1;
+                left: 15px;
+            }
+        }
+
+        > div:last-child {
+            flex: 1;
+
+            .views {
+                margin: 2px 0 0;
+                color: #999;
+                font-size: 11px;
+                display: block;
+            }
+        }
+        
+    }
+
+    li:not(:first-child) {
+        border-top: 1px solid #ebebeb;
     }
 }

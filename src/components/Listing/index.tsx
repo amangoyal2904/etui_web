@@ -19,11 +19,16 @@ export default function Listing({ type, title, data }: ListProps) {
             <ul>
               {data.data.map((item, index) => (
                 <li key={type + index}>
-                  <Link href={item.url}>                    
-                      <img src={item.img} alt={item.title} width={135} height={100} />
-                      <p>{item.title}</p>
-                      {item.type === "videoshow" && <span className={styles.slideVidIcon}></span>}                    
-                  </Link>
+                  <div>
+                    <Link href={item.url}>                    
+                      <img src={item.img} alt={item.title} width={80} height={60} />
+                    </Link>
+                    <span className={styles.duration}>{item.duration }</span>
+                  </div>
+                  <div>
+                      <a href={item.url}>{item.title}</a>
+                      <span className={styles.views}>Views: {item.views}</span>                   
+                  </div>
                 </li>
               ))}
             </ul>

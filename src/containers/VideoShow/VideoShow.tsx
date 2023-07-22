@@ -107,10 +107,11 @@ const VideoShow: FC<PageProps> = (props) => {
           */}
         </section>
         <aside className="sidebar">
-          <DfpAds adInfo={{key: "atf", index: 0}} objVc={version_control}/>
-          <DfpAds adInfo={{key: "mtf", index: 1}} objVc={version_control}/>
+          <div className="adContainer"><DfpAds adInfo={{key: "atf", index: 0}} objVc={version_control}/></div>
+          <div className="adContainer"><DfpAds adInfo={{key: "mtf", index: 1}} objVc={version_control}/></div>
           <MostViewVideos data={mostViewedVideos} />
           <MostPopularNews data={mostPopularNews} />
+          <div className="adContainer"><DfpAds adInfo={{key: "btf", index: 1}} objVc={version_control}/></div>
         </aside>
       </>
   );
