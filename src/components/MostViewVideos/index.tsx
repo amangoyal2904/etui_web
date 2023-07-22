@@ -16,17 +16,13 @@ const MostViewVideos: NextPage<any> = (props) => {
           let _urlVal = urlValidation(item.url)
           let _genHtml = <li key={index} attr-data-position={index}>
             <div className={styles.text}>
-            <Link href={_urlVal}>
-                
-                  {item.title}
-                
-            </Link>
+              <Link href={_urlVal}>{item.title}</Link>
             </div>
             <div className={styles.img}>
-              <Image onClick={()=>{ImageClickHandler(item.url)}} src={item.img} width="80" height="60" alt={item.title} title={item.title}/>
-                <span className={styles.timeFrame}>
-                    <span>{item.duration}</span>
-                </span>
+              <Link href={_urlVal}>
+                <img src={item.img} width="80" height="60" alt={item.title} title={item.title}/>
+              </Link>
+              <span className={styles.timeFrame}>{item.duration}</span>
             </div>
           </li>
           return htmlListData.push(_genHtml)
