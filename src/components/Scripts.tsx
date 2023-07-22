@@ -143,13 +143,22 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
             }}
           />
           <Script
-            src="https://static.growthrx.in/js/v2/web-sdk.js"
+            id="growthrx-analytics"
             strategy="lazyOnload"
-            onLoad={() => {
-              window.grx("init", window.objVc.growthRxId || "gc2744074");
-              window.customDimension = { ...window["customDimension"], url: window.location.href };
-              window.grx("track", "page_view", window.customDimension);
-              updateDimension();
+            dangerouslySetInnerHTML={{
+              __html: `
+               (function (g, r, o, w, t, h, rx) {
+                    g[t] = g[t] || function () {(g[t].q = g[t].q || []).push(arguments)
+                    }, g[t].l = 1 * new Date();
+                    g[t] = g[t] || {}, h = r.createElement(o), rx = r.getElementsByTagName(o)[0];
+                    h.async = 1;h.src = w;rx.parentNode.insertBefore(h, rx)
+                })(window, document, 'script', 'https://static.growthrx.in/js/v2/web-sdk.js', 'grx');
+                grx('init', window.objVc.growthRxId || 'gc2744074');
+                window.customDimension = { ...window["customDimension"], url: window.location.href };
+                //grx('track', 'page_view', {url: window.location.href});
+                const grxLoaded = new Event('grxLoaded');
+                document.dispatchEvent(grxLoaded);                
+              `
             }}
           />
           <Script

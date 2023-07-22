@@ -17,7 +17,8 @@
 .videoshow{
     font: 12px 'Montserrat',sans-serif;
     background: #fff;
-    margin: 0 auto;    
+    padding: 0 10px;  
+    border-right: 1px solid #ebebeb;  
 
     h1 {
         font-size: 36px;
@@ -30,6 +31,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 17px;
 
         .right {
             display: flex;
@@ -70,6 +72,15 @@
         }
     }
 
+    .vidWrapper {
+        display: flex;
+
+        .shareBar {
+            min-height: 420px;
+            width: 75px;
+        }
+    }    
+
     .videoDesc {
         background-color: #000;        
         color: #FFF;
@@ -77,6 +88,7 @@
         line-height: 18px;
         margin-top: 2px;        
         padding: 12px;
+        width: 611px;
     }
 
     // .pageContent{

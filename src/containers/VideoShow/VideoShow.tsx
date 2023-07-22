@@ -4,13 +4,15 @@ import styles from "./VideoShow.module.scss";
 import { useEffect, FC, useRef } from "react";
 import { PageProps, VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
-import { getSubsecString } from "../../utils/common";
+import { ET_WAP_URL, getSubsecString } from "../../utils/common";
 import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
 import MostPopularNews from "../../components/MostPopularNews";
 import DfpAds from "../../components/Ad/DfpAds";
 import Listing from "components/Listing";
 import ReadMore from "components/ReadMore";
 import MostViewVideos from "components/MostViewVideos";
+import {Share} from "components/Share";
+import SocialShare from "components/Videoshow/SocialShare";
 
 declare global {
   interface Window {
@@ -76,12 +78,26 @@ const VideoShow: FC<PageProps> = (props) => {
               </span>
             </div>
           </div>
-          <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+          <div className={styles.vidWrapper}>
+            <div className={styles.shareBar}>
+              <SocialShare mailData={{
+                    shareUrl: ET_WAP_URL + result.url,
+                    title: result.title,
+                    msid: result.msid,
+                    hostId: result.hostid,
+                    type: "5"
+                }}/>
+            </div>
+            <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+          </div>
           <div className={styles.videoDesc}>
             <p>{result.synopsis}</p>
             <a href="https://twitter.com/EconomicTimes" rel="nofollow" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
           </div>
           <ReadMore readMoreText={result.relKeywords} />
+          <div className="adContainer">
+            <DfpAds adInfo={{key: "mid1"}} objVc={version_control}/>
+          </div>
           <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
           {/* <PostComments /> */}
           {/* <PopulateComment msid={msid}/> */}
