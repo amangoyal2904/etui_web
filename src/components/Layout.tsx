@@ -44,10 +44,10 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           <HeaderMain
             page={page}
             menuData={menuData}
-            subsecnames={data.seo.subsecnames}
-            sectiondetail={data.seo.sectionDetail}
+            subsecnames={data?.seo?.subsecnames}
+            sectiondetail={data?.seo?.sectionDetail}
           />
-          <BreadCrumb data={data.seo.breadcrumb} />
+          <BreadCrumb data={data?.seo?.breadcrumb} />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/>
