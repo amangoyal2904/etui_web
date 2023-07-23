@@ -1,8 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link"
 import styles from './styles.module.scss'
-import Image from "next/image";
-import {ImageClickHandler,  urlValidation} from '../../utils/utils';
+import {urlValidation} from '../../utils/utils';
 
 const MostViewVideos: NextPage<any> = (props) => {  
     let listingData = props.data;

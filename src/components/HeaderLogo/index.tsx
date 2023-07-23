@@ -15,7 +15,7 @@ const EditionTimeStamp = () => {
     <>
       <div className={styles.edition_wrap}>
         <div className={styles.editionList}>
-          <span>English Edition</span>
+          <span role="heading">English Edition</span>
           <span className={styles.edMenu}>
             <span className={styles.ed}>English Edition</span>
               <a className={styles.edHin} target="_blank" rel="noopener dofollow noreferrer" href="https://hindi.economictimes.com/?utm_source=logo&utm_medium=referral&utm_campaign=et">हिन्दी</a>
@@ -119,7 +119,7 @@ const HeaderLogo = (props) => {
           <img src={etLogo} width={etLogoWidth} height={etLogoHeight} className="dib" alt="The Economic Times"/>
         </a>
         {page != "home" && 
-        <a className={`${styles.sec_logo} ${styles.head_name}`} href={sectiondetail.url} title={sectiondetail.title}>
+        <a className={`${styles.sec_logo} ${styles.head_name}`} href={sectiondetail?.url} title={sectiondetail?.title}>
           <ETSecLogo subsecnames={subsecnames} sectiondetail={sectiondetail} />
         </a>}
         <EditionTimeStamp />

@@ -33,8 +33,8 @@ export const SiteConfig = {
 
 export function getSubsecString(subsecNames) {
   if (!subsecNames) return "";
-  const names = [],
-    ids = [];
+  const names: string[] = [],
+    ids: string[] = [];
   Object.values(subsecNames).forEach((item: string) => {
     if (item) {
       /^[0-9]+$/.test(item) ? ids.push(item) : names.push(item);

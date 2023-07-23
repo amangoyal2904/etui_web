@@ -1,4 +1,4 @@
-import { encodeQueryData, getParameterByName, APP_ENV } from "../utils";
+import { getParameterByName, APP_ENV } from "../utils";
 import axios from "axios";
 import { isBrowser } from "utils";
 

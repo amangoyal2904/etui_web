@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
 import { setLoggedIn, setLoggedOut, setIsPrime } from "../../Slices/login";
 import styles from "./styles.module.scss";
-import Service from "network/service";
-import APIS_CONFIG from "network/config.json";
-import { APP_ENV, getCookie, setCookieToSpecificTime } from "utils";
+import Service from "../../network/service";
+import APIS_CONFIG from "../../network/config.json";
+import { APP_ENV, getCookie, setCookieToSpecificTime } from "../../utils";
 
 interface Props {}
 
@@ -54,7 +54,7 @@ const Login: React.FC<Props> = () => {
       // set state
       setIsSubscribed(1);
       // set prime status in redux
-      dispatch(setIsPrime(1));
+      // dispatch(setIsPrime(1));
       // add isprimeuser class in the body
       document.body.classList.add("isprimeuser");
       window.customDimension["dimension37"] = "Paid User";
@@ -83,7 +83,7 @@ const Login: React.FC<Props> = () => {
 
   const setLogout = (cb = null) => {
     const userSsoId = userInfo.ssoid
-    dispatch(setLoggedOut());
+    // dispatch(setLoggedOut());
     setUserInfo({});
     window.__APP.login = {
       status: false,
@@ -92,7 +92,7 @@ const Login: React.FC<Props> = () => {
       firstName: ""
     };
     if (typeof cb == "function") {
-      cb();
+      // cb();
     } else {
       window.objUser.logout(() => {
         window.ga('send', 'event', 'SignOut', window.location.href);

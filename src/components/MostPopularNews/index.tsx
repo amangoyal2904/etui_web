@@ -19,7 +19,7 @@ const MostPopularNews: NextPage<any> = (props) => {
               </a>
             </div>
             <div className={styles.img}>
-              <Image onClick={()=>{ImageClickHandler(item.url)}} src={item.img} width="100" height="75" alt={item.title} title={item.title}/>
+              <img src={item.img} width="100" height="75" alt={item.title} title={item.title}/>
                 <span className={styles.timeFrame}>
                     <span>{item.duration}</span>
                 </span>
