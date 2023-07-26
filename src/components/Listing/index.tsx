@@ -20,9 +20,9 @@ export default function Listing({ type, title, data }: ListProps) {
               {data.data.map((item, index) => (
                 <li key={type + index}>
                   <div>
-                    <Link href={item.url}>                    
+                    <a href={item.url}>                    
                       <img src={item.img} alt={item.title} width={80} height={60} />
-                    </Link>
+                    </a>
                     <span className={styles.duration}>{item.duration }</span>
                   </div>
                   <div>

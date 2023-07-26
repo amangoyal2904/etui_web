@@ -1,12 +1,14 @@
 'use client';
 
-import React, {FC, ReactElement } from 'react';
+import React, {FC, ReactElement, useEffect } from 'react';
 import Headers from './Head';
 import HeaderMain from './HeaderMain';
 import Scripts from './Scripts';
 import Footer from './Footer';
 import BreadCrumb from "components/BreadCrumb";
 import DfpAds from './Ad/DfpAds';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { callJsOnRouteChange } from 'utils/priority';
 
 interface Props {
   page?: string;
@@ -35,6 +37,15 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
   if(typeof window !== 'undefined') {
     window.objVc = objVc;
   }
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    console.log('rrrr');
+    
+    callJsOnRouteChange();
+  }, [pathname, searchParams]);
 
   return (
       <>

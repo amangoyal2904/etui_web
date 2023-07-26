@@ -22,5 +22,9 @@ export function InitialJsOnAppLoad(): void {
 export function callJsOnRouteChange(url?): void {
   console.log("callJsOnRouteChange called");
   window.adDivIds = [];
+  //=== destroy all dfp ad slots on route change
+  if (typeof window.googletag != "undefined" && window.googletag.apiReady) {      
+    window.googletag.destroySlots();
+  }
   // ga.pageview(url);
 }

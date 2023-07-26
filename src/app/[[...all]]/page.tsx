@@ -4,6 +4,7 @@ import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from 'containers';
 import Layout from 'components/Layout';
+import { Suspense } from 'react';
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
@@ -71,7 +72,9 @@ export default async function Page({ params, searchParams }: {
   
   const versionControl = response?.version_control || {};
   return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>      
-  <VideoShow {...response} objVc={versionControl}/>
+    <Suspense fallback={<p>Loading...</p>}>
+      <VideoShow {...response} objVc={versionControl}/>
+    </Suspense>
   </Layout>
   ;
 }

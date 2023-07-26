@@ -28,7 +28,7 @@ export const get = (config) => {
         "Content-Type": "application/json"
       }
     });
-    console.log({url, config});
+    // console.log({url, config});
     return instance.get(url, config);
   } catch (e) {
     console.log("error in get request", e);

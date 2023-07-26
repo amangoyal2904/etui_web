@@ -47,13 +47,10 @@ const DfpAds:NextPage<Props> = function(props) {
         }
     }
 
-    let adHeight = 0;
+    let adHeight = 0, adWidth = 0;
     if( typeof objVc !== "undefined" && objVc.dfp && objVc.dfp[key] && objVc.dfp[key].adSize) {
-        console.log('what::', objVc?.dfp[key]?.adSize);
-        
         const adSize = objVc?.dfp[key]?.adSize?.toString().replace(/[\[\]]/g, '');
-        console.log({adSize});
-        
+        adWidth = adSize && adSize.split(',')[0];
         adHeight = adSize && adSize.split(',')[1];
     }
 
@@ -165,7 +162,7 @@ const DfpAds:NextPage<Props> = function(props) {
         }
     }
 
-    const style = adHeight > 0 ? {minHeight: `${adHeight}px`} : {};
+    const style = adHeight > 0 ? {minHeight: `${adHeight}px`, minWidth: `${adWidth}px`} : {};
 
     return (
         <div id={divId} style={style}></div>

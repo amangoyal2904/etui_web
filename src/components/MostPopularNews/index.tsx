@@ -1,7 +1,5 @@
 import { NextPage } from "next";
 import styles from './styles.module.scss'
-import Image from "next/image";
-import {ImageClickHandler} from '../../utils/utils';
 
 const MostPopularNews: NextPage<any> = (props) => {  
     let listingData = props?.data;
