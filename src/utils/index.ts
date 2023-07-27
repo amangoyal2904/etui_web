@@ -1,13 +1,13 @@
 import getConfig from "next/config";
 import { pageview } from "./ga";
 
-const { publicRuntimeConfig = {} } = getConfig();
-export const APP_ENV = (publicRuntimeConfig.APP_ENV && publicRuntimeConfig.APP_ENV.trim()) || "production";
+// const { publicRuntimeConfig = {} } = getConfig();
+export const APP_ENV = (process.env.APP_ENV && process.env.APP_ENV.trim()) || "production";
 
 declare global {
   interface Window {
     geolocation: any;
-    customDimension: object;
+    customDimension: any;
     geoinfo: any;
     opera?: string;
     MSStream?: string;
@@ -124,11 +124,6 @@ export const prepareMoreParams = ({ all, page, msid }) => {
 };
 
 export const getMSID = (url) => (url && url.split(".cms")[0]) || "";
-export const encodeQueryData = (data) => {
-  const ret = [];
-  for (const d in data) ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
-  return ret.join("&");
-};
 
 //Get any parameter value from URL
 export const getParameterByName = (name) => {
@@ -152,7 +147,7 @@ export const queryString = (params) =>
   Object.keys(params)?.map((key) => key + "=" + params[key]).join("&");
 
 export const getMobileOS = () => {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera || "";
   if (/android/i.test(userAgent)) {
     return "Android";
   }

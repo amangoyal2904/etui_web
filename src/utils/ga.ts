@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as Config from "./common";
 import * as utils from ".";
 
@@ -12,7 +14,7 @@ declare global {
     // eslint-disable-next-line
     // gtag: any;
     dataLayer: [];
-    customDimension: object;
+    customDimension: any;
   }
 }
 export const pageview = (url) => {
@@ -41,7 +43,7 @@ export const gaObserverInit = (newImpressionNodes = [], newClickNodes = []) => {
           }
           const el = entry.target;
           if (el) {
-            const gaData = el.getAttribute("data-ga-impression").split("#");
+            const gaData = el?.getAttribute("data-ga-impression")?.split("#") || [];
             gaData[2] =
               typeof gaData[2] != "undefined" && gaData[2] != ""
                 ? gaData[2] == "url"

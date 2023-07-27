@@ -9,7 +9,7 @@ export default function BreadCrumb({ data }: BreadCrumbProps) {
   return (
     <>      
       <div className={styles.breadCrumb}>
-        {data.map((item, i) => (
+        {data?.map((item, i) => (
           <Fragment key={i}>
             {item.url ? (
               <span>

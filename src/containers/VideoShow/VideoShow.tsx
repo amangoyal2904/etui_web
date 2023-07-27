@@ -1,86 +1,119 @@
+'use client';
+
 import styles from "./VideoShow.module.scss";
-import { useEffect, Fragment, FC } from "react";
-import { useSelector } from "react-redux";
-import { PageProps, VideoShowProps, OtherVidsProps } from "types/videoshow";
-import { AppState } from "app/store";
+import { useEffect, FC, useRef } from "react";
+import { PageProps, VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
-import { ET_WAP_URL } from "../../utils/common";
-import PostComments from "../../components/Comments/PostComments";
-import PopulateComment from "../../components/Comments/PopulateComment";
-import SocialShare from "../../components/Videoshow/SocialShare";
+import { ET_WAP_URL, getSubsecString } from "../../utils/common";
+import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
+import MostPopularNews from "../../components/MostPopularNews";
+import DfpAds from "../../components/Ad/DfpAds";
+import Listing from "components/Listing";
+import ReadMore from "components/ReadMore";
+import MostViewVideos from "components/MostViewVideos";
+import {Share} from "components/Share";
+import SocialShare from "components/Videoshow/SocialShare";
+
+declare global {
+  interface Window {
+    isprimeuser: number;
+    spl: any;
+    SlikePlayer: any;
+  }
+}
 
 const VideoShow: FC<PageProps> = (props) => {
+  const result = props?.searchResult?.find((item) => item.name === "videoshow")?.data as VideoShowProps;
+  const mostPopularNews = props?.searchResult?.find((item) => item.name === "most_popular_news");
+  const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
+  const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
   const { seo = {}, version_control, parameters } = props;
+  console.log({props})
   const seoData = { ...seo, ...version_control?.seo };
   const { msid } = parameters;
   const { cpd_wap = "0" } = version_control;
-  const loginState = useSelector((state: AppState) => state.login);
+  // const loginState = useSelector((state: AppState) => state.login);
+
+  const vidRef = useRef(null);
+
   useEffect(() => {
     // set page specific customDimensions
     const payload = getPageSpecificDimensions(seo);
     window.customDimension = { ...window.customDimension, ...payload };
+
+    const subSecs = getSubsecString(seo?.subsecnames);
+    const playerConfig = setGetPlayerConfig({
+      dynamicPlayerConfig,
+      result,
+      autoPlay: true,
+      pageTpl: "videoshow",
+      isPrimeUser: window.isprimeuser,
+      subSecs
+    });
+
+    document.addEventListener('slikeReady', () => {
+      window?.spl?.load(playerConfig, (status) => {
+        if (status) {
+          const player = new window.SlikePlayer(playerConfig);
+          handleAdEvents(player);
+          handlePlayerEvents(player);
+        }
+      });
+    });
+    
   }, [props]);
 
-  const VideoContainer = () => {
-    {
-      return props?.searchResult?.map((item) => {
-        if (item.name === "videoshow") {
-          const result = item.data as VideoShowProps;
-          const url = `${result.iframeUrl}&skipad=${loginState.isprimeuser}`;
-          return (
-            <Fragment key={item.name}>
-              <div className={styles.videoshow}>
-                {/* <VideoEmbed url={url} /> */}
-
-                <div className={styles.wrap}>
-                  <h1 role="heading">{result.title}</h1>
-                  <div className={styles.synopsis}>
-                    <p>{result.synopsis}</p>
-                  </div>
-                  <div className={styles.date}>
-                    {result.agency} | {result.date}
-                  </div>
-                </div>
-                {/* <SocialShare
-                  shareParam={{
-                    shareUrl: ET_WAP_URL + result.url,
-                    title: result.title,
-                    msid: result.msid,
-                    hostId: result.hostid,
-                    type: "5"
-                  }}
-                /> */}
-                <SocialShare mailData={{
+  return (    
+      <>
+        <section className={`pageContent ${styles.videoshow} col3`}>
+          <h1>{result.title}</h1>
+          <div className={styles.byline}>
+            <div>{result.agency} | <time dateTime={result.date}>{result.date}</time></div>
+            <div className={styles.right}>              
+              <span className={styles.bookmarkCta}>
+                <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon"/>
+              </span>
+              <span className={styles.commentCta}>
+                <img src="https://img.etimg.com/photo/57749072.cms" alt="comment icon"/> Post a comment
+              </span>
+            </div>
+          </div>
+          <div className={styles.vidWrapper}>
+            <div className={styles.shareBar}>
+              <SocialShare mailData={{
                     shareUrl: ET_WAP_URL + result.url,
                     title: result.title,
                     msid: result.msid,
                     hostId: result.hostid,
                     type: "5"
                 }}/>
-              </div>
-              {/* <SeoWidget data={result.relKeywords} title="READ MORE" /> */}
-            </Fragment>
-          );
-        } else if (item.name === "other_videos" && Array.isArray(item.data)) {
-          const otherVids = item as OtherVidsProps;
-          // return <Listing type="grid" title={otherVids.title} data={otherVids} key={item.name} />;
-        }
-      });
-    }
-  };
-  return (
-    <>      
-      <section className={`${styles.mainContent} col3`}>
-        {VideoContainer()}
-        {/* <PostComments /> */}
-        {/* <PopulateComment msid={msid}/> */}
-        {/* <SEO {...seoData} /> */}
-        {/* <GreyDivider />
-        <AppDownloadWidget tpName="videoshow" />
-         */}
-      </section>
-      <aside className="col1">sidebar</aside>
-    </>
+            </div>
+            <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+          </div>
+          <div className={styles.videoDesc}>
+            <p>{result.synopsis}</p>
+            <a href="https://twitter.com/EconomicTimes" rel="nofollow" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
+          </div>
+          <ReadMore readMoreText={result.relKeywords} />
+          <div className="adContainer">
+            <DfpAds adInfo={{key: "mid1"}} objVc={version_control}/>
+          </div>
+          <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
+          {/* <PostComments /> */}
+          {/* <PopulateComment msid={msid}/> */}
+          {/* <SEO {...seoData} /> */}
+          {/* <GreyDivider />
+          <AppDownloadWidget tpName="videoshow" />
+          */}
+        </section>
+        <aside className="sidebar">
+          <div className="adContainer"><DfpAds adInfo={{key: "atf", index: 0}} objVc={version_control}/></div>
+          <div className="adContainer"><DfpAds adInfo={{key: "mtf", index: 1}} objVc={version_control}/></div>
+          <MostViewVideos data={mostViewedVideos} />
+          <MostPopularNews data={mostPopularNews} />
+          <div className="adContainer"><DfpAds adInfo={{key: "btf", index: 1}} objVc={version_control}/></div>
+        </aside>
+      </>
   );
 };
 

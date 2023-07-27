@@ -1,11 +1,14 @@
-import { useRouter } from "next/router";
+'use client';
+
+import { log } from "console";
+import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { FC, useEffect } from "react";
 import { APP_ENV, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 
 interface Props {
-  isprimeuser?: number;
+  isprimeuser?: number | boolean;
   objVc?: object;
 }
 
@@ -29,18 +32,22 @@ declare global {
   }
 }
 
-const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
+const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
+
+  console.log({isprimeuser});
+  
+
   const router = useRouter();
-  const reqData = router.query;
-  const isTopicPage = router.asPath.indexOf("/topic/") !== -1;
-  const isReady = router.isReady;
+  const searchParams = useSearchParams();
+
+  console.log({searchParams});
 
   const minifyJS = APP_ENV === "development" ? 0 : 1;
   const jsDomain = APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
   const jsIntsURL = `${jsDomain}/js_ints.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}`;
 
   useEffect(() => {
-    window.optCheck = router.asPath.indexOf("opt=1") != -1;
+    // window.optCheck = router.asPath.indexOf("opt=1") != -1;
     //updateDimension();
   }, []);
 
@@ -80,7 +87,8 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
             }
 
             if(value) {
-              var comps = value.split(',').map(function(item) { return item.trim(); });                                              
+              var comps = value.split(',')
+              (function(item) { return item.trim(); });                                              
               var map = {'CC': 'CountryCode', 'RC': 'region_code', 'CT': 'city', 'CO': 'Continent', 'GL': 'geolocation'}
               for(var i=0; i<comps.length; i++) {
                 var compSplit = comps[i].split(':');
@@ -117,7 +125,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
         }}
       />
 
-      {!reqData.opt && isReady && (
+      {!searchParams?.get('opt') && (
         <>
           <Script
             id="google-analytics"
@@ -135,18 +143,27 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
             }}
           />
           <Script
-            src="https://static.growthrx.in/js/v2/web-sdk.js"
+            id="growthrx-analytics"
             strategy="lazyOnload"
-            onLoad={() => {
-              window.grx("init", window.objVc.growthRxId || "gc2744074");
-              window.customDimension = { ...window["customDimension"], url: window.location.href };
-              window.grx("track", "page_view", window.customDimension);
-              updateDimension();
+            dangerouslySetInnerHTML={{
+              __html: `
+               (function (g, r, o, w, t, h, rx) {
+                    g[t] = g[t] || function () {(g[t].q = g[t].q || []).push(arguments)
+                    }, g[t].l = 1 * new Date();
+                    g[t] = g[t] || {}, h = r.createElement(o), rx = r.getElementsByTagName(o)[0];
+                    h.async = 1;h.src = w;rx.parentNode.insertBefore(h, rx)
+                })(window, document, 'script', 'https://static.growthrx.in/js/v2/web-sdk.js', 'grx');
+                grx('init', window.objVc.growthRxId || 'gc2744074');
+                window.customDimension = { ...window["customDimension"], url: window.location.href };
+                //grx('track', 'page_view', {url: window.location.href});
+                const grxLoaded = new Event('grxLoaded');
+                document.dispatchEvent(grxLoaded);                
+              `
             }}
           />
           <Script
             id="tag-manager"
-            strategy={isTopicPage ? "lazyOnload" : "worker"}
+            strategy="lazyOnload"
             src={`https://www.googletagmanager.com/gtag/js?id=${Config.GA.GTM_KEY}`}
           />
           {/* {isTopicPage ? ( */}
@@ -165,6 +182,12 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
           <Script strategy="lazyOnload" src="https://agi-static.indiatimes.com/cms-common/ibeat.min.js" />
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
 
+          <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
+		      <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js"  onLoad={() => {
+                  const slikeReady = new Event("slikeReady");
+                  document.dispatchEvent(slikeReady);
+                }}/>
+
           {!isprimeuser && (
             <>
               <Script
@@ -175,7 +198,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc }) => {
                   document.dispatchEvent(gptLoaded);
                 }}
               />
-              {router.asPath.indexOf("skip_ctn=1") == -1 && (
+              {searchParams?.get("skip_ctn") == '1' && (
                 <Script src="https://static.clmbtech.com/ad/commons/js/2501/colombia_v2.js" strategy="lazyOnload" />
               )}
             </>

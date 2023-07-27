@@ -1,26 +1,24 @@
-import { pageType, getMSID, prepareMoreParams } from "../utils";
-import Service from "../network/service";
-import APIS_CONFIG from "../network/config.json";
+import { headers } from 'next/headers';
+import { pageType, getMSID, prepareMoreParams } from "../../utils";
+import Service from "../../network/service";
+import APIS_CONFIG from "../../network/config.json";
+import { VideoShow } from 'containers';
+import Layout from 'components/Layout';
+import { Suspense } from 'react';
 
-interface Props {
-page: string;
-response: any;
-isprimeuser: number;
-dynamicFooterData: any;
-menuData: any;
-}
-
-const All = () => null;
-const expiryTime = 10 * 60;
-
-export async function getServerSideProps({ req, res, params, resolvedUrl }): Promise<{ props: Props }> {
-  const isprimeuser = req.headers?.primetemplate ? 1 : 0,
+export default async function Page({ params, searchParams }: {
+  params: { all: string[] }
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+  const headersList = headers()
+  const primetemplate = headersList.get('primetemplate')
+  const isprimeuser = primetemplate ? 1 : 0,
   { all = [] } = params,
   lastUrlPart: string = all?.slice(-1).toString(),
   api = APIS_CONFIG.FEED,
   REQUEST = APIS_CONFIG.REQUEST;
 
-  let page = pageType(resolvedUrl),
+  let page = pageType(all.join('/')),
   extraParams: any = {},
   response: any = {},
   menuData: any = {},
@@ -65,23 +63,18 @@ export async function getServerSideProps({ req, res, params, resolvedUrl }): Pro
     dynamicFooterData = footerMenuResult?.data || {};
     menuData = navBarResult?.data;
 
-    // console.log("menuData---", menuData);
-
     //==== sets response headers =====
-    res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
-    res.setHeader("Expires", new Date(new Date().getTime() + expiryTime * 1000).toUTCString());
+    //res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
+    //res.setHeader("Expires", new Date(new Date().getTime() + expiryTime * 1000).toUTCString());
   }catch(error){
     console.log("Error: ", error)
   }
-
-  return {
-    props: {
-      page,
-      response,
-      isprimeuser,
-      dynamicFooterData,
-      menuData,
-    },
-  };
+  
+  const versionControl = response?.version_control || {};
+  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>      
+    <Suspense fallback={<p>Loading...</p>}>
+      <VideoShow {...response} objVc={versionControl}/>
+    </Suspense>
+  </Layout>
+  ;
 }
-export default All;
