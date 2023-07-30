@@ -50,7 +50,7 @@ export default async function Page({ params, searchParams }: {
     //==== gets dyanmic footer data =====
     const footerMenuPromise = Service.get({
       api,
-      params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page },
+      params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page , platform:'web'},
     });
     //==== gets menu data =====
     const navBarPromise = Service.get({

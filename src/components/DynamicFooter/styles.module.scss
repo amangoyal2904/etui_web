@@ -10,6 +10,12 @@
     padding: 15px;
 
     .category {
+      height: 47px;
+      overflow: hidden;
+      padding: 0 1%;
+      position: relative;
+      margin-bottom: 20px;
+
       p {
         font-size: 20px;
         font-weight: 800;
@@ -43,6 +49,29 @@
           white-space: nowrap;
         }
       }
+      .show_hide_interlinking{
+        color: #fff;
+        float: right;
+        margin-right: 123px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: underline;
+      }
+      .show_hide_interlinking::after{
+        content: '';
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        margin-left: 10px;
+        padding: 3px;
+        margin-bottom: 1px;
+        transform: rotate(45deg);
+      }
+
+    }
+    .visible{
+      height: auto;
     }
   }
 
@@ -164,6 +193,7 @@
 
     .contentLeft {
       float: left;
+      margin-top: 15px;
     }
 
     .contentRight {

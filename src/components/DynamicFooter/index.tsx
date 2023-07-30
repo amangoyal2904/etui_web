@@ -1,9 +1,10 @@
 import styles from "./styles.module.scss";
-import { FC } from "react";
+import { FC, useState } from "react";
 import GreyDivider from "components/GreyDivider";
 import { isNoFollow } from "utils";
 
 const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) => {
+  const [isExpanded, setIsExpanded] = useState({});
   const hide_footer = false;
   const paymentButtonListener = () => {
     const paymentUrl = "";
@@ -103,15 +104,23 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
       </div>
     )
   }
-
+  const onMoreClick = (item) => {
+    setIsExpanded(prevState => {
+      return {
+        ...prevState,
+        [item]: !isExpanded[item]
+      }
+    });
+  }
   const Interlinking = () => {
     let interLinkingData = dynamicFooterData?.widgets || [];
     const interLinkingList = interLinkingData?.map((i, index) => (
-      <div data-attr="interlinking" className={styles.category} key={`inkl_${index}`}>
+      interLinkingData[index].title != "Browse Company" ?
+      <div data-attr="interlinking" className={`${styles.category} ${isExpanded[index] ? styles.visible :""}`} key={`inkl_${index}`}>
         {interLinkingData[index]["data"] && Array.isArray(interLinkingData[index]["data"]) && (
-          interLinkingData[index].title != "Browse Company" ?
             <>
               <p>{interLinkingData[index].title}</p>
+              <div className={styles.show_hide_interlinking} onClick={()=>onMoreClick(index)}>{isExpanded[index] ? 'Less' : 'More'}</div>
               <div className={styles.content}>
                 {interLinkingData[index]["data"]?.map((item, key) => {
                   const noFollow = isNoFollow(item.url) && item.noFollow != "false" ? { rel: "nofollow" } : {};
@@ -123,9 +132,8 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
                 })}
               </div>
             </>
-            : ""
         )}
-      </div>
+      </div>: ""
     ));
 
     return <div className={styles.dynamicCategories}>{interLinkingList}</div>;
