@@ -126,7 +126,7 @@ const VideoShow: FC<PageProps> = (props) => {
             </div>
             <div className={`vidWrapInner ${isPopupVid ? styles.popupVid : ''}`}>
               {isPopupVid && <div className={styles.title}>{result.title}</div> }
-              <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+              <div id={`id_${result.msid}`} className={`${styles.vidContainer} ${styles.vid}`}></div>
             </div>
           </div>
           <div className={styles.videoDesc}>
