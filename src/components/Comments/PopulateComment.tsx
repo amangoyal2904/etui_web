@@ -10,7 +10,7 @@ interface commentsProps {
 
 
 const PopulateComment:FC<commentsProps> = ({msid}) => {
-  const [commentsData,setCommentsData] = useState([]);
+  const [commentsData,setCommentsData] = useState<Object []>([]);
   const [activeIndex, setActiveIndex] = useState({"isReplyActive":null,"isFlagActive":null});
   const loadMoreCount = useRef(1);
   const visibleComments = useRef(2);
@@ -27,7 +27,7 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
       .catch(err => {
         console.log('error: ', err);
       })
-  }, [msid]);
+  }, [url]);
 
   const loadMore = (pageNumber,numberOfComments=25) => {
     fetch(url + `&pagenum=${pageNumber}&size=${numberOfComments}`, {
@@ -45,7 +45,7 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
 
   const commentCount = commentsData[0];
   const recentMessageCount = commentCount?.totalcount;
-  function populate(cards,level=1){
+  function populate(cards:Object[],level=1){
     let commentList = [];
     cards.forEach((item,index)=>{
       commentList.push(<CommentCard key = {item._id} commentCardId = {item._id} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} userFullName = {item.F_NAME} commentTime = {item.C_D} commentText = {item.C_T} statusPoints = {item.user_reward?.statusPoints} level = {level}/>);

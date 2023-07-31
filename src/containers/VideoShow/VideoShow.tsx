@@ -13,6 +13,8 @@ import ReadMore from "components/ReadMore";
 import MostViewVideos from "components/MostViewVideos";
 import {Share} from "components/Share";
 import SocialShare from "components/Videoshow/SocialShare";
+import PostComments from "components/Comments/PostComments";
+import PopulateComment from "components/Comments/PopulateComment";
 
 declare global {
   interface Window {
@@ -63,57 +65,64 @@ const VideoShow: FC<PageProps> = (props) => {
     
   }, [props]);
 
-  return (    
-      <>
-        <section className={`pageContent ${styles.videoshow} col3`}>
-          <h1>{result.title}</h1>
-          <div className={styles.byline}>
-            <div>{result.agency} | <time dateTime={result.date}>{result.date}</time></div>
-            <div className={styles.right}>              
-              <span className={styles.bookmarkCta}>
-                <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon"/>
-              </span>
-              <span className={styles.commentCta}>
-                <img src="https://img.etimg.com/photo/57749072.cms" alt="comment icon"/> Post a comment
-              </span>
-            </div>
+  return (
+    <>
+      <section className={`pageContent ${styles.videoshow} col3`}>
+        <h1>{result.title}</h1>
+        <div className={styles.byline}>
+          <div>
+            {result.agency} | <time dateTime={result.date}>{result.date}</time>
           </div>
-          <div className={styles.vidWrapper}>
-            <div className={styles.shareBar}>
-              <SocialShare mailData={{
-                    shareUrl: ET_WAP_URL + result.url,
-                    title: result.title,
-                    msid: result.msid,
-                    hostId: result.hostid,
-                    type: "5"
-                }}/>
-            </div>
-            <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+          <span className={styles.bookmarkCta}>
+            <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon" />
+          </span>
+          <PostComments />
+        </div>
+        <div className={styles.vidWrapper}>
+          <div className={styles.shareBar}>
+            <SocialShare
+              mailData={{
+                shareUrl: ET_WAP_URL + result.url,
+                title: result.title,
+                msid: result.msid,
+                hostId: result.hostid,
+                type: "5"
+              }}
+            />
           </div>
-          <div className={styles.videoDesc}>
-            <p>{result.synopsis}</p>
-            <a href="https://twitter.com/EconomicTimes" rel="nofollow" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
-          </div>
-          <ReadMore readMoreText={result.relKeywords} />
-          <div className="adContainer">
-            <DfpAds adInfo={{key: "mid1"}} objVc={version_control}/>
-          </div>
-          <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
-          {/* <PostComments /> */}
-          {/* <PopulateComment msid={msid}/> */}
-          {/* <SEO {...seoData} /> */}
-          {/* <GreyDivider />
+          <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+        </div>
+        <div className={styles.videoDesc}>
+          <p>{result.synopsis}</p>
+          <a
+            href="https://twitter.com/EconomicTimes"
+            rel="nofollow"
+            class="twitter-follow-button"
+            data-show-count="false"
+            data-lang="en"
+          >
+            Follow @EconomicTimes
+          </a>
+        </div>
+        <ReadMore readMoreText={result.relKeywords} />
+        <div className="adContainer">
+          <DfpAds adInfo={{ key: "mid1" }} objVc={version_control} />
+        </div>
+        <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
+        <PopulateComment msid={msid} />
+        {/* <SEO {...seoData} /> */}
+        {/* <GreyDivider />
           <AppDownloadWidget tpName="videoshow" />
           */}
-        </section>
-        <aside className="sidebar">
+      </section>
+      <aside className="sidebar">
           <div className="adContainer"><DfpAds adInfo={{key: "atf", index: 0}} objVc={version_control}/></div>
           <div className="adContainer"><DfpAds adInfo={{key: "mtf", index: 1}} objVc={version_control}/></div>
-          <MostViewVideos data={mostViewedVideos} />
-          <MostPopularNews data={mostPopularNews} />
+        <MostViewVideos data={mostViewedVideos} />
+        <MostPopularNews data={mostPopularNews} />
           <div className="adContainer"><DfpAds adInfo={{key: "btf", index: 1}} objVc={version_control}/></div>
-        </aside>
-      </>
+      </aside>
+    </>
   );
 };
 
