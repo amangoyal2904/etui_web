@@ -15,10 +15,15 @@ interface TechNavProps {
   msid: number;
 }
 
+interface TechNavListBlock {
+  msid: string;
+  data: any[];
+}
+
 const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
   // Use the useState hook to manage the component state
-  const [isLoading, setIsLoading] = useState(false);
-  const [techNavListBlock, settechNavListBlock] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [techNavListBlock, settechNavListBlock] = useState<TechNavListBlock[]>([]);
 
   useEffect(() => {
     getTechArticleList(78404305)
@@ -31,8 +36,8 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
         params: { feedtype: "etjson", msid }
       })
       .then((res) => {
-        let articleListObj = [...techNavListBlock,{msid, data: res.data}];
-        settechNavListBlock(articleListObj);
+        let articleListObj: TechNavListBlock[] = [...techNavListBlock,{msid, data: res.data}];
+        articleListObj && settechNavListBlock(articleListObj);
       })
       .catch((err) => {
         console.error(`Error in commodityNewsApi: ${err}`);
