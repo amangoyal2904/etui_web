@@ -1,7 +1,7 @@
 'use client';
 
 import styles from "./VideoShow.module.scss";
-import { useEffect, FC, useRef } from "react";
+import { useEffect, FC, useRef, useState } from "react";
 import { PageProps, VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
 import { ET_WAP_URL, getSubsecString } from "../../utils/common";
@@ -15,6 +15,7 @@ import {Share} from "components/Share";
 import SocialShare from "components/Videoshow/SocialShare";
 import PostComments from "components/Comments/PostComments";
 import PopulateComment from "components/Comments/PopulateComment";
+import { log } from "console";
 
 declare global {
   interface Window {
@@ -24,7 +25,14 @@ declare global {
   }
 }
 
+const options = {
+  root: null,
+  rootMargin: "0px 0px -50% 0px",
+  threshold: [0.5]
+};
+
 const VideoShow: FC<PageProps> = (props) => {
+  const [isPopupVid, setIsPopupVid] = useState(false);
   const result = props?.searchResult?.find((item) => item.name === "videoshow")?.data as VideoShowProps;
   const mostPopularNews = props?.searchResult?.find((item) => item.name === "most_popular_news");
   const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
@@ -37,6 +45,7 @@ const VideoShow: FC<PageProps> = (props) => {
   // const loginState = useSelector((state: AppState) => state.login);
 
   const vidRef = useRef(null);
+  const scrollRef = useRef(0);
 
   useEffect(() => {
     // set page specific customDimensions
@@ -65,6 +74,33 @@ const VideoShow: FC<PageProps> = (props) => {
     
   }, [props]);
 
+  useEffect(() => {
+    if(vidRef.current) {
+      const observer = new IntersectionObserver(([entry]) => {
+
+        // let isScrollingUp = false;
+        // const diff = scrollRef.current - window.scrollY;
+        // isScrollingUp = diff > 0;
+        
+        // if (entry.isIntersecting) {
+        //   scrollRef.current = window.scrollY;
+        //   console.log({isScrollingUp});
+        //   isScrollingUp ? setIsPopupVid(false) : setIsPopupVid(true);
+        // }      
+        
+        window.scrollY < 500 ? setIsPopupVid(false) : setIsPopupVid(true);
+
+      }, options);
+
+      observer.observe(vidRef.current);
+
+      return () => {
+        vidRef.current && observer.unobserve(vidRef.current);
+      };
+    }
+
+  }, [vidRef.current]);
+
   return (
     <>
       <section className={`pageContent ${styles.videoshow} col3`}>
@@ -78,7 +114,7 @@ const VideoShow: FC<PageProps> = (props) => {
           </span>
           <PostComments />
         </div>
-        <div className={styles.vidWrapper}>
+        <div className={styles.vidWrapper} ref={vidRef}>
           <div className={styles.shareBar}>
             <SocialShare
               mailData={{
@@ -90,14 +126,17 @@ const VideoShow: FC<PageProps> = (props) => {
               }}
             />
           </div>
-          <div id={`id_${result.msid}`} className={styles.vidContainer}></div>
+            <div className={`vidWrapInner ${isPopupVid ? styles.popupVid : ''}`}>
+              {isPopupVid && <div className={styles.title}>{result.title}</div> }
+            <div id={`id_${result.msid}`} className={`${styles.vidContainer} ${styles.vid}`}></div>
+            </div>
         </div>
         <div className={styles.videoDesc}>
           <p>{result.synopsis}</p>
           <a
             href="https://twitter.com/EconomicTimes"
             rel="nofollow"
-            class="twitter-follow-button"
+            className="twitter-follow-button"
             data-show-count="false"
             data-lang="en"
           >
