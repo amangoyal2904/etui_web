@@ -181,6 +181,27 @@
     }
 }
 
+.popupVid {
+    position: fixed;
+    right: 10px;
+    bottom: 0;    
+    z-index: 11;
+    background: #f7f7f7;
+    padding: 10px;
+    width: 360px;
+
+    .title {
+        font-weight: bold;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .vid {
+        width: 360px;
+        height: 260px;
+    }
+}
+
 .twitterFollowButton{
     position: relative;
     display: inline-block;
