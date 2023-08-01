@@ -64,7 +64,7 @@ const ReplyOnComment:FC<ReplyOnCommentProps> = (props) => {
     return (
        <>
         {openReplyForm && <div className={styles.cmtReplier}>
-            <form onSubmit={handleSubmit} className={styles.commentForm}>
+            <form onSubmit={handleSubmit} className={`${styles.commentForm} ${level > 1 ? styles.greyBgColor : ""}`}>
                  <textarea name="message" placeholder="Your reply" onChange={handleCommentChange}></textarea>
                  <p className={styles.chars_remain}>Characters Remaining (<span id="atrcharcount1">1500</span>)</p>
                  <div>
