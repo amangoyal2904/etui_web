@@ -4,7 +4,7 @@
     "dev": "PORT=3002 APP_ENV=development next",
     "build": "next build",
     "start": "PORT=3002 APP_ENV=development next start",
-    "prod": "PORT=3002 APP_ENV=production next start",
+    "prod": "PORT=3002 APP_ENV=development next start",
     "lint": "eslint",
     "type-check": "tsc",
     "test": "NODE_ENV=test jest",
