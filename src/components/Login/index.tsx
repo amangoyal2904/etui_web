@@ -71,6 +71,10 @@ const Login: React.FC<Props> = () => {
     window.objInts.afterPermissionCall(permissionCallback);
   };
   useEffect(() => {
+
+    console.log({APP_ENV});
+    
+
     if (typeof window.objInts !== "undefined") {
       intsCallback();
     } else {
