@@ -7,6 +7,8 @@
   background: #ffe9e2;
   /* Width and centering */
   width: 100%;
+  z-index: 99;
+  max-width: 1003px;
 
   /* Top navigation */
   .topnav {
@@ -62,6 +64,14 @@
         border: 1px solid transparent;
         border-bottom: 0;
         /* Styling for down arrow */
+
+        &.current{
+          background-color: #FFF;
+          color: #ed193b;
+          text-decoration: none;
+          font-weight: 600;
+          padding: 8px 4px 9px 4px;
+        }
         .downArw {
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
@@ -310,6 +320,20 @@
   }
 }
 
+.sticky {
+  /* Define the default styles for the element */
+  padding: 0px;
+  /* Add any other styles you want for the non-sticky state */
+}
+
+.stickyActive {
+  /* Define the styles for the element when it becomes sticky */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /* Add any other styles you want for the sticky state */
+}
+
 .sbnv_wrapper {
   border-color: #6d6d6d;
   display: flex;
@@ -341,6 +365,10 @@
         font-size: 12px;
         padding: 6px 5px 9px 5px;
         vertical-align: top;
+        &.current{
+          color: #ed193b;
+          text-decoration: none;
+        }
         &.subsec2{
           padding: 0;
           white-space: normal;

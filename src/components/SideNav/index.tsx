@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./styles.module.scss";
-import Service from "network/service";
-import APIS_CONFIG from "network/config.json";
+import Service from "../../network/service";
+import APIS_CONFIG from "../../network/config.json";
 
 interface SideNavData {
   nm: string;
@@ -24,16 +24,21 @@ const SideNav = () => {
   }, []);
 
   const handleSideNavApi = () => {
-    const api = APIS_CONFIG.FEED;
+    // const api = APIS_CONFIG.FEED;
 
-    Service.get({
-      api,
-      params: { type: "menu", feedtype: "etjson", pos: "lhsmenu" }
-    }).then(res => {
-      res.data && setSideNav(res.data);
-    }).catch(err => {
-      console.error(`error in sideMenuApi catch`, err);
-    });
+    // Service.get({
+    //   api,
+    //   params: { type: "menu", feedtype: "etjson", pos: "lhsmenu" }
+    // }).then(res => {
+    //   res.data && setSideNav(res.data);
+    // }).catch(err => {
+    //   console.error(`error in sideMenuApi catch`, err);
+    // });
+
+    const navbarData =  sessionStorage.getItem("navbar_data") || "";
+    if(navbarData){
+      setSideNav(JSON.parse(navbarData));  
+    }
   }
 
   const sideNavApiHtml = () => {
@@ -43,27 +48,31 @@ const SideNav = () => {
           {
             sideNavData?.map((l1, index) => { // Use nullish coalescing operator here
               return (
-                <li key={`${l1.nm}_${index}`}>
-                  {l1.sec && <span className={`${styles.commonSprite} ${styles.menuRtArrow}`}></span>}
-                  <a href={l1.link}>{l1.nm}</a>
-                  {l1.sec && <ul className={styles.l2} data-msid={l1.msid}>
-                    <li key="5rt" className={styles.subMenuTitle}>{l1.nm}</li>
-                    {l1.sec.map((l2, index) => (
-                      <li key={`${l2.nm}_${index}`}>
-                        {l2.sec && <span className={`${styles.commonSprite} ${styles.menuRtArrow}`}></span>}
-                        <a href={l2.link}>{l2.nm}</a>
-                        {l2.sec && <ul className={styles.l3} data-msid={l2.msid}>
-                          <li key="76ty" className={styles.subMenuTitle}>{l2.nm}</li>
-                          {l2.sec.map((l3, index) => (
-                            <li key={`${l3.nm}_${index}`}>
-                              <a href={l3.link}>{l3.nm}</a>
-                            </li>
-                          ))}
-                        </ul>}
-                      </li>
-                    ))}
-                  </ul>}
-                </li>
+                <>
+                  {
+                    l1.nm != "More"  && <li key={`${l1.nm}_${index}`}>
+                      {l1.sec && <span className={`${styles.commonSprite} ${styles.menuRtArrow}`}></span>}
+                      <a href={l1.link}>{l1.nm}</a>
+                      {l1.sec && <ul className={styles.l2} data-msid={l1.msid}>
+                        <li key="5rt" className={styles.subMenuTitle}>{l1.nm}</li>
+                        {l1.sec.map((l2, index) => (
+                          <li key={`${l2.nm}_${index}`}>
+                            {l2.sec && <span className={`${styles.commonSprite} ${styles.menuRtArrow}`}></span>}
+                            <a href={l2.link}>{l2.nm}</a>
+                            {l2.sec && <ul className={styles.l3} data-msid={l2.msid}>
+                              <li key="76ty" className={styles.subMenuTitle}>{l2.nm}</li>
+                              {l2.sec.map((l3, index) => (
+                                <li key={`${l3.nm}_${index}`}>
+                                  <a href={l3.link}>{l3.nm}</a>
+                                </li>
+                              ))}
+                            </ul>}
+                          </li>
+                        ))}
+                      </ul>}
+                    </li>
+                  }
+                </>
               )
             })
           }

@@ -2,9 +2,9 @@ import { headers } from 'next/headers';
 import { pageType, getMSID, prepareMoreParams } from "../../utils";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
-import { VideoShow } from 'containers';
-import Layout from 'components/Layout';
-import { Suspense } from 'react';
+import { VideoShow } from '../../containers/';
+import Layout from '../../components/Layout';
+import React, { Suspense } from 'react';
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
