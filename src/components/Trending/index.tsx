@@ -8,8 +8,8 @@ export default function Trending({data, title}: {data: any, title: string}) {
     <div className={styles.trending}>
       <h2>{title}</h2>
       {
-        data && Array.isArray(data) && data.map(item => {
-          return <li><a href={item.url}>{item.title}</a></li>
+        data && Array.isArray(data) && data.map((item, i) => {
+          return <li key={`trending_${i}`}><a href={item.url}>{item.title}</a></li>
         })
       }
     </div>
