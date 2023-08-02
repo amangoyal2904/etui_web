@@ -148,7 +148,7 @@ const Login: React.FC<Props> = () => {
     if (isLogin) {
       setLogout();
     } else {
-      const loginUrl = APIS_CONFIG.LOGIN[APP_ENV];
+      const loginUrl = 'https://etdev8243.indiatimes.com/'; //APIS_CONFIG.LOGIN[APP_ENV];
       window.location.href = `${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
     }
   };
