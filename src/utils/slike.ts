@@ -141,8 +141,8 @@ export const dynamicPlayerConfig = {
   },
   player: {
     msid: "",
-    autoPlay: false,
-    adSection: "default",
+    autoPlay: true,
+    adSection: "videoshow",
     fallbackMute: 0,
     mute: true,
     skipAd: 0,
@@ -158,7 +158,7 @@ export const dynamicPlayerConfig = {
     transmit: false,
     scrollBehaviour: {
       inViewPercent: 100,
-      dock: false,
+      dock: true,
       autoPlay: true,
       autoPause: true
     },
@@ -167,7 +167,7 @@ export const dynamicPlayerConfig = {
   gaId: "UA-198011-5"
 };
 
-export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, pageTpl, isPrimeUser, subSecs }) {
+export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, pageTpl, isPrimeUser, subSecs, adSection='default', isDeferredPreRoll=false }) {
   const playerConfig = JSON.parse(JSON.stringify(dynamicPlayerConfig));
   playerConfig.contEl = "id_" + result.msid;
   playerConfig.video.id = result.slikeid;
@@ -182,6 +182,11 @@ export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, page
   playerConfig.player.skipAd = isPrimeUser;
   playerConfig.player.isPrime = Boolean(isPrimeUser);
   playerConfig.player.pageSection = subSecs;
+  playerConfig.player.adSection = adSection;
+
+  if (isDeferredPreRoll) {
+    playerConfig.player.deferredPreroll = 5;
+  }
 
   return playerConfig;
 }
