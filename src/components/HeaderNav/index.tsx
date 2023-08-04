@@ -8,6 +8,7 @@ import MoreNav from "./MoreNav";
 import SubSecNav from "./SubSecNav";
 import HandleHoverSecHtml from "./HandleHoverSecHtml";
 import TechNav from "./TechNav";
+import SpotlightNav from "./SpotlightNav";
 
 interface HeaderNavProps {
   menuData: {
@@ -80,7 +81,9 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       case "More":
         return <MoreNav sec={sec} />; 
       case "Tech":
-        return <TechNav sec={sec} count={count} msid={msid} />  
+        return <TechNav sec={sec} count={count} msid={msid} /> 
+      case "Spotlight":
+        // return <SpotlightNav sec={sec} />    
       default:
         return <HandleHoverSecHtml sec={sec} count={count} msid={msid} />;
     }
@@ -99,8 +102,9 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
             return (
               <div key={`nav-l1-${index}`} className={styles.sec_1} data-l1={data.nm} data-id={data.msid}>
                 <a itemProp="url" className={`${subsec1 == data.msid && styles.current}`} href={data.link} data-ga-onclick={data.link}>
-                  <meta content={data.nm} itemProp="name" />{data.nm}
-                {data.nm === 'More' && <span className={styles.downArw}></span>}
+                {data.nm != 'More' && <meta content={data.nm} itemProp="name" />}
+                {data.nm != 'More' && data.nm}
+                {data.nm === 'More' && <img src="https://img.etimg.com/photo/msid-100067830/et-logo.jpg" width="4" height="16" alt="More" />}
                 </a>
                 {
                   data.hovernav && <div className={styles.subsecnav}>

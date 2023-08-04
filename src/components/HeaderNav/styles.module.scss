@@ -31,9 +31,13 @@
         width: 830px;
         left: -233px;
       }
+      &[data-l1="Spotlight"] .subsecnav {
+        width: 520px;
+        left: -488px;
+      }
       &[data-l1="More"] .subsecnav {
-        width: 764px;
-        margin-left: -506px;
+        width: 180px;
+        margin-left: -204px;
         /* Styling for sub-sections of "More" section */
         .subsec1 {
           border-bottom: 1px solid #000;

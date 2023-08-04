@@ -10,9 +10,11 @@ interface SubSecNavProps {
     sec?: {
       nm: string;
       link: string;
+      msid: string;
       sec?: {
         nm: string;
         link: string; 
+        msid: string;
       }[]
     }[];
   };
@@ -44,7 +46,7 @@ const SubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => {
 
             return (
               <div key={keyName_l2} data-ga-action={l2.nm}>
-                <a href={l2.link} data-ga-onclick={l2.link} className={styles.subsec2}>
+                <a href={l2.link} data-ga-onclick={l2.link} className={`${subsec3 == l2.msid && styles.current} ${styles.subsec2}`}>
                   {l2.nm}
                 </a>
                 {/* Check if there are any sub-sections */}
