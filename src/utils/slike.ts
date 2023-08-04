@@ -143,7 +143,7 @@ export const dynamicPlayerConfig = {
     msid: "",
     autoPlay: true,
     adSection: "videoshow",
-    fallbackMute: 0,
+    fallbackMute: true,
     mute: true,
     skipAd: 0,
     volume: 100,

@@ -41,6 +41,9 @@
   }
 }
 
+.topAdContainer {
+  text-align: center;
+}
 .adContainer {
   text-align: center;
   margin: 10px 0;
@@ -49,6 +52,13 @@
     display: inline-block;
     border: 10px solid #f4f4f4;
   }
+}
+
+#skinleft {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-left: calc((100% - 1003px) / 2 - -1004px);
 }
 
 .layout {
