@@ -114,7 +114,7 @@ const DfpAds:NextPage<Props> = function(props) {
                   let adSlot = customSlot ? customSlot : objVc.dfp[key] && objVc.dfp[key]["adSlot"];           
                   adSlot = `/7176/Economictimes${adSlot}`;
                   console.log("adslot", adSlot, Array.isArray(dimension[0]) ? dimension[0]: dimension, divId)
-                  slot = googleTag.defineSlot(adSlot, Array.isArray(dimension[0]) ? dimension[0]: dimension, divId);
+                  slot = googleTag.defineSlot(adSlot, Array.isArray(dimension) ? dimension: dimension, divId);
                   if(divId == "mh"){
                     window.ad_refresh.push(slot);
                   }
