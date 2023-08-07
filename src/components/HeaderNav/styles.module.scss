@@ -7,6 +7,8 @@
   background: #ffe9e2;
   /* Width and centering */
   width: 100%;
+  z-index: 99;
+  max-width: 1003px;
 
   /* Top navigation */
   .topnav {
@@ -29,9 +31,13 @@
         width: 830px;
         left: -233px;
       }
+      &[data-l1="Spotlight"] .subsecnav {
+        width: 520px;
+        left: -488px;
+      }
       &[data-l1="More"] .subsecnav {
-        width: 764px;
-        margin-left: -506px;
+        width: 180px;
+        margin-left: -204px;
         /* Styling for sub-sections of "More" section */
         .subsec1 {
           border-bottom: 1px solid #000;
@@ -62,6 +68,14 @@
         border: 1px solid transparent;
         border-bottom: 0;
         /* Styling for down arrow */
+
+        &.current{
+          background-color: #FFF;
+          color: #ed193b;
+          text-decoration: none;
+          font-weight: 600;
+          padding: 8px 4px 9px 4px;
+        }
         .downArw {
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
@@ -265,6 +279,60 @@
             margin-left: 0;
           }
         }
+
+        
+        .Edition_carouselone,  .Edition_carouseltwo{
+          width: 520px;
+          height: 250px;
+          overflow: hidden;
+          margin: 0;
+          padding-bottom: 15px;
+          margin-top: 30px;
+
+          ul {
+            overflow: hidden;
+            white-space: nowrap;
+            li{
+              display: inline-block;
+              vertical-align: top;
+              white-space: normal;
+              width: 520px;
+            }
+          }
+        }
+
+        .Edition_carouseltwo{
+          height: 120px;  
+          margin-top: 20px;
+          h2{
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 700;
+          }
+        }
+        .spotlightContent{
+          width: 105px;
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 32px;
+          min-height: 135px;
+          &:nth-child(4n){
+            margin-right: 0;  
+          }
+          a{
+            font-weight: 400;
+            color: #000;
+            font-family: Faustina,sans-serif;
+            cursor: pointer;
+            line-height: 14px;
+            font-size: 12px;
+            padding: 0;
+            &.txt{
+              margin-top: 5px;
+              text-align: center;
+            }
+          }
+        }
         
       }
       &:hover{
@@ -310,6 +378,20 @@
   }
 }
 
+.sticky {
+  /* Define the default styles for the element */
+  padding: 0px;
+  /* Add any other styles you want for the non-sticky state */
+}
+
+.stickyActive {
+  /* Define the styles for the element when it becomes sticky */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /* Add any other styles you want for the sticky state */
+}
+
 .sbnv_wrapper {
   border-color: #6d6d6d;
   display: flex;
@@ -341,6 +423,10 @@
         font-size: 12px;
         padding: 6px 5px 9px 5px;
         vertical-align: top;
+        &.current{
+          color: #ed193b;
+          text-decoration: none;
+        }
         &.subsec2{
           padding: 0;
           white-space: normal;
