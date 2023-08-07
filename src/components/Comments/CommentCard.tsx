@@ -1,11 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Service from "network/service";
 import APIS_CONFIG from "network/config.json";
 import styles from "./styles.module.scss";
 import ReplyOnComment from "./ReplyOnComment";
 import OffensiveCommentBox from "./OffensiveCommentBox";
+interface commentCardProps {
+  commentCardId:any;
+  userFullName:any;
+  commentTime:any;
+  statusPoints:any;
+  commentText:any;
+  level:any;
+  activeIndex:any;
+  setActiveIndex:any;
+}
 
-function CommentCard(props) {
+const CommentCard:FC<commentCardProps> = (props) => {
   const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex } = props;
   const [showOffensiveMark, setShowOffensiveMark] = useState(false);
   return (

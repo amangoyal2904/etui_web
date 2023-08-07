@@ -34,7 +34,7 @@ declare global {
 
 const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
-  console.log({isprimeuser});
+  console.log({APP_ENV});
   
 
   const router = useRouter();
@@ -43,8 +43,8 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   console.log({searchParams});
 
   const minifyJS = APP_ENV === "development" ? 0 : 1;
-  const jsDomain = APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
-  const jsIntsURL = `${jsDomain}/js_ints.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}`;
+  const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
+  const jsIntsURL = `${jsDomain}/js_ints.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
 
   useEffect(() => {
     // window.optCheck = router.asPath.indexOf("opt=1") != -1;

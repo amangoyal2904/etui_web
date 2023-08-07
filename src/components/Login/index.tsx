@@ -71,6 +71,10 @@ const Login: React.FC<Props> = () => {
     window.objInts.afterPermissionCall(permissionCallback);
   };
   useEffect(() => {
+
+    console.log({APP_ENV});
+    
+
     if (typeof window.objInts !== "undefined") {
       intsCallback();
     } else {
@@ -148,8 +152,8 @@ const Login: React.FC<Props> = () => {
     if (isLogin) {
       setLogout();
     } else {
-      const loginUrl = APIS_CONFIG.LOGIN[APP_ENV];
-      window.location.href = `${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
+      const loginUrl = `https://etdev8243.indiatimes.com/login.cms?ru=${window.location.href}`; //APIS_CONFIG.LOGIN[APP_ENV];
+      window.location.href = loginUrl; //`${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
     }
   };
 

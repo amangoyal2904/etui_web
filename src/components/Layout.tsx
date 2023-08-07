@@ -49,7 +49,9 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
 
   return (
       <>
-        <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
+        <div className="topAdContainer">
+          <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
+        </div>
         <Headers />
         <main className={`pageHolder container`}>
           <HeaderMain
