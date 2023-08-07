@@ -279,6 +279,60 @@
             margin-left: 0;
           }
         }
+
+        
+        .Edition_carouselone,  .Edition_carouseltwo{
+          width: 520px;
+          height: 250px;
+          overflow: hidden;
+          margin: 0;
+          padding-bottom: 15px;
+          margin-top: 30px;
+
+          ul {
+            overflow: hidden;
+            white-space: nowrap;
+            li{
+              display: inline-block;
+              vertical-align: top;
+              white-space: normal;
+              width: 520px;
+            }
+          }
+        }
+
+        .Edition_carouseltwo{
+          height: 120px;  
+          margin-top: 20px;
+          h2{
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 700;
+          }
+        }
+        .spotlightContent{
+          width: 105px;
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 32px;
+          min-height: 135px;
+          &:nth-child(4n){
+            margin-right: 0;  
+          }
+          a{
+            font-weight: 400;
+            color: #000;
+            font-family: Faustina,sans-serif;
+            cursor: pointer;
+            line-height: 14px;
+            font-size: 12px;
+            padding: 0;
+            &.txt{
+              margin-top: 5px;
+              text-align: center;
+            }
+          }
+        }
         
       }
       &:hover{

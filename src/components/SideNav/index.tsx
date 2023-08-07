@@ -50,7 +50,7 @@ const SideNav = () => {
               return (
                 <>
                   {
-                    l1.nm != "More"  && <li key={`${l1.nm}_${index}`}>
+                    l1.nm != "More" && l1.nm != "Spotlight"  && <li key={`${l1.nm}_${index}`}>
                       {l1.sec && <span className={`${styles.commonSprite} ${styles.menuRtArrow}`}></span>}
                       <a href={l1.link}>{l1.nm}</a>
                       {l1.sec && <ul className={styles.l2} data-msid={l1.msid}>

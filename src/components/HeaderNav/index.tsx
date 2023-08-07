@@ -83,7 +83,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       case "Tech":
         return <TechNav sec={sec} count={count} msid={msid} /> 
       case "Spotlight":
-        // return <SpotlightNav sec={sec} />    
+        return <SpotlightNav sec={sec} />    
       default:
         return <HandleHoverSecHtml sec={sec} count={count} msid={msid} />;
     }
