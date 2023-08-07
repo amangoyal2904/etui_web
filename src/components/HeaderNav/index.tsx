@@ -64,7 +64,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
 
   return (
     <>
-      {searchBar && <SearchBar />}
+      {searchBar && <SearchBar searchBar={searchBar} setSearchBarOff={() => setSearchBar(!searchBar)}/>}
       <div id="topnavBlk" className={styles.nav_block}>
         <nav id="topnav" className={`level1 ${styles.topnav}`}>
           <SideNav />
