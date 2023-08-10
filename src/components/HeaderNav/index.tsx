@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import SearchBar from "../SearchBar";
 import SideNav from "../SideNav";
 import styles from "./styles.module.scss";
@@ -27,33 +27,31 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
   // State to track whether the user has scrolled back to the top
   const [isScrolledToTop, setIsScrolledToTop] = useState<boolean>(false);
   const [stickyOffsetTop, setStickyOffsetTop] = useState<number>(0);
-
-  // Function to handle the scroll event
-  const handleScroll = () => {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    setIsScrolledToTop(scrollY <= stickyOffsetTop);
-    setIsSticky(scrollY >= stickyOffsetTop);
-  };
+  const headerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     document.addEventListener('mousemove', handleHoverSubSec);
-    const topNavRef = document.getElementById("topnavBlk");
-    setStickyOffsetTop(topNavRef?.offsetTop || 0);
-    
-    window.addEventListener('scroll', handleScroll);
     return () => {
       document.removeEventListener('mousemove', handleHoverSubSec);
     };
   }, []);
 
   useEffect(() => {
-    
-    // Do NOT remove the event listener here to keep the sticky behavior active
-    return () => {
-      // If you want to remove the event listener when the component unmounts, uncomment the following line
-      // window.removeEventListener('scroll', handleScroll);
+    if (headerRef.current) {
+      setStickyOffsetTop(headerRef.current.offsetTop);
+    }
+
+    const handleScroll = () => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolledToTop(scrollY <= stickyOffsetTop);
+      setIsSticky(scrollY >= stickyOffsetTop);
     };
-  }, []);
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [stickyOffsetTop]);
 
   const handleHoverSubSec = async () => {
     document.removeEventListener('mousemove', handleHoverSubSec);
@@ -95,7 +93,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       {searchBar && <SearchBar />}
       {/* Empty div as a placeholder to maintain the layout when the element becomes sticky */}
       {isSticky && !isScrolledToTop && <div style={{ height: '35px' }}></div>}
-      <div id="topnavBlk" className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block}`} >
+      <div id="topnavBlk" ref={headerRef} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block}`} >
         <nav id="topnav" className={`level1 ${styles.topnav}`}>
           <SideNav />
           {sectionList?.map((data, index) => {

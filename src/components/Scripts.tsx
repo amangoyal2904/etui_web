@@ -29,6 +29,7 @@ declare global {
         }
       }
     }
+    ispopup: boolean;
   }
 }
 
