@@ -6,6 +6,7 @@ import HeaderMain from './HeaderMain';
 import Scripts from './Scripts';
 import Footer from './Footer';
 import BreadCrumb from "components/BreadCrumb";
+import RedeemVoucher from "components/RedeemVoucher";
 import DfpAds from './Ad/DfpAds';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { callJsOnRouteChange } from 'utils/priority';
@@ -67,6 +68,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           { !isprimeuser && <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/> }
           <Footer dynamicFooterData={dynamicFooterData} />
+          <RedeemVoucher />
         </main>        
         
         { !isprimeuser && <DfpAds adInfo={{key: "skinleft"}} objVc={objVc}/> }
