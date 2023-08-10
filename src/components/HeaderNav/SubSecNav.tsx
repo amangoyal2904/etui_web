@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import MoreSubSecNavHtml from "./MoreSubSecNavHtml";
 import SubSecNavHtml from "./SubSecNavHtml";
@@ -20,9 +20,24 @@ interface Props {
 const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
   // Get the data for the first navigation item
   const { msid, moreCount, sec } = subSectionList[0];
+  const [isPrime, setIsPrime] = useState(false);
+
+  useEffect(() => {
+    if (typeof window.objInts !== "undefined") {
+      window.objInts.afterPermissionCall(() => {
+        window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
+      });
+    } else {
+      document.addEventListener("objIntsLoaded", () => {
+        window?.objInts?.afterPermissionCall(() => {
+          window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
+        });
+      });
+    }
+  }, []);
   // Render the component
   return (
-    <div className={styles.sbnv_wrapper}>
+    <div className={`${styles.sbnv_wrapper} ${isPrime ? styles.prime_user : ""}`}>
       <nav className={styles.subsec_nav}>
         {/* Render the first level navigation items */}
         {sec.slice(0, (moreCount || 0) - 1).map((data, index) => (
