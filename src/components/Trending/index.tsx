@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 
 export default function Trending({data, title}: {data: any, title: string}) {
   
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className={styles.trending}>

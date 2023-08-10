@@ -40,6 +40,7 @@ export interface PageProps {
   ];
   seo: SEOProps;
   version_control?: versionControlProps;
+  isprimeuser: number | boolean;
   parameters: {
     msid?: string;
   };

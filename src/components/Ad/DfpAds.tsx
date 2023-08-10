@@ -31,12 +31,12 @@ const DfpAds:NextPage<Props> = function(props) {
 
     let objVc = props.objVc;
     
-    console.log({adVC: objVc});
+    // console.log({adVC: objVc});
 
     if(typeof window !== 'undefined') {
         objVc = window.objVc;
     }
-    console.log({adVC1: objVc});
+    // console.log({adVC1: objVc});
     // console.log({objVc});
     
     let {key, index = 0} = adInfo;

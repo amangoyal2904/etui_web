@@ -49,6 +49,19 @@ const Login: React.FC<Props> = () => {
     }
   };
   const permissionCallback = () => {
+    window.objInts.permissions = [
+      "loggedin",
+      "subscribed",
+      "subscriber",
+      "can_buy_subscription",
+      "group_subscription",
+      "active_subscription",
+      "gcode_testgroup1",
+      "etadfree_can_buy_subscription",
+      "etadfree_subscriber",
+      "etadfree_expired_subscription",
+      "etadfree_can_renew_subscription"
+    ];
     const permissions = (window.objInts && window.objInts.permissions) || [];
     if (permissions.includes("subscribed")) {
       // set state
@@ -56,9 +69,12 @@ const Login: React.FC<Props> = () => {
       // set prime status in redux
       // dispatch(setIsPrime(1));
       // add isprimeuser class in the body
+      window.isprimeuser = 1;
+      document.cookie = "isprimeuser=1";
       document.body.classList.add("isprimeuser");
       window.customDimension["dimension37"] = "Paid User";
     } else {
+      window.isprimeuser = 0;
       window.customDimension["dimension37"] = "Free User";
       // remove isprimeuser class from the body
       document.body.classList.remove("isprimeuser");

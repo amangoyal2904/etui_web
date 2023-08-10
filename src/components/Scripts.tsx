@@ -44,7 +44,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
   const minifyJS = APP_ENV === "development" ? 0 : 1;
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
-  const jsIntsURL = `${jsDomain}/js_ints.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
+  const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
 
   useEffect(() => {
     // window.optCheck = router.asPath.indexOf("opt=1") != -1;
