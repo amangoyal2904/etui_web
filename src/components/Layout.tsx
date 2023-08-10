@@ -49,9 +49,11 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
 
   return (
       <>
-        <div className="topAdContainer">
-          <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
-        </div>
+        { !isprimeuser &&
+          <div className="topAdContainer">
+            <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
+          </div>
+        }
         <Headers />
         <main className={`pageHolder container`}>
           <HeaderMain
@@ -63,11 +65,11 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           <BreadCrumb data={data?.seo?.breadcrumb} />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
-          <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/>
+          { !isprimeuser && <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/> }
           <Footer dynamicFooterData={dynamicFooterData} />
         </main>        
         
-        <DfpAds adInfo={{key: "skinleft"}} objVc={objVc}/>
+        { !isprimeuser && <DfpAds adInfo={{key: "skinleft"}} objVc={objVc}/> }
       </>
     );
 }
