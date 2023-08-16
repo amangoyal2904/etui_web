@@ -127,3 +127,11 @@
     }
   }
 }
+
+.pink_theme{
+  &.hamberMenu{
+    .hamberIcon{
+      margin-top:12px;
+    } 
+  } 
+}

@@ -22,22 +22,26 @@ const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
   const { msid, moreCount, sec } = subSectionList[0];
   const [isPrime, setIsPrime] = useState(false);
 
+  const intsCallback = () =>  {
+    window?.objInts?.afterPermissionCall(() => {
+      console.log("permissiorn tetrs");
+      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
+    });
+  }
+
   useEffect(() => {
     if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(() => {
-        window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
-      });
+      window.objInts.afterPermissionCall(intsCallback);
     } else {
-      document.addEventListener("objIntsLoaded", () => {
-        window?.objInts?.afterPermissionCall(() => {
-          window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
-        });
-      });
+      document.addEventListener("objIntsLoaded", intsCallback);
     }
+    return () => {
+      document.removeEventListener("objIntsLoaded", intsCallback);
+    };
   }, []);
   // Render the component
   return (
-    <div className={`${styles.sbnv_wrapper} ${isPrime ? styles.prime_user : ""}`}>
+    <div className={`${styles.sbnv_wrapper} ${isPrime ? styles.pink_theme : ""}`}>
       <nav className={styles.subsec_nav}>
         {/* Render the first level navigation items */}
         {sec.slice(0, (moreCount || 0) - 1).map((data, index) => (
