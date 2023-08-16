@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
 import { pageType, getMSID, prepareMoreParams } from "../../utils";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
@@ -11,12 +11,16 @@ export default async function Page({ params, searchParams }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const headersList = headers()
-  const primetemplate = headersList.get('primetemplate')
-  const isprimeuser = primetemplate ? 1 : 0,
+  console.log({ headersList });
+  
+  const isprimeuser = cookies().get('isprimeuser'),
   { all = [] } = params,
   lastUrlPart: string = all?.slice(-1).toString(),
   api = APIS_CONFIG.FEED,
   REQUEST = APIS_CONFIG.REQUEST;
+
+  console.log({isprimeuser});
+  
 
   let page = pageType(all.join('/')),
   extraParams: any = {},
@@ -73,7 +77,7 @@ export default async function Page({ params, searchParams }: {
   const versionControl = response?.version_control || {};
   return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>      
     <Suspense fallback={<p>Loading...</p>}>
-      <VideoShow {...response} objVc={versionControl}/>
+      <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
     </Suspense>
   </Layout>
   ;

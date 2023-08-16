@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import SearchBar from "../SearchBar";
 import SideNav from "../SideNav";
 import styles from "./styles.module.scss";
@@ -27,33 +27,44 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
   // State to track whether the user has scrolled back to the top
   const [isScrolledToTop, setIsScrolledToTop] = useState<boolean>(false);
   const [stickyOffsetTop, setStickyOffsetTop] = useState<number>(0);
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const [isPrime, setIsPrime] = useState<boolean>(false);
 
-  // Function to handle the scroll event
-  const handleScroll = () => {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    setIsScrolledToTop(scrollY <= stickyOffsetTop);
-    setIsSticky(scrollY >= stickyOffsetTop);
-  };
+  const intsCallback = () =>  {
+    window?.objInts?.afterPermissionCall(() => {
+      window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
+    });
+  }
 
   useEffect(() => {
     document.addEventListener('mousemove', handleHoverSubSec);
-    const topNavRef = document.getElementById("topnavBlk");
-    setStickyOffsetTop(topNavRef?.offsetTop || 0);
-    
-    window.addEventListener('scroll', handleScroll);
+    if (typeof window.objInts !== "undefined") {
+      window.objInts.afterPermissionCall(intsCallback);
+    } else {
+      document.addEventListener("objIntsLoaded", intsCallback);
+    }
     return () => {
       document.removeEventListener('mousemove', handleHoverSubSec);
+      document.removeEventListener("objIntsLoaded", intsCallback);
     };
   }, []);
 
   useEffect(() => {
-    
-    // Do NOT remove the event listener here to keep the sticky behavior active
-    return () => {
-      // If you want to remove the event listener when the component unmounts, uncomment the following line
-      // window.removeEventListener('scroll', handleScroll);
+    if (headerRef.current) {
+      setStickyOffsetTop(headerRef.current.offsetTop);
+    }
+
+    const handleScroll = () => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolledToTop(scrollY <= stickyOffsetTop);
+      setIsSticky(scrollY >= stickyOffsetTop);
     };
-  }, []);
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [stickyOffsetTop]);
 
   const handleHoverSubSec = async () => {
     document.removeEventListener('mousemove', handleHoverSubSec);
@@ -95,7 +106,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       {searchBar && <SearchBar searchBar={searchBar} setSearchBarOff={() => setSearchBar(!searchBar)}/>}
       {/* Empty div as a placeholder to maintain the layout when the element becomes sticky */}
       {isSticky && !isScrolledToTop && <div style={{ height: '35px' }}></div>}
-      <div id="topnavBlk" className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block}`} >
+      <div id="topnavBlk" ref={headerRef} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPrime ? styles.pink_theme : ""}`} >
         <nav id="topnav" className={`level1 ${styles.topnav}`}>
           <SideNav />
           {sectionList?.map((data, index) => {

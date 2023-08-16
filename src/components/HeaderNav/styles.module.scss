@@ -8,7 +8,7 @@
   /* Width and centering */
   width: 100%;
   z-index: 99;
-  max-width: 1003px;
+  // max-width: 1003px;
 
   /* Top navigation */
   .topnav {
@@ -349,18 +349,6 @@
         z-index: 914;
       }
     }
-    .hamberMenu{
-      text-align: center;
-      height: 33px;
-      width: 35px;
-      .hamberIcon{
-        display: inline-block;
-        background-position: -232px -52px;
-        width: 17px;
-        height: 14px;
-        margin-top: 8px;
-      }
-    }
     .search_bar{
       float: right;
       background-color: #FFF3F0;
@@ -373,6 +361,71 @@
         width: 14px;
         height: 14px;
         margin-top: 10px;
+      }
+    }
+  }
+
+  &.pink_theme{
+    background-color: #ffded4;
+    border-top: 1px solid #debdb4;
+    border-bottom: 2px solid #debdb4;
+    .topnav{
+      width: 1260px;
+      margin: 0 auto;
+      .sec_1{
+        &[data-l1="More"] > a{
+          padding: 12px 10px 6px;  
+        }
+        & > a{
+          padding: 12px 10px 8px;
+          &.current{
+            background-color: #183651;
+            color: #FFF;
+            border-radius: 2px;
+            font-size: 10px;
+            padding: 1px 6px 2px 6px;
+            font-weight: 700;
+            margin: 10px 5px;
+          }
+        }
+        &:hover{
+          & > a:not(.current){
+            border: 1px solid transparent;
+            background-color: transparent;
+            &:before{
+              content: '';
+              position: absolute;
+              left: 40%;
+              border-bottom: 6px solid #debdb4;
+              border-left: 8px solid transparent;
+              border-right: 8px solid transparent;
+              display: inline-block;
+              bottom: -2px;
+            }
+          }
+          &[data-l1="Politics"], &[data-l1="ETPrime"], &[data-l1="Home"]{
+            a:before{
+              border:0px solid; 
+            }
+          }
+          .subsecnav{
+            left: -120px;
+            top: auto;
+            -webkit-box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            background-color: #fff9f7;
+            border-top: 2px solid #debdb4;
+          }
+          &[data-l1="More"] .subsecnav, &[data-l1="Spotlight"] .subsecnav{
+            left: auto;
+            right: 0;
+          }
+        }
+      }
+      .search_bar{
+        background-color:transparent;
+        padding-top: 5px;
+        margin-right: 62px;
       }
     }
   }
@@ -550,6 +603,49 @@
         text-decoration: none;
         border-bottom: 0;
         z-index: 914;
+      }
+    }
+  }
+
+  &.pink_theme{
+    background-color: #ffe9e2;
+    border-bottom: 1px solid #debdb4;
+    .subsec_nav{
+      width: 1260px;
+      margin: 0 auto;
+      background-color: #ffe9e2;
+      & > div {
+        & > a{
+          padding: 7px 12px 8px 12px;
+        }
+        &.subLevel{
+          .miniMenu{
+            -webkit-box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            background-color: #fff9f7;
+            border-top: 2px solid #debdb4;
+            &:not(.comnav){
+              left: -60px;
+            }
+          }
+          &:hover{
+            & > a {
+                border: 1px solid transparent;
+                background-color: transparent;
+                padding: 7px 12px;
+                &:before{
+                  content: '';
+                  position: absolute;
+                  left: 40%;
+                  border-bottom: 6px solid #debdb4;
+                  border-left: 8px solid transparent;
+                  border-right: 8px solid transparent;
+                  display: inline-block;
+                  bottom: -1px;
+                }
+            }
+          }
+        }
       }
     }
   }

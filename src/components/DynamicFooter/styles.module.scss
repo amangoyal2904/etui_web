@@ -20,7 +20,7 @@
         font-size: 20px;
         font-weight: 800;
         text-transform: capitalize;
-        color: #FFF;
+        // color: #FFF;
         margin-bottom: 6px;
         font-family: $Montserrat-font-family;
       }
@@ -29,7 +29,7 @@
         a {
           font-size: 13px;
           line-height: 25px;
-          color: #FFF;
+          // color: #FFF;
           display: inline-block;
           box-sizing: border-box;
           vertical-align: top;
@@ -50,7 +50,7 @@
         }
       }
       .show_hide_interlinking{
-        color: #fff;
+        // color: #fff;
         float: right;
         margin-right: 123px;
         cursor: pointer;
@@ -269,4 +269,74 @@
       }
     }
   }
+}
+
+.pink_theme{
+  background-color: #ffded4; 
+  .dynamicContainer{
+    width:1260px;
+    margin: 0 auto;
+    background-color: transparent; 
+    color: #000;
+    .divider{
+      background-color: #ffded4; 
+    }
+
+    .category{
+      .show_hide_interlinking:after{
+        border: solid #000;
+        border-width: 0 2px 2px 0;
+      }
+    }
+    .browseCompany{
+      .browse{
+        .compList a{
+          color:#fff;
+        }
+      }
+    }
+
+    .downloadSection{
+      .row{
+        .shareIcons{
+          .fbShare{
+            background-position: -354px -254px;
+            width: 40px;
+            height: 40px;
+          }
+          .inShare{
+            background-position: -404px -254px;
+            width: 40px;
+            height: 40px;
+          }
+          .twShare{
+            background-position: -354px -304px;
+            width: 40px;
+            height: 40px;
+          }
+          .rss{
+            background-position: -404px -304px;
+            width: 40px;
+            height: 40px;
+          }
+        }
+        .appstoredownload{
+          background-position: -234px -221px;
+          width: 98px;
+          height: 27px;
+        }
+        .gpdownload{
+          background-position: -348px -219px;
+          width: 88px;
+          height: 27px;
+        }
+        .primeLogo{
+          background-position: -338px -160px;
+        }
+        p{
+          color:#000;
+        }
+      }
+    }
+  } 
 }

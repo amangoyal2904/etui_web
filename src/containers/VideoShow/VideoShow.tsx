@@ -40,7 +40,7 @@ const VideoShow: FC<PageProps> = (props) => {
   const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
   const trendingVideos = props?.searchResult?.find((item) => item.name === "trending_videos") as any;
   const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
-  const { seo = {}, version_control, parameters } = props;
+  const { seo = {}, version_control, parameters, isprimeuser } = props;
   const { msid } = parameters;
   const { cpd_wap = "0" } = version_control;
 
@@ -74,7 +74,7 @@ const VideoShow: FC<PageProps> = (props) => {
 
     document.addEventListener('slikeReady', () => {
       window?.spl?.load(playerConfig, (status) => {
-        console.log({playerConfig,status});
+        // console.log({playerConfig,status});
         
         if (status) {
           const player = new window.SlikePlayer(playerConfig);
@@ -130,39 +130,39 @@ const VideoShow: FC<PageProps> = (props) => {
               {isPopupVid && <div className={styles.title}>{result.title}</div> }
             <div id={`id_${result.msid}`} className={`${styles.vidContainer} ${styles.vid}`}></div>
             </div>
-        </div>
-        <div className={styles.videoDesc}>
-          <p>{result.synopsis}</p>
-          <a
-            href="https://twitter.com/EconomicTimes"
-            rel="nofollow"
-            className="twitter-follow-button"
-            data-show-count="false"
-            data-lang="en"
-          >
-            Follow @EconomicTimes
-          </a>
-        </div>
-        <ReadMore readMoreText={result.relKeywords} />
-        <div className="adContainer">
-          <DfpAds adInfo={{ key: "mid1" }} objVc={version_control} />
-        </div>
-        <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
-        <PopulateComment msid={msid} />
-        {/* <SEO {...seoData} /> */}
-        {/* <GreyDivider />
+          </div>
+          <div className={styles.videoDesc}>
+            <p>{result.synopsis}</p>
+            <a href="https://twitter.com/EconomicTimes" rel="nofollow" className="twitter-follow-button" data-show-count="false" data-lang="en">Follow @EconomicTimes</a>
+          </div>
+          <ReadMore readMoreText={result.relKeywords} />
+          { !isprimeuser &&
+            <div className="adContainer">
+              <DfpAds adInfo={{key: "mid1"}} objVc={version_control}/>
+            </div>
+          }
+          <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
+          {/* <PostComments /> */}
+          {/* <PopulateComment msid={msid}/> */}
+          {/* <SEO {...seoData} /> */}
+          {/* <GreyDivider />
           <AppDownloadWidget tpName="videoshow" />
           */}
-      </section>
-      <aside className="sidebar">
-          <div className="adContainer"><DfpAds adInfo={{key: "atf", index: 0}} objVc={version_control}/></div>
-          <div className="adContainer"><DfpAds adInfo={{key: "mtf", index: 1}} objVc={version_control}/></div>
+        </section>
+        <aside className="sidebar">
+        { !isprimeuser && <>
+            <div className="adContainer"><DfpAds adInfo={{key: "atf", index: 0}} objVc={version_control}/></div>
+            <div className="adContainer"><DfpAds adInfo={{key: "mtf", index: 1}} objVc={version_control}/></div>
+          </>
+        }
           <MostViewVideos data={mostViewedVideos} />
           <Trending data={trendingVideos?.data} title={trendingVideos?.title} />
           <MostPopularNews data={mostPopularNews} />
-          <div className="adContainer"><DfpAds adInfo={{key: "btf", index: 1}} objVc={version_control}/></div>
-      </aside>
-    </>
+          { !isprimeuser &&
+            <div className="adContainer"><DfpAds adInfo={{key: "btf", index: 1}} objVc={version_control}/></div>
+          }
+        </aside>
+      </>
   );
 };
 
