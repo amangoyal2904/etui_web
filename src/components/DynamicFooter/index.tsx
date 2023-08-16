@@ -1,11 +1,31 @@
 import styles from "./styles.module.scss";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import GreyDivider from "components/GreyDivider";
 import { isNoFollow } from "utils";
 
 const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) => {
   const [isExpanded, setIsExpanded] = useState({});
   const hide_footer = false;
+
+  const [isPrime, setIsPrime] = useState(false);
+
+  const intsCallback = () =>  {
+    window?.objInts?.afterPermissionCall(() => {
+      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
+    });
+  }
+
+  useEffect(() => {
+    if (typeof window.objInts !== "undefined") {
+      window.objInts.afterPermissionCall(intsCallback);
+    } else {
+      document.addEventListener("objIntsLoaded", intsCallback);
+    }
+    return () => {
+      document.removeEventListener("objIntsLoaded", intsCallback);
+    };
+  }, []);
+
   const paymentButtonListener = () => {
     const paymentUrl = "";
     window.location.href = paymentUrl;
@@ -175,9 +195,9 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
      }
    }
   return (
-    <div id="footer" className={hide_footer ? styles.hide_footer : ""}>
+    <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPrime ? styles.pink_theme : ""}`}>
       <div className={styles.dynamicContainer}>
-        <GreyDivider />
+        {!isPrime && <GreyDivider />}
         {browseCompany()}
         {Interlinking()}
         {downloadSection()}

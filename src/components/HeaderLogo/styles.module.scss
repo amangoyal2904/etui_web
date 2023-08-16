@@ -7,8 +7,17 @@
   padding: 7px 0;
   z-index: 2;
   position: relative;
+  min-height: 110px;
+  display: table;
+  width: 100%;
+  margin: 0 auto;
 
-  .prime_user{
+  .headerWrap{
+    vertical-align: middle;
+    display: table-cell;
+  }
+
+  &.pink_theme{
     width: 1260px;
   }
 
@@ -81,41 +90,6 @@
           padding: 5px 0;
           border-bottom: 1px solid #c7cacc;
         }
-      }
-    }
-  }
-
-  .subSign{
-    padding-right: 7px;
-    -webkit-transition: ease all 0.5s;
-    -o-transition: ease all 0.5s;
-    transition: ease all 0.5s;
-    position: absolute;
-    right: 0;
-    text-align: right;
-    top:14px;
-
-    .subscribe{
-      padding: 2px 7px 3px 8px;
-      border-radius: 2px;
-      border: solid 1px black;
-      margin-right: 15px;
-      margin-bottom: 5px;
-    }
-
-    .soWrapper {
-      margin: 14px 0;
-      position: relative;
-      .hdr_spcl_ofr {
-        border: 1px solid rgba(237, 25, 59, 0.1);
-        padding: 4px 0;
-        border-right: none;
-        border-left: none;
-        text-align: center;
-        font-weight: bold;
-        color: #ed193b;
-        font-size: 10.5px;
-        cursor: pointer;
       }
     }
   }

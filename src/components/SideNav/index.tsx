@@ -13,13 +13,27 @@ interface SideNavData {
 const SideNav = () => {
   const [sideNavData, setSideNav] = useState<SideNavData[] | null>(null);
   const [closeClass, setCloseClass] = useState<boolean>(false);
+  const [isPrime, setIsPrime] = useState<boolean>(false);
+
+  const intsCallback = () =>  {
+    window?.objInts?.afterPermissionCall(() => {
+      window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
+    });
+  }
 
   useEffect(() => {
     const sideNavRef = document.getElementById("sideMenu");
     sideNavRef?.addEventListener('mouseenter', handleSideNavApi);
 
+    if (typeof window.objInts !== "undefined") {
+      window.objInts.afterPermissionCall(intsCallback);
+    } else {
+      document.addEventListener("objIntsLoaded", intsCallback);
+    }
+
     return () => {
       sideNavRef?.removeEventListener('mouseenter', handleSideNavApi);
+      document.removeEventListener("objIntsLoaded", intsCallback);
     };
   }, []);
 
@@ -83,7 +97,7 @@ const SideNav = () => {
 
   return (
     <>
-      <div className={`${styles.sections} ${styles.hamberMenu} ${closeClass && styles.closeMenu}`} onClick={() => setCloseClass(!closeClass)} id="sideMenu">
+      <div className={`${styles.sections} ${styles.hamberMenu} ${closeClass && styles.closeMenu} ${isPrime ? styles.pink_theme : ""}`} onClick={() => setCloseClass(!closeClass)} id="sideMenu">
         <span className={`${styles.hamberIcon} ${styles.commonSprite}`} />
         <nav id="sideBarNav" className={styles.ddNav} >
           {sideNavData ? sideNavApiHtml() : <div>Loading...</div>} {/* Conditional rendering */}

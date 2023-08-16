@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react' ;
+import React, { useEffect, useState } from 'react' ;
 import {dateFormat} from '../../utils/utils';
 import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
@@ -32,20 +32,6 @@ const EditionTimeStamp = () => {
         <span> | </span>
         <div>
           <a rel="nofollow" data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" className="dib epaper" href="/printhome.cms" target="_blank">Today's Paper</a>
-        </div>
-      </div>
-    </>
-  )
-}
-
-const TopSignBlock = () => {
-  return (
-    <>
-      <div className={`${styles.flr} ${styles.subSign}`}>
-        <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`}>Subscribe</span>
-        <Login />
-        <div className={styles.soWrapper}>
-        <a data-url="https://economictimes.indiatimes.com/plans.cms" data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`}>Special Offer on ETPrime</a>
         </div>
       </div>
     </>
@@ -107,14 +93,34 @@ const ETSecLogo = (props) => {
 const HeaderLogo = (props) => {
   const {page, subsecnames, sectiondetail} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
+  const [isPrime, setIsPrime] = useState(false);
 
   // const loginState = useSelector((state: any) => state.login);
   // const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
 
   // console.log(sectiondetail)
+
+  const intsCallback = () =>  {
+    window?.objInts?.afterPermissionCall(() => {
+      console.log("permissiorn tetrs");
+      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
+    });
+  }
+
+  useEffect(() => {
+    if (typeof window.objInts !== "undefined") {
+      window.objInts.afterPermissionCall(intsCallback);
+    } else {
+      document.addEventListener("objIntsLoaded", intsCallback);
+    }
+    return () => {
+      document.removeEventListener("objIntsLoaded", intsCallback);
+    };
+  }, []);
+
   return (
-    <div className={styles.logo_part}>
-      <div id="headerWrap">
+    <div className={`${styles.logo_part} ${isPrime ? styles.pink_theme : ""}`}>
+      <div id="headerWrap" className={`${styles.headerWrap}`}>
         <a title="The Economic Times" href="/">
           <img src={etLogo} width={etLogoWidth} height={etLogoHeight} className="dib" alt="The Economic Times"/>
         </a>
@@ -123,7 +129,7 @@ const HeaderLogo = (props) => {
           <ETSecLogo subsecnames={subsecnames} sectiondetail={sectiondetail} />
         </a>}
         <EditionTimeStamp />
-        <TopSignBlock />
+        <Login />
       </div>
     </div>
   )
