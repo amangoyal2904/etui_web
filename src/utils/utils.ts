@@ -6,6 +6,7 @@ declare global {
     interface Window { 
       geolocation: any;
       geoinfo: any;
+      chrome:any;
     }
 }
 
@@ -194,7 +195,7 @@ export const removeBackSlash = val => {
   return val;
 };
 
-export const loadAssets = (filename, fileType, attrType, position, cb, attr?, attrVal?, objAttr?) => { 
+export const loadAssets = (filename, fileType, attrType, position, cb="", attr?, attrVal?, objAttr?) => { 
   try { 
     if(filename){ 
       let fileRef: any = '';
@@ -270,6 +271,63 @@ export const urlValidation = (url:string) =>{
   }
   return url;
 }
+export const detectBrowser = browser => {
+  let isBrowser:any = "";
+  try {
+    switch (browser) {
+      case "chrome":
+        isBrowser =
+          !!window.chrome &&
+          (!!window.chrome.webstore || !!window.chrome.runtime);
+        break;
+      case "firefox":
+        isBrowser = typeof InstallTrigger !== "undefined";
+        break;
+      case "safari":
+        isBrowser =
+          /constructor/i.test(window.HTMLElement) ||
+          (function(p) {
+            return p.toString() === "[object SafariRemoteNotification]";
+          })(
+            !window["safari"] ||
+              (typeof safari !== "undefined" && safari.pushNotification)
+          );
+        break;
+      case "ie":
+        isBrowser = false || !!document.documentMode;
+        break;
+      case "edge":
+        isBrowser = !isIE && !!window.StyleMedia;
+        break;
+      case "opera":
+        isBrowser =
+          (!!window.opr && !!opr.addons) ||
+          !!window.opera ||
+          navigator.userAgent.indexOf(" OPR/") >= 0;
+        break;
+      case "blink":
+        isBrowser = (isChrome || isOpera) && !!window.CSS;
+        break;
+      default:
+        isBrowser = "unknown";
+    }
+  } catch (e) {
+    console.log("detectBrowser:", e);
+  }
+  return isBrowser;
+};
+export const isMobileSafari = () => {
+  let result:any = "";
+  try {
+    let ua = window.navigator.userAgent;
+    let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+    let webkit = !!ua.match(/WebKit/i);
+    result = iOS && webkit && !ua.match(/(CriOS|FxiOS|OPiOS|mercury)/i);
+  } catch (e) {
+    console.log("isMobileSafari:", e);
+  }
+  return result;
+};
 
 let output = {urlValidation, socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
 
