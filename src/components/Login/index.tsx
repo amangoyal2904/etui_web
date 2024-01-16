@@ -18,7 +18,7 @@ interface IUser {
 const Login: React.FC<Props> = () => {
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(0);
+  const [isPrime, setIsPrime] = useState(false);
   // const dispatch = useDispatch();
 
   const loginCallback = () => {
@@ -52,13 +52,16 @@ const Login: React.FC<Props> = () => {
     const permissions = (window.objInts && window.objInts.permissions) || [];
     if (permissions.includes("subscribed")) {
       // set state
-      setIsSubscribed(1);
+      setIsPrime(true);
       // set prime status in redux
       // dispatch(setIsPrime(1));
       // add isprimeuser class in the body
+      window.isprimeuser = 1;
+      document.cookie = "isprimeuser=1";
       document.body.classList.add("isprimeuser");
       window.customDimension["dimension37"] = "Paid User";
     } else {
+      window.isprimeuser = 0;
       window.customDimension["dimension37"] = "Free User";
       // remove isprimeuser class from the body
       document.body.classList.remove("isprimeuser");
@@ -144,12 +147,17 @@ const Login: React.FC<Props> = () => {
     }
   };
 
+  const handleRedeemVoucher = (): void => {
+    const voucherClicked = new Event("voucherClicked");
+    document.dispatchEvent(voucherClicked);
+  };
+
   const handleLoginToggle = (): void => {
     if (isLogin) {
       setLogout();
     } else {
-      const loginUrl = APIS_CONFIG.LOGIN[APP_ENV];
-      window.location.href = `${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
+      const loginUrl = `https://etdev8243.indiatimes.com/login.cms?ru=${window.location.href}`; //APIS_CONFIG.LOGIN[APP_ENV];
+      window.location.href = loginUrl; //`${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
     }
   };
 
@@ -159,26 +167,34 @@ const Login: React.FC<Props> = () => {
 
   return (
     <>
-      <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
+      <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
+        {!isPrime && <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`}>Subscribe</span>}
+        <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
+          {
+            isLogin 
+            ? <>
+              <span className={styles.dd} title={userInfo.primaryEmail}>{userInfo.firstName}</span>
+              <div className={styles.signMenu}>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`} onClick={resetInfo}>Edit Profile</a>
+                {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
+                <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
+                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
+                <a href="#" onClick={handleLoginToggle} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+              </div>
+            </>
+            : <a data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url" onClick={handleLoginToggle} href="#" className={styles.signInLink}>Sign In</a>
+          }
+        </div>
         {
-          isLogin 
-          ? <>
-            <span className={styles.dd} title={userInfo.primaryEmail}>{userInfo.firstName}</span>
-            <div className={styles.signMenu}>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`} onClick={resetInfo}>Edit Profile</a>
-              {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
-              <a href="#" className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
-              <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
-              <a href="#" onClick={handleLoginToggle} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
-            </div>
-          </>
-          : <a data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url" onClick={handleLoginToggle} href="#" className={styles.signInLink}>Sign In</a>
+          !isPrime && <div className={styles.soWrapper}>
+            <a data-url="https://economictimes.indiatimes.com/plans.cms" data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`}>Special Offer on ETPrime</a>
+          </div>
         }
       </div>
     </>

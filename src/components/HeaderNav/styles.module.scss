@@ -7,6 +7,8 @@
   background: #ffe9e2;
   /* Width and centering */
   width: 100%;
+  z-index: 99;
+  // max-width: 1003px;
 
   /* Top navigation */
   .topnav {
@@ -29,9 +31,13 @@
         width: 830px;
         left: -233px;
       }
+      &[data-l1="Spotlight"] .subsecnav {
+        width: 520px;
+        left: -488px;
+      }
       &[data-l1="More"] .subsecnav {
-        width: 764px;
-        margin-left: -506px;
+        width: 180px;
+        margin-left: -204px;
         /* Styling for sub-sections of "More" section */
         .subsec1 {
           border-bottom: 1px solid #000;
@@ -62,6 +68,14 @@
         border: 1px solid transparent;
         border-bottom: 0;
         /* Styling for down arrow */
+
+        &.current{
+          background-color: #FFF;
+          color: #ed193b;
+          text-decoration: none;
+          font-weight: 600;
+          padding: 8px 4px 9px 4px;
+        }
         .downArw {
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
@@ -265,6 +279,60 @@
             margin-left: 0;
           }
         }
+
+        
+        .Edition_carouselone,  .Edition_carouseltwo{
+          width: 520px;
+          height: 250px;
+          overflow: hidden;
+          margin: 0;
+          padding-bottom: 15px;
+          margin-top: 30px;
+
+          ul {
+            overflow: hidden;
+            white-space: nowrap;
+            li{
+              display: inline-block;
+              vertical-align: top;
+              white-space: normal;
+              width: 520px;
+            }
+          }
+        }
+
+        .Edition_carouseltwo{
+          height: 120px;  
+          margin-top: 20px;
+          h2{
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 700;
+          }
+        }
+        .spotlightContent{
+          width: 105px;
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 32px;
+          min-height: 135px;
+          &:nth-child(4n){
+            margin-right: 0;  
+          }
+          a{
+            font-weight: 400;
+            color: #000;
+            font-family: Faustina,sans-serif;
+            cursor: pointer;
+            line-height: 14px;
+            font-size: 12px;
+            padding: 0;
+            &.txt{
+              margin-top: 5px;
+              text-align: center;
+            }
+          }
+        }
         
       }
       &:hover{
@@ -279,18 +347,6 @@
         text-decoration: none;
         border-bottom: 0;
         z-index: 914;
-      }
-    }
-    .hamberMenu{
-      text-align: center;
-      height: 33px;
-      width: 35px;
-      .hamberIcon{
-        display: inline-block;
-        background-position: -232px -52px;
-        width: 17px;
-        height: 14px;
-        margin-top: 8px;
       }
     }
     .search_bar{
@@ -308,6 +364,85 @@
       }
     }
   }
+
+  &.pink_theme{
+    background-color: #ffded4;
+    border-top: 1px solid #debdb4;
+    border-bottom: 2px solid #debdb4;
+    .topnav{
+      width: 1260px;
+      margin: 0 auto;
+      .sec_1{
+        &[data-l1="More"] > a{
+          padding: 12px 10px 6px;  
+        }
+        & > a{
+          padding: 12px 10px 8px;
+          &.current{
+            background-color: #183651;
+            color: #FFF;
+            border-radius: 2px;
+            font-size: 10px;
+            padding: 1px 6px 2px 6px;
+            font-weight: 700;
+            margin: 10px 5px;
+          }
+        }
+        &:hover{
+          & > a:not(.current){
+            border: 1px solid transparent;
+            background-color: transparent;
+            &:before{
+              content: '';
+              position: absolute;
+              left: 40%;
+              border-bottom: 6px solid #debdb4;
+              border-left: 8px solid transparent;
+              border-right: 8px solid transparent;
+              display: inline-block;
+              bottom: -2px;
+            }
+          }
+          &[data-l1="Politics"], &[data-l1="ETPrime"], &[data-l1="Home"]{
+            a:before{
+              border:0px solid; 
+            }
+          }
+          .subsecnav{
+            left: -120px;
+            top: auto;
+            -webkit-box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            background-color: #fff9f7;
+            border-top: 2px solid #debdb4;
+          }
+          &[data-l1="More"] .subsecnav, &[data-l1="Spotlight"] .subsecnav{
+            left: auto;
+            right: 0;
+          }
+        }
+      }
+      .search_bar{
+        background-color:transparent;
+        padding-top: 5px;
+        margin-right: 62px;
+      }
+    }
+  }
+}
+
+.sticky {
+  /* Define the default styles for the element */
+  padding: 0px;
+  /* Add any other styles you want for the non-sticky state */
+}
+
+.stickyActive {
+  /* Define the styles for the element when it becomes sticky */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /* Add any other styles you want for the sticky state */
 }
 
 .sbnv_wrapper {
@@ -341,6 +476,10 @@
         font-size: 12px;
         padding: 6px 5px 9px 5px;
         vertical-align: top;
+        &.current{
+          color: #ed193b;
+          text-decoration: none;
+        }
         &.subsec2{
           padding: 0;
           white-space: normal;
@@ -464,6 +603,49 @@
         text-decoration: none;
         border-bottom: 0;
         z-index: 914;
+      }
+    }
+  }
+
+  &.pink_theme{
+    background-color: #ffe9e2;
+    border-bottom: 1px solid #debdb4;
+    .subsec_nav{
+      width: 1260px;
+      margin: 0 auto;
+      background-color: #ffe9e2;
+      & > div {
+        & > a{
+          padding: 7px 12px 8px 12px;
+        }
+        &.subLevel{
+          .miniMenu{
+            -webkit-box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.12);
+            background-color: #fff9f7;
+            border-top: 2px solid #debdb4;
+            &:not(.comnav){
+              left: -60px;
+            }
+          }
+          &:hover{
+            & > a {
+                border: 1px solid transparent;
+                background-color: transparent;
+                padding: 7px 12px;
+                &:before{
+                  content: '';
+                  position: absolute;
+                  left: 40%;
+                  border-bottom: 6px solid #debdb4;
+                  border-left: 8px solid transparent;
+                  border-right: 8px solid transparent;
+                  display: inline-block;
+                  bottom: -1px;
+                }
+            }
+          }
+        }
       }
     }
   }

@@ -75,5 +75,9 @@
   "techNavArticleList": {
     "production": "https://etdev8243.indiatimes.com/reactfeed_technav.cms",
     "development": "https://etdev8243.indiatimes.com/reactfeed_technav.cms"
+  },
+  "redeemVoucher": {
+    "development": "https://qcsubscription.economictimes.indiatimes.com/api/subscription/redeemVoucher",
+    "production": "https://subscriptions.economictimes.indiatimes.com/api/subscription/redeemVoucher"
   }
 }

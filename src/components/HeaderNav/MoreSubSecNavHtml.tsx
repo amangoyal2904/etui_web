@@ -5,21 +5,26 @@ interface SubSecNavProps {
   data: {
     nm: string | string[];
     link: string;
+    msid: string;
     sec?: {
       nm: string | string[];
       link: string;
+      msid: string;
       sec?: {
         nm: string;
         link: string; 
+        msid: string;
       }[]
     }[];
   };
   index: number;
+  subsecnames: any;
 }
 
-const MoreSubSecNavHtml: FC<SubSecNavProps> = ({ data, index }) => {
+const MoreSubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => {
   // Create a unique key for the current data item
   const keyName = `moreSubSecNavHtml-${index}`;
+  const {subsec1, subsec2, subsec3} = subsecnames;
 
   // Check if the required data properties exist, otherwise handle the error
   if (!data.nm || !data.link) {
@@ -29,7 +34,7 @@ const MoreSubSecNavHtml: FC<SubSecNavProps> = ({ data, index }) => {
   return (
     <React.Fragment key={keyName}>
       {/* Add a unique key for the main link */}
-      <a key={`l2_${index}`} href={data.link} className={styles.subsec1}>
+      <a key={`l2_${index}`} href={data.link}  className={`${subsec2 == data.msid && styles.current} ${styles.subsec1}`}>
         {data.nm}
       </a>
       {/* Check if there are any sub-sections */}

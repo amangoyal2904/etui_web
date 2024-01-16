@@ -1,6 +1,41 @@
 /* Import common styles */
 @import "../../styles/common.scss";
 
+.subSign{
+  padding-right: 7px;
+  -webkit-transition: ease all 0.5s;
+  -o-transition: ease all 0.5s;
+  transition: ease all 0.5s;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top:14px;
+
+  .subscribe:not(.cSprite_b){
+    padding: 2px 7px 3px 8px;
+    border-radius: 2px;
+    border: solid 1px black;
+    margin-right: 15px;
+    margin-bottom: 5px;
+  }
+
+  .soWrapper {
+    margin: 14px 0;
+    position: relative;
+    .hdr_spcl_ofr {
+      border: 1px solid rgba(237, 25, 59, 0.1);
+      padding: 4px 0;
+      border-right: none;
+      border-left: none;
+      text-align: center;
+      font-weight: bold;
+      color: #ed193b;
+      font-size: 10.5px;
+      cursor: pointer;
+    }
+  }
+}
+
 .loginBoxWrap{
   &:hover{
     .dd:after {
@@ -43,6 +78,9 @@
     width: 160px;
     right: 0;
     text-align: left;
+    & > a:hover{
+      background: #f4f4f4;
+    }
     a{
       display: block;
       line-height: 30px;
@@ -61,6 +99,7 @@
         background-position: -211px -6px;
         width: 15px;
         height: 13px;
+        background-color: #ffffff;
       }
       &.mypref:before{
         background-position: -231px -26px;
@@ -111,6 +150,92 @@
       }
       & + a{
         border-top: 1px solid #E8E8E8;
+      }
+    }
+  }
+}
+
+.pink_theme{
+  &.subSign{
+    &:before{
+      background: url($subscriber-sprite) no-repeat;
+      display: inline-block;
+      background-size: 475px;
+      content: "";
+      height: 5px;
+      width: 10px;
+      background-position: -47px -10px;
+      position: relative;
+      top: 20px;
+      left: 48px;
+      z-index: 2;
+    }
+  }
+  .loginBoxWrap{
+    border-top: 34px solid #183651;
+    top: -7px;
+    width: 86px;
+    position: relative;
+    &:before{
+      background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+      display: inline-block;
+      background-size: 475px;
+      content: '';
+      display: block;
+      position: absolute;
+      height: 35px;
+      width: 40px;
+      top: -36px;
+      left: 28px;
+    }
+    &:after{
+      content: '';
+      width: 0;
+      border-left: 43px solid transparent;
+      border-right: 43px solid transparent;
+      border-top: 15px solid #183651;
+      display: block;
+      height: 0;
+      position: relative;
+      top: 15px;
+    }
+    .dd{
+      min-height: 15px;
+      display: inline-block;
+      position: relative;
+      top: 15px;
+      width: 86px;
+      text-align: center;
+      color: #FFF;
+      background-color: #183651;
+      text-transform: uppercase;
+      font-size: 9px;
+      padding-top: 4px;
+      &:before{
+        content: 'Prime Member';
+        background: #FFF;
+        padding: 2px 0;
+        position: absolute;
+        left: 0;
+        width: 86px;
+        letter-spacing: .41px;
+        color: #ed193b;
+        text-transform: uppercase;
+        font-size: 9px;
+        font-weight: 700;
+        text-align: center;
+        top: -15px;
+      }
+      &:after{
+        display: none;
+      }
+    }
+    .signMenu{
+      top: auto;
+      bottom: -270px;
+      background: #FFF9F7;
+      & > a:hover{
+        background: #FFE9E2;
       }
     }
   }

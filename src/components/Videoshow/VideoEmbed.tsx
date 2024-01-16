@@ -5,7 +5,7 @@ const VideoEmbed: NextPage<any> = (props) => {
   //console.log('videoembed frame', props);
   const iframData = props.iframeData && props.iframeData !== '' ? props.iframeData : '';
   const renderIframe = ()=>{
-    console.log('iframData', iframData)
+    // console.log('iframData', iframData)
     return {__html: 'iframData'};
   }
   return (

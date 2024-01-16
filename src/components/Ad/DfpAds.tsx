@@ -31,12 +31,12 @@ const DfpAds:NextPage<Props> = function(props) {
 
     let objVc = props.objVc;
     
-    console.log({adVC: objVc});
+    // console.log({adVC: objVc});
 
     if(typeof window !== 'undefined') {
         objVc = window.objVc;
     }
-    console.log({adVC1: objVc});
+    // console.log({adVC1: objVc});
     // console.log({objVc});
     
     let {key, index = 0} = adInfo;
@@ -114,7 +114,7 @@ const DfpAds:NextPage<Props> = function(props) {
                   let adSlot = customSlot ? customSlot : objVc.dfp[key] && objVc.dfp[key]["adSlot"];           
                   adSlot = `/7176/Economictimes${adSlot}`;
                   console.log("adslot", adSlot, Array.isArray(dimension[0]) ? dimension[0]: dimension, divId)
-                  slot = googleTag.defineSlot(adSlot, Array.isArray(dimension[0]) ? dimension[0]: dimension, divId);
+                  slot = googleTag.defineSlot(adSlot, Array.isArray(dimension) ? dimension: dimension, divId);
                   if(divId == "mh"){
                     window.ad_refresh.push(slot);
                   }
