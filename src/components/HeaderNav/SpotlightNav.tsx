@@ -28,7 +28,7 @@ const SpotlightNav: React.FC<SpotlightNavProps> = ({ sec }) => {
                         <>
                           <li>
                             {
-                              value1.map((value2, index2) => {
+                              value1 && Array.isArray(value1) && value1.map((value2, index2) => {
                                 return (
                                   <>
                                     <div className={styles.spotlightContent}>
