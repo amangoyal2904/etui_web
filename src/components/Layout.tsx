@@ -10,6 +10,7 @@ import RedeemVoucher from "components/RedeemVoucher";
 import DfpAds from './Ad/DfpAds';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { callJsOnRouteChange } from 'utils/priority';
+import TopNudge from './TopNudge';
 
 interface Props {
   page?: string;
@@ -55,6 +56,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
             <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
           </div>
         }
+        <TopNudge objVc={objVc} />
         <Headers />
         <main className={`pageHolder container`}>
           <HeaderMain
