@@ -14,4 +14,7 @@ module.exports = {
       // !! WARN !!
       ignoreBuildErrors: true,
     },
+  experimental: {
+    appDir: true,
+  }
   };

@@ -22,7 +22,7 @@ const PostComments:FC = (props) => {
         const charLength = event.target.value.length;
         if(charLength == 3){
             console.log("greater than 2");
-            setShowForm(true);
+          setShowForm(true);
         }
         if (charLength > 1500){
             alert("You have entered more than 1500 characters");
@@ -79,7 +79,7 @@ const PostComments:FC = (props) => {
                  <h5>Have something to say? <b>Post your comment</b></h5>
                  <textarea name="message" placeholder="Your comment" onChange={handleCommentChange}></textarea>
                  {showForm && <div>
-                    <div className={isLoggedIn && styles.logged}>
+                    <div className={isLoggedIn ? styles.logged : ""}>
                         <h4>To post this comment you must</h4>
                         <div className={styles.loginButtons}>
                             <p className={styles.floatLeft}>Log In/Connect with:</p>
