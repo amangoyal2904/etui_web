@@ -138,12 +138,12 @@ const Login: React.FC<Props> = () => {
             'x-sso-id': userSsoId
         }
         
-        Service.post({ url, headers, payload: {}, params })
+        Service.post({ url, headers, payload: params, params: {} })
         .then((res) => {
           window.location.reload();
         })
         .catch((err) => {
-          console.log("PWA cookie consent err: ", err);
+          console.log("Next WEB cookie consent err: ", err);
         });
 
         //window.location.reload();
@@ -160,8 +160,7 @@ const Login: React.FC<Props> = () => {
     if (isLogin) {
       setLogout();
     } else {
-      const loginUrl = `https://etdev8243.indiatimes.com/login.cms?ru=${window.location.href}`; //APIS_CONFIG.LOGIN[APP_ENV];
-      window.location.href = loginUrl; //`${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
+      window.objUser.initSSOWidget()
     }
   };
 

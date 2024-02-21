@@ -4,7 +4,7 @@ import styles from "./VideoShow.module.scss";
 import { useEffect, FC, useRef, useState } from "react";
 import { PageProps, VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
-import { ET_WAP_URL, getSubsecString } from "../../utils/common";
+import { ET_WEB_URL, getSubsecString } from "../../utils/common";
 import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
 import MostPopularNews from "../../components/MostPopularNews";
 import DfpAds from "../../components/Ad/DfpAds";
@@ -107,7 +107,7 @@ const VideoShow: FC<PageProps> = (props) => {
         <h1>{result.title}</h1>
         <div className={styles.byline}>
           <div>
-            {result.agency} | <time dateTime={result.date}>{result.date}</time>
+            {result.agency} | <time dateTime={result.date}>{result.dtline}</time>
           </div>
           <span className={styles.bookmarkCta}>
             <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon" />
@@ -118,7 +118,7 @@ const VideoShow: FC<PageProps> = (props) => {
           <div className={styles.shareBar}>
             <SocialShare
               mailData={{
-                shareUrl: ET_WAP_URL + result.url,
+                shareUrl: ET_WEB_URL + result.url,
                 title: result.title,
                 msid: result.msid,
                 hostId: result.hostid,

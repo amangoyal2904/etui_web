@@ -26,12 +26,12 @@ const SpotlightNav: React.FC<SpotlightNavProps> = ({ sec }) => {
                     value.sec?.map((value1, index1) => {
                       return (
                         <>
-                          <li>
+                          <li key={index1}>
                             {
                               value1 && Array.isArray(value1) && value1.map((value2, index2) => {
                                 return (
                                   <>
-                                    <div className={styles.spotlightContent}>
+                                    <div className={styles.spotlightContent} key={index2}>
                                       <a href={value2.link}>
                                         <img src={value2.im} width="120" height="70" alt={value2.nm} />
                                       </a>

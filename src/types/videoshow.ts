@@ -26,6 +26,7 @@ export interface VideoShowProps {
   synopsis: string;
   agency: string;
   date: string;
+  dtline: string;
   url: string;
   views: string | number;
   nextvideo?: number | string;

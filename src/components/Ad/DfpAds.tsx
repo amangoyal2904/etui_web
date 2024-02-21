@@ -162,7 +162,7 @@ const DfpAds:NextPage<Props> = function(props) {
         }
     }
 
-    const style = adHeight > 0 ? {minHeight: `${adHeight}px`, minWidth: `${adWidth}px`} : {};
+    const style = adHeight > 0 ? {minHeight: `${adHeight}px`, minWidth: `${adWidth}px`, textAlign: 'center' as 'center', margin: '0 auto'} : {};
 
     return (
         <div id={divId} style={style}></div>

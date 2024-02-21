@@ -92,5 +92,18 @@
         }
       }
     }
+    .epaper{
+      background: linear-gradient(-225deg,#183551 0,#183551 29%,#ed193b 67%,#ed193b 100%);
+      background-position: 0 0;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: shine 3s infinite linear;
+      animation-fill-mode: forwards;
+      -webkit-text-size-adjust: none;
+      color: #fff;
+      background-size: 200% auto;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
+    }
   }
 }
