@@ -30,7 +30,7 @@ const HeaderAuth = () => {
     			    <div className="dib prel edition"><span>English Edition</span></div>
                     <span data-dt="2022-03-02 12:58:01.262"><span> | </span><span className="dib time">02 March, 2022, 12:58 PM IST</span></span>
     			    <span> | </span>
-    			    <Link data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" href="https://epaper.timesgroup.com/" target="_blank" className="dib epaper">E-Paper</Link>
+    			    <Link data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" href="/timesepaper/publication-the-economic-times,city-delhi.cms" target="_blank" className="dib epaper">E-Paper</Link>
     			</div>
             </div>
             <div className="flr subSign">

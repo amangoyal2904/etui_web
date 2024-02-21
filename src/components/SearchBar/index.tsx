@@ -32,7 +32,7 @@ const SearchBar = (props) => {
     if (typeof specialKeywords[keyword] != "undefined") {
       loc = specialKeywords[keyword];
     }
-    window.location.href = "https://m.economictimes.com" + loc;
+    window.location.href = (APP_ENV !== 'production' ? "https://etdev8243.indiatimes.com" : "https://economictimes.indiatimes.com") + loc;
   };
 
   const generateRedirectUrl = (keyword: string, specialKeywords: any) => {

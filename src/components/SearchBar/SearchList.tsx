@@ -68,7 +68,7 @@ const SearchList = (props) => {
         var langPrefix = objLang.maping[currLanguage], langSufix = '';
         langPrefix = langPrefix ? langPrefix + '/' : '';
         langSufix = currLanguage ? ',language-' + currLanguage : ''
-        let domain = 'https://m.economictimes.com'
+        let domain = 'https://economictimes.indiatimes.com'
         let list = compData.length > 0 && compData.map((data, i) => (
             <li className={(i == compData.length - 1) ? styles.lastList : styles.list} key={i}>
                 {
