@@ -197,7 +197,7 @@ const Login: React.FC<Props> = () => {
         </div>
         {
           !isPrime && <div className={styles.soWrapper}>
-            <a data-url="https://economictimes.indiatimes.com/plans.cms" data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`}>Special Offer on ETPrime</a>
+            <a data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`} onClick={gotoPlanPage}>Special Offer on ETPrime</a>
           </div>
         }
       </div>
