@@ -34,7 +34,7 @@ const HeaderAuth = () => {
     			</div>
             </div>
             <div className="flr subSign">
-                <a className="dib subScribe" href="/plans.cms" data-ga-onclick="Subscription Flow#SYFT#ATF - url">Subscribe</a>
+                <a className="dib subScribe" href="/plans.cms" data-ga-onclick="Subscription Flow#SYFT#ATF - url">Subscribe112</a>
                 <div className="dib signInOut prel signIn">
     			    <a className="signInLink" data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url">Sign In</a>
     			</div>

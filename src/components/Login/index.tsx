@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { APP_ENV, getCookie, setCookieToSpecificTime } from "../../utils";
+import { gotoPlanPage } from '../../utils/utils';
 
 interface Props {}
 
@@ -171,7 +172,7 @@ const Login: React.FC<Props> = () => {
   return (
     <>
       <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
-        {!isPrime && <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`}>Subscribe</span>}
+        {!isPrime && <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
         <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
           {
             isLogin 

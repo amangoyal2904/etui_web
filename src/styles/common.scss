@@ -43,6 +43,8 @@
 
 .topAdContainer {
   text-align: center;
+  background-color: #f7f7f7;
+  margin:auto;
 }
 .adContainer {
   text-align: center;
@@ -120,5 +122,16 @@
   .ssoLoginElm{
     position: relative;top: 25px;bottom: 0;left: 0;right: 0;margin: auto;display: flex;justify-content: center;overflow: auto;z-index: 999999;
   }
+}
+
+.navP.cSprite_b:before {
+  content: '';
+  width: 14px;
+  height: 19px;
+  background-position: -299px -6px;
+  vertical-align: top;
+  position: relative;
+  top: 1px;
+  margin-right: 3px;
 }
 
