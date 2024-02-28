@@ -44,7 +44,7 @@ a {
   margin: 0;
   list-style: none;
   text-align: center;
-  left: 50px;
+  left: 72px;
 }
 .trending .slick-dots li button:before{ opacity:0.25; width:6px; height:6px}
 .trending .slick-dots li{width: 6px; height: 6px; margin:0 2px;}
@@ -55,7 +55,7 @@ a {
 }
 
 .trending .slick-prev {
-  left: 125px;
+  left: 155px;
   top: -15px;
   z-index: 99999;
 }
