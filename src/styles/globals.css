@@ -110,6 +110,9 @@ a {
   top: 7px;
   transform: rotate(-45deg);
 }
-.slick-active{
-
+/* .trending .slick-slide{
+  width:320px !important;
 }
+.trending .slick-current{
+  width: 320px !important;
+} */
