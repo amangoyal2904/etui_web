@@ -16,7 +16,8 @@ interface IUser {
   primaryEmail?: string;
 }
 
-const Login: React.FC<Props> = () => {
+const Login: React.FC<Props> = (props) => {
+  const { headertext } = props;
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
   const [isPrime, setIsPrime] = useState(false);
@@ -197,7 +198,10 @@ const Login: React.FC<Props> = () => {
         </div>
         {
           !isPrime && <div className={styles.soWrapper}>
-            <a data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`} onClick={gotoPlanPage}>Special Offer on ETPrime</a>
+            <a data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr}`} onClick={gotoPlanPage} data-free={headertext?.free}>
+              {console.log('objuser', window.objUser, window.objInts.permissions.length)}
+              {headertext?.free ? headertext?.free : 'Special Offer on ETPrime'}
+            </a>
           </div>
         }
       </div>
