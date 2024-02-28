@@ -170,6 +170,21 @@ const Login: React.FC<Props> = (props) => {
     window.e$.jStorage.deleteKey('userInfo');
   }
 
+  const headerText = () => {
+    console.log('objuser', window.objUser);
+    const permissions = (window.objInts && window.objInts.permissions) || [];
+    let hText = 'Special Offer on ETPrime';
+    if(permissions.includes('expired_subscription')) {
+      hText = headertext?.expired
+    } else if(permissions.includes('cancelled_subscription')) {
+      hText = headertext?.cancelled
+    } else {
+      hText = headertext?.free
+    }
+
+    return hText;
+  }
+
   return (
     <>
       <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
@@ -198,10 +213,7 @@ const Login: React.FC<Props> = (props) => {
         </div>
         {
           !isPrime && <div className={styles.soWrapper}>
-            <a data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr}`} onClick={gotoPlanPage} data-free={headertext?.free}>
-              {console.log('objuser', window.objUser, window.objInts.permissions.length)}
-              {headertext?.free ? headertext?.free : 'Special Offer on ETPrime'}
-            </a>
+            <a data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr}`} onClick={gotoPlanPage}>{headerText()}</a>
           </div>
         }
       </div>
