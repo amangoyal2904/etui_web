@@ -4,6 +4,7 @@ import APIS_CONFIG from "network/config.json";
 import axios from 'axios';
 import styles from './styles.module.scss'
 import CommentCard from './CommentCard';
+import { APP_ENV } from 'utils';
 interface commentsProps {
   msid: number | string;
 }
@@ -15,7 +16,7 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
   const loadMoreCount = useRef(1);
   const visibleComments = useRef(2);
   console.log('Populate comment :', msid);
-  const url = `https://etdev8243.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true&msid=${msid}`;
+  const url = APIS_CONFIG.comments[APP_ENV]+`&msid=${msid}`;
   useEffect(() => {
     fetch(url + "&pagenum=1&size=2", {
       method: 'GET',

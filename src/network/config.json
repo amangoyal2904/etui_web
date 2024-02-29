@@ -79,5 +79,9 @@
   "redeemVoucher": {
     "development": "https://qcsubscription.economictimes.indiatimes.com/api/subscription/redeemVoucher",
     "production": "https://subscriptions.economictimes.indiatimes.com/api/subscription/redeemVoucher"
+  },
+  "comments":{
+    "development":"https://etdev8243.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true",
+    "production":"https://economictimes.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true"
   }
 }
