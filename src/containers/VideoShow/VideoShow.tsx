@@ -143,7 +143,7 @@ const VideoShow: FC<PageProps> = (props) => {
           }
           <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
           {/* <PostComments /> */}
-          {/* <PopulateComment msid={msid}/> */}
+          <PopulateComment msid={msid}/>
           {/* <SEO {...seoData} /> */}
           {/* <GreyDivider />
           <AppDownloadWidget tpName="videoshow" />

@@ -14,7 +14,7 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
   const [activeIndex, setActiveIndex] = useState({"isReplyActive":null,"isFlagActive":null});
   const loadMoreCount = useRef(1);
   const visibleComments = useRef(2);
-  
+  console.log('Populate comment :', msid);
   const url = `https://etdev8243.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true&msid=${msid}`;
   useEffect(() => {
     fetch(url + "&pagenum=1&size=2", {

@@ -31,21 +31,6 @@ const CommentCard:FC<commentCardProps> = (props) => {
               src="https://img.etimg.com/photo/47865640.cms"
             />
           </a>
-          <div style={{ height: 18, display: "block", paddingBottom: 3, position: "relative" }}>
-            {" "}
-            <span
-              style={{
-                color: "#336797",
-                cursor: "pointer",
-                fontSize: 11,
-                fontWeight: "normal",
-                float: "left",
-                height: 17
-              }}
-            >
-              <div className={styles.followbtn} />
-            </span>
-          </div>
         </div>
         <div className={styles.userDetails}>
           <div className={styles.userName}>
