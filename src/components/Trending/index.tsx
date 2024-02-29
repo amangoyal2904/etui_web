@@ -38,8 +38,6 @@ export default function Trending({ data, title }: TrendingProps) {
     nextArrow: <CustomNextArrow className={styles.nextBtn}/>,
   };
   
-  console.log('subsets');
-  console.log(subsets);
 
   return (
     <div className={`${styles.trending} trending`}>

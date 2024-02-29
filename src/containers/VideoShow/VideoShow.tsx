@@ -74,8 +74,6 @@ const VideoShow: FC<PageProps> = (props) => {
 
     document.addEventListener('slikeReady', () => {
       window?.spl?.load(playerConfig, (status) => {
-        // console.log({playerConfig,status});
-        
         if (status) {
           const player = new window.SlikePlayer(playerConfig);
           handleAdEvents(player);
@@ -142,12 +140,6 @@ const VideoShow: FC<PageProps> = (props) => {
             </div>
           }
           <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
-          {/* <PostComments /> */}
-          {/* <PopulateComment msid={msid}/> */}
-          {/* <SEO {...seoData} /> */}
-          {/* <GreyDivider />
-          <AppDownloadWidget tpName="videoshow" />
-          */}
         </section>
         <aside className="sidebar">
         { !isprimeuser && <>
