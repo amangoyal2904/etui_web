@@ -50,18 +50,19 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
 
   return (
       <>
-        { !isprimeuser &&
-          <div className="topAdContainer">
-            <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
-          </div>
-        }
         <Headers />
         <main className={`pageHolder container`}>
+          { !isprimeuser &&
+            <div className="topAdContainer">
+              <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
+            </div>
+          }
           <HeaderMain
             page={page}
             menuData={menuData}
             subsecnames={data?.seo?.subsecnames}
             sectiondetail={data?.seo?.sectionDetail}
+            commonMeta={data?.commonMeta}
           />
           <BreadCrumb data={data?.seo?.breadcrumb} />
           <div className="layout">{children}</div>

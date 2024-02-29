@@ -79,5 +79,9 @@
   "redeemVoucher": {
     "development": "https://qcsubscription.economictimes.indiatimes.com/api/subscription/redeemVoucher",
     "production": "https://subscriptions.economictimes.indiatimes.com/api/subscription/redeemVoucher"
+  },
+  "pushGA": {
+    "production": "https://etpwaapi.economictimes.com/pushGaData",
+    "development": "https://etpwaapipre.economictimes.com/pushGaData"
   }
 }

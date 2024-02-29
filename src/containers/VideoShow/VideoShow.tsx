@@ -107,7 +107,7 @@ const VideoShow: FC<PageProps> = (props) => {
         <h1>{result.title}</h1>
         <div className={styles.byline}>
           <div>
-            {result.agency} | <time dateTime={result.date}>{result.dtline}</time>
+            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
           </div>
           <span className={styles.bookmarkCta}>
             <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon" />
