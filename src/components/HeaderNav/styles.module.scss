@@ -364,6 +364,9 @@
         margin-top: 12px;
       }
     }
+    .navP.cSprite_b:before{
+      content:'';width:14px;height:19px;background-position: -299px -6px;vertical-align: top;position: relative;top: 1px;margin-right: 3px;
+    }
   }
 
   &.pink_theme{
