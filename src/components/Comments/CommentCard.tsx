@@ -13,12 +13,12 @@ interface commentCardProps {
   level:any;
   activeIndex:any;
   setActiveIndex:any;
+  item:any;
 }
 
 const CommentCard:FC<commentCardProps> = (props) => {
-  const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex } = props;
+  const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex, imgprofile } = props;
   const [showOffensiveMark, setShowOffensiveMark] = useState(false);
-  alert(props);
   return (
     <div className={`${styles.commentBox} ${level > 1 ? styles.commentGray : ""}`}>
       <div className={styles.commentUser}>
@@ -29,7 +29,7 @@ const CommentCard:FC<commentCardProps> = (props) => {
               className={styles.avatar}
               width={40}
               height={40}
-              src="https://img.etimg.com/photo/47865640.cms"
+              src={imgprofile}
             />
           </a>
         </div>

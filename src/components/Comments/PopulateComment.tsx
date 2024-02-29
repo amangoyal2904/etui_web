@@ -48,7 +48,7 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
   function populate(cards:Object[],level=1){
     let commentList = [];
     cards.forEach((item,index)=>{
-      commentList.push(<CommentCard key = {item._id} commentCardId = {item._id} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} userFullName = {item.F_NAME} commentTime = {item.C_D} commentText = {item.C_T} statusPoints = {item.user_reward?.statusPoints} level = {level}/>);
+      commentList.push(<CommentCard key = {item._id} commentCardId = {item._id} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} userFullName = {item.F_NAME} commentTime = {item.C_D} commentText = {item.C_T} statusPoints = {item.user_reward?.statusPoints} level = {level} imgprofile={item.PIU}/>);
       if(item.CHILD){
         commentList.push(populate(item.CHILD,level+1));
       }
