@@ -38,7 +38,6 @@ export const get = (config) => {
 export const post = (config) => {
   const { payload } = config;
   const url = getApiUrl(config, 0);
-  console.log('post url', url, config);
   
   return axios.request({
     method: "POST",
