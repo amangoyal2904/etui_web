@@ -18,6 +18,7 @@ interface commentCardProps {
 const CommentCard:FC<commentCardProps> = (props) => {
   const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex } = props;
   const [showOffensiveMark, setShowOffensiveMark] = useState(false);
+  alert(props);
   return (
     <div className={`${styles.commentBox} ${level > 1 ? styles.commentGray : ""}`}>
       <div className={styles.commentUser}>

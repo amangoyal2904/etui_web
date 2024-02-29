@@ -87,7 +87,7 @@ const ETSecLogo = (props) => {
       <span>
         <img src={LOGO[subsec1].im} width={LOGO[subsec1].width} height={LOGO[subsec1].height || "auto"} />
       </span>
-      : <span className={styles.sec_name}>{sectiondetail.title}</span>
+      : <span className={styles.sec_name}>{sectiondetail?.title}</span>
     }
     </>
 }
