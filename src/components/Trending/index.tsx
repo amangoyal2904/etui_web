@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from './styles.module.scss';
+import './slikCustom.css';
 
 interface TrendingProps {
   data: { title: string; url: string }[]; // Define the type of data prop
@@ -40,7 +41,7 @@ export default function Trending({ data, title }: TrendingProps) {
   
 
   return (
-    <div className={`${styles.trending} trending`}>
+    <div className={`${styles.trending} trending ${global.test}`}>
       <h2>{title}</h2>
       <Slider {...settings}>
         {/* Render each subset as a slide */}
