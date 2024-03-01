@@ -44,7 +44,6 @@ export default function Trending({ data, title }: TrendingProps) {
     <div className={`${styles.trending} trending ${global.test}`}>
       <h2>{title}</h2>
       <Slider {...settings}>
-        {/* Render each subset as a slide */}
         {subsets.map((subset, i) => (
           <div key={`subset_${i}`}>
             {subset.map((item, j) => (
