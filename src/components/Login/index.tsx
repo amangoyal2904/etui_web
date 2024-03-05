@@ -171,7 +171,6 @@ const Login: React.FC<Props> = (props) => {
   }
 
   const headerText = () => {
-    console.log('objuser', window.objUser);
     const permissions = (window.objInts && window.objInts.permissions) || [];
     let hText = 'Special Offer on ETPrime';
     if(permissions.includes('expired_subscription')) {

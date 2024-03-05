@@ -43,8 +43,6 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    console.log('rrrr');
-    
     callJsOnRouteChange();
   }, [pathname, searchParams]);
 
