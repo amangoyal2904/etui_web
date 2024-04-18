@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import { FC, useState, useEffect } from "react";
 import GreyDivider from "components/GreyDivider";
 import { isNoFollow } from "utils";
+import SearchBar from "components/SearchBar";
 
 const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) => {
   const [isExpanded, setIsExpanded] = useState({});
@@ -140,7 +141,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
         {interLinkingData[index]["data"] && Array.isArray(interLinkingData[index]["data"]) && (
             <>
               <p>{interLinkingData[index].title}</p>
-              <div className={styles.show_hide_interlinking} onClick={()=>onMoreClick(index)}>{isExpanded[index] ? 'Less' : 'More'}</div>
+              <div className={`${styles.show_hide_interlinking} ${isExpanded[index] ? styles.moreStyle :""}`} onClick={()=>onMoreClick(index)}>{isExpanded[index] ? 'Less' : 'More'}</div>
               <div className={styles.content}>
                 {interLinkingData[index]["data"]?.map((item, key) => {
                   const noFollow = isNoFollow(item.url) && item.noFollow != "false" ? { rel: "nofollow" } : {};
@@ -198,6 +199,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
     <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPrime ? styles.pink_theme : ""}`}>
       <div className={styles.dynamicContainer}>
         {!isPrime && <GreyDivider />}
+        <SearchBar footerSearch={true}/>
         {browseCompany()}
         {Interlinking()}
         {downloadSection()}

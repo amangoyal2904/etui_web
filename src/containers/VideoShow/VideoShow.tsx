@@ -4,7 +4,7 @@ import styles from "./VideoShow.module.scss";
 import { useEffect, FC, useRef, useState } from "react";
 import { PageProps, VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
-import { ET_WAP_URL, getSubsecString } from "../../utils/common";
+import { ET_WEB_URL, getSubsecString } from "../../utils/common";
 import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
 import MostPopularNews from "../../components/MostPopularNews";
 import DfpAds from "../../components/Ad/DfpAds";
@@ -13,6 +13,8 @@ import ReadMore from "components/ReadMore";
 import MostViewVideos from "components/MostViewVideos";
 import {Share} from "components/Share";
 import SocialShare from "components/Videoshow/SocialShare";
+import PostComments from "components/Comments/PostComments";
+import PopulateComment from "components/Comments/PopulateComment";
 import { log } from "console";
 import Trending from "components/Trending";
 
@@ -72,8 +74,6 @@ const VideoShow: FC<PageProps> = (props) => {
 
     document.addEventListener('slikeReady', () => {
       window?.spl?.load(playerConfig, (status) => {
-        // console.log({playerConfig,status});
-        
         if (status) {
           const player = new window.SlikePlayer(playerConfig);
           handleAdEvents(player);
@@ -99,34 +99,34 @@ const VideoShow: FC<PageProps> = (props) => {
     }
   }, [vidRef.current]);
 
-  return (    
-      <>
-        <section className={`pageContent ${styles.videoshow} col3`}>
-          <h1>{result.title}</h1>
-          <div className={styles.byline}>
-            <div>{result.agency} | <time dateTime={result.date}>{result.date}</time></div>
-            <div className={styles.right}>              
-              <span className={styles.bookmarkCta}>
-                <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon"/>
-              </span>
-              <span className={styles.commentCta}>
-                <img src="https://img.etimg.com/photo/57749072.cms" alt="comment icon"/> Post a comment
-              </span>
-            </div>
+  return (
+    <>
+      <section className={`pageContent ${styles.videoshow} col3`}>
+        <h1>{result.title}</h1>
+        <div className={styles.byline}>
+          <div>
+            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
           </div>
-          <div className={styles.vidWrapper} ref={vidRef}>
-            <div className={styles.shareBar}>
-              <SocialShare mailData={{
-                    shareUrl: ET_WAP_URL + result.url,
-                    title: result.title,
-                    msid: result.msid,
-                    hostId: result.hostid,
-                    type: "5"
-                }}/>
-            </div>
+          <span className={styles.bookmarkCta}>
+            <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon" />
+          </span>
+          <PostComments />
+        </div>
+        <div className={styles.vidWrapper} ref={vidRef}>
+          <div className={styles.shareBar}>
+            <SocialShare
+              mailData={{
+                shareUrl: ET_WEB_URL + result.url,
+                title: result.title,
+                msid: result.msid,
+                hostId: result.hostid,
+                type: "5"
+              }}
+            />
+          </div>
             <div className={`vidWrapInner ${isPopupVid ? styles.popupVid : ''}`}>
               {isPopupVid && <div className={styles.title}>{result.title}</div> }
-              <div id={`id_${result.msid}`} className={`${styles.vidContainer} ${styles.vid}`}></div>
+            <div id={`id_${result.msid}`} className={`${styles.vidContainer} ${styles.vid}`}></div>
             </div>
           </div>
           <div className={styles.videoDesc}>
@@ -140,12 +140,6 @@ const VideoShow: FC<PageProps> = (props) => {
             </div>
           }
           <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
-          {/* <PostComments /> */}
-          {/* <PopulateComment msid={msid}/> */}
-          {/* <SEO {...seoData} /> */}
-          {/* <GreyDivider />
-          <AppDownloadWidget tpName="videoshow" />
-          */}
         </section>
         <aside className="sidebar">
         { !isprimeuser && <>

@@ -44,8 +44,6 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    console.log('rrrr');
-    
     callJsOnRouteChange();
   }, [pathname, searchParams]);
 
@@ -59,11 +57,17 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
         <TopNudge objVc={objVc} />
         <Headers />
         <main className={`pageHolder container`}>
+          { !isprimeuser &&
+            <div className="topAdContainer">
+              <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
+            </div>
+          }
           <HeaderMain
             page={page}
             menuData={menuData}
             subsecnames={data?.seo?.subsecnames}
             sectiondetail={data?.seo?.sectionDetail}
+            commonMeta={data?.commonMeta}
           />
           <BreadCrumb data={data?.seo?.breadcrumb} />
           <div className="layout">{children}</div>

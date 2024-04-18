@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { APP_ENV, getCookie, setCookieToSpecificTime } from "../../utils";
+import { gotoPlanPage } from '../../utils/utils';
 
 interface Props {}
 
@@ -15,7 +16,8 @@ interface IUser {
   primaryEmail?: string;
 }
 
-const Login: React.FC<Props> = () => {
+const Login: React.FC<Props> = (props) => {
+  const { headertext } = props;
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
   const [isPrime, setIsPrime] = useState(false);
@@ -74,6 +76,10 @@ const Login: React.FC<Props> = () => {
     window.objInts.afterPermissionCall(permissionCallback);
   };
   useEffect(() => {
+
+    console.log({APP_ENV});
+    
+
     if (typeof window.objInts !== "undefined") {
       intsCallback();
     } else {
@@ -134,12 +140,12 @@ const Login: React.FC<Props> = () => {
             'x-sso-id': userSsoId
         }
         
-        Service.post({ url, headers, payload: {}, params })
+        Service.post({ url, headers, payload: params, params: {} })
         .then((res) => {
           window.location.reload();
         })
         .catch((err) => {
-          console.log("PWA cookie consent err: ", err);
+          console.log("Next WEB cookie consent err: ", err);
         });
 
         //window.location.reload();
@@ -156,8 +162,7 @@ const Login: React.FC<Props> = () => {
     if (isLogin) {
       setLogout();
     } else {
-      const loginUrl = `https://etdev8243.indiatimes.com/login.cms?ru=${window.location.href}`; //APIS_CONFIG.LOGIN[APP_ENV];
-      window.location.href = loginUrl; //`${loginUrl}${APP_ENV == "development" ? `?ru=${window.location.href}` : ""}`;
+      window.objUser.initSSOWidget()
     }
   };
 
@@ -165,10 +170,24 @@ const Login: React.FC<Props> = () => {
     window.e$.jStorage.deleteKey('userInfo');
   }
 
+  const headerText = () => {
+    const permissions = (window.objInts && window.objInts.permissions) || [];
+    let hText = 'Special Offer on ETPrime';
+    if(permissions.includes('expired_subscription')) {
+      hText = headertext?.expired
+    } else if(permissions.includes('cancelled_subscription')) {
+      hText = headertext?.cancelled
+    } else {
+      hText = headertext?.free
+    }
+
+    return hText;
+  }
+
   return (
     <>
       <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
-        {!isPrime && <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`}>Subscribe</span>}
+        {!isPrime && <span data-ga-onclick="Subscription Flow#SYFT#ATF - url" className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
         <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
           {
             isLogin 
@@ -193,7 +212,7 @@ const Login: React.FC<Props> = () => {
         </div>
         {
           !isPrime && <div className={styles.soWrapper}>
-            <a data-url="https://economictimes.indiatimes.com/plans.cms" data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr} ${styles.top_f_us}`}>Special Offer on ETPrime</a>
+            <a data-ga-onclick="Subscription Flow#SYFT#HomepageOfferHeader" className={`${styles.hdr_spcl_ofr}`} onClick={gotoPlanPage}>{headerText()}</a>
           </div>
         }
       </div>

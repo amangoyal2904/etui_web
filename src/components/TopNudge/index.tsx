@@ -113,6 +113,17 @@ export default function TopNudge({objVc}) {
 
     if(reActivatedEnabled && topNudgeEnabled && !isOnBoardingeligibile) {
         grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'User Eligible for Banner', 'event_label': bannerType + ' | Banner Location '+ currPageType()});
+        fetch("https://etdev8243.indiatimes.com/reactfeed_mostpopular?bannertype=" + bannerType , {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(nextCommentsData => {
+              console.log(nextCommentsData, 'nextCommentsData');
+            })
+            .catch(err => {
+              console.log('error: ', err);
+            })
         /* $.ajax({
             url: "/prime_campaign_nudge.cms?msid=98201998&bannertype=" + bannerType,
             contentType: "application/json; charset=utf-8",

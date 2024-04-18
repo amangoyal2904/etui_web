@@ -11,7 +11,7 @@ function NudgeContainer(props) {
         banner_text = "You're missing out on all member-benefits.",
         button_link = "Renew now and save 20% on ETPrime 1 year plan.",
         button_text = "Subscribe Now",
-        banner_subtext = "Cancel",
+        banner_subtext = "Act Now and continue enjoying premium benefits!",
         banner_cross = true,
         cross_frequency = 7 
     } = props;

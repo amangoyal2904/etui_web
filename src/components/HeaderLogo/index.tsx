@@ -2,6 +2,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from 'react' ;
 import {dateFormat} from '../../utils/utils';
+import { APP_ENV } from 'utils';
+import { ePaper_URL } from '../../utils/common';
 import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
 import Login from "../Login";
@@ -31,7 +33,7 @@ const EditionTimeStamp = () => {
         {/* <div><span> | </span>{siteTime}</div> */}
         <span> | </span>
         <div>
-          <a rel="nofollow" data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" className="dib epaper" href="/printhome.cms" target="_blank">Today's Paper</a>
+          <a rel="nofollow" data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" className={`dib ${styles.epaper}`} href={`${ePaper_URL[APP_ENV]}/timesepaper/publication-the-economic-times,city-delhi.cms`} target="_blank">Today's Paper</a>
         </div>
       </div>
     </>
@@ -91,7 +93,7 @@ const ETSecLogo = (props) => {
 }
 
 const HeaderLogo = (props) => {
-  const {page, subsecnames, sectiondetail} = props;
+  const {page, subsecnames, sectiondetail, headertext} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
   const [isPrime, setIsPrime] = useState(false);
 
@@ -129,7 +131,7 @@ const HeaderLogo = (props) => {
           <ETSecLogo subsecnames={subsecnames} sectiondetail={sectiondetail} />
         </a>}
         <EditionTimeStamp />
-        <Login />
+        <Login headertext={headertext}/>
       </div>
     </div>
   )
