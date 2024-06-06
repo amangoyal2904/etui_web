@@ -59,7 +59,7 @@ $sprite: url("https://img.etimg.com/photo/47784794.cms") no-repeat;
 }
 
 .commentForm {
-    background:#FFF;
+    background: #fff;
     padding:15px;
     .loginButtons {
         padding-bottom: 1px;
@@ -124,16 +124,16 @@ $sprite: url("https://img.etimg.com/photo/47784794.cms") no-repeat;
         padding: 15px 15px 20px;
         width: -webkit-fill-available;
     }
-    &.nonLogged {
-        padding-top: 0;
-        input[type="text"] {
-            background-position: 0 -81px;
-            border: 1px solid #b3adad;
-            border-radius: 4px;
-            color: #a9abaa;
-            padding: 5px;
-        }
-    }
+    // &.nonLogged {
+    //     padding-top: 0;
+    //     input[type=text] {
+    //         background-position: 0 -81px;
+    //         border: 1px solid #b3adad;
+    //         border-radius: 4px;
+    //         color: #a9abaa;
+    //         padding: 5px;
+    //     }
+    // }
     label {
         display: block;
         width: 194px;
@@ -188,7 +188,9 @@ $sprite: url("https://img.etimg.com/photo/47784794.cms") no-repeat;
         }
     }
 }
-
+.greyBgColor {
+    background:#f5f5f5;
+}
 .floatLeft {
     margin: 0;
     float: left;
@@ -198,7 +200,7 @@ $sprite: url("https://img.etimg.com/photo/47784794.cms") no-repeat;
     float: right;
 }
 .shareSprite {
-    background: url(https://img.etimg.com/photo/65289395.cms) no-repeat;
+    background: url(https://img.etimg.com/photo/105807325.cms) no-repeat;
 }
 
 
@@ -220,11 +222,19 @@ p.thankText + p.thankText{margin-bottom:130px}
 .logged { 
     display: none;
 }
-
+.nonLogged {
+    input[type=text] {
+        background-position: 0 -81px;
+        border: 1px solid #b3adad;
+        border-radius: 4px;
+        color: #a9abaa;
+        padding: 5px;
+    }
+}
 /* Populate Comment styling */ 
 #populateComment {
     float: left;
-    padding: 10px 20px;
+    padding-top: 10px;
     width: 100%;
     font-family: Montserrat;
     font-size: 14px;
@@ -552,7 +562,6 @@ p.thankText + p.thankText{margin-bottom:130px}
 }
 .cmtReplier form {
     position: relative;
-    width: 100%;
     h6.thankText {
         font-size: 16px;
         padding: 100px 0 10px;

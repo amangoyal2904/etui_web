@@ -1,6 +1,10 @@
 export const ET_WEB_URL = "https://economictimes.indiatimes.com/";
 export const ET_WAP_URL = "https://m.economictimes.com/";
 export const ET_IMG_DOMAIN = "https://img.etimg.com/";
+export const ePaper_URL = {
+  'development': 'https://etdev8243.indiatimes.com',
+  'production': 'https://epaper.indiatimes.com'
+}
 export const TEST_ID_CTN_HOME = "358376"; // 335965
 export const TEST_COLOMBIA_DFP_HOME = "/7176/ET_MWeb/ET_Mweb_Bid_Experiment/ET_Mweb_HP_Bid_Experiment_300";
 export const TEST_COLOMBIA_DFP_ARTICLESHOW = "/7176/ET_MWeb/ET_Mweb_Bid_Experiment/ET_Mweb_ROS_Bid_Experiment_300";
@@ -17,7 +21,7 @@ export const SiteConfig = {
   wapsiteregionalname: "The Economic Times",
   language: "en",
   languagefullName: "english",
-  weburl: "https://m.economictimes.com",
+  weburl: "https://economictimes.indiatimes.com",
   domain: "indiatimes.com",
   purpose: "Business News",
   image:
@@ -52,6 +56,6 @@ export const GA = {
 }
 
 export const X_CLIENT_ID = {
-  'development': 'w6590a0af0377c711dedefck565f27c1',
-  'production': 'w6590a0af0377c711dede6bd565f27c2'
+  'development': 'w2a8e883ec676f417520f422068a4741',
+  'production': 'b2a8e883ec676f417520f422068a4742'
 }

@@ -12,6 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         {children}
+        <div className="ssoLoginWrap hide">
+            <div id="ssoLogin" className="ssoLoginElm"/>
+        </div>
       </body>
     </html>
   );
