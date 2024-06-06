@@ -4,6 +4,7 @@ import APIS_CONFIG from "network/config.json";
 import axios from 'axios';
 import styles from './styles.module.scss'
 import CommentCard from './CommentCard';
+import { APP_ENV } from 'utils';
 interface commentsProps {
   msid: number | string;
 }
@@ -14,8 +15,8 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
   const [activeIndex, setActiveIndex] = useState({"isReplyActive":null,"isFlagActive":null});
   const loadMoreCount = useRef(1);
   const visibleComments = useRef(2);
-  
-  const url = `https://etdev8243.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true&msid=${msid}`;
+  console.log('Populate comment :', msid);
+  const url = APIS_CONFIG.comments[APP_ENV]+`&msid=${msid}`;
   useEffect(() => {
     fetch(url + "&pagenum=1&size=2", {
       method: 'GET',
@@ -48,7 +49,7 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
   function populate(cards:Object[],level=1){
     let commentList = [];
     cards.forEach((item,index)=>{
-      commentList.push(<CommentCard key = {item._id} commentCardId = {item._id} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} userFullName = {item.F_NAME} commentTime = {item.C_D} commentText = {item.C_T} statusPoints = {item.user_reward?.statusPoints} level = {level}/>);
+      commentList.push(<CommentCard key = {item._id} commentCardId = {item._id} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} userFullName = {item.F_NAME} commentTime = {item.C_D} commentText = {item.C_T} statusPoints = {item.user_reward?.statusPoints} level = {level} imgprofile={item.PIU}/>);
       if(item.CHILD){
         commentList.push(populate(item.CHILD,level+1));
       }

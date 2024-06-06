@@ -42,7 +42,7 @@ const VideoShow: FC<PageProps> = (props) => {
   const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
   const { seo = {}, version_control, parameters, isprimeuser } = props;
   const { msid } = parameters;
-  const { cpd_wap = "0" } = version_control;
+  //const { cpd_wap = "0" } = version_control;
 
   const subsecNames = props?.seo?.subsecnames;
 
@@ -140,6 +140,12 @@ const VideoShow: FC<PageProps> = (props) => {
             </div>
           }
           <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
+          {/* <PostComments /> */}
+          <PopulateComment msid={msid}/>
+          {/* <SEO {...seoData} /> */}
+          {/* <GreyDivider />
+          <AppDownloadWidget tpName="videoshow" />
+          */}
         </section>
         <aside className="sidebar">
         { !isprimeuser && <>
