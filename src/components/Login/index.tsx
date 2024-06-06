@@ -6,10 +6,21 @@ import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { APP_ENV, getCookie, setCookieToSpecificTime } from "../../utils";
+import { detectBrowser, isMobileSafari, loadAssets } from "utils/utils";
 import { gotoPlanPage } from '../../utils/utils';
 
 interface Props {}
-
+declare global {
+  interface Window { 
+    OneTapLogins:any;
+    oneTabloginProcess:any;
+    default_gsi:any;
+    oneTap:any;
+    __APP:any;
+    objUser:any;
+    objInts:any;
+  }
+}
 interface IUser {
   firstName?: string;
   ssoid?: string;
@@ -17,7 +28,7 @@ interface IUser {
 }
 
 const Login: React.FC<Props> = (props) => {
-  const { headertext } = props;
+  const { headertext }:any = props;
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
   const [isPrime, setIsPrime] = useState(false);
@@ -48,6 +59,11 @@ const Login: React.FC<Props> = (props) => {
       if (objUser.ssoid) window.customDimension["userId"] = objUser.ssoid;
     } else {
       window.customDimension["dimension3"] = "NONLOGGEDIN";
+      console.log("@@@@@@--->>",detectBrowser("safari"));
+      if (!(detectBrowser("safari") || isMobileSafari())) {
+        //let userTraffic = typeof objVc !== 'undefined' && objVc.userTraffic || 0;
+        setTimeout(()=> oneTapLogin(),10000);
+      }
     }
   };
   const permissionCallback = () => {
@@ -168,6 +184,51 @@ const Login: React.FC<Props> = (props) => {
 
   const resetInfo = () => {
     window.e$.jStorage.deleteKey('userInfo');
+  }
+  const oneTapLogin = () => {
+    let oneTapUrl = window.objVc.lib_googlelogin;
+    if (
+      typeof window.e$ != "undefined" && window.e$.jStorage &&
+      localStorage.getItem("jStorage")
+    ) {
+     
+      if (window.e$.jStorage.get("c_oneTapLogin") != 1 ) {
+        window.ispopup = true;
+        console.log("@@@@@--->>",oneTapUrl);
+        loadAssets(oneTapUrl, "js", "async", "body");
+        const oneTabPrompt = () => {
+          if (typeof window != "undefined" && typeof window.oneTabloginProcess != "undefined") {
+            window.OneTapLogins.init();
+            if (typeof window.default_gsi != "undefined") {
+              google.accounts.id.prompt(notification => {
+                console.log("One Tab Login --",notification)
+                window.oneTap = notification;
+                if (notification.isDisplayed() || (notification.h || notification.g ) == 'display') {
+                  // window.customDimension.dimension72 = window.customDimension.dimension72 ? window.customDimension.dimension72 + "Free Access Chrome login" : "Free Access Chrome login";
+                } if (notification.h == 'display' && notification.i == false && (notification.l == "opt_out_or_no_session" || notification.l == "suppressed_by_user" || notification.l == "missing_client_id")) {
+                  console.log("One Tab Login closed --",notification);
+                }
+                if ((notification.l || notification.m) == 'user_cancel') {
+                  console.log("One Tab Login closed --",notification);
+                }
+                if ((notification.g || notification.h) == 'skipped' && ((notification.l || notification.m) == 'tap_outside' || (notification.l || notification.m) == 'auto_cancel')) {
+                  console.log("One Tab Login closed --",notification);
+                }
+                if (notification.getMomentType() == "dismissed" && notification.getDismissedReason() == "credential_returned") {
+                  console.log('oneTap', notification);
+                }
+
+              });
+            } else {
+              setTimeout(oneTabPrompt, 500);
+            }
+          } else {
+            setTimeout(oneTabPrompt, 500);
+          }
+        }
+        oneTabPrompt();
+      }
+    }
   }
 
   const headerText = () => {
