@@ -16,6 +16,9 @@ declare global {
     oneTabloginProcess:any;
     default_gsi:any;
     oneTap:any;
+    __APP:any;
+    objUser:any;
+    objInts:any;
   }
 }
 interface IUser {
@@ -25,7 +28,7 @@ interface IUser {
 }
 
 const Login: React.FC<Props> = (props) => {
-  const { headertext } = props;
+  const { headertext }:any = props;
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
   const [isPrime, setIsPrime] = useState(false);
@@ -201,19 +204,17 @@ const Login: React.FC<Props> = (props) => {
                 console.log("One Tab Login --",notification)
                 window.oneTap = notification;
                 if (notification.isDisplayed() || (notification.h || notification.g ) == 'display') {
-                  //this.enableAccessPassOverlay();
-                  window.customDimension.dimension72 = window.customDimension.dimension72 ? window.customDimension.dimension72 + "Free Access Chrome login" : "Free Access Chrome login";
+                  // window.customDimension.dimension72 = window.customDimension.dimension72 ? window.customDimension.dimension72 + "Free Access Chrome login" : "Free Access Chrome login";
                 } if (notification.h == 'display' && notification.i == false && (notification.l == "opt_out_or_no_session" || notification.l == "suppressed_by_user" || notification.l == "missing_client_id")) {
-                  //this.closeOneTabOverlay();
+                  console.log("One Tab Login closed --",notification);
                 }
                 if ((notification.l || notification.m) == 'user_cancel') {
-                  //this.closeOneTabOverlay();
+                  console.log("One Tab Login closed --",notification);
                 }
                 if ((notification.g || notification.h) == 'skipped' && ((notification.l || notification.m) == 'tap_outside' || (notification.l || notification.m) == 'auto_cancel')) {
-                 // this.closeOneTabOverlay();
+                  console.log("One Tab Login closed --",notification);
                 }
                 if (notification.getMomentType() == "dismissed" && notification.getDismissedReason() == "credential_returned") {
-                 // this.setState({ oneTabloginEnable: false })
                   console.log('oneTap', notification);
                 }
 
@@ -228,20 +229,6 @@ const Login: React.FC<Props> = (props) => {
         oneTabPrompt();
       }
     }
-  }
-
-  const headerText = () => {
-    const permissions = (window.objInts && window.objInts.permissions) || [];
-    let hText = 'Special Offer on ETPrime';
-    if(permissions.includes('expired_subscription')) {
-      hText = headertext?.expired
-    } else if(permissions.includes('cancelled_subscription')) {
-      hText = headertext?.cancelled
-    } else {
-      hText = headertext?.free
-    }
-
-    return hText;
   }
 
   const headerText = () => {
