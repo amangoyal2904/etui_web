@@ -93,7 +93,7 @@ const ETSecLogo = (props) => {
 }
 
 const HeaderLogo = (props) => {
-  const {page, subsecnames, sectiondetail} = props;
+  const {page, subsecnames, sectiondetail, headertext} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
   const [isPrime, setIsPrime] = useState(false);
 
@@ -131,7 +131,7 @@ const HeaderLogo = (props) => {
           <ETSecLogo subsecnames={subsecnames} sectiondetail={sectiondetail} />
         </a>}
         <EditionTimeStamp />
-        <Login />
+        <Login headertext={headertext}/>
       </div>
     </div>
   )

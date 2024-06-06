@@ -42,7 +42,7 @@ const VideoShow: FC<PageProps> = (props) => {
   const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
   const { seo = {}, version_control, parameters, isprimeuser } = props;
   const { msid } = parameters;
-  const { cpd_wap = "0" } = version_control;
+  //const { cpd_wap = "0" } = version_control;
 
   const subsecNames = props?.seo?.subsecnames;
 
@@ -74,8 +74,6 @@ const VideoShow: FC<PageProps> = (props) => {
 
     document.addEventListener('slikeReady', () => {
       window?.spl?.load(playerConfig, (status) => {
-        // console.log({playerConfig,status});
-        
         if (status) {
           const player = new window.SlikePlayer(playerConfig);
           handleAdEvents(player);
@@ -107,7 +105,7 @@ const VideoShow: FC<PageProps> = (props) => {
         <h1>{result.title}</h1>
         <div className={styles.byline}>
           <div>
-            {result.agency} | <time dateTime={result.date}>{result.dtline}</time>
+            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
           </div>
           <span className={styles.bookmarkCta}>
             <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon" />
