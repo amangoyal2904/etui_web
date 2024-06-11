@@ -283,16 +283,10 @@
 
         
         .Edition_carouselone,  .Edition_carouseltwo{
-          // width: 520px;
-          // height: 250px;
-          // overflow: hidden;
-          // margin: 0;
           padding-bottom: 15px;
-          // margin-top: 30px;
           position: relative;
 
           ul {
-            // overflow: hidden;
             white-space: nowrap;
             li{
               display: inline-block;
@@ -301,34 +295,6 @@
               width: 520px;
             }
           }
-
-          // .spotligt_btn_slider{
-          //   position: absolute;
-          //   top: 0;
-          //   right:5px;
-          // }
-
-          // .arw_blk{
-          //   display: inline-block;
-          //   width: 8px;
-          //   height: 8px;
-          //   border-top: 2px solid #000;
-          //   border-left: 2px solid #000;
-          //   position: relative;
-          //   cursor: pointer;
-          //   border-radius: 2px;
-
-          //   &.arw_blk_p{
-          //     right: 2px;
-          //     transform: rotate(-45deg);
-          //   }
-
-          //   &.arw_blk_n{
-          //     right: -2px;
-          //     transform: rotate(135deg);
-          //     background: none;
-          //   }
-          // }
 
           .embla__buttons {
             display: grid;
@@ -345,9 +311,6 @@
           .Edition_wrp{
             padding-top: 30px;
           }
-          // .spotligt_btn_slider{
-          //   top: -20px;
-          // }
         }
 
         .Edition_carouseltwo{
