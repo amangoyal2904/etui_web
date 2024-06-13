@@ -11,6 +11,25 @@ const SearchBar = (props) => {
   const [searchData, setSearchData]: any = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
 
+  const [isPrime, setIsPrime] = useState(false);
+
+  const intsCallback = () =>  {
+    window?.objInts?.afterPermissionCall(() => {
+      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
+    });
+  }
+
+  useEffect(() => {
+    if (typeof window.objInts !== "undefined") {
+      window.objInts.afterPermissionCall(intsCallback);
+    } else {
+      document.addEventListener("objIntsLoaded", intsCallback);
+    }
+    return () => {
+      document.removeEventListener("objIntsLoaded", intsCallback);
+    };
+  }, []);
+
   const handleInput = (e) => {
     let searchValue = e.target.value;
     setSearchKey(searchValue);
@@ -109,16 +128,16 @@ const SearchBar = (props) => {
   }
   return (
     <>
-      <div className={styles.srch_container}>
+      <div className={`${styles.srch_container} ${isPrime ? styles.pink_theme : ""}`}>
         <div className={`${footerSearch ? styles.btm_srch_div : styles.srch_overlay_div}`}>
           <div className={`${footerSearch ? styles.btm_srch_content : styles.srch_overlay_content}`}>
 
-            {footerSearch ? <div className='flt'>
+            {footerSearch ? <div className={isPrime ? styles.footlogo_wrp : 'flt'}>
               <a title="The Economic Times" href="/">
                 <img className={styles.logo} loading="lazy"
                   title="The Economic Times"
                   alt="The Economic Times"
-                  src="https://img.etimg.com/photo/msid-74462387,quality-100/et-logo.jpg"
+                  src={isPrime ? "https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" : "https://img.etimg.com/photo/msid-74462387,quality-100/et-logo.jpg"}
                   height="28"
                   width="255" />
               </a>

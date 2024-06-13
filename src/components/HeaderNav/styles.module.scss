@@ -384,6 +384,7 @@
     background-color: #ffded4;
     border-top: 1px solid #debdb4;
     border-bottom: 2px solid #debdb4;
+    width: 100%;
     .topnav{
       width: 1260px;
       margin: 0 auto;
@@ -456,7 +457,8 @@
   /* Define the styles for the element when it becomes sticky */
   position: fixed;
   top: 0;
-  width: 100%;
+  // width: 100%;
+  width: 1003px;
   /* Add any other styles you want for the sticky state */
 }
 

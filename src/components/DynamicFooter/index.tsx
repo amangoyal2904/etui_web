@@ -200,7 +200,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
       <div className={styles.dynamicContainer}>
         {!isPrime && <GreyDivider />}
         {
-          isPrime ? <div >
+          isPrime ? <div className={styles.sbr_wrap}>
             <SearchBar footerSearch={true}/>
             {browseCompany()}  
           </div> : <>
