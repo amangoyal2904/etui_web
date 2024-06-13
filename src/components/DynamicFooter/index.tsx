@@ -199,8 +199,15 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
     <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPrime ? styles.pink_theme : ""}`}>
       <div className={styles.dynamicContainer}>
         {!isPrime && <GreyDivider />}
-        <SearchBar footerSearch={true}/>
-        {browseCompany()}
+        {
+          isPrime ? <div >
+            <SearchBar footerSearch={true}/>
+            {browseCompany()}  
+          </div> : <>
+            <SearchBar footerSearch={true}/>
+            {browseCompany()}
+          </>
+        }
         {Interlinking()}
         {downloadSection()}
         {copyrightSection()}
