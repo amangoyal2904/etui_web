@@ -4,7 +4,7 @@ import GreyDivider from "components/GreyDivider";
 import { isNoFollow } from "utils";
 import SearchBar from "components/SearchBar";
 
-const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) => {
+const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFooterData, page }) => {
   const [isExpanded, setIsExpanded] = useState({});
   const hide_footer = false;
 
@@ -202,10 +202,10 @@ const DynamicFooter: FC<{ dynamicFooterData: any }> = ({ dynamicFooterData }) =>
         {
           isPrime ? <div className={styles.sbr_wrap}>
             <SearchBar footerSearch={true}/>
-            {browseCompany()}  
+            {page == "home" && browseCompany()}  
           </div> : <>
             <SearchBar footerSearch={true}/>
-            {browseCompany()}
+            {page == "home" && browseCompany()}
           </>
         }
         {Interlinking()}
