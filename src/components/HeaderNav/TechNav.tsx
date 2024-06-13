@@ -18,31 +18,68 @@ interface TechNavProps {
 interface TechNavListBlock {
   msid: number;
   data: any[];
+  status: string
 }
 
 const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
   // Use the useState hook to manage the component state
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  //const [isLoading, setIsLoading] = useState<boolean>(false);
   const [techNavListBlock, setTechNavListBlock] = useState<TechNavListBlock[]>([]);
-
-  useEffect(() => {
-    getTechArticleList(78404305);
-  }, []);
+  const [error, setError] = useState<string | null>(null);
 
   const getTechArticleList = async (msid: number) => {
     const url = APIS_CONFIG.techNavArticleList[APP_ENV];
+    
     try {
       const res = await Service.get({
         url,
         params: { feedtype: "etjson", msid },
       });
-      const resData = res?.data || {};
-      let articleListObj: TechNavListBlock[] = [...techNavListBlock, { msid, data: resData }];
-      setTechNavListBlock(articleListObj);
+      const resData = res?.data || [];
+      // Remove the loading status entry
+      setTechNavListBlock(prev => prev.filter(block => block.msid !== msid));
+      
+      //let articleListObj: TechNavListBlock[] = [...techNavListBlock, { msid, data: resData, status: "success" }];
+      setTechNavListBlock(prev => [...prev, { msid, data: resData, status: "success" }]);
     } catch (error) {
       console.error(error);
+      setError("Failed to fetch data");
+
+      // Remove the loading status entry in case of error
+      setTechNavListBlock(prev => prev.filter(block => block.msid !== msid));
     }
   };
+
+  useEffect(() => {
+    getTechArticleList(78404305);
+  }, []);
+
+  useEffect(() => {
+    const activeClass = styles["active"];
+    const showClass = styles["show_block"];
+    const activeElement = document.querySelector(`.${activeClass}`);
+    const targetElementId = activeElement?.getAttribute("data-rel-id") || "";
+
+    // Get the techNavArticleBlock element and its child element with matching data-rel-id attribute
+    const techNavArticleBlock = document.getElementById("technav_art");
+    const targetElement_articleBlock = techNavArticleBlock?.querySelector(`[data-rel-id="${targetElementId}"]`);
+
+    if (targetElement_articleBlock && !targetElement_articleBlock?.hasAttribute('data-loading-id')) {
+      // console.log("techNavListBlock hook if", targetElementId)
+      targetElement_articleBlock.classList.add(showClass);
+    }
+
+    const siblings_articleBlock = techNavArticleBlock?.querySelectorAll(`.${showClass}`);
+
+    siblings_articleBlock?.forEach((sibling) => {
+      if (sibling !== targetElement_articleBlock) {
+        sibling.classList.remove(showClass);
+      }
+    });
+
+    console.log("techNavListBlock hook", targetElementId, techNavListBlock)
+
+  }, [techNavListBlock])
 
   // Define the handleMouseOver function to handle mouseover event on the links
   const handleMouseOver = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -57,9 +94,17 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
       const targetElement_articleBlock = techNavArticleBlock?.querySelector(`[data-rel-id="${targetElementId}"]`);
 
       // Add showClass to the targetElement_articleBlock element
-      if (targetElement_articleBlock) {
+      if (targetElement_articleBlock && !targetElement_articleBlock?.hasAttribute('data-loading-id')) {
         targetElement_articleBlock.classList.add(showClass);
       } else {
+        // Check if the msid already exists
+        const exists = techNavListBlock.some(block => block.msid === parseInt(targetElementId || "0", 10));
+
+        // Add a loading status entry if it doesn't already exist
+        if (!exists) {
+          setTechNavListBlock(prev => [...prev, { msid: parseInt(targetElementId || "0", 10), data: [], status: "loading" }]);
+        }
+
         getTechArticleList(parseInt(targetElementId || "0", 10));
       }
 
@@ -118,48 +163,50 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
       </div>
       {/* Render the data elements */}
       <div id="technav_art" className={styles.mLast}>
-        {techNavListBlock.map((obj, index) => {
+        { techNavListBlock.map((obj, index) => {
           return (
             <React.Fragment key={`tech_nav_${obj.msid}_${index}`}>
-              <div data-rel-id={obj.msid} className={styles.show_block}>
-                {obj?.data?.slice(0, 1).map((data, index1) => {
-                  return (
-                    <React.Fragment key={`tech_nav_first_${obj.msid}_${index}_${index1}`}>
-                      <div className={styles.first}>
-                        <h3>
-                          <a href={data.link}>{data.stname}</a>
-                        </h3>
-                        <a href={data.link}>
-                          <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
-                        </a>
-                        <p className={`${styles.wrapLines} ${styles.l5}`}>{data.strsyn}</p>
-                      </div>
-                    </React.Fragment>
-                  );
-                })}
-                <div className={`${styles.other} ${obj.msid == 94299203 && styles.eventsBlockTech}`}>
-                  {obj?.data?.slice(1).map((data, index1) => {
+              {
+                obj.status == "loading" ? <div data-rel-id={obj.msid} data-loading-id="loading"><p>Loading...</p></div> : (<div data-rel-id={obj.msid} >
+                  {obj?.data?.slice(0, 1).map((data, index1) => {
                     return (
-                      <React.Fragment key={`tech_nav_other_${obj.msid}_${index}_${index1}`}>
-                        {obj.msid == 94299203 ? (
-                          <div className={styles.navBlock}>
-                            <a target="_blank" rel="noreferrer" href={data.link}>
-                              <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
-                            </a>
-                            <a target="_blank" rel="noreferrer" className={styles.eventsBlockTechLinks} href={data.link}>
-                              {data.stname}
-                            </a>
-                          </div>
-                        ) : (
-                          <a className={styles.subsec3} href={data.link}>
-                            {data.stname}
+                      <React.Fragment key={`tech_nav_first_${obj.msid}_${index}_${index1}`}>
+                        <div className={styles.first}>
+                          <h3>
+                            <a href={data.link}>{data.stname}</a>
+                          </h3>
+                          <a href={data.link}>
+                            <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
                           </a>
-                        )}
+                          <p className={`${styles.wrapLines} ${styles.l5}`}>{data.strsyn}</p>
+                        </div>
                       </React.Fragment>
                     );
                   })}
-                </div>
-              </div>
+                  <div className={`${styles.other} ${obj.msid == 94299203 && styles.eventsBlockTech}`}>
+                    {obj?.data?.slice(1).map((data, index1) => {
+                      return (
+                        <React.Fragment key={`tech_nav_other_${obj.msid}_${index}_${index1}`}>
+                          {(obj.msid == 94299203 ? (
+                            <div className={styles.navBlock}>
+                              <a target="_blank" rel="noreferrer" href={data.link}>
+                                <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
+                              </a>
+                              <a target="_blank" rel="noreferrer" className={styles.eventsBlockTechLinks} href={data.link}>
+                                {data.stname}
+                              </a>
+                            </div>
+                          ) : (
+                            <a className={styles.subsec3} href={data.link}>
+                              {data.stname}
+                            </a>
+                          ))}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                </div>)
+              }
             </React.Fragment>
           );
         })}
