@@ -13,7 +13,7 @@ export default async function Page({ params, searchParams }: {
   const headersList = headers()
   console.log({ headersList });
   
-  const isprimeuser = cookies().get('isprimeuser'),
+  const isprimeuser = cookies().get('isprimeuser') || false,
   { all = [] } = params,
   lastUrlPart: string = all?.slice(-1).toString(),
   api = APIS_CONFIG.FEED,
