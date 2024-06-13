@@ -6,7 +6,7 @@ const SpotlightNav = ({ sec }: any) => {
   return (
     <>
       {
-        sec?.map((value, index) => <SpotlightNavList data={value} />)
+        sec?.map((value, index) => <SpotlightNavList data={value} key={`SpotlightNav_${index}`}  />)
       }
     </>
   )
