@@ -111,7 +111,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
           <SideNav />
           {sectionList?.map((data, index) => {
             return (
-              <div key={`nav-l1-${index}`} className={styles.sec_1} data-l1={data.nm} data-id={data.msid}>
+              <div key={`nav-l1-${index}`} className={`${styles.sec_1} ${data.hovernav ? styles.notSubSecnav : ""}`} data-l1={data.nm} data-id={data.msid}>
                 <a itemProp="url" className={`${subsec1 == data.msid ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''}`} href={data.link} data-ga-onclick={data.link}>
                 {data.nm != 'More' && <meta content={data.nm} itemProp="name" />}
                 {data.nm != 'More' && data.nm}
