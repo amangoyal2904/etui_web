@@ -404,7 +404,7 @@
             margin: 10px 5px;
           }
         }
-        &:not(.notSubSecnav):hover{
+        &.hasSubSecnav:hover{
           & > a:not(.current){
             border: 1px solid transparent;
             background-color: transparent;
