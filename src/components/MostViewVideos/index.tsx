@@ -13,7 +13,7 @@ const MostViewVideos: NextPage<any> = (props) => {
       if(relatedVideoData){
         relatedVideoData.map((item, index)=>{
           let _urlVal = urlValidation(item.url)
-          let _genHtml = <li key={index} attr-data-position={index}>
+          let _genHtml = <li key={index}>
             <div className={styles.text}>
               <a href={_urlVal}>{item.title}</a>
             </div>
