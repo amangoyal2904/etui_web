@@ -255,17 +255,22 @@ const Login: React.FC<Props> = (props) => {
             ? <>
               <span className={styles.dd} title={userInfo.primaryEmail}>{userInfo.firstName}</span>
               <div className={styles.signMenu}>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`} onClick={resetInfo}>Edit Profile</a>
-                {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
-                <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
-                <a href="#" onClick={handleLoginToggle} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+                <div className={styles.outerContainer}>
+                  <p className={styles.emailLbl}>{userInfo.primaryEmail}</p>
+                  <div className={styles.bgWhite}>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`} onClick={resetInfo}>Edit Profile</a>
+                    {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
+                    <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
+                    <a href="#" onClick={handleLoginToggle} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+                  </div>
+                </div>
               </div>
             </>
             : <a data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url" onClick={handleLoginToggle} href="#" className={styles.signInLink}>Sign In</a>
