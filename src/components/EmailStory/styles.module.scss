@@ -1,0 +1,84 @@
+.emailStoryWrapper{
+    width: 500px;
+    margin: 50px auto 0;
+    background: #FFF;
+    border: 10px solid #CCC;
+    border-radius: 4px;
+    box-shadow: 3px 3px 10px #444;
+    padding: 20px;
+    position: relative;
+
+    .title{
+        font-size: 18px;
+    }
+
+    .close{
+        height: 24px;
+        position: absolute;
+        top: 16px;
+        right: 10px;
+        width: 24px;
+        background: url(https://img.etimg.com/photo/61879095.cms) no-repeat -150px -375px;
+        font-size: 0;
+        display: inline-block;
+        vertical-align: top;
+        cursor: pointer;
+    }
+    .addMore{
+        color:#7D7D7D;
+        font-size:11px;
+        margin-left:10px;
+    }
+.inlineForm{
+    margin-top: 10px;
+    label{
+        display: inline-block;
+        vertical-align: top;
+        width: 48%;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+}
+.inlineForm label + label {
+    margin-left: 4%;
+}
+
+input{
+    background: transparent url(https://img.etimg.com/photo/5535771.cms) repeat-x scroll 0 0;
+    border: 1px solid #F2F2F2;
+    color: #7D7D7D;
+    font-size: 16px;
+    height: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.internalLayer{
+    margin-top: 25px;
+}
+}
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+}
+.submitBtn{
+    button{
+        width: 64px;
+        height: 22px;
+        background: url(https://img.etimg.com/photo/4621525.cms) no-repeat;
+        border: 0;
+        color: #FFF;
+        font-family: arial;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        padding-left: 0;
+    }
+}
+.reCAPTCHAWrapper{
+    text-align: center;
+}

@@ -17,7 +17,7 @@ interface IUser {
 }
 
 const Login: React.FC<Props> = (props) => {
-  const { headertext } = props;
+  const { headertext }:any = props;
   const [userInfo, setUserInfo] = useState<IUser>({});
   const [isLogin, setIsLogin] = useState(false);
   const [isPrime, setIsPrime] = useState(false);
@@ -51,7 +51,7 @@ const Login: React.FC<Props> = (props) => {
     }
   };
   const permissionCallback = () => {
-    const permissions = (window.objInts && window.objInts.permissions) || [];
+    const permissions = (window && window.objInts && window.objInts.permissions) || [];
     if (permissions.includes("subscribed")) {
       // set state
       setIsPrime(true);
@@ -171,7 +171,7 @@ const Login: React.FC<Props> = (props) => {
   }
 
   const headerText = () => {
-    const permissions = (window.objInts && window.objInts.permissions) || [];
+    const permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
     let hText = 'Special Offer on ETPrime';
     if(permissions.includes('expired_subscription')) {
       hText = headertext?.expired
