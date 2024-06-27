@@ -10,6 +10,7 @@ import RedeemVoucher from "./RedeemVoucher";
 import DfpAds from './Ad/DfpAds';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { callJsOnRouteChange } from 'utils/priority';
+import BreakingNews from './BreakingNews';
 
 interface Props {
   page?: string;
@@ -63,6 +64,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
             commonMeta={data?.commonMeta}
           />
           <BreadCrumb data={data?.seo?.breadcrumb} />
+          <BreakingNews />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           { !isprimeuser && <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/> }

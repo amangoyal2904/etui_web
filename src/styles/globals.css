@@ -45,5 +45,78 @@ a {
   flex: 0 0 100%;
   min-width: 0;
 }
+.lb-icon{height: 6px;position: relative;display:inline-block;width: 6px;background:#ff0000;border-radius:50%;margin:0 10px 0 3px;bottom:1px;}
+.lb-icon:before,.lb-icon:after {animation: pulse 2s linear infinite;border: #ff0000 solid 1px;border-radius: 50%;box-sizing: border-box;content: ' '; height: 8px;width: 8px;left:-1px;opacity: .6;position: absolute;top: -1px;transform: scale(.714);z-index: 1}
+.lb-icon:after {animation-delay: 1s}
+@keyframes pulse {
+  to {
+      opacity: 0;
+      transform: scale(2.8)
+  }
+}
+
+.svg-container{display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0;background-color:#ffe9e2;}
+#first {animation: first_arrow 2s ease-in-out 3s infinite forwards;}
+#second {animation: second_arrow 2s ease-in-out 3s infinite forwards;}
+#third {animation: third_arrow 2s ease-in-out 3s infinite forwards;}
+@keyframes first_arrow {
+    0% {opacity: 1;}
+    45% {opacity: 0.8;-webkit-transform: translateX(8px);}
+    90% {opacity: 0;-webkit-transform: translateX(16px);}
+    100% {opacity: 0;-webkit-transform: translateX(-24px);}
+}
+@keyframes second_arrow {
+    0% {opacity: 1;}
+    45% {opacity: 0.5;-webkit-transform: translateX(16px);}
+    90% {opacity: 0;-webkit-transform: translateX(8px);}
+    100% {opacity: 0;-webkit-transform: translateX(-24px);}
+}
+@keyframes third_arrow {
+    0% {opacity: 1;}
+    45% {opacity: 0.2;-webkit-transform: translateX(24px);}
+    90% {opacity: 0;}
+    100% {opacity: 0;-webkit-transform: translateX(-24px);}
+}
+.embla__dots {
+  display: flex;
+  /* flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: calc((2.6rem - 1.4rem) / 2 * -1); */
+}
+.embla__dot {
+  -webkit-tap-highlight-color: rgba(49, 49, 49, 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 5px;
+  height: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #bfbfbf;
+  margin: 0 2px;
+}
+/* .embla__dot:after {
+  box-shadow: inset 0 0 0 0.2rem rgb(234, 234, 234);
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  content: '';
+} */
+.embla__dot--selected{
+  box-shadow: inset 0 0 0 0.2rem rgb(54, 49, 61);
+  /* background-color: red; */
+}
 
 

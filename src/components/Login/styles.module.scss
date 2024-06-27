@@ -76,11 +76,26 @@
     position: absolute;
     z-index: 99;
     top: 15px;
-    width: 160px;
+    width: 225px;
     right: 0;
     text-align: left;
     & > a:hover{
       background: #f4f4f4;
+    }
+    .outerContainer{
+      padding: 14px 12px 12px;
+      border-radius: 6px;
+      box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.28);
+      background-color: #fafafa;
+      .emailLbl{
+        color: #5c5c5c;
+        text-align: center;
+        margin-bottom: 14px;
+        font-size: 10px;
+        .bgWhite{
+          background: #fff;
+        }
+      }
     }
     a{
       display: block;
