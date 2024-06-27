@@ -7,25 +7,17 @@
     font-weight: 600;
     position: relative;
   }
-  .embla__buttons{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: .6rem;
-    gap: .6rem;
-    align-items: center;
-    position: absolute;
-    top: 7px;
-    right: 5px;
-  }
-  .trending_wrp{
-    white-space: nowrap;
-    display: block;
-    .emblaWrp{
-      width: 320px;
-      white-space: normal;
-      display: inline-block;
-      vertical-align: top;
-      text-align: center;
+  .spotligt_btn_slider{
+    display: flex;
+   &.embla__buttons{
+      // display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: .6rem;
+      gap: .6rem;
+      align-items: center;
+      position: absolute;
+      top: 7px;
+      right: 5px;
     }
   }
   

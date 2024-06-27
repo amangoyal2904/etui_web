@@ -45,12 +45,12 @@ const MoreSubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => 
 
           // Check if the required sub-section properties exist, otherwise handle the error
           if (!l2.nm || !l2.link) {
-            return <div key={keyName_l2}>Error: Invalid sub-section object</div>;
+            return <div key={keyName_l2}>Error: Invalid sub-section object</div>
           }
 
           return (
             <React.Fragment key={keyName_l2}>
-              <a href={l2.link} className={styles.subsec2}>
+              <a href={l2.link} className={`${styles.subsec2} ${subsec3 == l2.msid && styles.current}`}>
                 {l2.nm}
               </a>
               {/* Check if there are any sub-sections */}

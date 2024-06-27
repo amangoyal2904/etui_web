@@ -6,6 +6,7 @@ import {
     NextButton,
     usePrevNextButtons
   } from '../CarouselArrowBtn'
+  import { DotButton, useDotButton } from '../CarouselDotBtn'
 
 
 interface TrendingProps {
@@ -15,7 +16,9 @@ interface TrendingProps {
 
 export default function Trending({ data, title }: TrendingProps) {
 
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const OPTIONS = {loop: true}
+  const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi)
 
     const {
         prevBtnDisabled,
@@ -24,16 +27,6 @@ export default function Trending({ data, title }: TrendingProps) {
         onNextButtonClick
     } = usePrevNextButtons(emblaApi)
 
-  // const CustomPrevArrow = (props) => {
-  //   const { className, style, onClick } = props;
-  //   return <div className={`${className} arw_blk`} onClick={onClick}><span className="alft"></span></div>;
-  // };
-
-  // const CustomNextArrow = (props) => {
-  //   const { className, style, onClick } = props;
-  //   return <div className={`${className} arw_blk`}  onClick={onClick}><span className="aryt"></span></div>;
-  // };
-
   const subsets: { title: string; url: string }[][] = [];
   const chunkSize = 4;
 
@@ -41,16 +34,6 @@ export default function Trending({ data, title }: TrendingProps) {
   for (let i = 0; i < data.length; i += chunkSize) {
     subsets.push(data.slice(i, i + chunkSize));
   }
-
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  //   prevArrow: <CustomPrevArrow className={styles.prevBtn}/>,
-  //   nextArrow: <CustomNextArrow className={styles.nextBtn}/>,
-  // };
   
 
   return (
@@ -59,13 +42,24 @@ export default function Trending({ data, title }: TrendingProps) {
         {title}
         <div className={`${styles.spotligt_btn_slider} ${styles.embla__buttons}`}>
             <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+            <div className="embla__dots">
+              {scrollSnaps.map((_, index) => (
+                <DotButton
+                  key={index}
+                  onClick={() => onDotButtonClick(index)}
+                  className={'embla__dot'.concat(
+                    index === selectedIndex ? ' embla__dot--selected' : ''
+                  )}
+                />
+              ))}
+            </div>
             <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
       </h2>
       <div ref={emblaRef}>
         <div className={`embla__container ${styles.trending_wrp}`}>
           {subsets.map((subset, i) => (
-            <div className={styles.emblaWrp} key={`subset_${i}`}>
+            <div className={`embla__slide` } key={`subset_${i}`}>
               {subset.map((item, j) => (
                 <a href={item.url} key={`trending_${i}_${j}`}>{item.title}</a>
               ))}
