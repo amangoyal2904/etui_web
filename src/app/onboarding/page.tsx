@@ -1,15 +1,17 @@
 import styles from "./styles.module.scss"
+import OnboardingSilde from '../../components/OnboardingSilde';
 
-export default function Page() {
+export default async function Page() {
     const year = new Date().getFullYear();
 
     const fetchHit = async () => {
-        let serviceUrl = 'https://etonboard.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json';
+        let serviceUrl = 'https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json';
     
         // Parameters to be sent with the GET request
         const params = new URLSearchParams({
             isPaidUser: 'true',
-            email: "maneet.rana@timesinternet.in"
+            email: "testonboarding@givmail.com",
+            isEdit: 'true'
         });
     
         try {
@@ -17,7 +19,7 @@ export default function Page() {
             const fetchQues = await fetch(`${serviceUrl}?${params.toString()}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': "ce1tl8rz8t1lk96gdlrxwquku",
+                    'Authorization': "ad7qnu3xtwikuv358ln9pftex",
                     'Content-Type': 'application/json'
                 }
             });
@@ -29,20 +31,23 @@ export default function Page() {
     
             // Parsing the response to JSON
             const jsonFetchQues = await fetchQues.json();
+
+            return jsonFetchQues;
             
             // Logging the response
-            console.log("jsonFetchQues", jsonFetchQues);
+            //console.log("jsonFetchQues", jsonFetchQues);
             
             // Call the function to handle the response data
             // objObd.createOnd(jsonFetchQues);
         } catch (error) {
+            return {};
             // Logging any error that occurs during the fetch process
             console.error('Error fetching the questionnaire:', error);
         }
     };
     
     // Call the function
-    fetchHit();
+    const fetchQuesData = await fetchHit();
 
     return <>
         <header className={`${styles.headerWrp} ${styles.tac}`}>
@@ -50,9 +55,7 @@ export default function Page() {
                 <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" alt="The Economic Times" width="255" />  
             </a>
         </header>
-        <div>
-
-        </div>
+        <OnboardingSilde fetchQuesData={fetchQuesData} />
         <footer className={styles.footerWrp}>
             <ul className={`${styles.ftListWrp}`}>
                 <li>
