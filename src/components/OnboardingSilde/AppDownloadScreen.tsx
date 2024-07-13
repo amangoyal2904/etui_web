@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./styles.module.scss";
 
-const AppDownloadScreen = ({ data, type, slideIndex, totalSlide, handleContinueBtn }) => {
+const AppDownloadScreen = ({ data, type, slideIndex, totalSlide, handleContinueBtn, showQues }) => {
     const img_f = type === 'market' ? '88391331' : '88304350';
     const img_t = type === 'market' ? '88391358' : '88304359';
     const img_th = type === 'market' ? '88391371' : '88304374';
@@ -15,7 +15,7 @@ const AppDownloadScreen = ({ data, type, slideIndex, totalSlide, handleContinueB
     };
 
     return (
-        <li className={`${styles.surveyScrn} ${styles.app_d_scrn} ${slideIndex == 0 ? styles.slideBlock : ''}`} data-scrn={data.templateId} data-ques={data.questions[0].key}>
+        <li className={`${styles.surveyScrn} ${styles.app_d_scrn} ${showQues == data.questions[0].key ? styles.slideBlock : ''}`} data-scrn={data.templateId} data-ques={data.questions[0].key}>
             <div className="screen">
                 <div className={styles.headTitle}>{data.boldTitle}</div>
                 <div className={styles.headDes}>{data.desc}</div>

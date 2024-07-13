@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./styles.module.scss";
 
-const GridScreen = ({ data, slideIndex, totalSlide, handleContinueBtn }) => {
+const GridScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQues }) => {
   const gridData = data.questions[0].options;
+  const [elmTrigger, setElmTrigger] = useState(0);
+
+  const handleChangeEvent = (elm) => {
+    setElmTrigger(1);
+  }
 
   return (
-    <li data-scrn="grid_type" data-ques={data.questions[0].key} className={`${styles.surveyScrn} ${slideIndex == 0 ? styles.slideBlock : ''}`}>
+    <li data-scrn="grid_type" data-ques={data.questions[0].key} className={`${styles.surveyScrn} ${elmTrigger ==1 ? 'val_update' : ''} ${showQues == data.questions[0].key ? styles.slideBlock : ''} `}>
       <div className="screen 3">
         <div className={styles.headTitle}>{data.boldTitle}</div>
         <div className={styles.headDes}>{data.desc}</div>
         <div className={gridData[0].iconUrl ? styles.inputBox : styles.screen4}>
           {gridData.map((option, index) => {
-            const checkedVal = option.selected;
+            const checkedVal = !!option.selected ? true : false;
             const innerCls = option.iconUrl
               ? option.selected ? `${styles.checkedActive} ${styles.catBox}` : `${styles.catBox}`
               : option.selected ? `${styles.bg_white} ${styles.topBox}` : `${styles.topBox}`;
@@ -39,10 +44,11 @@ const GridScreen = ({ data, slideIndex, totalSlide, handleContinueBtn }) => {
                     data-key={option.key}
                     data-name={option.name}
                     type="checkbox"
-                    checked={!!checkedVal} // Ensure boolean value
+                    // checked={checkedVal} // Ensure boolean value
                     value={option.name}
                     name={option.key}
                     id={option.key}
+                    onChange={(e) => handleChangeEvent(e)}
                   />
                   <span className={styles.checkmark}></span>
                   {boxHtml}

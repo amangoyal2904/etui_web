@@ -1013,7 +1013,7 @@ const testJSON = [
     name: "Startups & Fundraising",
     key: "startupsFundraising",
     value: "Startups & Fundraising",
-    selected: false
+    selected: true
     },
     {
     name: "Stocks & Trading",
@@ -2063,6 +2063,7 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
     const [screens, setScreens] = useState(testJSON); //useState(fetchQuesData?.questionnaireDto?.screens || []);
     const [slideIndex, setslideIndex] = useState(0);
     const [totalSlide, setTotalSlide] = useState(0);
+    const [showQues, setShowQues] = useState(screens[0].questions[0].key);
 
     console.log("fetchQuesData--", screens.length);
 
@@ -2196,18 +2197,17 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
         const resObj = createRes();
 
         console.log("resObj--", resObj);
-        
-        setslideIndex(slideIndex+ 1)
-        const items = document.querySelectorAll(`.${styles['surveyScrn']}`);
-        items[slideIndex]?.classList.remove(`${styles['slideBlock']}`);
-        items[slideIndex + 1]?.classList.add(`${styles['slideBlock']}`);
+
+        setslideIndex(slideIndex+ 1);
     }
 
-    const handleBackBtn = () => {
-        setslideIndex(slideIndex - 1)
+    useEffect(() => {
         const items = document.querySelectorAll(`.${styles['surveyScrn']}`);
-        items[slideIndex]?.classList.remove(`${styles['slideBlock']}`);
-        items[slideIndex - 1]?.classList.add(`${styles['slideBlock']}`);
+        setShowQues(items[slideIndex]?.getAttribute("data-ques") || "")
+    }, [slideIndex]);
+
+    const handleBackBtn = () => {
+        setslideIndex(slideIndex - 1);
     }
 
     useEffect(() => {
@@ -2221,17 +2221,17 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
         return screens.map((screen, index) => {
             switch (screen.templateId) {
                 case "TextType":
-                    return <TextScreen key={index} slideIndex={index} totalSlide={totalSlide} data={screen} objObd={undefined} handleContinueBtn={handleContinueBtn} />;
+                    return <TextScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} objObd={undefined} handleContinueBtn={handleContinueBtn} />;
                 case "ET APP":
                 case "ET MARKET APP":    
-                    return <AppDownloadScreen key={index} slideIndex={index} totalSlide={totalSlide} data={screen} type={(screen as any).type} handleContinueBtn={handleContinueBtn} />;
+                    return <AppDownloadScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} type={(screen as any).type} handleContinueBtn={handleContinueBtn} />;
                 case "DropDown":
-                    return <DropdownScreen key={index} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn}  />;
+                    return <DropdownScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn}  />;
                 case "Grid":
                 case "GridImg":    
-                    return <GridScreen key={index} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} />;    
+                    return <GridScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} />;    
                 case "Newsletters":    
-                    return <NewsletterScreen key={index} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} />;        
+                    return <NewsletterScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} />;        
                 default:
                     return null;
             }

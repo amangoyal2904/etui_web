@@ -2,11 +2,11 @@
 import React from 'react';
 import styles from "./styles.module.scss";
 
-const TextScreen = ({ data, objObd,  slideIndex, totalSlide, handleContinueBtn}) => {
+const TextScreen = ({ data, objObd,  slideIndex, totalSlide, handleContinueBtn, showQues }) => {
     const inputVal = data.questions[0].answer || '';
 
     return (
-        <li data-scrn="text_type" className={`${styles.surveyScrn} ${slideIndex == 0 ? styles.slideBlock : ''}`} data-ques="Welcome">
+        <li data-scrn="text_type" className={`${styles.surveyScrn} ${showQues == data.questions[0].key ? styles.slideBlock : ''}`} data-ques="Welcome">
             <div className="screen 1">
                 <div className={styles.headTitle}>{data.boldTitle}</div>
                 <div className={styles.headDes}>{data.desc}</div>

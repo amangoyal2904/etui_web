@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from "./styles.module.scss";
 
-const DropdownScreen = ({ data, slideIndex, totalSlide, handleContinueBtn }) => {
+const DropdownScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQues }) => {
 
   const handleSelectChange = (e) => {
     e.target.classList.add("slt_chg");
   };
 
   return (
-    <li data-scrn="dd_type" className={`${styles.surveyScrn} ${slideIndex == 0 ? styles.slideBlock : ''}`} data-ques={data.questions[0].key}>
+    <li data-scrn="dd_type" className={`${styles.surveyScrn} ${showQues == data.questions[0].key ? styles.slideBlock : ''}`} data-ques={data.questions[0].key}>
       <div className="screen 2">
         <div className={styles.headTitle}>{data.boldTitle}</div>
         <div className={styles.headDes}>{data.desc}</div>
