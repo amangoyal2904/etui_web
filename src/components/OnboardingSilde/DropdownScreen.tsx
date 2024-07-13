@@ -24,6 +24,7 @@ const DropdownScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQ
                       value={option.value}
                       selected={option.selected}
                       disabled={i === 0}
+                      key={`dd_type_${i}`}
                     >
                       {option.value}
                     </option>
