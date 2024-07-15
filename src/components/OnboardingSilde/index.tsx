@@ -8,6 +8,8 @@ import DropdownScreen from "./DropdownScreen";
 import GridScreen from "./GridScreen";
 import NewsletterScreen from "./NewsletterScreen";
 
+import { useSearchParams } from 'next/navigation'
+
 const testJSON = [
     {
     name: "Screen6",
@@ -2058,12 +2060,13 @@ const testJSON = [
     }
     ]
 
-const OnboardingSilde = ( {fetchQuesData} ) => {
+const OnboardingSilde = ( {fetchQuesData, pageType} ) => {
     
     const [screens, setScreens] = useState(testJSON); //useState(fetchQuesData?.questionnaireDto?.screens || []);
     const [slideIndex, setslideIndex] = useState(0);
     const [totalSlide, setTotalSlide] = useState(0);
     const [showQues, setShowQues] = useState(screens[0].questions[0].key);
+    const searchParams = useSearchParams()
 
     console.log("fetchQuesData--", screens.length);
 
@@ -2164,7 +2167,7 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
             break;
           case "Newsletters":
             const newsletterAnsArr:any[] = [];
-            visScrn.querySelectorAll(".nl_wrp").forEach((wrp) => {
+            visScrn.querySelectorAll(`.${styles['nl_wrp']}`).forEach((wrp) => {
               newsletterAnsArr.push({
                 desc: wrp.getAttribute('data-desc'),
                 imageUrl: wrp.getAttribute('data-img'),
@@ -2194,16 +2197,58 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
     };
 
     const handleContinueBtn = (slideIndex) => {
-        const resObj = createRes();
+        const items = document.querySelectorAll(`.${styles['surveyScrn']}`);
+        if(items[slideIndex]?.classList.contains("val_update")){
+            const resObj = createRes();
 
-        console.log("resObj--", resObj);
+            console.log("resObj--", resObj);
+        }
 
         setslideIndex(slideIndex+ 1);
     }
 
+    const insertParam = (key, value) => {
+        key = encodeURIComponent(key);
+        value = encodeURIComponent(value);
+    
+        // kvp looks like ['key1=value1', 'key2=value2', ...]
+        let kvp = document.location.search.substr(1).split('&').filter(Boolean); // Ensures kvp is an array and removes empty strings
+        let i = 0;
+    
+        for (; i < kvp.length; i++) {
+            if (kvp[i].startsWith(key + '=')) {
+                let pair = kvp[i].split('=');
+                pair[1] = value;
+                kvp[i] = pair.join('=');
+                break;
+            }
+        }
+    
+        if (i >= kvp.length) {
+            kvp.push([key, value].join('='));
+        }
+    
+        // Convert kvp array back to query string
+        let params = kvp.join('&');
+    
+        // Return the updated query string
+        return params;
+    };
+    
+    const setPushstate = (scrn) => {
+        if (typeof pageType !== 'undefined' && pageType === "page") {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('scrn', scrn)
+            window.history.pushState(null, '', `?${params.toString()}`)
+        }
+        // objObd.gaHit("showscrn"); // Uncomment this if gaHit function is defined elsewhere
+    };
+
     useEffect(() => {
         const items = document.querySelectorAll(`.${styles['surveyScrn']}`);
         setShowQues(items[slideIndex]?.getAttribute("data-ques") || "")
+
+        setPushstate(slideIndex);
     }, [slideIndex]);
 
     const handleBackBtn = () => {
@@ -2214,6 +2259,9 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
         const items = document.querySelectorAll(`.${styles['surveyScrn']}`);
         setTotalSlide(items.length);
         console.log("items --- ", items.length);
+
+        const scrn = searchParams.get('scrn');
+        setslideIndex(Number(scrn) || 0);
     }, [])
 
     const renderScreens = () => {
@@ -2224,14 +2272,14 @@ const OnboardingSilde = ( {fetchQuesData} ) => {
                     return <TextScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} objObd={undefined} handleContinueBtn={handleContinueBtn} />;
                 case "ET APP":
                 case "ET MARKET APP":    
-                    return <AppDownloadScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} type={(screen as any).type} handleContinueBtn={handleContinueBtn} />;
+                    return <AppDownloadScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} type={screen.templateId == "ET MARKET APP" ? "market" : "et"} handleContinueBtn={handleContinueBtn} />;
                 case "DropDown":
                     return <DropdownScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn}  />;
                 case "Grid":
                 case "GridImg":    
                     return <GridScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} />;    
                 case "Newsletters":    
-                    return <NewsletterScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} />;        
+                    return <NewsletterScreen key={index} showQues={showQues} slideIndex={index} totalSlide={totalSlide} data={screen} handleContinueBtn={handleContinueBtn} createRes={createRes} />;        
                 default:
                     return null;
             }

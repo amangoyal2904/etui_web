@@ -58,7 +58,7 @@ const GridScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQues 
           })}
         </div>
         <div className={styles.btnBox}>
-          <button className={`${styles.btn} `} data-btn={`${slideIndex == totalSlide - 1 ? 'btn_sbt' : 'btn_ctn'}`} data-screen="3" onClick={() => handleContinueBtn(slideIndex)}>{slideIndex == totalSlide - 1 ? "Submit" : "CONTINUE"}</button>
+          <button className={`${styles.btn} `} data-btn={`${slideIndex == totalSlide - 1 ? 'btn_sbt' : 'btn_ctn'}`} data-screen="3" onClick={() => {handleContinueBtn(slideIndex); setElmTrigger(0);}}>{slideIndex == totalSlide - 1 ? "Submit" : "CONTINUE"}</button>
         </div>
       </div>
     </li>

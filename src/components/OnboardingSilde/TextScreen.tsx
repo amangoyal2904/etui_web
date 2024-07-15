@@ -1,8 +1,9 @@
 // TextScreen.js
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./styles.module.scss";
 
 const TextScreen = ({ data, objObd,  slideIndex, totalSlide, handleContinueBtn, showQues }) => {
+    const [elmTrigger, setElmTrigger] = useState(0);
     const inputVal = data.questions[0].answer || '';
 
     return (
@@ -24,7 +25,7 @@ const TextScreen = ({ data, objObd,  slideIndex, totalSlide, handleContinueBtn, 
                     />
                 </div>
                 <div className={styles.btnBox}>
-                    <button data-screen="1" className={`${styles.btn} `} data-btn={`${slideIndex == totalSlide - 1 ? 'btn_sbt' : 'btn_ctn'}`} onClick={() => handleContinueBtn(slideIndex)}>{slideIndex == totalSlide - 1 ? "submit" : "CONTINUE"}</button>
+                    <button data-screen="1" className={`${styles.btn} `} data-btn={`${slideIndex == totalSlide - 1 ? 'btn_sbt' : 'btn_ctn'}`} onClick={() => {handleContinueBtn(slideIndex); setElmTrigger(0);}}>{slideIndex == totalSlide - 1 ? "submit" : "CONTINUE"}</button>
                 </div>
             </div>
         </li>
