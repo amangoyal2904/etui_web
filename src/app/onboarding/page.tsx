@@ -55,7 +55,7 @@ export default async function Page() {
                 <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" alt="The Economic Times" width="255" />  
             </a>
         </header>
-        <OnboardingSilde fetchQuesData={fetchQuesData} />
+        <OnboardingSilde fetchQuesData={fetchQuesData} pageType={'page'} />
         <footer className={styles.footerWrp}>
             <ul className={`${styles.ftListWrp}`}>
                 <li>

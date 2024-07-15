@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./styles.module.scss";
+import DropDown from './DropDown';
 
 const DropdownScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQues }) => {
+  const [elmTrigger, setElmTrigger] = useState(0);
 
   const handleSelectChange = (e) => {
-    e.target.classList.add("slt_chg");
+    setElmTrigger(1);
   };
 
   return (
-    <li data-scrn="dd_type" className={`${styles.surveyScrn} ${showQues == data.questions[0].key ? styles.slideBlock : ''}`} data-ques={data.questions[0].key}>
+    <li data-scrn="dd_type" className={`${styles.surveyScrn} ${elmTrigger ==1 ? 'val_update' : ''} ${showQues == data.questions[0].key ? styles.slideBlock : ''}`} data-ques={data.questions[0].key}>
       <div className="screen 2">
         <div className={styles.headTitle}>{data.boldTitle}</div>
         <div className={styles.headDes}>{data.desc}</div>
@@ -17,25 +19,13 @@ const DropdownScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQ
             <div className={styles.selectBox} key={index}>
               <div className={styles.leftB}><label>{question.question}</label></div>
               <div className={styles.rightB}>
-                <select id={question.key} name={question.key} onChange={handleSelectChange}>
-                  {question.options.map((option, i) => (
-                    <option
-                      data-key={option.key}
-                      value={option.value}
-                      selected={option.selected}
-                      disabled={i === 0}
-                      key={`dd_type_${i}`}
-                    >
-                      {option.value}
-                    </option>
-                  ))}
-                </select>
+                <DropDown question={question} handleSelectChange={handleSelectChange} elmTrigger={elmTrigger} />
               </div>
             </div>
           ))}
         </div>
         <div className={styles.btnBox}>
-          <button className={`${styles.btn} `} data-btn={`${slideIndex == totalSlide - 1 ? 'btn_sbt' : 'btn_ctn'}`} data-screen="2" onClick={() => handleContinueBtn(slideIndex)}>{slideIndex == totalSlide - 1 ? "Submit" : "CONTINUE"}</button>
+          <button className={`${styles.btn} `} data-btn={`${slideIndex == totalSlide - 1 ? 'btn_sbt' : 'btn_ctn'}`} data-screen="2" onClick={() => {handleContinueBtn(slideIndex); setElmTrigger(0);}}>{slideIndex == totalSlide - 1 ? "Submit" : "CONTINUE"}</button>
         </div>
       </div>
     </li>
