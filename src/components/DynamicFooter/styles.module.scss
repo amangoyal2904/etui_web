@@ -285,6 +285,11 @@
       background-color: #ffded4; 
     }
 
+    .sbr_wrap{
+      display: flex;
+      align-items: flex-start;
+    }
+
     .category{
       .show_hide_interlinking:after{
         border: solid #000;
@@ -292,9 +297,36 @@
       }
     }
     .browseCompany{
+      border-bottom: 0px solid;
+      width: 50%;
+      border-left: 1px solid #ebc3b7;
       .browse{
-        .compList a{
-          color:#fff;
+        .browseTitle{
+          color: #99756b;
+          margin-bottom: 5px;
+          span{
+            font-weight: 400;
+          }
+          .comp{
+            display: inline-block;
+            font-size: 18px;
+            margin-left: 5px;
+          }
+        }
+        .compList{
+          border-left: 0px solid;
+          padding-left: 0;
+          margin-left: 0;
+          a{
+            color: #644c45;
+            background-color: #FFF;
+            border: 0px;
+            margin: 3px;
+            width: 29px;
+            height: 29px;
+            font-size: 15px;
+            line-height: 29px;
+          }
         }
       }
     }
@@ -338,6 +370,9 @@
         }
         p{
           color:#000;
+        }
+        h4{
+          color: #000;
         }
       }
     }

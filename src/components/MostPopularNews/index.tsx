@@ -3,7 +3,6 @@ import styles from './styles.module.scss'
 
 const MostPopularNews: NextPage<any> = (props) => {  
     let listingData = props?.data;
-    console.log('__MostPopularNews components__', listingData);
     const title = listingData?.title;
     const relatedVideoData = listingData?.data ? listingData?.data : '';
     const relatedVideoHandler = ()=>{
@@ -32,7 +31,7 @@ const MostPopularNews: NextPage<any> = (props) => {
       <>      
           <div className={styles.mostPopularNews}>
               <h4 className={styles.head4}>{title}</h4>
-              <ul className={styles.listing}>{relatedVideoHandler()}</ul>
+              <ul className={`${styles.listing} font_faus`}>{relatedVideoHandler()}</ul>
           </div>
       </>
     );
