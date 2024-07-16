@@ -91,11 +91,9 @@ const Login: React.FC<Props> = (props) => {
     }
     window.objInts.afterPermissionCall(permissionCallback);
   };
+
   useEffect(() => {
-
     console.log({APP_ENV});
-    
-
     if (typeof window.objInts !== "undefined") {
       intsCallback();
     } else {
@@ -234,6 +232,9 @@ const Login: React.FC<Props> = (props) => {
   const headerText = () => {
     const permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
     let hText = 'Special Offer on ETPrime';
+    if(isLogin) {
+      permissions = (window.objInts && window.objInts.permissions) || [];
+    }
     if(permissions.includes('expired_subscription')) {
       hText = headertext?.expired
     } else if(permissions.includes('cancelled_subscription')) {

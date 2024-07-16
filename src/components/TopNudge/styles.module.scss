@@ -1,0 +1,12 @@
+.topUserInfoBand {
+  background-color: #f7653c; width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; cursor: pointer; z-index: 2; position: relative;
+  .info_content {display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;width: 1260px; justify-content: space-between; z-index: 2;}
+  .info_icon {height: 78px; padding: 0 20px; width: 285px; box-sizing: border-box; text-align: center;}
+  .info_text {margin: 0 40px; font-size: 17px;color: #fff; font-weight: 500;}
+  .info_text {font-size: 22px; font-weight: 600; text-align: center;}
+  .info_subtext {margin: 0 auto; font-size: 20px; font-weight: normal; color: #fff; text-align: center; min-width: 780px;}
+  .ctaBox {width: 170px; box-sizing: border-box; display: flex; align-items: center; margin-left: 20px}
+  .info_cta {width: 134px; height: 38px; padding: 9px 0; font-size: 15px; font-weight: 500; border-radius: 19px; background: #ffdf00; cursor: pointer; box-sizing: border-box; text-align: center;}
+  .info_cta:hover {text-decoration: none;}
+  .info_cross:after {display: inline-block; content: "\00d7"; font-size: 36px; cursor: pointer; background: transparent; color: #fff; margin-left: 16px;}
+}
