@@ -17,7 +17,7 @@ const NewsletterScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, sho
         <div className={styles.headDes}>{data.desc}</div>
         <div className={styles.newsletter_scrn}>
           {newsletterList.map((option, index) => (
-            <NewsletterList option={option} handleChangeEvent={handleChangeEvent} elmTrigger={elmTrigger} createRes={createRes} />
+            <NewsletterList key={`newsletter_${index}`} option={option} handleChangeEvent={handleChangeEvent} elmTrigger={elmTrigger} createRes={createRes} />
           ))}
         </div>
         <div className={styles.btnBox}>
