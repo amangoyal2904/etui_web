@@ -116,11 +116,24 @@
         font-weight: bold;
         font-size: 13px;
         padding: 10px;
+        position: relative;
     }
 
     .vid {
         width: 360px;
         height: 260px;
+    }
+    .closeVideo{
+        color: #fff;
+        font-weight: 600;
+        padding: 3px 6px;
+        background-color: #000;
+        cursor: pointer;
+        border-radius: 17px;
+        font-size: 12px;
+        top: -16px;
+        position: absolute;
+        left: -16px;
     }
 }
 
@@ -136,4 +149,22 @@
     border-radius: 100px;
     font-weight: 500;
     font-size: 12px;
+}
+.bookmarkCta{
+    float: right;
+    padding: 2px;
+    border: 1px solid;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    position: relative;
+    top: -15px;
+    right: -8px;
+    span{
+        width: 20px;
+        height: 17px;
+        background: url(https://img.etimg.com/photo/63696304.cms) no-repeat;
+        display: inline-block;
+        margin: 3px 5px;
+    }
 }

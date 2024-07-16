@@ -67,7 +67,7 @@ const Login: React.FC<Props> = (props) => {
     }
   };
   const permissionCallback = () => {
-    const permissions = (window.objInts && window.objInts.permissions) || [];
+    const permissions = (window && window.objInts && window.objInts.permissions) || [];
     if (permissions.includes("subscribed")) {
       // set state
       setIsPrime(true);
@@ -230,7 +230,7 @@ const Login: React.FC<Props> = (props) => {
   }
 
   const headerText = () => {
-    let permissions = [];
+    let permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
     let hText = 'Special Offer on ETPrime';
     if(isLogin) {
       permissions = (window.objInts && window.objInts.permissions) || [];

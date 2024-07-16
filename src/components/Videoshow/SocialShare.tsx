@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Share} from "../Share";
 import styles from './styles.module.scss';
+import EmailStory from 'components/EmailStory';
 
 interface SocialShareProps {
   mailData: {
@@ -16,7 +17,7 @@ const SocialShare: FC<SocialShareProps> = (props) => {
   const url = props.mailData.shareUrl && props.mailData.shareUrl != '' ? props.mailData.shareUrl : ''
   const [showUrl, setShowUrl] = useState('no');
   const [showEmbed, setShowEmbed] = useState('no');
-  const [showMail, setShowMail] = useState('no');
+  const [showMail, setShowMail] = useState(false);
   
   const showHandlerModule = (val:string)=>{
     let _url = '';
@@ -36,18 +37,15 @@ const SocialShare: FC<SocialShareProps> = (props) => {
     setShowEmbed('no')
   }
   const closeMailHandler = ()=>{
-    setShowMail('no')
+    setShowMail(false)
   }
   const openMailHandler = () => {
-    setShowMail('yes')
+    setShowMail(true)
   }
   return (  
     <Share>
         <div className={styles.codeMailVideo}>
-          <span onClick={()=>openMailHandler} className={styles.email} title="Email this video"></span>
-          {
-            // showMail === 'yes' ? <MailSendTemplate mailData={props.mailData} onclickhandler={closeMailHandler} /> : ''
-          }
+          <span onClick={openMailHandler} className={styles.email} title="Email this video"></span>
         </div>
         <div className={styles.codeVideo}>
           <span onClick={()=>{showHandlerModule('url')}}>Copy URL</span>
@@ -70,6 +68,7 @@ const SocialShare: FC<SocialShareProps> = (props) => {
           }
           
         </div>
+       {showMail ? <EmailStory closeMailHandler={closeMailHandler}/> :""}
     </Share>
   );
 };

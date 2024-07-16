@@ -26,7 +26,7 @@ declare global {
     }
 }
 
-const DfpAds:NextPage<Props> = function(props) {
+const DfpAds = function(props:Props) {
     let adInfo:any = props.adInfo;
 
     let objVc = props.objVc;

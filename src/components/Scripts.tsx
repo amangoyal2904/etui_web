@@ -22,6 +22,9 @@ declare global {
         deleteKey(arg1: string);
       };
     };
+    objInts:any;
+    objUser:any;
+    __APP:any;
     google: {
       accounts: {
         id: {
