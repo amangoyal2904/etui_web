@@ -155,7 +155,7 @@ export const dynamicPlayerConfig = {
     sg: "",
     ppid: "",
     playInBackground: true,
-    transmit: typeof window.geolocation != "undefined" && window.geolocation == 2 ? true : false,
+    transmit:  typeof window != "undefined" && typeof window?.geolocation != "undefined" && window?.geolocation == 2 ? true : false,
     scrollBehaviour: {
       inViewPercent: 100,
       dock: true,
@@ -169,14 +169,14 @@ export const dynamicPlayerConfig = {
 
 export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, pageTpl, isPrimeUser = false, subSecs, adSection='default', isDeferredPreRoll=false, relvideo }) {
   const playerConfig = JSON.parse(JSON.stringify(dynamicPlayerConfig));
-  playerConfig.contEl = "id_" + result.msid;
-  playerConfig.video.id = result.slikeid;
-  playerConfig.video.playerType = result.playertype;
-  playerConfig.video.shareUrl = ET_WAP_URL + result.url;
-  playerConfig.player.description_url = ET_WAP_URL + result.url; // no need to modify; added specifically for tracking purpose by Slike team
-  playerConfig.video.image = result.img;
-  playerConfig.video.title = result.title;
-  playerConfig.player.msid = result.msid;
+  playerConfig.contEl = "id_" + result?.msid;
+  playerConfig.video.id = result?.slikeid;
+  playerConfig.video.playerType = result?.playertype;
+  playerConfig.video.shareUrl = ET_WAP_URL + result?.url;
+  playerConfig.player.description_url = ET_WAP_URL + result?.url; // no need to modify; added specifically for tracking purpose by Slike team
+  playerConfig.video.image = result?.img;
+  playerConfig.video.title = result?.title;
+  playerConfig.player.msid = result?.msid;
   playerConfig.player.autoPlay = autoPlay;
   playerConfig.player.pagetpl = pageTpl;
   playerConfig.player.skipAd = isPrimeUser;

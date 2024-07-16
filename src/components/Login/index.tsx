@@ -230,7 +230,7 @@ const Login: React.FC<Props> = (props) => {
   }
 
   const headerText = () => {
-    const permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
+    let permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
     let hText = 'Special Offer on ETPrime';
     if(isLogin) {
       permissions = (window.objInts && window.objInts.permissions) || [];

@@ -42,8 +42,8 @@ const VideoShow: FC<PageProps> = (props) => {
   const trendingVideos = props?.searchResult?.find((item) => item.name === "trending_videos") as any;
   const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
   const { seo = {}, version_control, parameters, isprimeuser } = props;
-  const { msid } = parameters;
-  const { cpd_wap = "0" }: any = version_control;
+  const { msid } = parameters || {};
+  const { cpd_wap = "0" }: any = version_control || {};
 
   const subsecNames = props?.seo?.subsecnames;
 
@@ -107,6 +107,7 @@ const VideoShow: FC<PageProps> = (props) => {
   };
 
   return (
+    result ? 
     <>
       <section className={`pageContent ${styles.videoshow} col3`}>
         <h1>{result.title}</h1>
@@ -187,8 +188,8 @@ const VideoShow: FC<PageProps> = (props) => {
             <DfpAds adInfo={{ key: "btf", index: 1 }} objVc={version_control} />
           </div>
         )}
-      </aside>
-    </>
+      </aside> 
+    </>:""
   );
 };
 
