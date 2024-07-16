@@ -57,7 +57,54 @@ export const grxPushData = (planDim: any, planUrl: string) => {
     });
 }
 
+export const isLiveApp = () => {
+    const lh = window.location.host,
+      isLive = lh.indexOf("localhost") !== -1 || lh.indexOf("etnext") != -1 || lh.indexOf("etpwa") != -1 ? 0 : 1;
+    return isLive;
+};
+
+export const fetchAllMetaInfo = async (msid) => {
+    try {
+      const response = await fetch(
+        `https://${
+          isLiveApp() ? "economictimes" : "etdev8243"
+        }.indiatimes.com/feed_meta_all.cms?msid=${msid}&feedtype=etjson`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (
+          data.info &&
+          data.info.feed_meta_all &&
+          data.info.feed_meta_all.allmetalist &&
+          data.info.feed_meta_all.allmetalist.sec
+        ) {
+          const metaArray = data.info.feed_meta_all.allmetalist.sec;
+          const metaObj = {};
+          for (const meta of metaArray) {
+            metaObj[meta.mname] = meta.minfo;
+          }
+          return metaObj;
+        }
+      } else {
+        throw new Error("Network response was not OK");
+      }
+    } catch (err) {
+      console.error("Error fetch Abound Banner", err);
+    }
+};
+
+export const currPageType = () => {
+    let type = 'home_page';
+    const lh = window.location.href;
+    if(lh.includes('videoshow')) {
+        type = 'videoshow';
+    }
+    return type;
+}
+
 export default {
     getParameterByName,
+    fetchAllMetaInfo,
+    currPageType,
     grxPushData
 }

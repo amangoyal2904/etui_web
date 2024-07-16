@@ -306,3 +306,18 @@ export const prepSeoListData = (data) => {
   });
   return primaryList;
 };
+
+export const currPageType = () =>  {
+  let type = 'home_page';
+  const tpNameListArr = ['articlelist','primehome','markets','newshome','politicsnation','personalfinance','mutual_funds','techhome','opinionshome','nri','panache','videohome']
+  const pn = window.location.pathname;
+
+  if(pn.includes('articleshow')) {
+      type = 'articleshow_page';
+  } else if(pn === "/") {
+      type = 'home_page';
+  } else {
+      type = 'listing_page';
+  }
+  return type;
+}
