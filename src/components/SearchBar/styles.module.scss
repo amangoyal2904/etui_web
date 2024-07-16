@@ -223,4 +223,32 @@
     line-height: 20px;
     text-decoration: none;
   }
+
+  &.pink_theme{
+    width: 50%;
+    .btm_srch_div{
+      background-color: transparent;
+      .btm_srch_content{
+        .footlogo_wrp{
+          text-align: left;
+        }
+        .searchContainer{
+          width: 435px;
+          margin-left: 0;
+          display: flex;
+          align-items: center;
+          margin-top: 7px;
+        }
+        .btm_inputBox{
+          background: #FFF;
+          width: 360px;
+          border: 1px solid #b3adad;
+          border-radius: 4px;
+        }
+        .searchIcon{
+          height: 39px;
+        }
+      }
+    }
+  }
 }

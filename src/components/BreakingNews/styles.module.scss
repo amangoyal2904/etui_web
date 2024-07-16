@@ -1,0 +1,56 @@
+.embla__buttons{
+    flex: 1;
+    background: #ffe9e2;
+    box-sizing: border-box;
+    padding-top: 14px;
+    z-index: 1;
+    display: flex;
+    justify-content: space-evenly;
+  }
+.breakingNewsWap{
+    -webkit-box-shadow: 0px 2px 4px 0px #0000001A;
+    box-shadow: 0px 2px 4px 0px #0000001A;
+    margin-top: -7px;
+    .bnewsWrp{
+        display: flex;
+        position: relative;
+        .emblaWrp{
+            flex: 0 0 90%;
+            .breakingNews{
+                display: flex !important;
+                // padding-left: 5px;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 0px;
+                .customLbIcon{
+                    margin: 0 10px;
+                    bottom: 0;
+                    flex: none;
+                }
+                .head{
+                    font-size: 16px;
+                    font-weight: 700;
+                    padding: 0;
+                    position: relative;
+                    flex: none;
+                }
+                .title {
+                    font-size: 18px;
+                    line-height: 32px;
+                    font-weight: 700;
+                    font-family: 'Faustina';
+                    height: 40px;
+                    display: -webkit-box;
+                    background-color: #ffe9e2;
+                    position: relative;
+                    padding-top: 2px;
+                    box-sizing: border-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}  

@@ -156,7 +156,7 @@ const RedeemVoucher = () => {
   };
 
   return (
-    showVoucher && (
+    showVoucher ? (
       <div className={styles.rdmWrapper}>
         <div className={styles.boxWrapper}>
           {!success && (
@@ -200,8 +200,8 @@ const RedeemVoucher = () => {
             {loading ? "Loading ..." : success ? "CONTINUE READING" : "SUBMIT"}
           </button>
         </div>
-      </div>
-    )
+      </div> 
+    ) : null
   );
 };
 

@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 
 const MostPopularNews = (props: { data: any }) => {
   let listingData = props?.data;
-  console.log("__MostPopularNews components__", listingData);
   const title = listingData?.title;
   const relatedVideoData = listingData?.data ? listingData?.data : "";
   const relatedVideoHandler = () => {

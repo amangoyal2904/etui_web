@@ -6,17 +6,18 @@ import HeaderMain from './HeaderMain';
 import Scripts from './Scripts';
 import Footer from './Footer';
 import BreadCrumb from "components/BreadCrumb";
-import RedeemVoucher from "components/RedeemVoucher";
+import RedeemVoucher from "./RedeemVoucher";
 import DfpAds from './Ad/DfpAds';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { callJsOnRouteChange } from 'utils/priority';
+import BreakingNews from './BreakingNews';
 
 interface Props {
   page?: string;
   dynamicFooterData?: any;
   menuData?: any;
   objVc?: any;
-  isprimeuser?: boolean | number;
+  isprimeuser?: any;
   data: any;
   children?: ReactElement;
 }
@@ -63,10 +64,11 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
             commonMeta={data?.commonMeta}
           />
           <BreadCrumb data={data?.seo?.breadcrumb} />
+          <BreakingNews />
           <div className="layout">{children}</div>
           <Scripts objVc={objVc} isprimeuser={isprimeuser} />
           { !isprimeuser && <DfpAds adInfo={{key: "btf728"}} objVc={objVc}/> }
-          <Footer dynamicFooterData={dynamicFooterData} />
+          <Footer dynamicFooterData={dynamicFooterData} page={page} />
           <RedeemVoucher />
         </main>        
         

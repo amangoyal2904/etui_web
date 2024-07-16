@@ -6,10 +6,21 @@ import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { APP_ENV, getCookie, setCookieToSpecificTime } from "../../utils";
+import { detectBrowser, isMobileSafari, loadAssets } from "utils/utils";
 import { gotoPlanPage } from '../../utils/utils';
 
 interface Props {}
-
+declare global {
+  interface Window { 
+    OneTapLogins:any;
+    oneTabloginProcess:any;
+    default_gsi:any;
+    oneTap:any;
+    __APP:any;
+    objUser:any;
+    objInts:any;
+  }
+}
 interface IUser {
   firstName?: string;
   ssoid?: string;
@@ -48,6 +59,11 @@ const Login: React.FC<Props> = (props) => {
       if (objUser.ssoid) window.customDimension["userId"] = objUser.ssoid;
     } else {
       window.customDimension["dimension3"] = "NONLOGGEDIN";
+      console.log("@@@@@@--->>",detectBrowser("safari"));
+      if (!(detectBrowser("safari") || isMobileSafari())) {
+        //let userTraffic = typeof objVc !== 'undefined' && objVc.userTraffic || 0;
+        setTimeout(()=> oneTapLogin(),10000);
+      }
     }
   };
   const permissionCallback = () => {
@@ -169,6 +185,51 @@ const Login: React.FC<Props> = (props) => {
   const resetInfo = () => {
     window.e$.jStorage.deleteKey('userInfo');
   }
+  const oneTapLogin = () => {
+    let oneTapUrl = window.objVc.lib_googlelogin;
+    if (
+      typeof window.e$ != "undefined" && window.e$.jStorage &&
+      localStorage.getItem("jStorage")
+    ) {
+     
+      if (window.e$.jStorage.get("c_oneTapLogin") != 1 ) {
+        window.ispopup = true;
+        console.log("@@@@@--->>",oneTapUrl);
+        loadAssets(oneTapUrl, "js", "async", "body");
+        const oneTabPrompt = () => {
+          if (typeof window != "undefined" && typeof window.oneTabloginProcess != "undefined") {
+            window.OneTapLogins.init();
+            if (typeof window.default_gsi != "undefined") {
+              google.accounts.id.prompt(notification => {
+                console.log("One Tab Login --",notification)
+                window.oneTap = notification;
+                if (notification.isDisplayed() || (notification.h || notification.g ) == 'display') {
+                  // window.customDimension.dimension72 = window.customDimension.dimension72 ? window.customDimension.dimension72 + "Free Access Chrome login" : "Free Access Chrome login";
+                } if (notification.h == 'display' && notification.i == false && (notification.l == "opt_out_or_no_session" || notification.l == "suppressed_by_user" || notification.l == "missing_client_id")) {
+                  console.log("One Tab Login closed --",notification);
+                }
+                if ((notification.l || notification.m) == 'user_cancel') {
+                  console.log("One Tab Login closed --",notification);
+                }
+                if ((notification.g || notification.h) == 'skipped' && ((notification.l || notification.m) == 'tap_outside' || (notification.l || notification.m) == 'auto_cancel')) {
+                  console.log("One Tab Login closed --",notification);
+                }
+                if (notification.getMomentType() == "dismissed" && notification.getDismissedReason() == "credential_returned") {
+                  console.log('oneTap', notification);
+                }
+
+              });
+            } else {
+              setTimeout(oneTabPrompt, 500);
+            }
+          } else {
+            setTimeout(oneTabPrompt, 500);
+          }
+        }
+        oneTabPrompt();
+      }
+    }
+  }
 
   const headerText = () => {
     const permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
@@ -194,17 +255,22 @@ const Login: React.FC<Props> = (props) => {
             ? <>
               <span className={styles.dd} title={userInfo.primaryEmail}>{userInfo.firstName}</span>
               <div className={styles.signMenu}>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`} onClick={resetInfo}>Edit Profile</a>
-                {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
-                <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
-                <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
-                <a href="#" onClick={handleLoginToggle} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+                <div className={styles.outerContainer}>
+                  <p className={styles.emailLbl}>{userInfo.primaryEmail}</p>
+                  <div className={styles.bgWhite}>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`} onClick={resetInfo}>Edit Profile</a>
+                    {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
+                    <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
+                    <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
+                    <a href="#" onClick={handleLoginToggle} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+                  </div>
+                </div>
               </div>
             </>
             : <a data-ga-onclick="ET Login#Signin - Sign In - Click#ATF - url" onClick={handleLoginToggle} href="#" className={styles.signInLink}>Sign In</a>
