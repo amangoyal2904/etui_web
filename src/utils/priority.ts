@@ -9,9 +9,9 @@ export function InitialJsOnAppLoad(): void {
   try {
     window["arrPageAds"] = [];
     window.adDivIds = [];
-    document.addEventListener('gaLoaded', ()=> {
-      ga.gaObserverInit();
-    });
+    // document.addEventListener('gaLoaded', ()=> {
+    //   ga.gaObserverInit();
+    // });
     ga.growthRxInit();
     // ga.GTMInit();
   } catch (error) {

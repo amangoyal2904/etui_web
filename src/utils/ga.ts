@@ -57,8 +57,8 @@ export const gaObserverInit = (newImpressionNodes = [], newClickNodes = []) => {
             gaData[2] = gaData[2].replace("url", window.location.href);
             if (gaData.length > 2) {
               console.log(gaData);
-              window.ga("set", window.customDimension);
-              window.ga("send", "event", gaData[0], gaData[1], gaData[2]);
+              //window.ga("set", window.customDimension);
+              //window.ga("send", "event", gaData[0], gaData[1], gaData[2]);
               // Growth RX Event
               grxEvent("event", {
                 event_category: gaData[0],
@@ -88,7 +88,7 @@ export const gaObserverInit = (newImpressionNodes = [], newClickNodes = []) => {
         track2 = track2.indexOf("url") != -1 ? track2.replace("url", window.location.href) : track2;
         if (trackVal.length > 1) {
           console.log(trackVal);
-          window.ga("send", "event", trackVal[0], trackVal[1], track2, window.customDimension);
+          //window.ga("send", "event", trackVal[0], trackVal[1], track2, window.customDimension);
           // Growth RX Event
           grxEvent("event", {
             event_category: trackVal[0],
