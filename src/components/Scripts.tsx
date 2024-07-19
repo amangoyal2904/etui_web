@@ -1,11 +1,11 @@
 'use client';
 
-import { log } from "console";
 import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { FC, useEffect } from "react";
 import { APP_ENV, updateDimension } from "../utils";
 import * as Config from "../utils/common";
+import GLOBAL_CONFIG from "../network/global_config.json";
 
 interface Props {
   isprimeuser?: number | boolean;
@@ -23,7 +23,6 @@ declare global {
       };
     };
     objInts:any;
-    objUser:any;
     __APP:any;
     google: {
       accounts: {
@@ -31,10 +30,36 @@ declare global {
           disableAutoSelect;
         }
       }
-    }
-    ispopup: boolean;
+    };
+    googletag: any;
+    ispopup: any;
+    jsso?: {
+      getValidLoggedInUser?: any;
+      getUserDetails?: any;
+      signOutUser?: any;
+    };
+    isSurveyLoad: any;
+    dataLayer: [];
+    ssoWidget?: any;
+    verifyLoginSuccess?: any;
+    objUser: {
+      ssoid?: any;
+      ticketId?: any;
+      info?: {
+        thumbImageUrl: any;
+        primaryEmail: string;
+        firstName: string;
+      };
+      isPrime?: any;
+      permissions?: any;
+      accessibleFeatures?: any;
+      primeInfo?: any;
+    };
+    _sva: any;
   }
 }
+
+declare var JssoCrosswalk: any;
 
 const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
@@ -45,8 +70,11 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   const searchParams = useSearchParams();
 
   const minifyJS = APP_ENV === "development" ? 0 : 1;
+
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
   const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
+
+
 
   useEffect(() => {
     // window.optCheck = router.asPath.indexOf("opt=1") != -1;
@@ -71,6 +99,14 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           _comscore.push({ c1: "2", c2: "6036484" });
         `}
       </Script>
+      <Script
+        src={(GLOBAL_CONFIG as any)[APP_ENV]?.jssoSDK}
+        onLoad={() => {
+          window.jsso = new JssoCrosswalk("et", "web");
+          const jssoLoaded = new Event("jssoLoaded");
+          document.dispatchEvent(jssoLoaded);
+        }}
+      />
       <Script id="geoinfo-call">
         {`
         function getGeoInfo() {    
@@ -118,14 +154,6 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           }
         `}
       </Script>
-      <Script
-        src={jsIntsURL}
-        strategy="afterInteractive"
-        onLoad={() => {
-          const objIntsLoaded = new Event("objIntsLoaded");
-          document.dispatchEvent(objIntsLoaded);
-        }}
-      />
 
       {!searchParams?.get('opt') && (
         <>

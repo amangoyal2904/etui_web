@@ -9,6 +9,7 @@ import SubSecNav from "./SubSecNav";
 import HandleHoverSecHtml from "./HandleHoverSecHtml";
 import TechNav from "./TechNav";
 import SpotlightNav from "./SpotlightNav";
+import { useStateContext } from "../../store/StateContext";
 
 interface HeaderNavProps {
   menuData: {
@@ -28,24 +29,13 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
   const [isScrolledToTop, setIsScrolledToTop] = useState<boolean>(false);
   const [stickyOffsetTop, setStickyOffsetTop] = useState<number>(0);
   const headerRef = useRef<HTMLDivElement | null>(null);
-  const [isPrime, setIsPrime] = useState<boolean>(false);
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
-    });
-  }
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   useEffect(() => {
     document.addEventListener('mousemove', handleHoverSubSec);
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
     return () => {
       document.removeEventListener('mousemove', handleHoverSubSec);
-      document.removeEventListener("objIntsLoaded", intsCallback);
     };
   }, []);
 

@@ -1,29 +1,15 @@
 import { Fragment, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
+import { useStateContext } from "../../store/StateContext";
 
 interface BreadCrumbProps {
   data: { title: string; url?: string }[];
 }
 
 export default function BreadCrumb({ data }: BreadCrumbProps) {
-  const [isPrime, setIsPrime] = useState(false);
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
-  }, []);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
+  
   return (
     <>      
       <div className={`${styles.breadCrumb} ${isPrime ? styles.pink_theme : ""}`}>

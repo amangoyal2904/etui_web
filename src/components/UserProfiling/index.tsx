@@ -1,26 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { ET_IMG_DOMAIN } from "utils/common";
+import { useStateContext } from "../../store/StateContext";
 
 export default function UserProfiling() {
-  const [isPrime, setIsPrime] = useState(false);
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
-  }, []);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   const fetchQuestions = () => {
     const isLive = window.location.host.includes('https://economictimes.indiatimes.com/');
@@ -31,7 +16,7 @@ export default function UserProfiling() {
       })
         .then(res => res.json())
         .then(data => {
-          setCommentsData(data);
+          //setCommentsData(data);
         })
         .catch(err => {
           console.log('error: ', err);
@@ -46,7 +31,7 @@ export default function UserProfiling() {
                 <img src={`${ET_IMG_DOMAIN}/photo/105255513.cms`} height="15" width="15" title="close" alt="close" className={styles.dialog_closeicon} />
                 <div className={styles.loadingSec}>
                     <div className={styles.newLoading}>
-                        <div className="loading" style="display: block;">
+                        <div className="loading" style={{ display: 'block' }}>
                             <div className="loader">
                                 <div className="loader__bar"></div>
                                 <div className="loader__bar"></div>
@@ -67,7 +52,7 @@ export default function UserProfiling() {
                 
                 <div className={styles.dynamicFormBox}>
                     <div className={styles.dynamicForm}></div>
-                    <div style="display: flex;width: 100%;">
+                    <div style={{ display: 'flex', width: '100%' }}>
                         <button className="btn flr saveData">Save Changes</button>
                     </div>
                 </div>

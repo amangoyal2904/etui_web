@@ -53,4 +53,30 @@
             }
         }
     }
+
+    &.pink_theme{
+        background: linear-gradient(to right, #ffffff, #ffffff 60%, #1f364f 42%, #1f364f 100%);
+
+        .bnewsWrp{
+            width: 1255px;
+            margin: 0 auto;
+        }
+
+        .embla__buttons{
+            background-color: #1F364F;
+        }
+
+        .blueClr{
+            background-color: #1F364F;    
+        }
+        
+        .bnewsWrp {
+            .breakingNews{
+                .title{
+                    background-color: #1F364F;
+                    color: #fff;
+                }
+            }
+        }
+    }
 }  

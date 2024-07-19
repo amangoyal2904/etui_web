@@ -11,38 +11,38 @@ declare global {
     }
 }
 
-export const setCookieToSpecificTime = (name, value, time, seconds) =>{
-      try{
-          var domain = document.domain; 
-          var cookiestring ='';
-          if(name && value && time){
-              cookiestring=name+"="+ escape(value) + "; expires=" + new Date(new Date().toDateString() + ' ' + time).toUTCString() +'; domain='+domain+'; path=/;';
-          }
-          if(name && value && seconds){ //temp cookie
-            var exdate = new Date();
-            exdate.setSeconds(exdate.getSeconds() + seconds);
-              var c_value = escape(value) + ((seconds == null) ? "" : "; expires=" + exdate.toUTCString()) + '; domain='+domain+'; path=/;';
-              cookiestring=name+"="+ c_value;
-          }
-          document.cookie=cookiestring;
-      }catch(e){
-           console.log('setCookieToSpecificTime', e);
-      }
-};
-export const getCookie = (name) =>{
-   try{
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-     }catch(e){
-        console.log('getCookie', e);   
-    }
-};
+// export const setCookieToSpecificTime = (name, value, time, seconds) =>{
+//       try{
+//           var domain = document.domain; 
+//           var cookiestring ='';
+//           if(name && value && time){
+//               cookiestring=name+"="+ escape(value) + "; expires=" + new Date(new Date().toDateString() + ' ' + time).toUTCString() +'; domain='+domain+'; path=/;';
+//           }
+//           if(name && value && seconds){ //temp cookie
+//             var exdate = new Date();
+//             exdate.setSeconds(exdate.getSeconds() + seconds);
+//               var c_value = escape(value) + ((seconds == null) ? "" : "; expires=" + exdate.toUTCString()) + '; domain='+domain+'; path=/;';
+//               cookiestring=name+"="+ c_value;
+//           }
+//           document.cookie=cookiestring;
+//       }catch(e){
+//            console.log('setCookieToSpecificTime', e);
+//       }
+// };
+// export const getCookie = (name) =>{
+//    try{
+//         var nameEQ = name + "=";
+//         var ca = document.cookie.split(';');
+//         for (var i = 0; i < ca.length; i++) {
+//           var c = ca[i];
+//           while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+//           if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+//         }
+//         return null;
+//      }catch(e){
+//         console.log('getCookie', e);   
+//     }
+// };
 // Check if GDPR policy allowed for current location
 export const allowGDPR = ()=>{
   try{
@@ -355,6 +355,6 @@ export const gotoPlanPage = (options: any) => {
   grxPushData(planDim, planUrl);
 }
 
-let output = {urlValidation, socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, getCookie, setCookieToSpecificTime, pageType, mgidGeoCheck}
+let output = {urlValidation, socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, pageType, mgidGeoCheck}
 
 export default output
