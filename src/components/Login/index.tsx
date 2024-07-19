@@ -26,6 +26,7 @@ const Login = ({headertext}) => {
 
   const verifyLoginSuccessCallback = async () => {
     try {
+      //document.body.classList.add("isprimeuser");
       const primeRes = await loadPrimeApi();
       if (primeRes?.status === "SUCCESS") {
         const isPrime =
@@ -43,13 +44,15 @@ const Login = ({headertext}) => {
           setCookieToSpecificTime("OTR", primeRes.token, 30, 0, 0, "");
         }
 
-        saveLogs({
-          type: "Mercury",
-          res: "SUCCESS",
-          msg: "verifyLoginSuccessCallback",
-          resData: primeRes,
-          objUser: window.objUser,
-        });
+        document.body.classList.add("isprimeuser");
+
+        // saveLogs({
+        //   type: "Desktop",
+        //   res: "SUCCESS",
+        //   msg: "verifyLoginSuccessCallback",
+        //   resData: primeRes,
+        //   objUser: window.objUser,
+        // });
       } else {
         window.objUser.permissions = [];
         window.objUser.accessibleFeatures = [];
@@ -73,12 +76,47 @@ const Login = ({headertext}) => {
         payload: {
           ssoReady: true,
           isLogin: true,
-          isPrime: window.objUser.isPrime,
+          isPrime: window.objUser.isPrime, // true, //,
           userInfo: window.objUser?.info,
           ssoid: window.objUser?.ssoid,
           ticketId: window.objUser?.ticketId,
           accessibleFeatures: window.objUser.accessibleFeatures,
+          //[
+          //   "ETSCREE",
+          //   "TOIARTCL",
+          //   "ETADF",
+          //   "TOIADL",
+          //   "ETARTICLES",
+          //   "TOIPRED",
+          //   "ETCHPTR",
+          //   "TOIUNLM",
+          //   "ETPRED",
+          //   "ETINVID",
+          //   "TOICRWD",
+          //   "MATAEPPR",
+          //   "TOIPDEV",
+          //   "ETNEWSL",
+          //   "ETWEED",
+          //   "TOIBRF",
+          //   "TOITA",
+          //   "ETMBSR",
+          //   "ETEPPR",
+          //   "TOIEPPR",
+          //   "ETSHKP",
+          //   "TOINEWSLT",
+          //   "ETSRP",
+          //   "TOISPCL",
+          //   "ETSTKAN"
+          // ],
           permissions: window.objUser.permissions,
+          // [
+          //   "loggedin",
+          //   "subscribed",
+          //   "subscriber",
+          //   "active_subscription",
+          //   "etadfree_can_buy_subscription",
+          //   "etredcarpet_can_buy_subscription"
+          // ], //
         },
       });
     } catch (e) {
@@ -163,8 +201,11 @@ const Login = ({headertext}) => {
     document.dispatchEvent(voucherClicked);
   };
   const headerText = () => {
-    const permissions = (window.objInts && window.objInts.permissions) || [];
+    let permissions = (typeof window !="undefined" && window.objInts && window.objInts.permissions) || [];
     let hText = 'Special Offer on ETPrime';
+    if(isLogin) {
+      permissions = (window.objInts && window.objInts.permissions) || [];
+    }
     if(permissions.includes('expired_subscription')) {
       hText = headertext?.expired
     } else if(permissions.includes('cancelled_subscription')) {
@@ -186,10 +227,10 @@ const Login = ({headertext}) => {
               {
                 isLogin 
                 ? <>
-                  <span className={styles.dd} title={userInfo.primaryEmail}>{userInfo.firstName}</span>
+                  <span className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</span>
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
-                      <p className={styles.emailLbl}>{userInfo.primaryEmail}</p>
+                      <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
                         <a href={`${APIS_CONFIG.DOMAIN[APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`}>Edit Profile</a>
                         {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}

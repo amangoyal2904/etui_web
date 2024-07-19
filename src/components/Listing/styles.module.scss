@@ -23,28 +23,36 @@
         > div:first-child {
             width: 80px;
 
-            .duration {
-                position: absolute;
-                bottom: -5px;
-                z-index: 1;
-                left: 15px;
-            }
+            // .duration {
+            //     position: absolute;
+            //     bottom: -5px;
+            //     z-index: 1;
+            //     left: 15px;
+            // }
         }
 
         > div:last-child {
             flex: 1;
 
-            .views {
-                margin: 2px 0 0;
-                color: #999;
-                font-size: 11px;
-                display: block;
-            }
+            // .views {
+            //     margin: 2px 0 0;
+            //     color: #999;
+            //     font-size: 11px;
+            //     display: block;
+            // }
         }
         
     }
 
     li:not(:first-child) {
         border-top: 1px solid #ebebeb;
+    }
+    .contentWrapper{
+        span{
+            display: block;
+            margin: 2px 0 0;
+            color: #999;
+            font-size: 11px;
+        }
     }
 }

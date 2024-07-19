@@ -10,6 +10,7 @@ import RedeemVoucher from "./RedeemVoucher";
 import DfpAds from './Ad/DfpAds';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { callJsOnRouteChange } from 'utils/priority';
+import TopNudge from './TopNudge';
 import BreakingNews from './BreakingNews';
 
 interface Props {
@@ -49,6 +50,12 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
 
   return (
       <>
+        { !isprimeuser &&
+          <div className="topAdContainer">
+            <DfpAds adInfo={{key: "topad"}} objVc={objVc}/>
+          </div>
+        }
+        <TopNudge objVc={objVc} />
         <Headers />
         <main className={`pageHolder container`}>
           { !isprimeuser &&

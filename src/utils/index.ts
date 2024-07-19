@@ -280,32 +280,32 @@ export const createGAPageViewPayload = (payload = {}) => {
   }
 };
 export const updateDimension = (dimensions = {}, payload = {}) => {
-  if (typeof window !== "undefined") {
-    const sendEvent = () => {
-      dimensions["dimension20"] = "PWA";
-      window.customDimension = { ...window.customDimension, ...dimensions };
-      createGAPageViewPayload(payload);
-      pageview(
-        (location.pathname + location.search).length > 1
-          ? (location.pathname + location.search).substr(1)
-          : location.pathname + location.search
-      );
-    };
-    const objUser = (window.objUser && window.objUser.info) || {};
-    if (Object.keys(objUser).length) {
-      dimensions["dimension3"] = "LOGGEDIN";
-    } else {
-      dimensions["dimension3"] = "NONLOGGEDIN";
-    }
-    window.customDimension = { ...window.customDimension, ...dimensions };
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(sendEvent);
-    } else {
-      document.addEventListener("objIntsLoaded", () => {
-        window?.objInts?.afterPermissionCall(sendEvent);
-      });
-    }
-  }
+  // if (typeof window !== "undefined") {
+  //   const sendEvent = () => {
+  //     dimensions["dimension20"] = "PWA";
+  //     window.customDimension = { ...window.customDimension, ...dimensions };
+  //     createGAPageViewPayload(payload);
+  //     pageview(
+  //       (location.pathname + location.search).length > 1
+  //         ? (location.pathname + location.search).substr(1)
+  //         : location.pathname + location.search
+  //     );
+  //   };
+  //   const objUser = (window.objUser && window.objUser.info) || {};
+  //   if (Object.keys(objUser).length) {
+  //     dimensions["dimension3"] = "LOGGEDIN";
+  //   } else {
+  //     dimensions["dimension3"] = "NONLOGGEDIN";
+  //   }
+  //   window.customDimension = { ...window.customDimension, ...dimensions };
+  //   if (typeof window.objInts !== "undefined") {
+  //     window.objInts.afterPermissionCall(sendEvent);
+  //   } else {
+  //     document.addEventListener("objIntsLoaded", () => {
+  //       window?.objInts?.afterPermissionCall(sendEvent);
+  //     });
+  //   }
+  // }
 };
 
 export const prepSeoListData = (data) => {
@@ -657,3 +657,18 @@ export const initSSOWidget = () => {
 
   ssoWidget("init", centralSSOObj);
 };
+
+export const currPageType = () =>  {
+  let type = 'home_page';
+  const tpNameListArr = ['articlelist','primehome','markets','newshome','politicsnation','personalfinance','mutual_funds','techhome','opinionshome','nri','panache','videohome']
+  const pn = window.location.pathname;
+
+  if(pn.includes('articleshow')) {
+      type = 'articleshow_page';
+  } else if(pn === "/") {
+      type = 'home_page';
+  } else {
+      type = 'listing_page';
+  }
+  return type;
+}

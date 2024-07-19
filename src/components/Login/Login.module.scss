@@ -87,14 +87,14 @@
       border-radius: 6px;
       box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.28);
       background-color: #fafafa;
+      .bgWhite{
+        background: #fff;
+      }
       .emailLbl{
         color: #5c5c5c;
         text-align: center;
         margin-bottom: 14px;
         font-size: 10px;
-        .bgWhite{
-          background: #fff;
-        }
       }
     }
     a{
@@ -248,7 +248,11 @@
     }
     .signMenu{
       top: auto;
-      bottom: -270px;
+      // bottom: -270px;
+      border-radius: 6px;
+      .outerContainer{
+        background: #FFF9F7;  
+      }
       background: #FFF9F7;
       & > a:hover{
         background: #FFE9E2;

@@ -3,29 +3,14 @@ import { FC, useState, useEffect } from "react";
 import GreyDivider from "components/GreyDivider";
 import { isNoFollow } from "utils";
 import SearchBar from "components/SearchBar";
+import { useStateContext } from "../../store/StateContext";
 
 const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFooterData, page }) => {
   const [isExpanded, setIsExpanded] = useState({});
   const hide_footer = false;
 
-  const [isPrime, setIsPrime] = useState(false);
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
-  }, []);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   const paymentButtonListener = () => {
     const paymentUrl = "";

@@ -22,6 +22,8 @@ declare global {
         deleteKey(arg1: string);
       };
     };
+    objInts:any;
+    __APP:any;
     google: {
       accounts: {
         id: {
@@ -152,14 +154,6 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           }
         `}
       </Script>
-      <Script
-        src={jsIntsURL}
-        strategy="afterInteractive"
-        onLoad={() => {
-          const objIntsLoaded = new Event("objIntsLoaded");
-          document.dispatchEvent(objIntsLoaded);
-        }}
-      />
 
       {!searchParams?.get('opt') && (
         <>

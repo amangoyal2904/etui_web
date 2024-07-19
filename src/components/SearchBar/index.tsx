@@ -3,7 +3,8 @@ import styles from "./styles.module.scss";
 import APIS_CONFIG from "network/config.json";
 import { APP_ENV } from 'utils';
 import SearchList from './SearchList';
-import { grxEvent } from '../../utils/ga'
+import { grxEvent } from '../../utils/ga';
+import { useStateContext } from "../../store/StateContext";
 
 const SearchBar = (props) => {
   const { setSearchBarOff, searchBar, footerSearch = false } = props;
@@ -11,24 +12,8 @@ const SearchBar = (props) => {
   const [searchData, setSearchData]: any = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
 
-  const [isPrime, setIsPrime] = useState(false);
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
-  }, []);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   const handleInput = (e) => {
     let searchValue = e.target.value;
