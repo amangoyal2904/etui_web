@@ -5,7 +5,7 @@ import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 
 // const { publicRuntimeConfig = {} } = getConfig();
-export const APP_ENV = (process.env.NODE_ENV && process.env.NODE_ENV.trim()) || "production";
+export const APP_ENV = "development";  //(process.env.NODE_ENV && process.env.NODE_ENV.trim()) || "production";
 
 declare global {
   interface Window {
