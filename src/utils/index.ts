@@ -420,14 +420,14 @@ export const loadPrimeApi = async () => {
     const response = await service.post({
       url,
       headers,
-      payload: {},
-      // body,
-      params: {
+      payload: {
         grantType: "refresh_token",
         ticketId: ticketId,
         deviceDetail: getMobileOS(),
         allMerchant: true,
       },
+      // body,
+      params: {},
     });
 
     return response.data || {};
@@ -460,13 +460,12 @@ export const logout = async () => {
         "x-site-app-code": (GLOBAL_CONFIG as any)[APP_ENV]["X_SITE_CODE"],
       };
 
-      const body = JSON.stringify({ ticketId: ticketId });
-
       const response = await service.post({
         url,
         headers,
-        payload: {},
-        body,
+        payload: {
+          ticketId: ticketId
+        },
         params: {},
       });
 
