@@ -45,6 +45,7 @@ declare global {
     objUser: {
       ssoid?: any;
       ticketId?: any;
+      email?: any;
       info?: {
         thumbImageUrl: any;
         primaryEmail: string;

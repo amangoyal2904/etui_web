@@ -26,7 +26,7 @@ const Login = ({headertext}) => {
 
   const verifyLoginSuccessCallback = async () => {
     try {
-      document.body.classList.add("isprimeuser");
+      //document.body.classList.add("isprimeuser");
       const primeRes = await loadPrimeApi();
       if (primeRes?.status === "SUCCESS") {
         const isPrime =
@@ -76,45 +76,48 @@ const Login = ({headertext}) => {
         payload: {
           ssoReady: true,
           isLogin: true,
-          isPrime: true, //window.objUser.isPrime, 
+          isPrime: window.objUser.isPrime, // true, //,
           userInfo: window.objUser?.info,
           ssoid: window.objUser?.ssoid,
+          email: window.objUser?.info?.primaryEmail || "",
           ticketId: window.objUser?.ticketId,
-          accessibleFeatures: [
-            "ETSCREE",
-            "TOIARTCL",
-            "ETADF",
-            "TOIADL",
-            "ETARTICLES",
-            "TOIPRED",
-            "ETCHPTR",
-            "TOIUNLM",
-            "ETPRED",
-            "ETINVID",
-            "TOICRWD",
-            "MATAEPPR",
-            "TOIPDEV",
-            "ETNEWSL",
-            "ETWEED",
-            "TOIBRF",
-            "TOITA",
-            "ETMBSR",
-            "ETEPPR",
-            "TOIEPPR",
-            "ETSHKP",
-            "TOINEWSLT",
-            "ETSRP",
-            "TOISPCL",
-            "ETSTKAN"
-          ],   //window.objUser.accessibleFeatures,
-          permissions: [
-            "loggedin",
-            "subscribed",
-            "subscriber",
-            "active_subscription",
-            "etadfree_can_buy_subscription",
-            "etredcarpet_can_buy_subscription"
-          ], // window.objUser.permissions,
+          accessibleFeatures: window.objUser.accessibleFeatures,
+          //[
+          //   "ETSCREE",
+          //   "TOIARTCL",
+          //   "ETADF",
+          //   "TOIADL",
+          //   "ETARTICLES",
+          //   "TOIPRED",
+          //   "ETCHPTR",
+          //   "TOIUNLM",
+          //   "ETPRED",
+          //   "ETINVID",
+          //   "TOICRWD",
+          //   "MATAEPPR",
+          //   "TOIPDEV",
+          //   "ETNEWSL",
+          //   "ETWEED",
+          //   "TOIBRF",
+          //   "TOITA",
+          //   "ETMBSR",
+          //   "ETEPPR",
+          //   "TOIEPPR",
+          //   "ETSHKP",
+          //   "TOINEWSLT",
+          //   "ETSRP",
+          //   "TOISPCL",
+          //   "ETSTKAN"
+          // ],
+          permissions: window.objUser.permissions,
+          // [
+          //   "loggedin",
+          //   "subscribed",
+          //   "subscriber",
+          //   "active_subscription",
+          //   "etadfree_can_buy_subscription",
+          //   "etredcarpet_can_buy_subscription"
+          // ], //
         },
       });
     } catch (e) {
@@ -131,6 +134,7 @@ const Login = ({headertext}) => {
         isPrime: window.objUser.isPrime,
         userInfo: window.objUser?.info,
         ssoid: window.objUser?.ssoid,
+        email: window.objUser?.info?.primaryEmail || "",
         ticketId: window.objUser?.ticketId,
         accessibleFeatures: window.objUser.accessibleFeatures,
         permissions: window.objUser.permissions,
@@ -148,6 +152,7 @@ const Login = ({headertext}) => {
         isPrime: false,
         userInfo: {},
         ssoid: "",
+        email: "",
         ticketId: "",
         accessibleFeatures: [],
         permissions: [],

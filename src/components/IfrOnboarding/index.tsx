@@ -7,7 +7,7 @@ import { delete_cookie, getCookie, setCookieToSpecificTime } from 'utils';
 const IfrOnboarding = () => {
   const [showIframe, setShowIframe] = useState(false);
   const { state } = useStateContext();
-  const { isLogin, isPrime } = state.login;
+  const { isLogin, isPrime, ssoid, email } = state.login;
   const onboardTimerRef = useRef<any>(null);
 
   const handleOnboardVisibility = (secondsOpenDialog) => {
@@ -22,7 +22,7 @@ const IfrOnboarding = () => {
     const serviceUrl = 'https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json';
     const params = new URLSearchParams({
       isPaidUser: 'true',
-      email: "testonboarding@givmail.com",
+      email: email,
       isEdit: 'false'
     });
 
@@ -30,7 +30,7 @@ const IfrOnboarding = () => {
       const response = await fetch(`${serviceUrl}?${params.toString()}`, {
         method: 'GET',
         headers: {
-          'Authorization': "ad7qnu3xtwikuv358ln9pftex",
+          'Authorization': ssoid,
           'Content-Type': 'application/json'
         }
       });
