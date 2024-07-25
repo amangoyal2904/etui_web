@@ -79,6 +79,7 @@ const Login = ({headertext}) => {
           isPrime: window.objUser.isPrime, // true, //,
           userInfo: window.objUser?.info,
           ssoid: window.objUser?.ssoid,
+          email: window.objUser?.info?.primaryEmail || "",
           ticketId: window.objUser?.ticketId,
           accessibleFeatures: window.objUser.accessibleFeatures,
           //[
@@ -133,6 +134,7 @@ const Login = ({headertext}) => {
         isPrime: window.objUser.isPrime,
         userInfo: window.objUser?.info,
         ssoid: window.objUser?.ssoid,
+        email: window.objUser?.info?.primaryEmail || "",
         ticketId: window.objUser?.ticketId,
         accessibleFeatures: window.objUser.accessibleFeatures,
         permissions: window.objUser.permissions,
@@ -150,6 +152,7 @@ const Login = ({headertext}) => {
         isPrime: false,
         userInfo: {},
         ssoid: "",
+        email: "",
         ticketId: "",
         accessibleFeatures: [],
         permissions: [],
