@@ -72,7 +72,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
           menuData={menuData}
           subsecnames={data?.seo?.subsecnames}
           sectiondetail={data?.seo?.sectionDetail}
-          commonMeta={data?.commonMeta}
+          commonMeta={data?.commonMeta || {}}
         />
         <BreadCrumb data={data?.seo?.breadcrumb} />
         <BreakingNews />

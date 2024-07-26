@@ -7,6 +7,7 @@ import { ePaper_URL } from '../../utils/common';
 import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
 import Login from "../Login";
+import { useStateContext } from "../../store/StateContext";
 // import { useSelector } from 'react-redux';
 
 const EditionTimeStamp = () => {
@@ -95,30 +96,13 @@ const ETSecLogo = (props) => {
 const HeaderLogo = (props) => {
   const {page, subsecnames, sectiondetail, headertext} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
-  const [isPrime, setIsPrime] = useState(false);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   // const loginState = useSelector((state: any) => state.login);
   // const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
 
   // console.log(sectiondetail)
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      console.log("permissiorn tetrs");
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
-  }, []);
 
   return (
     <div className={`${styles.logo_part} ${isPrime ? styles.pink_theme : ""}`}>

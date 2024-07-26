@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getCookie, setCookieToSpecificTime } from 'utils';
+import { useStateContext } from "../../store/StateContext";
 
 // Define request headers
 const reqHeader: HeadersInit = {
@@ -37,6 +38,8 @@ const nlChannelId = '5f5a00075651d4e45e1b67d6';
 // Hook for managing newsletter subscription actions
 const useNewsletterSubscription = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
 
   // Function to initialize newsletter subscription
   const initSubscription = async (config: any, callback: (cbData: any) => void) => {
@@ -52,7 +55,7 @@ const useNewsletterSubscription = () => {
             userId: config.email || '',
             userName: '',
             serviceIds: config.sid || '',
-            ssoCheck: !!(window.objUser?.primaryEmail || window.objUser?.mobileData?.Verified.mobile || getCookie('wv_ssoid')),
+            ssoCheck: !!(userInfo?.primaryEmail || userInfo?.Verified.mobile || getCookie('wv_ssoid')),
             nlName: '',
             limit: '',
             sourcePage: '',
@@ -104,7 +107,7 @@ const useNewsletterSubscription = () => {
           method: 'POST',
           headers: reqHeader,
           body: JSON.stringify({
-            userId: window.objUser?.primaryEmail || '',
+            userId: userInfo?.primaryEmail || '',
             serviceId: '',
             sectionId: process.env.NEXT_PUBLIC_SUBSEC1_VALUE || "",
             secname: secName.split('-').join(' '),
@@ -152,7 +155,7 @@ const useNewsletterSubscription = () => {
           method: 'POST',
           headers: reqHeader,
           body: JSON.stringify({
-            ssoId: config.email || window.objUser?.primaryEmail,
+            ssoId: config.email || userInfo?.primaryEmail,
             key: config.key || ""
           })
         });
@@ -208,7 +211,7 @@ const useNewsletterSubscription = () => {
   const unsubsNews = async (config: any, callback: (cbData: any) => void) => {
     if (config) {
       setIsLoading(true);
-      const userEmail = window.objUser?.primaryEmail || config.email || sessionStorage.getItem("tempEmail");
+      const userEmail = userInfo?.primaryEmail || config.email || sessionStorage.getItem("tempEmail");
 
       try {
         const response = await fetch(`${nlSubEndPoint}/unsub/${nlChannelId}`, {

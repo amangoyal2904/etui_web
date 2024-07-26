@@ -8,6 +8,7 @@ import {
   NextButton,
   usePrevNextButtons
 } from '../CarouselArrowBtn';
+import { useStateContext } from "../../store/StateContext";
 
 const BreakingNews: React.FC = () => {
   const [news, setNews] = useState<any[]>([]);
@@ -23,6 +24,8 @@ const BreakingNews: React.FC = () => {
   const titleArr = {10: 'Alert', 11: 'News Flash', 12: 'News Just In', 13: 'What\'s New', 0: 'Breaking News'};
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   const fetchNews = useCallback(async () => {
     console.log('Fetching news...');
@@ -107,15 +110,22 @@ const BreakingNews: React.FC = () => {
   }, [isPageVisible, startFetchingNews, stopFetchingNews]);
 
   const svgHTML = () => (
-    <span className="svg-container">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="0 0 50 40" fill="none"> 
+    <span className={`svg-container ${isPrime ? styles.blueClr : ''}`}>
+      {isPrime ? (<svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="0 0 50 40" fill="none">
+        <g id="node_1_0">
+          <path id="third" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#FFFFFF"></path>
+          <path id="second" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#FFFFFF"></path>
+          <path id="first" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#FFFFFF"></path>
+          <path id="white" fill-rule="evenodd" clip-rule="evenodd" d="M0 0 L 6 0 L22 20 L6 40 L 0 40 L 0 0 Z" fill="#FFFFFF"></path>
+        </g>  
+      </svg>) : (<svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="0 0 50 40" fill="none"> 
         <g id="node_1_0">                              
           <path id="third" fillRule="evenodd" clipRule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#ED193B"></path>
           <path id="second" fillRule="evenodd" clipRule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#ED193B"></path>
           <path id="first" fillRule="evenodd" clipRule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#ED193B"></path>
           <path id="white" fillRule="evenodd" clipRule="evenodd" d="M0 0 L 6 0 L22 20 L6 40 L 0 40 L 0 0 Z" fill="#FFFFFF"></path>
         </g>
-      </svg>
+      </svg>)}
     </span>
   );
 
@@ -125,7 +135,7 @@ const BreakingNews: React.FC = () => {
 
   return (
     news.length > 0 ? (
-      <div id="breakingNews" className={styles.breakingNewsWap}>
+      <div id="breakingNews" className={`${styles.breakingNewsWap} ${isPrime ? styles.pink_theme : ''}`}>
         <div className={`embla ${styles.bnewsWrp}`}>
           <div ref={emblaRef} className={styles.emblaWrp}>
             <ul className={`embla__container`}>
