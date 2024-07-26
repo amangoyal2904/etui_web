@@ -1,0 +1,30 @@
+[
+    {
+        "design": "type1",
+        "hideCloseBtn" : false,
+        "showBand" : true,
+        "width" : "full",
+        "fullBandClickable" : "",
+        "content": {
+            "heading" : "Monsoon Offer",
+            "subHead" : "Get flat 20% discount on ETPrime membership",
+            "offer" : "Bank Offers Available",
+            "btnLink" : "https://buy.indiatimes.com/ET/plans",
+            "btnText" : "Avail Offer"
+        }
+    },
+    {
+        "design": "type2",
+        "hideCloseBtn" : false,
+        "showBand" : true,
+        "width" : "short",
+        "fullBandClickable" : "",
+        "content": {
+            "heading" : "",
+            "subHead" : "Get flat 20% discount on ETPrime membership",
+            "offer" : "",
+            "btnLink" : "https://buy.indiatimes.com/ET/plans",
+            "btnText" : "Avail Offer"
+        }
+    }
+]
