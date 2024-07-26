@@ -1,26 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { checkLoggedinStatus, currPageType } from "utils";
+import { currPageType } from "utils";
 import NudgeContainer from "./NudgeContainer";
 import { grxEvent } from "utils/ga";
 
 import styles from "./styles.module.scss";
 import { fetchAllMetaInfo } from "utils/articleUtility";
+import { useStateContext } from "../../store/StateContext";
 
 export default function TopNudge({objVc}) {
-  const [isPrime, setIsPrime] = useState(false);
-  const [metaInfo, setMetaInfo] = useState({});
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-      const isLoggedIn = checkLoggedinStatus();
-      console.log(isLoggedIn, objVc.ads_primeuser_enable, '-----');
-      if(isLoggedIn && !Number(objVc?.ads_primeuser_enable)) {
-          fetchSubsc();
-      }
-    });
-  }
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const [metaInfo, setMetaInfo] = useState<any>({});
 
   const fetchSubsc = () => {
     /* const isGroupUser = window.objInts.permissions.includes("group_subscription");
@@ -119,7 +110,7 @@ export default function TopNudge({objVc}) {
         allMetaData['bannerType'] = bannerType;
         setNudgeDetails(allMetaData);
     } else {
-        window.saveLogs && window.saveLogs({'type': 'top_nudge_skipped', 'bannerType': bannerType, 'TP_email': _tp_data.email, 'origin' : 'appendBand'});
+        //window.saveLogs && window.saveLogs({'type': 'top_nudge_skipped', 'bannerType': bannerType, 'TP_email': _tp_data.email, 'origin' : 'appendBand'});
         console.info('Nudge Skipped');
     }
   }
@@ -282,15 +273,9 @@ export default function TopNudge({objVc}) {
   }
 
   useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
+    if(isLogin && !Number(objVc?.ads_primeuser_enable)) {
+      fetchSubsc();
     }
-
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
   }, []);
 
   return (

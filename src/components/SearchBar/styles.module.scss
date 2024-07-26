@@ -225,7 +225,10 @@
   }
 
   &.pink_theme{
-    width: 50%;
+    width: 100%;
+    .srch_overlay_div{
+      width: 100%;
+    }
     .btm_srch_div{
       background-color: transparent;
       .btm_srch_content{
