@@ -117,6 +117,9 @@
         font-size: 13px;
         padding: 10px;
         position: relative;
+        display: flex;
+        align-items: center;
+        gap: 7px;
     }
 
     .vid {
@@ -151,15 +154,12 @@
     font-size: 12px;
 }
 .bookmarkCta{
-    float: right;
     padding: 2px;
     border: 1px solid;
     border-radius: 50%;
     width: 22px;
     height: 22px;
-    position: relative;
-    top: -15px;
-    right: -8px;
+    
     span{
         width: 20px;
         height: 17px;

@@ -1,28 +1,28 @@
 import { headers, cookies } from 'next/headers';
-import { pageType, getMSID, prepareMoreParams } from "../../utils";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from '../../containers/';
 import Layout from '../../components/Layout';
-import React, { Suspense } from 'react';
+import { getDevStatus } from 'utils/utils';
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const headersList = headers()
-  console.log({ headersList });
+  const headersList = headers();
+  const domain = headersList.get("host") || "";
+  const isDev = getDevStatus(domain);
   
+  const slugArr = params?.all || [];
+
   const isprimeuser = cookies().get('isprimeuser') || false,
   { all = [] } = params,
   lastUrlPart: string = all?.slice(-1).toString(),
   api = APIS_CONFIG.FEED,
   REQUEST = APIS_CONFIG.REQUEST;
 
-  console.log({isprimeuser});
-  
-
-  let page = pageType(all.join('/')),
+  let page = getPageName(slugArr),
   extraParams: any = {},
   response: any = {},
   menuData: any = {},
@@ -30,16 +30,11 @@ export default async function Page({ params, searchParams }: {
 
   try {
     if (page !== "notfound") {
-      const msid = getMSID(lastUrlPart);
-      const moreParams = prepareMoreParams({ all, page, msid });
+      const msid = getMSID(slugArr);      
 
-      //==== gets page data =====
-      const apiType = page === "videoshownew" ? "videoshow" : page;
-      const result = await Service.get({
-        api,
-        params: { type: apiType, platform: "web", feedtype: "etjson", ...moreParams },
-      });
-      response = result?.data || {}; 
+      //==== gets page data =====            
+      response = await getData(isDev, page, msid);
+
       const { subsecnames = {} } = response.seo;
       extraParams = subsecnames
         ? {
@@ -65,20 +60,114 @@ export default async function Page({ params, searchParams }: {
     const [footerMenuResult, navBarResult] = await Promise.all([footerMenuPromise, navBarPromise]);
 
     dynamicFooterData = footerMenuResult?.data || {};
-    menuData = navBarResult?.data;
-
-    //==== sets response headers =====
-    //res.setHeader("Cache-Control", `public, s-maxage=${expiryTime}, stale-while-revalidate=${expiryTime * 2}`);
-    //res.setHeader("Expires", new Date(new Date().getTime() + expiryTime * 1000).toUTCString());
+    menuData = navBarResult?.data;     
   }catch(error){
     console.log("Error: ", error)
   }
   
   const versionControl = response?.version_control || {};
-  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>      
-    <Suspense fallback={<p>Loading...</p>}>
+  
+  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>          
       <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
-    </Suspense>
   </Layout>
   ;
+}
+
+export async function generateMetadata({ params }) {
+  const headersList = headers();
+  const domain = headersList.get("host") || "";
+  const isDev = getDevStatus(domain);
+
+  const slugArr = params?.all || [];
+  const msid = getMSID(slugArr);
+  const page = getPageName(slugArr);
+
+  if (page == "notfound") {
+    return {
+      title: "Not Found",
+      description: "Could not find requested resource"
+    };
+  }
+
+  const data = await getData(isDev, page, msid);
+  let pageContent: any = {};
+  
+  pageContent = data;
+
+  const seo = pageContent?.seo || {};
+
+  return {
+    title: seo?.title || "",
+    description: seo?.description || "",
+    keywords: seo?.keywords || "",
+    authors: seo?.authors || "",
+    // "geo.region": "uk",
+    alternates: {
+      canonical: seo?.actualURL || "",
+    },
+    openGraph: {
+      images: seo?.image,
+      url: seo?.url,
+      siteName: ""
+    },
+    icons: {
+      other: [
+        {
+          rel: "amphtml",
+          url: seo?.ampURL || ""
+        },
+        {
+          rel: "alternate",
+          url: seo?.actualURL?.replace(ET_WAP_URL, ET_WEB_URL)
+        }
+      ]
+    }
+  };
+}
+
+async function getData(isDev, page, msid) {
+  const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
+  let apiEndPoint = "";
+
+  if (page === "videoshow") {
+    apiEndPoint = `${baseUrl}/reactfeed_videoshow.cms?platform=web&msid=${msid}&feedtype=etjson&type=videoshow`;
+  }
+
+  const res = await fetch(apiEndPoint);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+function getPageName(slugArr) {
+  const slug = Array.isArray(slugArr) ? slugArr.join("/") : "";
+  // console.log({ slug });
+  if (/\/videoshow\/[0-9]+\.cms$/.test(slug)) {
+    return "videoshow";
+  }
+  if (/\/articleshow\/[0-9]+\.cms$/.test(slug)) {
+    return "articleshow";
+  }
+  // if url is like /topic/yogi or /topic/yogi/news or /topic/yogi/videos where yogi is dynamic keyword
+  if (/^topic\/[a-zA-Z0-9-]+/.test(slug)) {
+    return "topic";
+  }
+  // if url is like /quickreads or /quickreads/111083896
+  if (/^quickreads/.test(slug)) {
+    return "quickreads";
+  }
+
+  return "notfound";
+}
+
+function getMSID(slugArr) {
+  try {
+    return slugArr[slugArr.length - 1].slice(0, -4);
+  } catch (err) {
+    console.error(`msid determination error`);
+    return 0;
+  }
 }

@@ -33,10 +33,11 @@ const options = {
   threshold: [0.5]
 };
 
-const VideoShow: FC<PageProps> = (props) => {
+const VideoShow = (props) => {
   const [isPopupVid, setIsPopupVid] = useState(false);
   const [isPopupVidClosed, setIsPopupVidClosed] = useState(false);
   const result = props?.searchResult?.find((item) => item.name === "videoshow")?.data as VideoShowProps;
+  console.log({result})
   const mostPopularNews = props?.searchResult?.find((item) => item.name === "most_popular_news");
   const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
   const trendingVideos = props?.searchResult?.find((item) => item.name === "trending_videos") as any;
@@ -106,10 +107,16 @@ const VideoShow: FC<PageProps> = (props) => {
     setIsPopupVidClosed(true);
   };
 
+  const jsonLd = {};
+
   return (
     result ? 
     <>
       <section className={`pageContent ${styles.videoshow} col3`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
         <h1>{result.title}</h1>
         <div className={styles.byline}>
           <div>
