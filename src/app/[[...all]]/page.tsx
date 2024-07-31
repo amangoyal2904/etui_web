@@ -110,18 +110,18 @@ export async function generateMetadata({ params }) {
       url: seo?.url,
       siteName: ""
     },
-    icons: {
-      other: [
-        {
-          rel: "amphtml",
-          url: seo?.ampURL || ""
-        },
-        {
-          rel: "alternate",
-          url: seo?.actualURL?.replace(ET_WAP_URL, ET_WEB_URL)
-        }
-      ]
-    }
+    // icons: {
+    //   other: [
+    //     {
+    //       rel: "amphtml",
+    //       url: seo?.ampURL || ""
+    //     },
+    //     {
+    //       rel: "alternate",
+    //       url: seo?.actualURL?.replace(ET_WAP_URL, ET_WEB_URL)
+    //     }
+    //   ]
+    // }
   };
 }
 
