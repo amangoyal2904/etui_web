@@ -114,12 +114,8 @@ export const allowGDPR = () => {
   }
 };
 export const pageType = (pathurl) => {
-  if (pathurl.indexOf("/topic/") != -1) {
-    return "topic";
-  } else if (pathurl.indexOf("/videoshow/") != -1) {
+  if (pathurl.indexOf("/videoshow/") != -1) {
     return "videoshow";
-  } else if (pathurl.indexOf("/videoshownew/") != -1) {
-    return "videoshownew";
   } else {
     return "notfound";
   }

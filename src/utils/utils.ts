@@ -480,3 +480,10 @@ let output = {
 };
 
 export default output;
+
+export const getDevStatus = (host: string | string[]) => {
+  if (host.indexOf("localhost") !== -1 || host.indexOf("etwebpre.indiatimes.com") !== -1) {
+    return true;
+  }
+  return false;
+};
