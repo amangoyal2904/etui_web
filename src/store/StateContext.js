@@ -11,6 +11,7 @@ const initialState = {
     userInfo: {},
     ssoid: "",
     ticketId: "",
+    email: "",
     error: null,
   }
 };

@@ -10,7 +10,8 @@ import {
   loadPrimeApi,
   setCookieToSpecificTime,
   delete_cookie,
-  saveLogs
+  saveLogs,
+  userMappingData
 } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
@@ -45,6 +46,12 @@ const Login = ({headertext}) => {
         }
 
         document.body.classList.add("isprimeuser");
+
+        const primeUserLoginMap_check = Number(localStorage.getItem("primeUserLoginMap_check")) == 1 || false;
+        if(primeUserLoginMap_check){
+          userMappingData({res: primeRes?.data, userInfo : window.objUser?.info, isPrime, email: window.objUser?.info?.primaryEmail})
+          localStorage.removeItem("primeUserLoginMap_check");
+        }
 
         // saveLogs({
         //   type: "Desktop",
@@ -268,3 +275,4 @@ const Login = ({headertext}) => {
 };
 
 export default Login;
+

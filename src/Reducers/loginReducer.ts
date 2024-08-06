@@ -28,6 +28,7 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         userInfo: action.payload.userInfo,
         accessibleFeatures: action.payload.accessibleFeatures,
         permissions: action.payload.permissions, 
+        email: action.payload.userInfo.primaryEmail,
         error: null 
       };
     case "LOGOUT":
@@ -41,6 +42,7 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         userInfo: {}, 
         accessibleFeatures: [], 
         permissions: [], 
+        email: "",
         error: null
       };
     default:

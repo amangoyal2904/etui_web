@@ -10,18 +10,12 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
+  page?: string;
 }
 
 declare global {
   interface Window {
     optCheck: boolean;
-    e$: {
-      jStorage: {
-        set(arg1: string, arg2: any, arg3: Object): any;
-        get(arg1: string): any;
-        deleteKey(arg1: string);
-      };
-    };
     objInts:any;
     __APP:any;
     google: {
@@ -57,6 +51,7 @@ declare global {
       primeInfo?: any;
     };
     _sva: any;
+    tpName?: string;
   }
 }
 

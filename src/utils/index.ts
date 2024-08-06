@@ -3,6 +3,7 @@ import { pageview } from "./ga";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
+import jStorage from "jstorage-react";
 
 // const { publicRuntimeConfig = {} } = getConfig();
 export const APP_ENV = "development";  //(process.env.NODE_ENV && process.env.NODE_ENV.trim()) || "production";
@@ -618,6 +619,7 @@ export const initSSOWidget = () => {
     gaChannelName: "et",
     last_clicked_lob: "ET",
     signInCallback: function () {
+      localStorage.setItem("primeUserLoginMap_check", "1");
       verifyLogin();
       ssoClose();
       window.location.reload();
@@ -667,3 +669,43 @@ export const currPageType = () =>  {
   }
   return type;
 }
+
+export const userMappingData = ({res, userInfo, isPrime, email}) => {
+  let primeUserLoginMap:any = {};
+  if (isPrime) {
+    //const userData = jStorage.get('userInfo');
+  var primaryEmail = userInfo.primaryEmail ? userInfo.primaryEmail : email;
+  var mobile = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile && (userInfo.mobileData.Verified.code  + '-' + userInfo.mobileData.Verified.mobile) || '';
+  var emailIdStatus = userInfo.emailList && userInfo.emailList[email];
+    primeUserLoginMap = {
+      expiry: res.subscriptionDetails[0].expiryDate,
+      loginId:
+          primaryEmail && emailIdStatus === 'Verified'
+          ? primaryEmail
+          : mobile
+          ? mobile
+          : email,
+      lastClosedNudgeDate_web_pw: '',
+      lastClosedNudgeDate_web: '',
+      lastClosedNudgeDate_PW: '',
+      lastClosedNudgeDate: '',
+      showInSameSession: true,
+      count_web_pw_perday: 2,
+      count_mweb_pw_perday: 2,
+      ssoid: userInfo.ssoid,
+      count_web_pw: 7,
+      count_web: 2,
+      count_pw: 7,
+      count: 2,
+    };
+  } else {
+    primeUserLoginMap = JSON.parse(jStorage.get('primeUserLoginMap'));
+    if (primeUserLoginMap) {
+      primeUserLoginMap.count = 2;
+    }
+  }
+
+  if (primeUserLoginMap) {
+    jStorage.set('primeUserLoginMap', JSON.stringify(primeUserLoginMap));
+  }
+};
