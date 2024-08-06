@@ -12,6 +12,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { callJsOnRouteChange } from 'utils/priority';
 import TopNudge from './TopNudge';
 import BreakingNews from './BreakingNews';
+import { AnyListenerPredicate } from '@reduxjs/toolkit';
 
 interface Props {
   page?: string;
@@ -21,6 +22,7 @@ interface Props {
   isprimeuser?: any;
   data: any;
   children?: ReactElement;
+  pageSeo: any;
 }
 
 interface ChildProps {
@@ -29,7 +31,7 @@ interface ChildProps {
   data: any;
 }
 
-const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children }) => { 
+const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children, pageSeo }) => { 
   
   if (!data?.seo?.subsecnames || !data?.seo?.sectionDetail) {
     data.seo = {};
@@ -39,6 +41,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
 
   if(typeof window !== 'undefined') {
     window.objVc = objVc;
+    window.pageSeo = pageSeo; 
   }
 
   const pathname = usePathname();

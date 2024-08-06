@@ -1,10 +1,11 @@
 import { headers, cookies } from 'next/headers';
-import { pageType, getMSID, prepareMoreParams } from "../../utils";
+import { getMSID, prepareMoreParams } from "../../utils";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from '../../containers/';
 import Layout from '../../components/Layout';
 import React, { Suspense } from 'react';
+import { pageType } from 'utils/utils';
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
@@ -73,9 +74,9 @@ export default async function Page({ params, searchParams }: {
   }catch(error){
     console.log("Error: ", error)
   }
-  
+  const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
-  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>      
+  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo}>      
     <Suspense fallback={<p>Loading...</p>}>
       <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
     </Suspense>

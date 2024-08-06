@@ -44,18 +44,11 @@ const VideoShow: FC<PageProps> = (props) => {
   const { seo = {}, version_control, parameters, isprimeuser } = props;
   const { msid } = parameters || {};
   const { cpd_wap = "0" }: any = version_control || {};
-
   const subsecNames = props?.seo?.subsecnames;
-
   const vidRef = useRef(null);
 
   useEffect(() => {
-    // set page specific customDimensions
-    const payload = getPageSpecificDimensions(seo);
-    window.customDimension = { ...window.customDimension, ...payload };
-
     const subSecs = getSubsecString(subsecNames);
-
     let adSection = "videoshow",
       isDeferredPreRoll = false;
     if (subsecNames?.subsec1 == 13352306) {
