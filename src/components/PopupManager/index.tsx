@@ -1,50 +1,60 @@
 "use client";
-// PopupManager.js
-import React, { useState, useEffect } from 'react';
+// PopupManager.tsx
+import React, { useState, useEffect, useRef } from 'react';
 import Popup from '../Popup';
 
-const PopupManager = ({ popups, interval }) => {
+interface PopupManagerProps {
+  popups: string[];
+  interval: number;
+}
+
+const PopupManager: React.FC<PopupManagerProps> = ({ popups, interval }) => {
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     if (popups.length > 0) {
+        console.log("popupContent 11", showPopup);
       setShowPopup(true);
-
-      const initialTimeout = setTimeout(() => {
+      
+      const showNextPopup = () => {
         setShowPopup(false);
-        setCurrentPopupIndex((prevIndex) => prevIndex + 1);
-
-        const timer = setInterval(() => {
+        console.log("popupContent 12", showPopup);
+        timerRef.current = setTimeout(() => {
           setCurrentPopupIndex((prevIndex) => {
             const nextIndex = prevIndex + 1;
             if (nextIndex >= popups.length) {
-              clearInterval(timer);
               return prevIndex;
             }
-            setShowPopup(false);
-            setTimeout(() => setShowPopup(true), interval);
+            console.log("popupContent 13", showPopup);
+            setShowPopup(true);
             return nextIndex;
           });
         }, interval);
-      }, interval);
+      };
+
+      timerRef.current = setTimeout(showNextPopup, interval);
 
       return () => {
-        clearTimeout(initialTimeout);
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
       };
     }
   }, [popups, interval]);
 
   const handleClose = () => {
     setShowPopup(false);
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setShowPopup(true);
     }, interval);
   };
 
   return (
     <>
-    {/* {console.log("popupContent 0 --- ", showPopup, currentPopupIndex)} */}
+        {console.log("popupContent --", showPopup, currentPopupIndex, popups.length)}
       {showPopup && currentPopupIndex < popups.length && (
         <Popup
           message={popups[currentPopupIndex]}

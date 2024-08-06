@@ -1,29 +1,32 @@
-// Popup.js
+// Popup.tsx
 import React from 'react';
 import PrimeLoginMap from 'components/PrimeLoginMap';
 import IfrOnboarding from 'components/IfrOnboarding';
 
-const Popup = ({ message, onClose }) => {
+interface PopupProps {
+  message: string;
+  onClose: () => void;
+}
+
+const Popup: React.FC<PopupProps> = ({ message, onClose }) => {
   let content;
 
-  const popupContent = () => {
-    console.log("popupContent 2 ---")
-    switch (message) {
-        case 'onboarding':
-          return <IfrOnboarding onClose={onClose} />;
-        case 'primeLoginMap':
-          return <PrimeLoginMap onClose={onClose} />;
-    }
+  switch (message) {
+    case 'onboarding':
+      content = <IfrOnboarding onClose={onClose} />;
+      break;
+    case 'primeLoginMap':
+      content = <PrimeLoginMap onClose={onClose} />;
+      break;
+    default:
+      content = <div>No component found</div>;
   }
 
-  console.log("popupContent 1 --- " ,popupContent(), message)
-
   return (
-    <>
-        <div className='popupManager'>
-            {popupContent()}
-        </div>
-    </>
+    <div className={`popupManager ${message}`}>
+        {console.log("popupContent -- ", content)}
+      {content}
+    </div>
   );
 };
 
