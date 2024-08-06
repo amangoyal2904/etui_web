@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 import { useStateContext } from "../../store/StateContext";
 import { delete_cookie, getCookie, setCookieToSpecificTime } from 'utils';
 
-const IfrOnboarding = () => {
+const IfrOnboarding = (onClose) => {
   const [showIframe, setShowIframe] = useState(false);
   //const [onboardApiHit, setOnboardApiHit] = useState(false);
   const { state, dispatch } = useStateContext();
@@ -106,6 +106,8 @@ const IfrOnboarding = () => {
     const handleMessage = (event) => {
       if (event.data === 'removeIframe') {
         setShowIframe(false);
+        console.log("onClose", onClose)
+        onClose()
       }
     };
 
