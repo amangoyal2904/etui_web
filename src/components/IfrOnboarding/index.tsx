@@ -93,7 +93,7 @@ const IfrOnboarding = (onClose) => {
 
     onboardShown && setShowIframe(false);
     console.log("testing--", isPrime);
-    if(isLogin && true && !onboardShown){
+    if(isLogin && isPrime && !onboardShown){
       if (showOnboard == '1') {
         handleOnboardvisibility(secondsToOpen)
       } else if( showOnboard == undefined && !onboardApiHit){
@@ -135,7 +135,6 @@ const IfrOnboarding = (onClose) => {
 
   return (
     <>
-      {console.log("popupContent --- showIframe", showIframe)}
       {
         showIframe &&
         <div id="onboardFrameContainer" className={`${styles.onboardContainer}`}>

@@ -1,10 +1,9 @@
 "use client";
-// PopupManager.tsx
 import React, { useState, useEffect } from 'react';
 import IfrOnboarding from 'components/IfrOnboarding';
 import PrimeLoginMap from 'components/PrimeLoginMap';
 
-const PopupManager = () => {
+const PopupManager: React.FC = () => {
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -29,7 +28,7 @@ const PopupManager = () => {
           }
           return prevIndex;
         });
-      }, 0); // Delay to ensure setState completes
+      }, 0);
     };
 
     window.addEventListener('nextPopup', handleNextPopup);
@@ -47,7 +46,6 @@ const PopupManager = () => {
 
   return (
     <>
-      {console.log("popupContent --- popupManager", showPopup, currentPopupIndex, popups.length)}  
       {showPopup && currentPopupIndex < popups.length && (
         <div className={`popupManager ${popups[currentPopupIndex]}`}>
           {(() => {

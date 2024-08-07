@@ -28,7 +28,7 @@ const BreakingNews: React.FC = () => {
   const { isPrime } = state.login;
 
   const fetchNews = useCallback(async () => {
-    console.log('Fetching news...');
+    //console.log('Fetching news...');
     try {
       const response = await axios.get('https://etdev8243.indiatimes.com/json_bnews1.cms', {
         responseType: 'text'
@@ -37,7 +37,7 @@ const BreakingNews: React.FC = () => {
       if (match && match[1]) {
         const newsData = JSON.parse(match[1]);
         setNews(newsData);
-        console.log('News fetched:', newsData);
+        //console.log('News fetched:', newsData);
       } else {
         throw new Error('Invalid response format');
       }
@@ -50,10 +50,10 @@ const BreakingNews: React.FC = () => {
     if (!intervalIdRef.current) {
       fetchNews(); // Initial fetch
       intervalIdRef.current = setInterval(() => {
-        console.log('Interval triggered, fetching news.');
+        // console.log('Interval triggered, fetching news.');
         fetchNews();
       }, 30000);
-      console.log('Started news fetching interval.');
+      // console.log('Started news fetching interval.');
     }
   }, [fetchNews]);
 
@@ -61,13 +61,13 @@ const BreakingNews: React.FC = () => {
     if (intervalIdRef.current) {
       clearInterval(intervalIdRef.current);
       intervalIdRef.current = null;
-      console.log('Stopped news fetching interval.');
+      // console.log('Stopped news fetching interval.');
     }
   }, []);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      console.log('Visibility changed:', !document.hidden);
+      // console.log('Visibility changed:', !document.hidden);
       setIsPageVisible(!document.hidden);
     };
 
@@ -80,10 +80,10 @@ const BreakingNews: React.FC = () => {
   useEffect(() => {
     observerRef.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
-        console.log('Element is in view.');
+        // console.log('Element is in view.');
         setIsPageVisible(true);
       } else {
-        console.log('Element is out of view.');
+        // console.log('Element is out of view.');
         setIsPageVisible(false);
       }
     });
@@ -101,10 +101,10 @@ const BreakingNews: React.FC = () => {
 
   useEffect(() => {
     if (isPageVisible) {
-      console.log('Page is visible, starting news fetching.');
+      // console.log('Page is visible, starting news fetching.');
       startFetchingNews();
     } else {
-      console.log('Page is not visible, stopping news fetching.');
+      // console.log('Page is not visible, stopping news fetching.');
       stopFetchingNews();
     }
   }, [isPageVisible, startFetchingNews, stopFetchingNews]);
@@ -161,8 +161,8 @@ const BreakingNews: React.FC = () => {
             </ul>
           </div>
           <div className={`${styles.embla__buttons}`}>
-            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} />
+            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} />
           </div>
         </div>
       </div>
