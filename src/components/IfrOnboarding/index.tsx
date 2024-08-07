@@ -59,13 +59,21 @@ const IfrOnboarding = (onClose) => {
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
 
         getCookie("showOnboard") == undefined && setCookieToSpecificTime('showOnboard', displayFrame ? '1' : '0', 1, 0, 0, "")
-        setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, "")
-        displayFrame && handleOnboardvisibility(secondsOpenDialog);
+        setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, "");
+
+        if(displayFrame){
+          handleOnboardvisibility(secondsOpenDialog);
+        }else{
+          const event = new Event('nextPopup');
+          window.dispatchEvent(event);
+        }
         console.log("popupContent --- fetchHit" , displayFrame)
         onboardApiHit = false;
         //setOnboardApiHit(false);
     } catch (error) {
         return {};
+        const event = new Event('nextPopup');
+        window.dispatchEvent(event);
         // Logging any error that occurs during the fetch process
         console.error('Error fetching the questionnaire:', error);
     }
@@ -85,7 +93,7 @@ const IfrOnboarding = (onClose) => {
 
     onboardShown && setShowIframe(false);
     console.log("testing--", isPrime);
-    if(isLogin && true && !onboardShown){
+    if(isLogin && isPrime && !onboardShown){
       if (showOnboard == '1') {
         handleOnboardvisibility(secondsToOpen)
       } else if( showOnboard == undefined && !onboardApiHit){
@@ -96,6 +104,8 @@ const IfrOnboarding = (onClose) => {
     }else if(!isLogin){
       delete_cookie("showOnboard");
       delete_cookie("onboardShown");
+      const event = new Event('nextPopup');
+      window.dispatchEvent(event);
     }
   }
 
