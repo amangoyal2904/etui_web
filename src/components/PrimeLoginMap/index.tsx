@@ -17,13 +17,15 @@ const PrimeLoginMap = (onClose) => {
     const [isElegible, setIsElegible] = useState(false);
 
     useEffect(() => {
+        console.log("popupContent --- checkElegibility" , isPrime, checkElegibility('launch'))
         if (!isPrime && checkElegibility('launch')) {
             appendDialog();
         }
-    }, []);
+    }, [isPrime]);
 
     const checkElegibility = (flag) => {
         const primeData = JSON.parse(jStorage.get('primeUserLoginMap') || localStorage.getItem('primeUserLoginMap'));
+        console.log("popupContent --- checkElegibility -- primeData" , primeData)
         if (!primeData) return false;
         
         setPrimeUserData(primeData);
@@ -53,7 +55,8 @@ const PrimeLoginMap = (onClose) => {
         primeUserData.count_web -= 1;
         setData();
         setIsElegible(false);
-        onClose();
+        const event = new Event('nextPopup');
+        window.dispatchEvent(event);
     };
 
     const signIn = () => {

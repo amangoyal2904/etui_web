@@ -16,6 +16,7 @@ const IfrOnboarding = (onClose) => {
     onboardTimerRef.current = setTimeout(() => {
       console.log('Timeout executed!');
       // Your timeout logic here
+      console.log("popupContent --- handleOnboardvisibility" , showIframe)
       setShowIframe(true);
       setCookieToSpecificTime('onboardShown', true,  1, 0, 0, "")
     }, secondsOpenDialog * 1000);
@@ -60,7 +61,7 @@ const IfrOnboarding = (onClose) => {
         getCookie("showOnboard") == undefined && setCookieToSpecificTime('showOnboard', displayFrame ? '1' : '0', 1, 0, 0, "")
         setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, "")
         displayFrame && handleOnboardvisibility(secondsOpenDialog);
-
+        console.log("popupContent --- fetchHit" , displayFrame)
         onboardApiHit = false;
         //setOnboardApiHit(false);
     } catch (error) {
@@ -107,7 +108,8 @@ const IfrOnboarding = (onClose) => {
       if (event.data === 'removeIframe') {
         setShowIframe(false);
         console.log("onClose", onClose)
-        onClose()
+        const event = new Event('nextPopup');
+        window.dispatchEvent(event);
       }
     };
 

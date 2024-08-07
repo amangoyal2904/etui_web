@@ -45,7 +45,8 @@ const Login = ({headertext}) => {
           setCookieToSpecificTime("OTR", primeRes.token, 30, 0, 0, "");
         }
 
-        document.body.classList.add("isprimeuser");
+        
+        isPrime && document.body.classList.add("isprimeuser");
 
         const primeUserLoginMap_check = Number(localStorage.getItem("primeUserLoginMap_check")) == 1 || false;
         if(primeUserLoginMap_check){

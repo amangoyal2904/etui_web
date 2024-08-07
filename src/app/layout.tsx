@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     'onboarding',
     'primeLoginMap',
   ];
-  const interval = 1000; // 3 seconds
+  const interval = 60000; // 3 seconds
 
   return (
     <html lang="en">

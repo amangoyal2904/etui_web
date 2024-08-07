@@ -1,65 +1,66 @@
 "use client";
 // PopupManager.tsx
-import React, { useState, useEffect, useRef } from 'react';
-import Popup from '../Popup';
+import React, { useState, useEffect } from 'react';
+import IfrOnboarding from 'components/IfrOnboarding';
+import PrimeLoginMap from 'components/PrimeLoginMap';
 
-interface PopupManagerProps {
-  popups: string[];
-  interval: number;
-}
-
-const PopupManager: React.FC<PopupManagerProps> = ({ popups, interval }) => {
+const PopupManager = () => {
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const popups = [
+    'onboarding',
+    'primeLoginMap',
+  ];
 
   useEffect(() => {
     if (popups.length > 0) {
-        console.log("popupContent 11", showPopup);
       setShowPopup(true);
-      
-      const showNextPopup = () => {
-        setShowPopup(false);
-        console.log("popupContent 12", showPopup);
-        timerRef.current = setTimeout(() => {
-          setCurrentPopupIndex((prevIndex) => {
-            const nextIndex = prevIndex + 1;
-            if (nextIndex >= popups.length) {
-              return prevIndex;
-            }
-            console.log("popupContent 13", showPopup);
+    }
+
+    const handleNextPopup = () => {
+      setShowPopup(false);
+      setTimeout(() => {
+        setCurrentPopupIndex((prevIndex) => {
+          const nextIndex = prevIndex + 1;
+          if (nextIndex < popups.length) {
             setShowPopup(true);
             return nextIndex;
-          });
-        }, interval);
-      };
+          }
+          return prevIndex;
+        });
+      }, 0); // Delay to ensure setState completes
+    };
 
-      timerRef.current = setTimeout(showNextPopup, interval);
+    window.addEventListener('nextPopup', handleNextPopup);
 
-      return () => {
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-        }
-      };
-    }
-  }, [popups, interval]);
+    return () => {
+      window.removeEventListener('nextPopup', handleNextPopup);
+    };
+  }, [popups.length]);
 
   const handleClose = () => {
     setShowPopup(false);
-    timerRef.current = setTimeout(() => {
-      setShowPopup(true);
-    }, interval);
+    const event = new Event('nextPopup');
+    window.dispatchEvent(event);
   };
 
   return (
     <>
-        {console.log("popupContent --", showPopup, currentPopupIndex, popups.length)}
+      {console.log("popupContent --- popupManager", showPopup, currentPopupIndex, popups.length)}  
       {showPopup && currentPopupIndex < popups.length && (
-        <Popup
-          message={popups[currentPopupIndex]}
-          onClose={handleClose}
-        />
+        <div className={`popupManager ${popups[currentPopupIndex]}`}>
+          {(() => {
+            switch (popups[currentPopupIndex]) {
+              case 'onboarding':
+                return <IfrOnboarding onClose={handleClose} />;
+              case 'primeLoginMap':
+                return <PrimeLoginMap onClose={handleClose} />;
+              default:
+                return <div>No component found</div>;
+            }
+          })()}
+        </div>
       )}
     </>
   );
