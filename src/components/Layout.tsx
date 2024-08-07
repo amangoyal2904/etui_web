@@ -43,7 +43,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
 
   if (typeof window !== "undefined") {
     window.objVc = objVc;
-    window.page = page;
+    window.tpName = page;
   }
 
   const pathname = usePathname();
