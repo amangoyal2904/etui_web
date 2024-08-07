@@ -125,6 +125,7 @@ const IfrOnboarding = (onClose) => {
 
   return (
     <>
+      {console.log("popupContent --- showIframe", showIframe)}
       {
         showIframe &&
         <div id="onboardFrameContainer" className={`${styles.onboardContainer}`}>

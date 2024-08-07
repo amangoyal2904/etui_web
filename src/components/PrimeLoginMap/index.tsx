@@ -87,6 +87,7 @@ const PrimeLoginMap = (onClose) => {
 
     return (
         <>
+            {console.log("popupContent --- isElegible", isElegible)}
           {isElegible && (
             <>
               <div className={styles.BgLayer} onClick={closeDialog} />
