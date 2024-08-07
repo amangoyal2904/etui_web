@@ -93,7 +93,7 @@ const IfrOnboarding = (onClose) => {
 
     onboardShown && setShowIframe(false);
     console.log("testing--", isPrime);
-    if(isLogin && isPrime && !onboardShown){
+    if(isLogin && true && !onboardShown){
       if (showOnboard == '1') {
         handleOnboardvisibility(secondsToOpen)
       } else if( showOnboard == undefined && !onboardApiHit){
@@ -104,8 +104,6 @@ const IfrOnboarding = (onClose) => {
     }else if(!isLogin){
       delete_cookie("showOnboard");
       delete_cookie("onboardShown");
-      const event = new Event('nextPopup');
-      window.dispatchEvent(event);
     }
   }
 
