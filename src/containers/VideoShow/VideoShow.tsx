@@ -107,7 +107,7 @@ const VideoShow = (props) => {
     setIsPopupVidClosed(true);
   };
 
-  const jsonLd = seo.seoschema || {};
+  const jsonLd = seo.pageSchema || {};
 
   return (
     result ? 
