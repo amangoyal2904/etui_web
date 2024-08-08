@@ -69,10 +69,10 @@ export default async function Page({ params, searchParams }: {
   }
   const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
-  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo}>      
-    <Suspense fallback={<p>Loading...</p>}>
+  return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo}>          
       <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
   </Layout>
+
   ;
 }
 
