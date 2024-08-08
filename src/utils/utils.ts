@@ -1,6 +1,6 @@
 import os from "os";
 const serverHost = os.hostname() || "";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { grxPushData } from "./articleUtility";
 
 declare global {
@@ -14,59 +14,75 @@ declare global {
 
 
 //Email validate
-export const validateEmail = () =>{
-   try{
-      var b = 0,
-          c = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z]{2,4})+$/;
-          if (a && a.indexOf(",") != -1) {
-            for (var a = a.split(","), d = 0, d = 0; d < a.length; d += 1)
-              c.test(a[d]) && (b += 1);
-            return d == b ? !0 : !1
-          } else{
-            return c.test(a) ? !0 : !1
-          }
-   }catch(e){
-     console.log('validateEmail', e);        
+export const validateEmail = () => {
+  try {
+    var b = 0,
+      c = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z]{2,4})+$/;
+    if (a && a.indexOf(",") != -1) {
+      for (var a = a.split(","), d = 0, d = 0; d < a.length; d += 1) c.test(a[d]) && (b += 1);
+      return d == b ? !0 : !1;
+    } else {
+      return c.test(a) ? !0 : !1;
+    }
+  } catch (e) {
+    console.log("validateEmail", e);
   }
 };
 // Date format
-export const appendZero = (num) => (num >= 0 && num < 10) ? '0' + num : num;
-export const dateFormat = (dt, format = '%Y-%M-%d') => {
-  let objD:any = (dt instanceof Date) ? dt : new Date(dt);
-  let shortMonthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  let fullMonthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  let shortDaysName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
-  let fullDaysName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-  let  newDate = '';
-  if(objD != 'Invalid Date') {
+export const appendZero = (num) => (num >= 0 && num < 10 ? "0" + num : num);
+export const dateFormat = (dt, format = "%Y-%M-%d") => {
+  let objD: any = dt instanceof Date ? dt : new Date(dt);
+  let shortMonthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let fullMonthName = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  let shortDaysName = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+  let fullDaysName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  let newDate = "";
+  if (objD != "Invalid Date") {
     let hour = objD.getHours();
     let dList = {
-      '%ss': objD.getMilliseconds(),
-      '%Y': objD.getFullYear(),
-      '%y': objD.getFullYear().toString().substr(-2),
-      '%MMM': shortMonthName[objD.getMonth()],
-      '%MM': fullMonthName[objD.getMonth()],
-      '%M': objD.getMonth() + 1,
-      '%d': objD.getDate(),
-      '%h': (hour <= 12 ? hour : (hour - 12)),
-      '%H': hour,
-      '%m': objD.getMinutes(),
-      '%s': objD.getSeconds(),
-      '%DD': fullDaysName[objD.getDay() + 1],
-      '%D': shortDaysName[objD.getDay() + 1],
-      '%p': (objD.getHours() > 11 ? 'PM' : 'AM')
+      "%ss": objD.getMilliseconds(),
+      "%Y": objD.getFullYear(),
+      "%y": objD.getFullYear().toString().substr(-2),
+      "%MMM": shortMonthName[objD.getMonth()],
+      "%MM": fullMonthName[objD.getMonth()],
+      "%M": objD.getMonth() + 1,
+      "%d": objD.getDate(),
+      "%h": hour <= 12 ? hour : hour - 12,
+      "%H": hour,
+      "%m": objD.getMinutes(),
+      "%s": objD.getSeconds(),
+      "%DD": fullDaysName[objD.getDay() + 1],
+      "%D": shortDaysName[objD.getDay() + 1],
+      "%p": objD.getHours() > 11 ? "PM" : "AM"
     };
     newDate = format;
 
-    for(let key in dList) {
-      let regEx = new RegExp(key, 'g');
+    for (let key in dList) {
+      let regEx = new RegExp(key, "g");
       newDate = newDate.replace(regEx, appendZero(dList[key]));
     }
   }
   return newDate;
 };
-export const processEnv = process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim() || "production";
-export const queryString = (params) => Object.keys(params)?.map(key => key + '=' + params[key]).join('&');
+export const processEnv =
+  (process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim()) || "production";
+export const queryString = (params) =>
+  Object.keys(params)
+    ?.map((key) => key + "=" + params[key])
+    .join("&");
 
 export const isProductionEnv = () => {
   const isProd = process.env.NODE_ENV.trim() === "production";
@@ -118,7 +134,7 @@ export const isDevEnv = () => {
   return isDev;
 };
 
-export const isVisible = elm => {
+export const isVisible = (elm) => {
   if (elm) {
     var rect = elm.getBoundingClientRect();
     var innerHeight = window.innerHeight - 200;
@@ -135,48 +151,86 @@ export const isVisible = elm => {
   }
 };
 
-export const mgidGeoCheck = (pos) =>{
-  try{
-        let geoinfo = window.geoinfo;
-        if(pos == "mid"){
-            if(typeof geoinfo !="undefined" && ((geoinfo.CountryCode.toUpperCase() =="AU" && geoinfo.geolocation == "6") || (geoinfo.CountryCode.toUpperCase() =="CA" && geoinfo.geolocation == "2") || (geoinfo.CountryCode.toUpperCase() =="US" && geoinfo.geolocation == "2") || (geoinfo.CountryCode.toUpperCase() =="GB" && geoinfo.geolocation == "5") || (geoinfo.CountryCode.toUpperCase() =="AE" && geoinfo.geolocation == "3") || (geoinfo.CountryCode.toUpperCase() =="SA" && geoinfo.geolocation == "3") || (geoinfo.CountryCode.toUpperCase() =="QA" && geoinfo.geolocation == "3") || (geoinfo.CountryCode.toUpperCase() =="OM" && geoinfo.geolocation == "3") || (geoinfo.CountryCode.toUpperCase() =="KW" && geoinfo.geolocation == "3") || (geoinfo.CountryCode.toUpperCase() =="BH" && geoinfo.geolocation == "3"))){
-              return true;   
-            }else{
-              return false;
-            }
-        }else if(pos == "eoa"){
-            if(typeof geoinfo !="undefined" && ((geoinfo.CountryCode.toUpperCase() =="AU" && geoinfo.geolocation == "6") || (geoinfo.CountryCode.toUpperCase() =="CA" && geoinfo.geolocation == "2"))){
-              return true;   
-            }else{
-              return false;
-            }
-        }
-      }catch(e){}
-      
-  };
+export const mgidGeoCheck = (pos) => {
+  try {
+    let geoinfo = window.geoinfo;
+    if (pos == "mid") {
+      if (
+        typeof geoinfo != "undefined" &&
+        ((geoinfo.CountryCode.toUpperCase() == "AU" && geoinfo.geolocation == "6") ||
+          (geoinfo.CountryCode.toUpperCase() == "CA" && geoinfo.geolocation == "2") ||
+          (geoinfo.CountryCode.toUpperCase() == "US" && geoinfo.geolocation == "2") ||
+          (geoinfo.CountryCode.toUpperCase() == "GB" && geoinfo.geolocation == "5") ||
+          (geoinfo.CountryCode.toUpperCase() == "AE" && geoinfo.geolocation == "3") ||
+          (geoinfo.CountryCode.toUpperCase() == "SA" && geoinfo.geolocation == "3") ||
+          (geoinfo.CountryCode.toUpperCase() == "QA" && geoinfo.geolocation == "3") ||
+          (geoinfo.CountryCode.toUpperCase() == "OM" && geoinfo.geolocation == "3") ||
+          (geoinfo.CountryCode.toUpperCase() == "KW" && geoinfo.geolocation == "3") ||
+          (geoinfo.CountryCode.toUpperCase() == "BH" && geoinfo.geolocation == "3"))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (pos == "eoa") {
+      if (
+        typeof geoinfo != "undefined" &&
+        ((geoinfo.CountryCode.toUpperCase() == "AU" && geoinfo.geolocation == "6") ||
+          (geoinfo.CountryCode.toUpperCase() == "CA" && geoinfo.geolocation == "2"))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } catch (e) {}
+};
 
-export const removeBackSlash = val => {
+export const removeBackSlash = (val) => {
   val = val && typeof val != "object" ? val.replace(/\\/g, "") : "";
   return val;
 };
 
-export const loadAssets = (filename, fileType, attrType, position, cb="", attr?, attrVal?, objAttr?) => { 
-  try { 
-    if(filename){ 
-      let fileRef: any = '';
-      if (fileType == "js") { 
-        fileRef = document.createElement('script'); 
-        fileRef.setAttribute("type", "text/javascript"); 
-        fileRef.setAttribute("src", filename); 
-        if (attrType) { 
-          fileRef.setAttribute(attrType, attrType); 
-        } 
-        if (attr && attrVal) { 
-          fileRef.setAttribute(attr, attrVal); 
-        } 
-        if (typeof objAttr == "undefined") { objAttr = {}; } if (Object.keys(objAttr).length > 0 && objAttr.constructor === Object) { for (var key in objAttr) { fileRef.setAttribute(key, objAttr[key]); } } if (typeof cb == "function") { fileRef.addEventListener("load", cb); } } else if (fileType == "css") { fileRef = document.createElement("link"); fileRef.setAttribute("rel", "stylesheet"); fileRef.setAttribute("type", "text/css"); fileRef.setAttribute("href", filename) } if (typeof fileRef != "undefined") { var positionToAppend = position ? position : "head"; document.getElementsByTagName(positionToAppend)[0].appendChild(fileRef); } 
-      } } catch (e) { console.log("loadAssets:", e) } 
-}
+export const loadAssets = (filename, fileType, attrType, position, cb = "", attr?, attrVal?, objAttr?) => {
+  try {
+    if (filename) {
+      let fileRef: any = "";
+      if (fileType == "js") {
+        fileRef = document.createElement("script");
+        fileRef.setAttribute("type", "text/javascript");
+        fileRef.setAttribute("src", filename);
+        if (attrType) {
+          fileRef.setAttribute(attrType, attrType);
+        }
+        if (attr && attrVal) {
+          fileRef.setAttribute(attr, attrVal);
+        }
+        if (typeof objAttr == "undefined") {
+          objAttr = {};
+        }
+        if (Object.keys(objAttr).length > 0 && objAttr.constructor === Object) {
+          for (var key in objAttr) {
+            fileRef.setAttribute(key, objAttr[key]);
+          }
+        }
+        if (typeof cb == "function") {
+          fileRef.addEventListener("load", cb);
+        }
+      } else if (fileType == "css") {
+        fileRef = document.createElement("link");
+        fileRef.setAttribute("rel", "stylesheet");
+        fileRef.setAttribute("type", "text/css");
+        fileRef.setAttribute("href", filename);
+      }
+      if (typeof fileRef != "undefined") {
+        var positionToAppend = position ? position : "head";
+        document.getElementsByTagName(positionToAppend)[0].appendChild(fileRef);
+      }
+    }
+  } catch (e) {
+    console.log("loadAssets:", e);
+  }
+};
 
 export const socialUrl = {
   fb: "https://www.facebook.com/sharer.php",
@@ -190,16 +244,15 @@ export const socialUrl = {
   popUpSettings: "toolbar=0,status=0,width=626,height=436"
 };
 
-export const encodeQueryData = data => {
+export const encodeQueryData = (data) => {
   const ret: string[] = [];
-  for (let d in data)
-    ret.push(`${encodeURIComponent(d)} = ${encodeURIComponent(data[d])}`);
+  for (let d in data) ret.push(`${encodeURIComponent(d)} = ${encodeURIComponent(data[d])}`);
   return ret.join("&");
 };
 
-export const getApiUrl = (api, param, index, apidomain = '') => {
-  let env = '';
-  if (typeof(window) == "undefined") {
+export const getApiUrl = (api, param, index, apidomain = "") => {
+  let env = "";
+  if (typeof window == "undefined") {
     // env = window.__APP && window.__APP.env;
   } else {
     env = process.env.NODE_ENV.toLowerCase();
@@ -222,17 +275,19 @@ export const getApiUrl = (api, param, index, apidomain = '') => {
 };
 
 export const isHostPreprod = () => {
-  return serverHost.indexOf("3632") > -1
-          || serverHost.indexOf("3633") > -1
-          || serverHost.indexOf("13120") > -1
-          || serverHost.indexOf("35115") > -1;
-}
+  return (
+    serverHost.indexOf("3632") > -1 ||
+    serverHost.indexOf("3633") > -1 ||
+    serverHost.indexOf("13120") > -1 ||
+    serverHost.indexOf("35115") > -1
+  );
+};
 
-export const urlValidation = (url:string) =>{
+export const urlValidation = (url: string) => {
   let _url = url;
-  let checkVideoUrl = _url.indexOf('/videoshow/') !== -1 && _url.indexOf('economictimes.indiatimes.com') !== -1
-  if(checkVideoUrl){
-    return _url.split("https://economictimes.indiatimes.com").pop()
+  let checkVideoUrl = _url.indexOf("/videoshow/") !== -1 && _url.indexOf("economictimes.indiatimes.com") !== -1;
+  if (checkVideoUrl) {
+    return _url.split("https://economictimes.indiatimes.com").pop();
   }
   return url;
 }
@@ -282,7 +337,7 @@ export const urlValidation = (url:string) =>{
 //   return isBrowser;
 // };
 export const isMobileSafari = () => {
-  let result:any = "";
+  let result: any = "";
   try {
     let ua = window.navigator.userAgent;
     let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
@@ -294,6 +349,29 @@ export const isMobileSafari = () => {
   return result;
 };
 
-let output = {urlValidation, socialUrl,removeBackSlash,isVisible, isDevEnv, isProductionEnv, queryString, processEnv, dateFormat, appendZero, validateEmail, getParameterByName, allowGDPR, pageType, mgidGeoCheck}
+let output = {
+  urlValidation,
+  socialUrl,
+  removeBackSlash,
+  isVisible,
+  isDevEnv,
+  isProductionEnv,
+  queryString,
+  processEnv,
+  dateFormat,
+  appendZero,
+  validateEmail,
+  getParameterByName,
+  allowGDPR,
+  pageType,
+  mgidGeoCheck
+};
 
-export default output
+export default output;
+
+export const getDevStatus = (host: string | string[]) => {
+  if (host.indexOf("localhost") !== -1 || host.indexOf("etwebpre.indiatimes.com") !== -1) {
+    return true;
+  }
+  return false;
+};

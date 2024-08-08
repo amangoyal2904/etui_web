@@ -10,13 +10,15 @@ import {
   loadPrimeApi,
   setCookieToSpecificTime,
   delete_cookie,
-  saveLogs
+  saveLogs,
+  userMappingData
 } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import Image from "next/image";
 import APIS_CONFIG from "../../network/config.json";
-import { gotoPlanPage } from '../../utils/utils';
+import {  } from '../../utils/utils';
+import { goToPlansPage } from "utils/ga";
 
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
@@ -44,7 +46,14 @@ const Login = ({headertext}) => {
           setCookieToSpecificTime("OTR", primeRes.token, 30, 0, 0, "");
         }
 
-        document.body.classList.add("isprimeuser");
+        
+        isPrime && document.body.classList.add("isprimeuser");
+
+        const primeUserLoginMap_check = Number(localStorage.getItem("primeUserLoginMap_check")) == 1 || false;
+        if(primeUserLoginMap_check){
+          userMappingData({res: primeRes?.data, userInfo : window.objUser?.info, isPrime, email: window.objUser?.info?.primaryEmail})
+          localStorage.removeItem("primeUserLoginMap_check");
+        }
 
         // saveLogs({
         //   type: "Desktop",
@@ -225,7 +234,7 @@ const Login = ({headertext}) => {
       {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
-            {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
+            {!isPrime && <span className={`${styles.subscribe}`} onClick={goToPlanPage}>Subscribe</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
@@ -268,3 +277,4 @@ const Login = ({headertext}) => {
 };
 
 export default Login;
+

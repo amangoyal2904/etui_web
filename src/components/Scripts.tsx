@@ -12,6 +12,7 @@ import { useStateContext } from "store/StateContext";
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
+  page?: string;
 }
 
 declare global {
@@ -67,6 +68,7 @@ declare global {
       primeInfo?: any;
     };
     _sva: any;
+    tpName?: string;
   }
 }
 declare var JssoCrosswalk: any;

@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 import { useStateContext } from "../../store/StateContext";
 import { delete_cookie, getCookie, setCookieToSpecificTime } from 'utils';
 
-const IfrOnboarding = () => {
+const IfrOnboarding = (onClose) => {
   const [showIframe, setShowIframe] = useState(false);
   //const [onboardApiHit, setOnboardApiHit] = useState(false);
   const { state, dispatch } = useStateContext();
@@ -16,6 +16,7 @@ const IfrOnboarding = () => {
     onboardTimerRef.current = setTimeout(() => {
       console.log('Timeout executed!');
       // Your timeout logic here
+      console.log("popupContent --- handleOnboardvisibility" , showIframe)
       setShowIframe(true);
       setCookieToSpecificTime('onboardShown', true,  1, 0, 0, "")
     }, secondsOpenDialog * 1000);
@@ -58,13 +59,21 @@ const IfrOnboarding = () => {
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
 
         getCookie("showOnboard") == undefined && setCookieToSpecificTime('showOnboard', displayFrame ? '1' : '0', 1, 0, 0, "")
-        setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, "")
-        displayFrame && handleOnboardvisibility(secondsOpenDialog);
+        setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, "");
 
+        if(displayFrame){
+          handleOnboardvisibility(secondsOpenDialog);
+        }else{
+          const event = new Event('nextPopup');
+          window.dispatchEvent(event);
+        }
+        console.log("popupContent --- fetchHit" , displayFrame)
         onboardApiHit = false;
         //setOnboardApiHit(false);
     } catch (error) {
         return {};
+        const event = new Event('nextPopup');
+        window.dispatchEvent(event);
         // Logging any error that occurs during the fetch process
         console.error('Error fetching the questionnaire:', error);
     }
@@ -84,7 +93,7 @@ const IfrOnboarding = () => {
 
     onboardShown && setShowIframe(false);
     console.log("testing--", isPrime);
-    if(isLogin && true && !onboardShown){
+    if(isLogin && isPrime && !onboardShown){
       if (showOnboard == '1') {
         handleOnboardvisibility(secondsToOpen)
       } else if( showOnboard == undefined && !onboardApiHit){
@@ -106,6 +115,9 @@ const IfrOnboarding = () => {
     const handleMessage = (event) => {
       if (event.data === 'removeIframe') {
         setShowIframe(false);
+        console.log("onClose", onClose)
+        const event = new Event('nextPopup');
+        window.dispatchEvent(event);
       }
     };
 

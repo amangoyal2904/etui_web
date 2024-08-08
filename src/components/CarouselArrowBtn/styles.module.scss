@@ -12,10 +12,18 @@
     width: 10px;
     height: 10px;
     z-index: 1;
-    color: var(--text-body);
+    color: #000;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &.red{
+      color: #ff454f;  
+    }
+    
+    &.black{
+      color: #000;
+    }
   }
   .embla__button:disabled {
     color: rgb(192, 192, 192);
