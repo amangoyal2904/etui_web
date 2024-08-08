@@ -29,6 +29,7 @@ export default async function Page({ params, searchParams }: {
   dynamicFooterData: any = {};
 
   try {
+   
     if (page !== "notfound") {
       const msid = getMSID(slugArr);      
 
@@ -45,7 +46,6 @@ export default async function Page({ params, searchParams }: {
 
       if (response && response.error) page = "notfound";
     }
-
     //==== gets dyanmic footer data =====
     const footerMenuPromise = Service.get({
       api,

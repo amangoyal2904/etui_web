@@ -52,6 +52,7 @@ const VideoShow = (props) => {
 
   useEffect(() => {
     // set page specific customDimensions
+    //renderInterstatialAds();
     const payload = getPageSpecificDimensions(seo);
     window.customDimension = { ...window.customDimension, ...payload };
 
