@@ -17,8 +17,7 @@ import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import Image from "next/image";
 import APIS_CONFIG from "../../network/config.json";
-import {  } from '../../utils/utils';
-import { goToPlansPage } from "utils/ga";
+import { gotoPlanPage } from '../../utils/utils';
 
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
@@ -234,7 +233,7 @@ const Login = ({headertext}) => {
       {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
-            {!isPrime && <span className={`${styles.subscribe}`} onClick={goToPlanPage}>Subscribe</span>}
+            {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
