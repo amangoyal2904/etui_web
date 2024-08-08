@@ -26,7 +26,7 @@ declare global {
     }
 }
 
-const DfpAds:NextPage<Props> = function(props) {
+const DfpAds = function(props:Props) {
     let adInfo:any = props.adInfo;
 
     let objVc = props.objVc;
@@ -162,7 +162,7 @@ const DfpAds:NextPage<Props> = function(props) {
         }
     }
 
-    const style = adHeight > 0 ? {minHeight: `${adHeight}px`, minWidth: `${adWidth}px`, textAlign: 'center' as 'center', margin: '0 auto'} : {};
+    const style = adHeight > 0 ? {minHeight: `${adHeight}px`, width: `${adWidth}px`, textAlign: 'center' as 'center', margin: '0 auto'} : {};
 
     return (
         <div id={divId} style={style}></div>

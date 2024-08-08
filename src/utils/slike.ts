@@ -149,13 +149,13 @@ export const dynamicPlayerConfig = {
     volume: 100,
     shareOptions: ["t", "f", "w", "e"],
     playlistUrl: "",
-    playlist: false,
+    playlist: true,
     pagetpl: "videoshow",
     pageSection: "",
     sg: "",
     ppid: "",
     playInBackground: true,
-    transmit: false,
+    transmit:  typeof window != "undefined" && typeof window?.geolocation != "undefined" && window?.geolocation == 2 ? true : false,
     scrollBehaviour: {
       inViewPercent: 100,
       dock: true,
@@ -167,22 +167,23 @@ export const dynamicPlayerConfig = {
   gaId: "UA-198011-5"
 };
 
-export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, pageTpl, isPrimeUser, subSecs, adSection='default', isDeferredPreRoll=false }) {
+export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, pageTpl, isPrimeUser = false, subSecs, adSection='default', isDeferredPreRoll=false, relvideo }) {
   const playerConfig = JSON.parse(JSON.stringify(dynamicPlayerConfig));
-  playerConfig.contEl = "id_" + result.msid;
-  playerConfig.video.id = result.slikeid;
-  playerConfig.video.playerType = result.playertype;
-  playerConfig.video.shareUrl = ET_WAP_URL + result.url;
-  playerConfig.video.description_url = ET_WAP_URL + result.url; // no need to modify; added specifically for tracking purpose by Slike team
-  playerConfig.video.image = result.img;
-  playerConfig.video.title = result.title;
-  playerConfig.player.msid = result.msid;
+  playerConfig.contEl = "id_" + result?.msid;
+  playerConfig.video.id = result?.slikeid;
+  playerConfig.video.playerType = result?.playertype;
+  playerConfig.video.shareUrl = ET_WAP_URL + result?.url;
+  playerConfig.player.description_url = ET_WAP_URL + result?.url; // no need to modify; added specifically for tracking purpose by Slike team
+  playerConfig.video.image = result?.img;
+  playerConfig.video.title = result?.title;
+  playerConfig.player.msid = result?.msid;
   playerConfig.player.autoPlay = autoPlay;
   playerConfig.player.pagetpl = pageTpl;
   playerConfig.player.skipAd = isPrimeUser;
   playerConfig.player.isPrime = Boolean(isPrimeUser);
   playerConfig.player.pageSection = subSecs;
   playerConfig.player.adSection = adSection;
+  playerConfig.player.relvideo = relvideo;
 
   if (isDeferredPreRoll) {
     playerConfig.player.deferredPreroll = 5;

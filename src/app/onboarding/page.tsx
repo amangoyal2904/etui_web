@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss"
 import OnboardingSilde from '../../components/OnboardingSilde';
+import { Suspense } from "react";
 
 export default async function Page() {
     const year = new Date().getFullYear();
@@ -55,7 +56,10 @@ export default async function Page() {
                 <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" alt="The Economic Times" width="255" />  
             </a>
         </header>
-        <OnboardingSilde fetchQuesData={fetchQuesData} pageType={'page'} />
+        <Suspense fallback={<div>Loading...</div>}>
+            <OnboardingSilde fetchQuesData={fetchQuesData} pageType={'page'} />
+        </Suspense>
+        
         <footer className={styles.footerWrp}>
             <ul className={`${styles.ftListWrp}`}>
                 <li>

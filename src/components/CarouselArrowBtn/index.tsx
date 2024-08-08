@@ -40,7 +40,7 @@ export const PrevButton = (props) => {
 
   return (
     <button
-      className={`${styles.embla__button} embla__button--prev`}
+      className={`${styles.embla__button} embla__button--prev ${styles[props.color] || styles.black}`}
       type="button"
       {...restProps}
     >
@@ -60,7 +60,7 @@ export const NextButton = (props) => {
 
   return (
     <button
-      className={`${styles.embla__button} embla__button--next`}
+      className={`${styles.embla__button} embla__button--next ${styles[props.color] || styles.black}`}
       type="button"
       {...restProps}
     >

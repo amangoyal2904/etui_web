@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import MoreSubSecNavHtml from "./MoreSubSecNavHtml";
 import SubSecNavHtml from "./SubSecNavHtml";
+import { useStateContext } from "../../store/StateContext";
 
 // Define types for the props
 interface SubSection {
@@ -20,25 +21,9 @@ interface Props {
 const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
   // Get the data for the first navigation item
   const { msid, moreCount, sec } = subSectionList[0];
-  const [isPrime, setIsPrime] = useState(false);
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      console.log("permissiorn tetrs");
-      window.objInts.permissions.includes("subscribed") && setIsPrime(true);
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-    return () => {
-      document.removeEventListener("objIntsLoaded", intsCallback);
-    };
-  }, []);
   // Render the component
   return (
     <div className={`${styles.sbnv_wrapper} ${isPrime ? styles.pink_theme : ""}`}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
+import { useStateContext } from "../../store/StateContext";
 
 interface SideNavData {
   nm: string;
@@ -13,27 +14,15 @@ interface SideNavData {
 const SideNav = () => {
   const [sideNavData, setSideNav] = useState<SideNavData[] | null>(null);
   const [closeClass, setCloseClass] = useState<boolean>(false);
-  const [isPrime, setIsPrime] = useState<boolean>(false);
-
-  const intsCallback = () =>  {
-    window?.objInts?.afterPermissionCall(() => {
-      window.objInts.permissions.indexOf("subscribed") > -1 && setIsPrime(true);
-    });
-  }
+  const { state, dispatch } = useStateContext();
+  const { isPrime } = state.login;
 
   useEffect(() => {
     const sideNavRef = document.getElementById("sideMenu");
     sideNavRef?.addEventListener('mouseenter', handleSideNavApi);
 
-    if (typeof window.objInts !== "undefined") {
-      window.objInts.afterPermissionCall(intsCallback);
-    } else {
-      document.addEventListener("objIntsLoaded", intsCallback);
-    }
-
     return () => {
       sideNavRef?.removeEventListener('mouseenter', handleSideNavApi);
-      document.removeEventListener("objIntsLoaded", intsCallback);
     };
   }, []);
 

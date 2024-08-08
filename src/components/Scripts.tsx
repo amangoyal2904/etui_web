@@ -1,40 +1,63 @@
 'use client';
 
-import { log } from "console";
 import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { FC, useEffect } from "react";
 import { APP_ENV, updateDimension } from "../utils";
 import * as Config from "../utils/common";
-import renderInterstatialAds from "./Ad/interstatialScript";
 import {Interstatial} from "../utils/interstitial";
 
+import GLOBAL_CONFIG from "../network/global_config.json";
 
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
+  page?: string;
 }
 
 declare global {
   interface Window {
     optCheck: boolean;
-    e$: {
-      jStorage: {
-        set(arg1: string, arg2: any, arg3: Object): any;
-        get(arg1: string): any;
-        deleteKey(arg1: string);
-      };
-    };
+    objInts:any;
+    __APP:any;
     google: {
       accounts: {
         id: {
           disableAutoSelect;
         }
       }
-    }
-    ispopup: boolean;
+    };
+    googletag: any;
+    ispopup: any;
+    jsso?: {
+      getValidLoggedInUser?: any;
+      getUserDetails?: any;
+      signOutUser?: any;
+    };
+    isSurveyLoad: any;
+    dataLayer: [];
+    ssoWidget?: any;
+    verifyLoginSuccess?: any;
+    objUser: {
+      ssoid?: any;
+      ticketId?: any;
+      email?: any;
+      info?: {
+        thumbImageUrl: any;
+        primaryEmail: string;
+        firstName: string;
+      };
+      isPrime?: any;
+      permissions?: any;
+      accessibleFeatures?: any;
+      primeInfo?: any;
+    };
+    _sva: any;
+    tpName?: string;
   }
 }
+
+declare var JssoCrosswalk: any;
 
 const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
@@ -45,12 +68,14 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   const searchParams = useSearchParams();
 
   const minifyJS = APP_ENV === "development" ? 0 : 1;
+
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
+
+
 
   useEffect(() => {
     // window.optCheck = router.asPath.indexOf("opt=1") != -1;
     //updateDimension();
-    // renderInterstatialAds();
     Interstatial();
   }, []);
 
@@ -72,6 +97,14 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           _comscore.push({ c1: "2", c2: "6036484" });
         `}
       </Script>
+      <Script
+        src={(GLOBAL_CONFIG as any)[APP_ENV]?.jssoSDK}
+        onLoad={() => {
+          window.jsso = new JssoCrosswalk("et", "web");
+          const jssoLoaded = new Event("jssoLoaded");
+          document.dispatchEvent(jssoLoaded);
+        }}
+      />
       <Script id="geoinfo-call">
         {`
         function getGeoInfo() {    
@@ -117,9 +150,28 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
             const geoLoaded = new Event("geoLoaded");
             document.dispatchEvent(geoLoaded);
           }
+
+          document.addEventListener("geoLoaded", () => {
+            if (window.geoinfo && window.geoinfo.CountryCode != "IN") {
+                function loadOnetrustSdk() {
+                  const script = document.createElement('script');
+                  script.src = 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js';
+                  script.async = true; 
+                  script.charSet = 'UTF-8';
+                  script.setAttribute('data-domain-script', '2e8261f2-d127-4191-b6f6-62ba7e124082');
+                  document.head.appendChild(script);
+                }
+                if('requestIdleCallback' in window){
+                  window.requestIdleCallback(function(){          
+                    loadOnetrustSdk();
+                  }, { timeout: 2500 })
+                } else {
+                  loadOnetrustSdk();
+                }
+            }
+          });
         `}
       </Script>
-   
 
       {!searchParams?.get('opt') && (
         <>

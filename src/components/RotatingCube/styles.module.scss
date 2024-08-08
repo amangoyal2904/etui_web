@@ -1,0 +1,203 @@
+// CSS module styles (styles.module.scss)
+
+.cube {
+  position: fixed;
+  width: 145px;
+  height: 95px;
+  transform-style: preserve-3d;
+  z-index: 99;
+  &::after {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    bottom: 25px;
+    left: 3%;
+    width: 95%;
+    height: 15px;
+    -webkit-box-shadow: 0 25px 15px #777;
+    box-shadow: 0 25px 15px #777;
+  }
+}
+
+.cube-inner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.cube-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  backface-visibility: hidden;
+}
+
+.cube-face:nth-child(1) {
+  transform: rotateY(0deg) translateZ(47.5px);
+}
+
+.cube-face:nth-child(2) {
+  transform: rotateY(90deg) translateZ(72.5px);
+}
+
+.cube-face:nth-child(3) {
+  transform: rotateY(180deg) translateZ(47.5px);
+}
+
+.cube-face:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(72.5px);
+}
+
+.budgetCubeItem {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  background: #a0428f;
+  padding: 0;
+}
+
+.closebtn {
+  position: absolute;
+  right: -12px;
+  top: -14px;
+  border: 0;
+  cursor: pointer;
+  background: #000;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  z-index: 85;
+  &::before,
+  &::after {
+    content: "";
+    width: 2px;
+    height: 9px;
+    background: #fff;
+    position: absolute;
+    transform: rotate(-45deg);
+    top: 4px;
+    left: 8px;
+  }
+  &::before {
+    transform: rotate(45deg);
+  }
+}
+
+.etads1 {
+  height: 30px;
+}
+
+.etads2 {
+  height: 65px;
+}
+
+.etads1,
+.etads2 {
+  position: relative;
+  display: block;
+  width: 145px;
+  margin: 0 auto;
+}
+
+.etcontent {
+  position: relative;
+  display: block;
+  width: 145px;
+  height: 65px;
+  background: #000;
+  border-radius: 3.2px;
+  margin: 0 auto;
+  color: #fff;
+  &.feeds {
+    padding: 5px 0;
+    width: 130px;
+    height: 40px;
+    margin: 8px auto;
+  }
+}
+
+.etcontent a {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+}
+
+.title {
+  width: 100%;
+  max-width: 145px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.values {
+  position: relative;
+  display: block;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.num {
+  position: relative;
+  display: inline-block;
+  font-size: 17.6px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.per {
+  position: relative;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  padding-left: 15px;
+  &::before {
+    content: "";
+    width: 8px;
+    height: 13px;
+    position: absolute;
+    display: inline-block;
+    top: -1px;
+    left: 5px;
+  }
+}
+
+.per.green {
+  color: #00fb2f;
+  &::before {
+    background: url(https://img.etimg.com/photo/70041681.cms) no-repeat;
+  }
+}
+
+.per.red {
+  color: #ff2a2a;
+  &::before {
+    background: url(https://img.etimg.com/photo/70041683.cms) no-repeat;
+  }
+}
+
+.status {
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.status.LIVE {
+  color: #00fb2f;
+}
+
+.status:not(.LIVE) {
+  color: #ff2a2a;
+}

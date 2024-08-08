@@ -1,7 +1,6 @@
 import { getCookie , setCookieToSpecificTime} from 'utils/utils';
 
 export const Interstatial = ()=>{
-    debugger;
     console.log("HERE I AM.");
     let fcap: any;
     let intsFequencyCap = 2;
@@ -11,7 +10,7 @@ export const Interstatial = ()=>{
     console.log(isIntActive);
     if(isIntActive!="true" && fcap < intsFequencyCap){
         var intsUrl = '/interstitial'; 
-        setCookieToSpecificTime("et_interstitial_active",'true', '', 30);
+        setCookieToSpecificTime("et_interstitial_active",'true', 0, 30);
     // setCookieToSpecificTime("interstitial_done", "1",  '23:59:59', 0);
         
         window.location.replace(intsUrl);
