@@ -17,6 +17,7 @@ import PostComments from "components/Comments/PostComments";
 import PopulateComment from "components/Comments/PopulateComment";
 import { log } from "console";
 import Trending from "components/Trending";
+import renderInterstatialAds from 'components/Ad/interstatialScript';
 
 declare global {
   interface Window {
@@ -41,7 +42,7 @@ const VideoShow: FC<PageProps> = (props) => {
   const trendingVideos = props?.searchResult?.find((item) => item.name === "trending_videos") as any;
   const relatedVideos = props?.searchResult?.find((item) => item.name === "related_videos") as any;
   const { seo = {}, version_control, parameters, isprimeuser } = props;
-  const { msid } = parameters;
+  const { msid } = parameters || {};
   //const { cpd_wap = "0" } = version_control;
 
   const subsecNames = props?.seo?.subsecnames;
@@ -50,6 +51,7 @@ const VideoShow: FC<PageProps> = (props) => {
 
   useEffect(() => {
     // set page specific customDimensions
+    //renderInterstatialAds();
     const payload = getPageSpecificDimensions(seo);
     window.customDimension = { ...window.customDimension, ...payload };
 
@@ -82,7 +84,6 @@ const VideoShow: FC<PageProps> = (props) => {
         }
       });
     });
-    
   }, [props]);
 
   useEffect(() => {

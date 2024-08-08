@@ -5,6 +5,9 @@ import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from '../../containers/';
 import Layout from '../../components/Layout';
 import React, { Suspense } from 'react';
+import renderInterstatialAds from 'components/Ad/interstatialScript';
+import { redirect } from 'next/navigation'
+
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
@@ -12,16 +15,22 @@ export default async function Page({ params, searchParams }: {
 }) {
   const headersList = headers()
   console.log({ headersList });
-  
+ 
   const isprimeuser = cookies().get('isprimeuser') || false,
   { all = [] } = params,
   lastUrlPart: string = all?.slice(-1).toString(),
   api = APIS_CONFIG.FEED,
   REQUEST = APIS_CONFIG.REQUEST;
 
-  console.log({isprimeuser});
-  
+  //renderInterstatialAds();
+  if(!isprimeuser){
+    debugger;
+    //redirect('/interstitial');
 
+  }
+  console.log({isprimeuser});
+  //renderInterstatialAds();
+  
   let page = pageType(all.join('/')),
   extraParams: any = {},
   response: any = {},
@@ -29,6 +38,7 @@ export default async function Page({ params, searchParams }: {
   dynamicFooterData: any = {};
 
   try {
+   
     if (page !== "notfound") {
       const msid = getMSID(lastUrlPart);
       const moreParams = prepareMoreParams({ all, page, msid });
@@ -50,7 +60,6 @@ export default async function Page({ params, searchParams }: {
 
       if (response && response.error) page = "notfound";
     }
-
     //==== gets dyanmic footer data =====
     const footerMenuPromise = Service.get({
       api,
