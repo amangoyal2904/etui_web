@@ -100,8 +100,8 @@ function goBack(){
           <a className={styles.et_logo} href="https://economictimes.indiatimes.com" >
               <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" width="330"/>
           </a>
-          <a className={styles.pg_link} href="https://economictimes.indiatimes.com">
-          <div className={styles.tm_text} onClick={goBack}>
+          <a className={styles.pg_link} href="#" onClick={goBack}>
+          <div className={styles.tm_text} >
                   Click here to go to economictimes.com
               <div className={styles.load_tm}>Site will load in <span id="timer">10</span> seconds.</div>
           </div>
