@@ -85,7 +85,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
       </main>
 
       {!isprimeuser && <DfpAds adInfo={{ key: "skinleft" }} objVc={objVc} />}
-      {/* {!isprimeuser && <RotatingCube objVc={objVc} />} */}
+      {!isprimeuser && <RotatingCube objVc={objVc} />}
     </>
   );
 };
