@@ -130,7 +130,7 @@
     "development": "https://qa-oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout",
     "production": "https://oauth2.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout"
   },
-  "saveProfile": {
+  "SAVEPROFILE": {
     "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v1/saveUserResponse.json",
     "production": "https://etonboard.economictimes.indiatimes.com/etonboard/api/v1/saveUserResponse.json"
   }
