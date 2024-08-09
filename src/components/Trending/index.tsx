@@ -41,19 +41,19 @@ export default function Trending({ data, title }: TrendingProps) {
       <h2>
         {title}
         <div className={`${styles.spotligt_btn_slider} ${styles.embla__buttons}`}>
-            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} />
             <div className="embla__dots">
               {scrollSnaps.map((_, index) => (
                 <DotButton
                   key={index}
                   onClick={() => onDotButtonClick(index)}
                   className={'embla__dot'.concat(
-                    index === selectedIndex ? ' embla__dot--selected' : ''
+                    index === selectedIndex ? ' embla__dot--selected red' : ''
                   )}
                 />
               ))}
             </div>
-            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} />
         </div>
       </h2>
       <div ref={emblaRef}>
