@@ -12,6 +12,8 @@ declare global {
 }
 
 export const getMarketBandData = (): (() => void) => {
+  let interval: NodeJS.Timeout;
+
   const fetchData = async () => {
     try {
       const response = await fetch("https://bselivefeeds.indiatimes.com/marketband.json");
@@ -25,8 +27,18 @@ export const getMarketBandData = (): (() => void) => {
 
       // Process and store the band data
       processBandData(jsonData);
+
+      // Adjust the interval based on market status
+      if (jsonData.marketStatus.currentMarketStatus !== "LIVE") {
+        updateInterval(120e3); // 2 minutes in milliseconds
+      } else {
+        updateInterval(12e3); // 12 seconds in milliseconds
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
+
+      // If fetching fails, set the interval to retry after 2 minutes
+      updateInterval(120e3); // 2 minutes in milliseconds
     }
   };
 
@@ -52,48 +64,63 @@ export const getMarketBandData = (): (() => void) => {
     }
   };
 
+  // Function to update the fetch interval
+  const updateInterval = (newInterval: number) => {
+    if (interval) {
+      clearInterval(interval);
+    }
+    interval = setInterval(fetchData, newInterval);
+  };
+
   // Initial fetch
   fetchData();
-
-  // Set interval for refreshing data every 12 seconds
-  const interval = setInterval(fetchData, 12000); // 12 seconds in milliseconds
 
   // Return cleanup function to clear interval on component unmount
   return () => clearInterval(interval);
 };
 
-export const setCookieToSpecificTime = (name, value, time, seconds) =>{
-      try{
-          let domain = ".indiatimes.com"; 
-          location.hostname == "localhost" ? domain="localhost" : domain = ".indiatimes.com";
-          let cookiestring ='';
-          if(name && value && time){
-              cookiestring=name+"="+ value + "; expires=" + new Date(new Date().toDateString() + ' ' + time).toUTCString() +'; domain='+domain+'; path=/;';
-          }
-          if(name && value && seconds){ //temp cookie
-            let exdate = new Date();
-            exdate.setSeconds(exdate.getSeconds() + seconds);
-              let c_value = value + ((seconds == null) ? "" : "; expires=" + exdate.toUTCString()) + '; domain='+domain+'; path=/;';
-              cookiestring=name+"="+ c_value;
-          }
-          document.cookie=cookiestring;
-      }catch(e){
-           console.log('setCookieToSpecificTime', e);
-      }
-};
-export const getCookie = (name) =>{
-   try{
-        let nameEQ = name + "=";
-        let ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-     }catch(e){
-        console.log('getCookie', e);
+export const setCookieToSpecificTime = (name, value, time, seconds) => {
+  try {
+    let domain = ".indiatimes.com";
+    location.hostname == "localhost" ? (domain = "localhost") : (domain = ".indiatimes.com");
+    let cookiestring = "";
+    if (name && value && time) {
+      cookiestring =
+        name +
+        "=" +
+        value +
+        "; expires=" +
+        new Date(new Date().toDateString() + " " + time).toUTCString() +
+        "; domain=" +
+        domain +
+        "; path=/;";
     }
+    if (name && value && seconds) {
+      //temp cookie
+      let exdate = new Date();
+      exdate.setSeconds(exdate.getSeconds() + seconds);
+      let c_value =
+        value + (seconds == null ? "" : "; expires=" + exdate.toUTCString()) + "; domain=" + domain + "; path=/;";
+      cookiestring = name + "=" + c_value;
+    }
+    document.cookie = cookiestring;
+  } catch (e) {
+    console.log("setCookieToSpecificTime", e);
+  }
+};
+export const getCookie = (name) => {
+  try {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  } catch (e) {
+    console.log("getCookie", e);
+  }
 };
 // Check if GDPR policy allowed for current location
 export const allowGDPR = () => {
