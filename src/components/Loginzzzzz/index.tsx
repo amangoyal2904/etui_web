@@ -17,7 +17,6 @@ declare global {
     default_gsi:any;
     oneTap:any;
     __APP:any;
-    objUser:any;
     objInts:any;
   }
 }

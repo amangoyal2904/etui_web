@@ -22,8 +22,8 @@ declare global {
         deleteKey(arg1: string);
       };
     };
-    objInts:any;
-    __APP:any;
+    objInts: any;
+    __APP: any;
     google: {
       accounts: {
         id: {
@@ -37,6 +37,8 @@ declare global {
       getValidLoggedInUser?: any;
       getUserDetails?: any;
       signOutUser?: any;
+      v1AddUpdateMobile?: any;
+      v1VerifyAlternateMobile?: any;
     };
     isSurveyLoad: any;
     dataLayer: [];
@@ -50,11 +52,14 @@ declare global {
         thumbImageUrl: any;
         primaryEmail: string;
         firstName: string;
+        ssoid: any;
       };
       isPrime?: any;
       permissions?: any;
       accessibleFeatures?: any;
       primeInfo?: any;
+      afterLoginCall?: any;
+      loadSsoApi?: any;
     };
     _sva: any;
   }
@@ -64,8 +69,8 @@ declare var JssoCrosswalk: any;
 
 const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
-  console.log({APP_ENV});
-  
+  console.log({ APP_ENV });
+
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -214,10 +219,10 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
 
           <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
-		      <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js"  onLoad={() => {
-                  const slikeReady = new Event("slikeReady");
-                  document.dispatchEvent(slikeReady);
-                }}/>
+          <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js" onLoad={() => {
+            const slikeReady = new Event("slikeReady");
+            document.dispatchEvent(slikeReady);
+          }} />
 
           {!isprimeuser && (
             <>
