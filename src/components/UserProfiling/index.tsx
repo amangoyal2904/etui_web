@@ -75,38 +75,6 @@ const UserProfile = () => {
         }
     }, []);
 
-    // const fetchProfileQuestions = () => {
-    //     const isLive = window.location.host.includes('https://economictimes.indiatimes.com/');
-    //     const onboardingDomain = isLive ? "etonboard" : "etonboard-stg";
-    //     const isPaidUser = typeof window.objUser !== 'undefined' && window.objUser.permissions && window.objUser.permissions.indexOf('subscribed') !== -1;
-    //     const email = typeof window.objUser !== 'undefined' && window.objUser.info && window.objUser.info.primaryEmail || '';
-    //     const isPopupShown = typeof window.e$ !== 'undefined' && window.e$.jStorage.get('profile_update_shown') || 0;
-    //     if (!isPopupShown) {
-    //         const url = `https://${onboardingDomain}.economictimes.indiatimes.com/etonboard/api/v3/fetchQuestionnaire.json?isPaidUser=${isPaidUser}&email=${email}&isEdit=true`;
-    //         fetch(url, {
-    //             headers: {
-    //                 'Authorization': typeof window.objUser !== 'undefined' && window.objUser.info && window.objUser.info.ssoid || '2eay77d9dlvyhluun6rh5u942',
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         }).then(response => response.json())
-    //             .then(res => {
-    //                 console.log("@@@ res", res)
-    //                 const profile = res.questionnaireDto && res.questionnaireDto.screens && res.questionnaireDto.screens.filter(ele => ele.key === "screen1") || [];
-    //                 const isProfileComplete = profile && profile.length > 0 && profile[0].status && profile[0].status.toLowerCase() === "complete";
-    //                 const questionnaire = res.questionnaireDto && res.questionnaireDto.screens && res.questionnaireDto.screens.length > 0 && res.questionnaireDto.screens[0].questions || [];
-    //                 setQuestionnaire(questionnaire);
-    //                 console.log("@@@ questionnaire", questionnaire)
-    //                 setUuid(res.userUuid || "");
-    //                 if (!isProfileComplete && email) {
-    //                     const userInfo = typeof window.objUser !== 'undefined' && window.objUser.info;
-    //                     setShowProfileForm(true);
-    //                     setDefaultData(userInfo)
-    //                     // fireGaEvent('Popup Shown', window.location.href);
-    //                     document.body.classList.add(styles.noscroll);
-    //                 }
-    //             })
-    //     }
-    // }
     const fetchProfileQuestions = () => {
         const isLive = window.location.host.includes('https://economictimes.indiatimes.com/');
         const onboardingDomain = isLive ? "etonboard" : "etonboard-stg";
@@ -265,9 +233,7 @@ const UserProfile = () => {
         if (Object.keys(errors).length == 0) {
             const mobileOtp = `${otp.digit1}${otp.digit2}${otp.digit3}${otp.digit4}${otp.digit5}${otp.digit6}`;
             // fireGaEvent('OTP Popup Clicked', 'Verify');
-            // window.objUser.loadSsoApi(function () {
             window.jsso?.v1VerifyAlternateMobile(profileObj.mobile, mobileOtp, uuid, submitMobileOtpCallbak);
-            // });
         } else {
 
         }
@@ -367,9 +333,7 @@ const UserProfile = () => {
     }
     const resendOtp = () => {
         // fireGaEvent('OTP Popup Clicked', 'Resend');
-        // window.objUser && window.objUser.loadSsoApi(function () {
-        window.jsso?.v1AddUpdateMobile(profileObj.mobile, resendOTPCallbak)
-        // });
+        window.jsso?.v1AddUpdateMobile(profileObj.mobile, resendOTPCallbak);
     }
     const resendOTPCallbak = (res) => {
         if (res.status == "SUCCESS") {
@@ -517,7 +481,6 @@ const UserProfile = () => {
                             <div className={styles.btnMain}>
                                 <button className={styles.btn} onClick={() => saveProfileData()}>Save Profile</button>
                             </div>
-                            {/* <input type="submit" onClick={() => saveProfileData()} value="Save Profile" /> */}
                         </>}
                 </div>
             </div> : ""}
