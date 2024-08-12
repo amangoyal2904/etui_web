@@ -173,9 +173,9 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
                       <React.Fragment key={`tech_nav_first_${obj.msid}_${index}_${index1}`}>
                         <div className={styles.first}>
                           <h3>
-                            <a href={data.link}>{data.stname}</a>
+                            <a href={data.link['@href']}>{data.stname}</a>
                           </h3>
-                          <a href={data.link}>
+                          <a href={data.link['@href']}>
                             <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
                           </a>
                           <p className={`${styles.wrapLines} ${styles.l5}`}>{data.strsyn}</p>
@@ -189,15 +189,15 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
                         <React.Fragment key={`tech_nav_other_${obj.msid}_${index}_${index1}`}>
                           {(obj.msid == 94299203 ? (
                             <div className={styles.navBlock}>
-                              <a target="_blank" rel="noreferrer" href={data.link}>
+                              <a target="_blank" rel="noreferrer" href={data.link['@href']}>
                                 <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
                               </a>
-                              <a target="_blank" rel="noreferrer" className={styles.eventsBlockTechLinks} href={data.link}>
+                              <a target="_blank" rel="noreferrer" className={styles.eventsBlockTechLinks} href={data.link['@href']}>
                                 {data.stname}
                               </a>
                             </div>
                           ) : (
-                            <a className={styles.subsec3} href={data.link}>
+                            <a className={styles.subsec3} href={data.link['@href']}>
                               {data.stname}
                             </a>
                           ))}

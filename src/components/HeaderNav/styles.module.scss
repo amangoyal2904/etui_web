@@ -542,6 +542,12 @@
       }
     }
     .subLevel{
+      &.current{
+        & > a{
+          color: #ed193b;
+          text-decoration: none;
+        }
+      }
       & > div {
         display: inline-block;
         position: relative;

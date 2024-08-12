@@ -55,7 +55,7 @@ const HeaderNav = () => {
                         if (i<15) {
                             return (
                                 <div  onClick={() => handleNavClick(ele?.sec, ele?.title)} key={ele.title}>
-                                    <Link href="/" className={activeNav == ele.title ? 'current': null}>{ele.title}</Link>
+                                    <Link href="/" className={activeNav == ele.title ? 'current': ""}>{ele.title}</Link>
                                 </div>
                             )
                         }
@@ -75,8 +75,8 @@ const HeaderNav = () => {
                         if (i<12) {
                             return (
                                 <div key={`ele_${i}`}>
-                                    <Link href="/" key={ele.title}>
-                                        {ele.title}
+                                    <Link href="/" key={(ele as any).title}>
+                                        {(ele as any).title}
                                     </Link>
                                 </div>
                             )
