@@ -95,5 +95,17 @@
   "LOGOUT_AUTH_TOKEN": {
     "development": "https://qa-oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout",
     "production": "https://oauth2.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout"
+  },
+  "AllUserSubscriptions": {
+    "development": "https://qcsubscription.economictimes.indiatimes.com/subscription/allUserSubscriptions",
+    "production": "https://subscriptions.economictimes.indiatimes.com/subscription/allUserSubscriptions" 
+  },
+  "Ifm_Onboarding": {
+    "development": "https://etdev8243.indiatimes.com/onboarding.cms?obd_ifrm=1",
+    "production": "https://economictimes.indiatimes.com/onboarding.cms?obd_ifrm=1"
+  },
+  "FetchQuestionnaire": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json"
   }
 }
