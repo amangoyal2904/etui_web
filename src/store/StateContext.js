@@ -13,6 +13,7 @@ const initialState = {
     ticketId: "",
     email: "",
     error: null,
+    permissions: []
   }
 };
 
