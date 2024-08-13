@@ -288,7 +288,7 @@ export default function TopNudge({objVc}) {
     if(isLogin && !Number(objVc?.ads_primeuser_enable)) {
       fetchSubsc();
     }
-  }, []);
+  }, [isLogin]);
 
   return (
     <>      
