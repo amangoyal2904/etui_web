@@ -5,8 +5,12 @@
   },
   "FEED": {
     "dns": {
-      "development": ["https://etdev8243.indiatimes.com/"],
-      "production": ["https://etdev8243.indiatimes.com/"]
+      "development": [
+        "https://etdev8243.indiatimes.com/"
+      ],
+      "production": [
+        "https://etdev8243.indiatimes.com/"
+      ]
     },
     "path": "reactfeed"
   },
@@ -22,38 +26,68 @@
         "https://vsp1etpwaapi.economictimes.com/",
         "https://etpwaapipre.economictimes.com/"
       ],
-      "staging": ["https://etpwaapipre.economictimes.com/", "https://etpwaapi.economictimes.com/"],
-      "production": ["https://etpwaapi.economictimes.com/", "https://vsp1etpwaapi.economictimes.com/"]
+      "staging": [
+        "https://etpwaapipre.economictimes.com/",
+        "https://etpwaapi.economictimes.com/"
+      ],
+      "production": [
+        "https://etpwaapi.economictimes.com/",
+        "https://vsp1etpwaapi.economictimes.com/"
+      ]
     },
     "path": "request"
   },
   "USER_ACTIVITY": {
     "dns": {
-      "development": ["https://etua-stg.economictimes.indiatimes.com/personalization/logdata/et/ua"],
-      "production": ["https://etusers1.economictimes.com/personalisation/logdata/et/ua"]
+      "development": [
+        "https://etua-stg.economictimes.indiatimes.com/personalization/logdata/et/ua"
+      ],
+      "production": [
+        "https://etusers1.economictimes.com/personalisation/logdata/et/ua"
+      ]
     },
     "path": ""
   },
   "PERSONALISATION": {
-    "development": ["https://etua-stg.economictimes.indiatimes.com/users/api/logdata/uuid/resolve"],
-    "production": ["https://idm.economictimes.com/personalisation/logdata/uuid/resolve"]
+    "development": [
+      "https://etua-stg.economictimes.indiatimes.com/users/api/logdata/uuid/resolve"
+    ],
+    "production": [
+      "https://idm.economictimes.com/personalisation/logdata/uuid/resolve"
+    ]
   },
   "SEARCH": {
     "ethome": {
-      "development": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"],
-      "production": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"]
+      "development": [
+        "https://etsearch.indiatimes.com/etspeeds/ethome.ep"
+      ],
+      "production": [
+        "https://etsearch.indiatimes.com/etspeeds/ethome.ep"
+      ]
     },
     "definition": {
-      "development": ["https://spmdev8243.economictimes.com/json_definitionsearch.cms"],
-      "production": ["https://m.economictimes.com/json_definitionsearch.cms"]
+      "development": [
+        "https://spmdev8243.economictimes.com/json_definitionsearch.cms"
+      ],
+      "production": [
+        "https://m.economictimes.com/json_definitionsearch.cms"
+      ]
     },
     "news": {
-      "development": ["https://spmdev8243.economictimes.com/json_newssearch.cms"],
-      "production": ["https://m.economictimes.com/json_newssearch.cms"]
+      "development": [
+        "https://spmdev8243.economictimes.com/json_newssearch.cms"
+      ],
+      "production": [
+        "https://m.economictimes.com/json_newssearch.cms"
+      ]
     },
     "reporter": {
-      "development": ["https://spmdev8243.economictimes.com/json_reportersearch.cms"],
-      "production": ["https://m.economictimes.com/json_reportersearch.cms"]
+      "development": [
+        "https://spmdev8243.economictimes.com/json_reportersearch.cms"
+      ],
+      "production": [
+        "https://m.economictimes.com/json_reportersearch.cms"
+      ]
     }
   },
   "saveNews": {
@@ -80,9 +114,9 @@
     "development": "https://qcsubscription.economictimes.indiatimes.com/api/subscription/redeemVoucher",
     "production": "https://subscriptions.economictimes.indiatimes.com/api/subscription/redeemVoucher"
   },
-  "comments":{
-    "development":"https://etdev8243.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true",
-    "production":"https://economictimes.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true"
+  "comments": {
+    "development": "https://etdev8243.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true",
+    "production": "https://economictimes.indiatimes.com/commentsdata.cms?appkey=ET&sortcriteria=CreationDate&order=asc&lastdeenid=0&after=true&withReward=true"
   },
   "pushGA": {
     "production": "https://etpwaapi.economictimes.com/pushGaData",
@@ -95,6 +129,10 @@
   "LOGOUT_AUTH_TOKEN": {
     "development": "https://qa-oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout",
     "production": "https://oauth2.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout"
+  },
+  "SAVEPROFILE": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v1/saveUserResponse.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/api/v1/saveUserResponse.json"
   },
   "AllUserSubscriptions": {
     "development": "https://qcsubscription.economictimes.indiatimes.com/subscription/allUserSubscriptions",

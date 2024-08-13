@@ -5,21 +5,25 @@ import Script from "next/script";
 import { FC, useEffect } from "react";
 import { APP_ENV, updateDimension } from "../utils";
 import * as Config from "../utils/common";
-import {Interstatial} from "../utils/interstitial";
-
 import GLOBAL_CONFIG from "../network/global_config.json";
 
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
-  page?: string;
 }
 
 declare global {
   interface Window {
     optCheck: boolean;
-    objInts:any;
-    __APP:any;
+    e$: {
+      jStorage: {
+        set(arg1: string, arg2: any, arg3: Object): any;
+        get(arg1: string): any;
+        deleteKey(arg1: string);
+      };
+    };
+    objInts: any;
+    __APP: any;
     google: {
       accounts: {
         id: {
@@ -33,6 +37,8 @@ declare global {
       getValidLoggedInUser?: any;
       getUserDetails?: any;
       signOutUser?: any;
+      v1AddUpdateMobile?: any;
+      v1VerifyAlternateMobile?: any;
     };
     isSurveyLoad: any;
     dataLayer: [];
@@ -46,14 +52,16 @@ declare global {
         thumbImageUrl: any;
         primaryEmail: string;
         firstName: string;
+        ssoid: any;
       };
       isPrime?: any;
       permissions?: any;
       accessibleFeatures?: any;
       primeInfo?: any;
+      afterLoginCall?: any;
+      loadSsoApi?: any;
     };
     _sva: any;
-    tpName?: string;
   }
 }
 
@@ -61,8 +69,8 @@ declare var JssoCrosswalk: any;
 
 const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
-  console.log({APP_ENV});
-  
+  console.log({ APP_ENV });
+
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -70,13 +78,13 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   const minifyJS = APP_ENV === "development" ? 0 : 1;
 
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
+  const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
 
 
 
   useEffect(() => {
     // window.optCheck = router.asPath.indexOf("opt=1") != -1;
     //updateDimension();
-    Interstatial();
   }, []);
 
   return (
@@ -150,26 +158,6 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
             const geoLoaded = new Event("geoLoaded");
             document.dispatchEvent(geoLoaded);
           }
-
-          document.addEventListener("geoLoaded", () => {
-            if (window.geoinfo && window.geoinfo.CountryCode != "IN") {
-                function loadOnetrustSdk() {
-                  const script = document.createElement('script');
-                  script.src = 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js';
-                  script.async = true; 
-                  script.charSet = 'UTF-8';
-                  script.setAttribute('data-domain-script', '2e8261f2-d127-4191-b6f6-62ba7e124082');
-                  document.head.appendChild(script);
-                }
-                if('requestIdleCallback' in window){
-                  window.requestIdleCallback(function(){          
-                    loadOnetrustSdk();
-                  }, { timeout: 2500 })
-                } else {
-                  loadOnetrustSdk();
-                }
-            }
-          });
         `}
       </Script>
 
@@ -231,10 +219,10 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
 
           <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
-		      <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js"  onLoad={() => {
-                  const slikeReady = new Event("slikeReady");
-                  document.dispatchEvent(slikeReady);
-                }}/>
+          <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js" onLoad={() => {
+            const slikeReady = new Event("slikeReady");
+            document.dispatchEvent(slikeReady);
+          }} />
 
           {!isprimeuser && (
             <>

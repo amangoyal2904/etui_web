@@ -19,7 +19,7 @@ const StickyFooter = (props:any) => {
   const handleClose = () =>{
     setIsVisible(false);
   }
-  console.log("@@@ bandObj --->???????????? ", allMetaData);
+  // console.log("@@@ bandObj --->???????????? ", allMetaData);
   return(
     <>
     {isVisible && bandObj?.bannerType === "type1" && (
