@@ -42,7 +42,7 @@ const RotatingCube: React.FC<RotatingCubeProps> = ({ objVc }) => {
         } else {
           getMarketBandData(); // Fetch market band data if not available
         }
-      }, 1000);
+      }, 6e3); // Data updating every 6 sec
     }
   }, []);
 
