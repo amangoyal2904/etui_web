@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import IfrOnboarding from 'components/IfrOnboarding';
 import PrimeLoginMap from 'components/PrimeLoginMap';
+import { useStateContext } from "../../store/StateContext";
 
 const PopupManager: React.FC = () => {
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
+  const { state, dispatch } = useStateContext();
+  const { isLogin } = state.login;
+  
 
   const popups = [
     'onboarding',
@@ -36,7 +40,7 @@ const PopupManager: React.FC = () => {
     return () => {
       window.removeEventListener('nextPopup', handleNextPopup);
     };
-  }, [popups.length]);
+  }, [popups.length, isLogin]);
 
   const handleClose = () => {
     setShowPopup(false);
@@ -46,7 +50,7 @@ const PopupManager: React.FC = () => {
 
   return (
     <>
-      {showPopup && currentPopupIndex < popups.length && (
+      {isLogin != "" && showPopup && currentPopupIndex < popups.length && (
         <div className={`popupManager ${popups[currentPopupIndex]}`}>
           {(() => {
             switch (popups[currentPopupIndex]) {

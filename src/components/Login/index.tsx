@@ -137,8 +137,8 @@ const Login = ({headertext}) => {
     dispatch({
       type: "LOGIN_SUCCESS",
       payload: {
-        ssoReady: true,
-        isLogin: true,
+        // ssoReady: true,
+        // isLogin: true,
         isPrime: window.objUser.isPrime,
         userInfo: window.objUser?.info,
         ssoid: window.objUser?.ssoid,

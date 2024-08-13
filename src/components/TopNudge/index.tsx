@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
-
-import { currPageType } from "utils";
+import APIS_CONFIG from "../../network/config.json";
+import { currPageType, APP_ENV } from "utils";
 import NudgeContainer from "./NudgeContainer";
 import { grxEvent } from "utils/ga";
+import Service from "network/service";
 
 import styles from "./styles.module.scss";
 import { fetchAllMetaInfo } from "utils/articleUtility";
 import { useStateContext } from "../../store/StateContext";
+import jStorage from "jstorage-react";
 
 export default function TopNudge({objVc}) {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
   const [metaInfo, setMetaInfo] = useState<any>({});
 
-  const fetchSubsc = () => {
+  const fetchSubsc = async () => {
+    const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
+    const isGroupUser = permissions.includes("group_subscription") || false;
+    const res = await Service.get({
+      url,
+      params: { merchantCode: "ET", isGroupUser },
+    });
+    const resData = res?.data || [];
+
     /* const isGroupUser = window.objInts.permissions.includes("group_subscription");
     const url = `https://${objVc.subscriptions}.economictimes.indiatimes.com/subscription/allUserSubscriptions?merchantCode=ET&isGroupUser=${isGroupUser}`;
 
@@ -29,44 +39,46 @@ export default function TopNudge({objVc}) {
         .catch(err => {
           console.log('error: ', err);
         }) */
-        const data = [{
-            "merchantCode": "ET",
-            "productCode": "ETPR",
-            "productName": "ET Prime",
-            "planName": "Annual Membership",
-            "purchaseDate": "2023-01-18 15:14:48",
-            "expiryDate": "2024-02-01 15:14:48",
-            "paymentMode": "ETPAY",
-            "recurring": 0,
-            "price": 2499,
-            "finalBillingAmount": 2499,
-            "discount": 0,
-            "currency": "INR",
-            "userSubscriptionId": "63c7bf90cb571cfa97a1dc4e",
-            "subscriptionStatus": "active",
-            "trialExpiryDate": "2023-02-01 15:14:48",
-            "trial": false,
-            "refundable": false,
-            "canRenew": true,
-            "planPeriod": 1,
-            "planPeriodUnit": "YEAR",
-            "planId": 28,
-            "userAcquisitionType": "REGULAR_PLAN_PURCHASE",
-            "paymentMethod": "CC",
-            "trialEndDate": "2023-02-01 15:14:48",
-            "showRenew": true,
-            "eligibleForUpgrade": false,
-            "eligibleForExtension": false,
-            "graceEndDate": "2024-02-17 15:14:48",
-            "subscriptionStartDate": "2023-01-18 15:14:48",
-            "planCode": "etprAnnualPlan",
-            "daysLeft": 16,
-            "eligibleForSiMandate": false,
-            "siteAppCodeType": "ET",
-            "planPriceCurrency": "INR",
-            "planShortName": "Yearly"
-        }]
-        checkNudgeType(data);
+
+
+        // const data = [{
+        //     "merchantCode": "ET",
+        //     "productCode": "ETPR",
+        //     "productName": "ET Prime",
+        //     "planName": "Annual Membership",
+        //     "purchaseDate": "2023-01-18 15:14:48",
+        //     "expiryDate": "2024-02-01 15:14:48",
+        //     "paymentMode": "ETPAY",
+        //     "recurring": 0,
+        //     "price": 2499,
+        //     "finalBillingAmount": 2499,
+        //     "discount": 0,
+        //     "currency": "INR",
+        //     "userSubscriptionId": "63c7bf90cb571cfa97a1dc4e",
+        //     "subscriptionStatus": "active",
+        //     "trialExpiryDate": "2023-02-01 15:14:48",
+        //     "trial": false,
+        //     "refundable": false,
+        //     "canRenew": true,
+        //     "planPeriod": 1,
+        //     "planPeriodUnit": "YEAR",
+        //     "planId": 28,
+        //     "userAcquisitionType": "REGULAR_PLAN_PURCHASE",
+        //     "paymentMethod": "CC",
+        //     "trialEndDate": "2023-02-01 15:14:48",
+        //     "showRenew": true,
+        //     "eligibleForUpgrade": false,
+        //     "eligibleForExtension": false,
+        //     "graceEndDate": "2024-02-17 15:14:48",
+        //     "subscriptionStartDate": "2023-01-18 15:14:48",
+        //     "planCode": "etprAnnualPlan",
+        //     "daysLeft": 16,
+        //     "eligibleForSiMandate": false,
+        //     "siteAppCodeType": "ET",
+        //     "planPriceCurrency": "INR",
+        //     "planShortName": "Yearly"
+        // }]
+        checkNudgeType(resData);
   }
 
   const checkNudgeType = (data) => {
@@ -98,10 +110,10 @@ export default function TopNudge({objVc}) {
   }
 
   const appendBand = async(bannerType) => {
-    var nudgeSavedObj = window.e$.jStorage.get('topNudgeObj') && JSON.parse(window.e$.jStorage.get('topNudgeObj'));
+    var nudgeSavedObj = jStorage.get('topNudgeObj') && JSON.parse(jStorage.get('topNudgeObj'));
     var reActivatedEnabled = nudgeSavedObj ? +new Date() > nudgeSavedObj.reActivatedOn : true;
     var topNudgeEnabled = objVc.top_nudge_enable && Number(objVc.top_nudge_enable) || 0;
-    var accessPassData = window.e$.jStorage.get('accessPassData');
+    var accessPassData = jStorage.get('accessPassData');
     var isOnBoardingeligibile = accessPassData && accessPassData.eligible;
 
     if(reActivatedEnabled && topNudgeEnabled && !isOnBoardingeligibile) {

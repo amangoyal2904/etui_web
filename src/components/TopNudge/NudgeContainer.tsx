@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import jStorage from "jstorage-react";
 import { ET_IMG_DOMAIN } from "../../utils/common";
 import styles from "./styles.module.scss";
 import { grxEvent } from "utils/ga";
@@ -29,13 +29,13 @@ function NudgeContainer({data}) {
         var frequencyVal = data?.cross_frequency;
         if(frequencyVal) {
             var reActivatedOn = +new Date() + (Number(frequencyVal) * 1000 * 60 * 60 * 24);
-            $.jStorage.set('topNudgeObj', JSON.stringify({reActivatedOn: reActivatedOn}));
+            jStorage.set('topNudgeObj', JSON.stringify({reActivatedOn: reActivatedOn}));
         }
         
-        grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Dismiss', 'event_label': bannerType + ' | Banner Location '+ currPageType()});
-        $("#topnavBlk").css("top", "0");
-        $('.topUserInfoBand').slideUp();
-        $('.topUserInfoBand').remove();
+        grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Dismiss', 'event_label': data.bannerType + ' | Banner Location '+ currPageType()});
+        // $("#topnavBlk").css("top", "0");
+        // $('.topUserInfoBand').slideUp();
+        // $('.topUserInfoBand').remove();
     }
 
     return (

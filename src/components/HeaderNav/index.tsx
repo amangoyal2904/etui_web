@@ -76,7 +76,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
     return sec?.sec;
   });
 
-  const handleHoverNav = (elm: any) => { // handleHoverNav can take in any argument
+  const handleHoverNav = (elm: any, index) => { // handleHoverNav can take in any argument
     const { sec, count, msid, nm } = elm;
     switch(nm){
       case "More":
@@ -86,7 +86,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       case "Spotlight":
         return <SpotlightNav sec={sec} />    
       default:
-        return <HandleHoverSecHtml sec={sec} count={count} msid={msid} />;
+        return <HandleHoverSecHtml key={`HandleHoverSecHtml_${index}`} sec={sec} count={count} msid={msid} />;
     }
   };
 
@@ -116,7 +116,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
                         if (elm.nm === data.nm) { // add error handling for wrong type or undefined value
                           return (
                             <React.Fragment key={`nav-l1-hover-${index}-${index2}`}>
-                              {handleHoverNav(elm)}
+                              {handleHoverNav(elm, index2)}
                             </React.Fragment>
                           );
                         }
