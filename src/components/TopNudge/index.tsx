@@ -285,10 +285,10 @@ export default function TopNudge({objVc}) {
   }
 
   useEffect(() => {
-    if(isLogin && !Number(objVc?.ads_primeuser_enable)) {
+    if(isPrime != "" && isLogin && !Number(objVc?.ads_primeuser_enable)) {
       fetchSubsc();
     }
-  }, [isLogin]);
+  }, [isPrime]);
 
   return (
     <>      
