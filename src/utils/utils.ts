@@ -13,13 +13,22 @@ declare global {
 
 export const getMarketBandData = (): (() => void) => {
   let interval: NodeJS.Timeout;
+  let currentInterval = 0;
 
   const fetchData = async () => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // Set a 5-second timeout
+
     try {
-      const response = await fetch("https://bselivefeeds.indiatimes.com/marketband.json");
+      const response = await fetch("https://bselivefeeds.indiatimes.com/marketband.json", {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error("Failed to fetch");
+        throw new Error(`Failed to fetch: ${response.statusText}`);
       }
+
       const text = await response.text();
 
       // Extract JSON data from the response text
@@ -29,10 +38,9 @@ export const getMarketBandData = (): (() => void) => {
       processBandData(jsonData);
 
       // Adjust the interval based on market status
-      if (jsonData.marketStatus.currentMarketStatus !== "LIVE") {
-        updateInterval(120e3); // 2 minutes in milliseconds
-      } else {
-        updateInterval(12e3); // 12 seconds in milliseconds
+      const newInterval = jsonData?.marketStatus?.currentMarketStatus !== "LIVE" ? 120e3 : 12e3; // 2 min or 12 sec
+      if (newInterval !== currentInterval) {
+        updateInterval(newInterval);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -42,15 +50,17 @@ export const getMarketBandData = (): (() => void) => {
     }
   };
 
-  // Function to extract JSON data from the text wrapped in marketlivedata(...)
   const extractJsonFromText = (text: string): any => {
-    const start = text.indexOf("{");
-    const end = text.lastIndexOf(")");
-    const jsonText = text.substring(start, end);
-    return JSON.parse(jsonText);
+    try {
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf(")");
+      const jsonText = text.substring(start, end);
+      return JSON.parse(jsonText);
+    } catch (e) {
+      throw new Error("Failed to parse JSON data");
+    }
   };
 
-  // Function to process and store band data
   const processBandData = (data: any) => {
     if (data && data.marketBandList) {
       window.objMarketBand = window.objMarketBand || {};
@@ -64,18 +74,16 @@ export const getMarketBandData = (): (() => void) => {
     }
   };
 
-  // Function to update the fetch interval
   const updateInterval = (newInterval: number) => {
     if (interval) {
       clearInterval(interval);
     }
+    currentInterval = newInterval;
     interval = setInterval(fetchData, newInterval);
   };
 
-  // Initial fetch
   fetchData();
 
-  // Return cleanup function to clear interval on component unmount
   return () => clearInterval(interval);
 };
 
