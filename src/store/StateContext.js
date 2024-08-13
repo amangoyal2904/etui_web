@@ -8,6 +8,7 @@ const initialState = {
   login: {
     ssoReady: "",
     isLogin: "",
+    isPrime: "",
     userInfo: {},
     ssoid: "",
     ticketId: "",
