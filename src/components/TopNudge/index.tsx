@@ -17,7 +17,7 @@ export default function TopNudge({objVc}) {
 
   const fetchSubsc = async () => {
     const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
-    const isGroupUser = permissions.includes("group_subscription") || false;
+    const isGroupUser = permissions?.includes("group_subscription") || false;
     const res = await Service.get({
       url,
       params: { merchantCode: "ET", isGroupUser },
