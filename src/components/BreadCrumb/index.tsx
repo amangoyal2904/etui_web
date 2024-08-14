@@ -9,6 +9,8 @@ interface BreadCrumbProps {
 export default function BreadCrumb({ data }: BreadCrumbProps) {
   const { state, dispatch } = useStateContext();
   const { isPrime } = state.login;
+
+  console.log("BreadCrumbProps ----", data)
   
   return (
     <>      

@@ -8,7 +8,7 @@ const SearchList = (props) => {
     searchValue = searchValue.toLowerCase();
     const displayListData = (type) => {
         let listData = (type == 'primeNews') ? data.filter(data => data.link.includes('/prime/')) : (type == 'news') ? data.filter(data => !data.link.includes('/prime/')) : data;
-        let list = listData.length > 0 && listData.map((data, i) => <li className={(i == listData.length - 1) ? styles.lastList : styles.list} key={i}><a href={type == 'reptr' ? `https://m.economictimes.com${data.link}` : data.link}>{makeBold(data.title)}</a> </li>)
+        let list = listData.length > 0 && listData.map((data, i) => <li className={(i == listData.length - 1) ? styles.lastList : styles.list} key={i}><a href={type == 'reptr' ? `https://economictimes.indiatimes.com${data.link}` : data.link}>{makeBold(data.title)}</a> </li>)
         return list;
     }
     const getCompanyData = (type) => {
