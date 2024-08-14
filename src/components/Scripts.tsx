@@ -33,6 +33,7 @@ declare global {
     };
     googletag: any;
     ispopup: any;
+    tpName: any;
     jsso?: {
       getValidLoggedInUser?: any;
       getUserDetails?: any;

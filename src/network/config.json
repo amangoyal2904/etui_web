@@ -67,26 +67,26 @@
     },
     "definition": {
       "development": [
-        "https://spmdev8243.economictimes.com/json_definitionsearch.cms"
+        "https://etdev8243.indiatimes.com/json_definitionsearch.cms"
       ],
       "production": [
-        "https://m.economictimes.com/json_definitionsearch.cms"
+        "https://economictimes.indiatimes.com/json_definitionsearch.cms"
       ]
     },
     "news": {
       "development": [
-        "https://spmdev8243.economictimes.com/json_newssearch.cms"
+        "https://etdev8243.indiatimes.com/json_newssearch.cms"
       ],
       "production": [
-        "https://m.economictimes.com/json_newssearch.cms"
+        "https://economictimes.indiatimes.com/json_newssearch.cms"
       ]
     },
     "reporter": {
       "development": [
-        "https://spmdev8243.economictimes.com/json_reportersearch.cms"
+        "https://etdev8243.indiatimes.com/json_reportersearch.cms"
       ],
       "production": [
-        "https://m.economictimes.com/json_reportersearch.cms"
+        "https://economictimes.indiatimes.com/json_reportersearch.cms"
       ]
     }
   },
