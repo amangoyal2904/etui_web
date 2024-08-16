@@ -181,7 +181,7 @@ const VideoShow = (props) => {
         {!isprimeuser && (
           <>
             <div className="adContainer">
-              <DfpAds adInfo={{ key: "atf", index: 0 }} objVc={version_control} />
+              <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={version_control} />
             </div>
             <div className="adContainer">
               <DfpAds adInfo={{ key: "mtf", index: 1 }} objVc={version_control} />
@@ -191,12 +191,16 @@ const VideoShow = (props) => {
         <MostViewVideos data={mostViewedVideos} />
         <Trending data={trendingVideos?.data} title={trendingVideos?.title} />
         <MostPopularNews data={mostPopularNews} />
-        {!isprimeuser && (
+        <div className="adContainer">
+        <DfpAds adInfo={{ key: "btf300", index: 2 }} objVc={version_control} />
+        </div>
+      
+      </aside> 
+      {!isprimeuser && (
           <div className="adContainer">
-            <DfpAds adInfo={{ key: "btf", index: 1 }} objVc={version_control} />
+            <DfpAds adInfo={{ key: "btf", index: 3 }} objVc={version_control} />
           </div>
         )}
-      </aside> 
     </>:""
   );
 };
