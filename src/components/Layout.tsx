@@ -55,17 +55,12 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
 
   return (
     <>
-      {!isprimeuser && (
-        <div className="topAdContainer">
-          <DfpAds adInfo={{ key: "topad" }} objVc={objVc} />
-        </div>
-      )}
       <TopNudge objVc={objVc} />
       <Headers />
       <main className={`pageHolder container`}>
         {!isprimeuser && (
           <div className="topAdContainer">
-            <DfpAds adInfo={{ key: "topad" }} objVc={objVc} />
+            <DfpAds adInfo={{ key: "atf" }} objVc={objVc} />
           </div>
         )}
         <HeaderMain
@@ -84,7 +79,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
         <RedeemVoucher />
       </main>
 
-      {!isprimeuser && <DfpAds adInfo={{ key: "skinleft" }} objVc={objVc} />}
+      {!isprimeuser && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
       {!isprimeuser && <RotatingCube objVc={objVc} />}
     </>
   );
