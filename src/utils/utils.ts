@@ -317,7 +317,7 @@ export const removeBackSlash = (val) => {
   return val;
 };
 
-export const loadAssets = (filename, fileType, attrType, position, cb = "", attr?, attrVal?, objAttr?) => {
+export const loadAssets = (filename, fileType, attrType, position, cb, attr?, attrVal?, objAttr?) => {
   try {
     if (filename) {
       let fileRef: any = "";

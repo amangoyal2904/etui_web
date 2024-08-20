@@ -172,7 +172,12 @@ const VideoShow = (props) => {
         <ReadMore readMoreText={result?.relKeywords} />
         {!isprimeuser && (
           <div className="adContainer">
-            <DfpAds adInfo={{ key: "mid1" }} objVc={version_control} />
+              <div id={`taboola-mid-article-thumbnails-${result.msid}`} 
+              className="wdt-taboola" 
+              data-mode="thumbnails-mid-mobile" 
+              data-target_type="mix" 
+              style={{height: '310px', marginTop:'7px', overflow:'hidden'}}
+              data-placement={`Mid Article Thumbnails`} />
           </div>
         )}
         <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
