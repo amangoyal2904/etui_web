@@ -4,6 +4,10 @@ import GreyDivider from "components/GreyDivider";
 import { isNoFollow } from "utils";
 import SearchBar from "components/SearchBar";
 import { useStateContext } from "../../store/StateContext";
+import Global_Config from "../../network/global_config.json";
+import {
+  APP_ENV
+} from "../../utils";
 
 const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFooterData, page }) => {
   const [isExpanded, setIsExpanded] = useState({});
@@ -86,17 +90,19 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFoote
 
         {!isSubscribed && (
           <div className={`${styles.row} ${styles.contentRight}`}>
-            <div
-              onClick={() => paymentButtonListener()}
+            <a
+              href={Global_Config[APP_ENV]["Prime_Page"]}
               data-ga-onclick="Prime Distribution - Web#Footer#Web Footer Prime Click"
             >
               <span className={`${styles.primeLogo} ${styles.commonSprite}`} />
-            </div>
+            </a>
           </div>
         )}
         <div className={`${styles.row} ${styles.contentRight}`}>
-          <span className={`${styles.subscribe} ${styles.commonSprite}`} />
-          <h4>subscribe to our newsletter</h4>
+          <a href={`${Global_Config[APP_ENV]["ET_WEB_URL"]}/subscription`}>
+            <span className={`${styles.subscribe} ${styles.commonSprite}`} />
+            <h4>subscribe to our newsletter</h4>
+          </a>
         </div>
       </div>
     );

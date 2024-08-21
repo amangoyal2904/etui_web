@@ -13,6 +13,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { callJsOnRouteChange } from "utils/priority";
 import TopNudge from "./TopNudge";
 import BreakingNews from "./BreakingNews";
+import { useStateContext } from "../store/StateContext";
 
 const RotatingCube = dynamic(() => import("./RotatingCube"), {
   ssr: false
@@ -35,6 +36,9 @@ interface ChildProps {
 }
 
 const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children }) => {
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+
   if (!data?.seo?.subsecnames || !data?.seo?.sectionDetail) {
     data.seo = {};
     data.seo.subsecnames = {};
@@ -58,7 +62,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
       <TopNudge objVc={objVc} />
       <Headers />
       <main className={`pageHolder container`}>
-        {!isprimeuser && (
+        {!isPrime && (
           <div className="topAdContainer">
             <DfpAds adInfo={{ key: "atf" }} objVc={objVc} />
           </div>
@@ -73,14 +77,14 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
         <BreadCrumb data={data?.seo?.breadcrumb} />
         <BreakingNews />
         <div className="layout">{children}</div>
-        <Scripts objVc={objVc} isprimeuser={isprimeuser} />
-        {!isprimeuser && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
+        <Scripts objVc={objVc} isprimeuser={isPrime} />
+        {!isPrime && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
         <Footer dynamicFooterData={dynamicFooterData} page={page} />
         <RedeemVoucher />
       </main>
 
-      {!isprimeuser && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
-      {!isprimeuser && <RotatingCube objVc={objVc} />}
+      {!isPrime && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
+      {!isPrime && <RotatingCube objVc={objVc} />}
     </>
   );
 };
