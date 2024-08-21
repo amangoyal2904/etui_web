@@ -6,6 +6,9 @@ import { FC, useEffect } from "react";
 import { APP_ENV, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 import GLOBAL_CONFIG from "../network/global_config.json";
+import {loadAndBeyondScript, loadTaboolaScript} from "./Ad/AdScript";
+import { useStateContext } from "../store/StateContext";
+
 
 interface Props {
   isprimeuser?: number | boolean;
@@ -80,13 +83,19 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
 
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
   const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
-
-
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
+  let execution = 0;
 
   useEffect(() => {
     // window.optCheck = router.asPath.indexOf("opt=1") != -1;
     //updateDimension();
-  }, []);
+    if(typeof isPrime != "undefined" && typeof permissions!="undefined" && execution == 0){
+      loadAndBeyondScript(isPrime);
+      loadTaboolaScript(isPrime);
+      execution = 1;
+    }
+  }, [isPrime, permissions]);
 
   return (
     <>
