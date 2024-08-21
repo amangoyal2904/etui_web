@@ -10,7 +10,7 @@ function findBannerType(page) {
   const pageObject = allPageTypes.find(obj => obj.page === page);
   return pageObject;
 }
-const Footer = async ({ dynamicFooterData, page }) => {
+const Footer = ({ dynamicFooterData, page }) => {
   const bandObj = findBannerType(page);
   return (
     <>
