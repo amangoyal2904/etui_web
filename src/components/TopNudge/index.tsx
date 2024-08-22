@@ -18,6 +18,20 @@ export default function TopNudge({objVc}) {
   const fetchSubsc = async () => {
     const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
     const isGroupUser = permissions?.includes("group_subscription") || false;
+    fetch(url , {
+      method: 'GET',
+      credentials: 'include'
+  })
+      .then(res => res.json())
+      .then(nextCommentsData => {
+        console.log(nextCommentsData, 'nextCommentsData');
+        checkNudgeType(nextCommentsData);
+      })
+      .catch(err => {
+        console.log('error: ', err);
+      });
+
+    
     const res = await Service.get({
       url,
       params: { merchantCode: "ET", isGroupUser },
@@ -29,19 +43,7 @@ export default function TopNudge({objVc}) {
     const resData = res?.data || [];
 
 
-    fetch(url , {
-        method: 'GET',
-        credentials: 'include'
-    })
-        .then(res => res.json())
-        .then(nextCommentsData => {
-          console.log(nextCommentsData, 'nextCommentsData');
-          checkNudgeType(nextCommentsData);
-        })
-        .catch(err => {
-          console.log('error: ', err);
-        });
-
+    
 
         // const data = [{
         //     "merchantCode": "ET",
