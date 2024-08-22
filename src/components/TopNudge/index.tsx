@@ -23,7 +23,7 @@ export default function TopNudge({objVc}) {
       params: { merchantCode: "ET", isGroupUser },
       withCredentials: true,
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "content-type": "application/json; charset=utf-8"
       }
     });
     const resData = res?.data || [];
