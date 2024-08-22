@@ -30,7 +30,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
   const [stickyOffsetTop, setStickyOffsetTop] = useState<number>(0);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   useEffect(() => {
     document.addEventListener('mousemove', handleHoverSubSec);
@@ -96,7 +96,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       {searchBar && <SearchBar searchBar={searchBar} setSearchBarOff={() => setSearchBar(!searchBar)}/>}
       {/* Empty div as a placeholder to maintain the layout when the element becomes sticky */}
       {isSticky && !isScrolledToTop && <div style={{ height: '35px' }}></div>}
-      <div id="topnavBlk" ref={headerRef} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPrime ? styles.pink_theme : ""}`} >
+      <div id="topnavBlk" ref={headerRef} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPink ? styles.pink_theme : ""}`} >
         <nav id="topnav" className={`level1 ${styles.topnav}`} 
         itemScope
         itemType="https://schema.org/SiteNavigationElement">

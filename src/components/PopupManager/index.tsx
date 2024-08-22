@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import IfrOnboarding from 'components/IfrOnboarding';
 import PrimeLoginMap from 'components/PrimeLoginMap';
 import { useStateContext } from "../../store/StateContext";
+import UserProfiling from 'components/UserProfiling';
 
 const PopupManager: React.FC = () => {
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0);
@@ -58,6 +59,8 @@ const PopupManager: React.FC = () => {
                 return <IfrOnboarding onClose={handleClose} />;
               case 'primeLoginMap':
                 return <PrimeLoginMap onClose={handleClose} />;
+              case 'userprofiling':
+                <UserProfiling onClose={handleClose} />  
               default:
                 return <div>No component found</div>;
             }

@@ -37,7 +37,7 @@ interface ChildProps {
 
 const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children }) => {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
 
   if (!data?.seo?.subsecnames || !data?.seo?.sectionDetail) {
     data.seo = {};
@@ -62,7 +62,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
       <TopNudge objVc={objVc} />
       <Headers />
       <main className={`pageHolder container`}>
-        {!isPrime && (
+        {!isPink && (
           <div className="topAdContainer">
             <DfpAds adInfo={{ key: "atf" }} objVc={objVc} />
           </div>
@@ -77,14 +77,14 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
         <BreadCrumb data={data?.seo?.breadcrumb} />
         <BreakingNews />
         <div className="layout">{children}</div>
-        <Scripts objVc={objVc} isprimeuser={isPrime} />
-        {!isPrime && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
+        <Scripts objVc={objVc} isprimeuser={isPink} />
+        {!isPink && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
         <Footer dynamicFooterData={dynamicFooterData} page={page} />
         <RedeemVoucher />
       </main>
 
-      {!isPrime && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
-      {!isPrime && <RotatingCube objVc={objVc} />}
+      {!isPink && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
+      {!isPink && <RotatingCube objVc={objVc} />}
     </>
   );
 };

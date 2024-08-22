@@ -13,7 +13,7 @@ const SearchBar = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   const handleInput = (e) => {
     let searchValue = e.target.value;
@@ -113,16 +113,16 @@ const SearchBar = (props) => {
   }
   return (
     <>
-      <div className={`${styles.srch_container} ${isPrime ? styles.pink_theme : ""}`}>
+      <div className={`${styles.srch_container} ${isPink ? styles.pink_theme : ""}`}>
         <div className={`${footerSearch ? styles.btm_srch_div : styles.srch_overlay_div}`}>
           <div className={`${footerSearch ? styles.btm_srch_content : styles.srch_overlay_content}`}>
 
-            {footerSearch ? <div className={isPrime ? styles.footlogo_wrp : 'flt'}>
+            {footerSearch ? <div className={isPink ? styles.footlogo_wrp : 'flt'}>
               <a title="The Economic Times" href="/">
                 <img className={styles.logo} loading="lazy"
                   title="The Economic Times"
                   alt="The Economic Times"
-                  src={isPrime ? "https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" : "https://img.etimg.com/photo/msid-74462387,quality-100/et-logo.jpg"}
+                  src={isPink ? "https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" : "https://img.etimg.com/photo/msid-74462387,quality-100/et-logo.jpg"}
                   height="28"
                   width="255" />
               </a>

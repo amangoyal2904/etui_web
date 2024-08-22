@@ -29,6 +29,8 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         accessibleFeatures: action.payload.accessibleFeatures,
         permissions: action.payload.permissions, 
         email: action.payload.userInfo.primaryEmail,
+        isAdfree: action.payload.isAdfree,
+        isPink: action.payload.isPink,
         error: null 
       };
     case "LOGOUT":
@@ -43,6 +45,8 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         accessibleFeatures: [], 
         permissions: [], 
         email: "",
+        isAdfree: action.payload.ssoReady,
+        isPink: false,
         error: null
       };
     default:

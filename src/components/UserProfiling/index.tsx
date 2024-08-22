@@ -41,9 +41,9 @@ interface Errors {
     [key: string]: string;
 }
 type Questionnaire = Question[];
-const UserProfile = () => {
+const UserProfile = (onClose) => {
     const { state, dispatch } = useStateContext();
-    const { isPrime } = state.login;
+    const { isPrime, isPink } = state.login;
     const otpBoxReference = useRef<HTMLInputElement[]>([]);
     const [profileObj, setProfileObj] = useState<ProfileData>({
         name: "",
@@ -154,6 +154,7 @@ const UserProfile = () => {
         setShowProfileForm(false);
         typeof window.e$ !== 'undefined' && window.e$.jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
         document.body.classList.remove(styles.noscroll);
+        onClose();
     }
     const setDefaultData = userInfo => {
         if (typeof window.geoinfo !== "undefined" && window.geoinfo) {

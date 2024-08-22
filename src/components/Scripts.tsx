@@ -52,6 +52,7 @@ declare global {
       ssoid?: any;
       ticketId?: any;
       email?: any;
+      isPink?: any;
       info?: {
         thumbImageUrl: any;
         primaryEmail: string;

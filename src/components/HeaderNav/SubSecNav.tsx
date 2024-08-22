@@ -18,7 +18,7 @@ interface Props {
 const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
   const { msid, moreCount, sec } = subSectionList[0];
   const { state } = useStateContext();
-  const { isPrime } = state.login;
+  const {  isPrime, isPink} = state.login;
 
   // Check if any item in the "More" section matches the current msid
   const isCurrentInMoreSection = Array.isArray(sec)
@@ -29,7 +29,7 @@ const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
     : false;
 
   return (
-    <div className={`${styles.sbnv_wrapper} ${isPrime ? styles.pink_theme : ""}`}>
+    <div className={`${styles.sbnv_wrapper} ${isPink ? styles.pink_theme : ""}`}>
       <nav className={styles.subsec_nav}>
         {Array.isArray(sec) && sec.slice(0, (moreCount || 0) - 1).map((data, index) => (
           <SubSecNavHtml

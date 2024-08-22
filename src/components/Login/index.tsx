@@ -11,7 +11,8 @@ import {
   setCookieToSpecificTime,
   delete_cookie,
   saveLogs,
-  userMappingData
+  userMappingData,
+  adFreeEx
 } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
@@ -21,13 +22,15 @@ import { gotoPlanPage } from '../../utils/utils';
 
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree } = state.login;
 
   //console.log(state.login);
 
   const verifyLoginSuccessCallback = async () => {
     try {
       //document.body.classList.add("isprimeuser");
+      // window.objUser.isPink = true; 
+      // window.objUser.isPink && document.body.classList.add("isprimeuser");
       const primeRes = await loadPrimeApi();
       if (primeRes?.status === "SUCCESS") {
         const isPrime =
@@ -35,18 +38,28 @@ const Login = ({headertext}) => {
           primeRes?.data.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("subscribed");
           });
+        const isExpired =
+          primeRes?.data &&
+          primeRes?.data.permissions.some(function (item: any) {
+            return !item.includes("etadfree") && item.includes("expired_subscription");
+          });  
         window.objUser.permissions = primeRes?.data?.permissions || [];
         window.objUser.accessibleFeatures =
           primeRes.data.accessibleFeatures || [];
         window.objUser.primeInfo = primeRes?.data;
         window.objUser.isPrime = isPrime;
+        window.objUser.isPink = true; //isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
         if (primeRes && primeRes?.token) {
           setCookieToSpecificTime("OTR", primeRes.token, 30, 0, 0, "");
         }
 
         
-        isPrime && document.body.classList.add("isprimeuser");
+        window.objUser.isPink && document.body.classList.add("isprimeuser");
+
+        if(isExpired){
+          adFreeEx();
+        }
 
         const primeUserLoginMap_check = Number(localStorage.getItem("primeUserLoginMap_check")) == 1 || false;
         if(primeUserLoginMap_check){
@@ -89,6 +102,7 @@ const Login = ({headertext}) => {
           ssoid: window.objUser?.ssoid,
           email: window.objUser?.info?.primaryEmail || "",
           ticketId: window.objUser?.ticketId,
+          isPink: window.objUser?.isPink,
           accessibleFeatures: window.objUser.accessibleFeatures,
           //[
           //   "ETSCREE",
@@ -164,6 +178,8 @@ const Login = ({headertext}) => {
         ticketId: "",
         accessibleFeatures: [],
         permissions: [],
+        isAdfree: false,
+        isPink: false
       },
     });
   };
@@ -232,7 +248,7 @@ const Login = ({headertext}) => {
     <>
       {
         ssoReady ? (
-          <div className={`${styles.flr} ${styles.subSign} ${isPrime ? styles.pink_theme : ""}`}>
+          <div className={`${styles.flr} ${styles.subSign} ${isPink ? styles.pink_theme : ""}`}>
             {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
@@ -262,7 +278,7 @@ const Login = ({headertext}) => {
               }
             </div>
             {
-              !isPrime && <div className={styles.soWrapper}>
+              (!isPrime || isAdfree) && <div className={styles.soWrapper}>
                 <a className={`${styles.hdr_spcl_ofr}`} onClick={gotoPlanPage}>{headerText()}</a>
               </div>
             }
