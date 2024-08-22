@@ -14,7 +14,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFoote
   const hide_footer = false;
 
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   const paymentButtonListener = () => {
     const paymentUrl = "";
@@ -187,11 +187,11 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFoote
      }
    }
   return (
-    <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPrime ? styles.pink_theme : ""}`}>
+    <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPink ? styles.pink_theme : ""}`}>
       <div className={styles.dynamicContainer}>
-        {!isPrime && <GreyDivider />}
+        {!isPink && <GreyDivider />}
         {
-          isPrime ? <div className={styles.sbr_wrap}>
+          isPink ? <div className={styles.sbr_wrap}>
             <SearchBar footerSearch={true}/>
             {page == "home" && browseCompany()}  
           </div> : <>

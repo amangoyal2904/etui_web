@@ -13,7 +13,7 @@ const SideNav = () => {
   const [sideNavData, setSideNav] = useState<SideNavData[] | null>(null);
   const [closeClass, setCloseClass] = useState<boolean>(false);
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   useEffect(() => {
     const sideNavRef = document.getElementById("sideMenu");
@@ -84,7 +84,7 @@ const SideNav = () => {
 
   return (
     <>
-      <div className={`${styles.sections} ${styles.hamberMenu} ${closeClass && styles.closeMenu} ${isPrime ? styles.pink_theme : ""}`} onClick={() => setCloseClass(!closeClass)} id="sideMenu">
+      <div className={`${styles.sections} ${styles.hamberMenu} ${closeClass && styles.closeMenu} ${isPink ? styles.pink_theme : ""}`} onClick={() => setCloseClass(!closeClass)} id="sideMenu">
         <span className={`${styles.hamberIcon} ${styles.commonSprite}`} />
         <nav id="sideBarNav" className={styles.ddNav} >
           {sideNavData ? sideNavApiHtml() : <div>Loading...</div>} {/* Conditional rendering */}

@@ -4,6 +4,7 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
+import { useStateContext } from "../store/StateContext";
 
 // const { publicRuntimeConfig = {} } = getConfig();
 export const APP_ENV = "development";  //(process.env.NODE_ENV && process.env.NODE_ENV.trim()) || "production";
@@ -709,3 +710,77 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
     jStorage.set('primeUserLoginMap', JSON.stringify(primeUserLoginMap));
   }
 };
+
+export const isSameDay = (flag) => {
+  return new Date(flag).getDate() === new Date().getDate();
+}
+
+export const setAdFreeExp = (nudgeFlag, ssoid, dispatch) => {
+  var ssoGrxId = ssoid ? ssoid : getCookie('_grx');
+  var isAdFreeExpRef = jStorage.get('adFreeCampign_' + ssoGrxId);
+  if(isAdFreeExpRef.eligible && !isAdFreeExpRef.availed) {
+      //objAd.type == 'adfree';
+      window.objUser.isPink = true;
+      
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          isAdfree: true,
+          isPink: window.objUser.isPink
+        },
+      });
+      // $('.dib.subScribe, .soWrapper').remove();
+      //$('html').addClass('prime_header skip_cube skipStickyBand skip_popup');
+
+      //objUserSubscriptions.appendBand(nudgeFlag);
+  }
+};
+
+export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
+  var ssoGrxId = ssoid ? ssoid : getCookie('_grx');
+  var addFreeCampignRef = jStorage.get('adFreeCampign_' + ssoGrxId);
+
+  if(!addFreeCampignRef) {
+      var userDetails = jStorage.get('prime_' + ticketId);
+      var timeStampDiff = (+new Date()) - (+new Date(userDetails.subscriptionDetail.graceEndDate));
+      var dayDiff = Math.round(timeStampDiff / (1000 * 3600 * 24));
+      var isValidForCampaign = Number(window.objVc.adfree_campign_eud || 900) > dayDiff;
+      if(isValidForCampaign) {
+        jStorage.set('adFreeCampign_' + ssoGrxId, {lastVisitedTime: +new Date(), availed: false, eligible: true, counter: 1});
+        setAdFreeExp("adFree", ssoid, dispatch);
+        //grxEvent('event', {'event_category': 'Adfree expired',  'event_action': 'True', 'event_label':  ''}, 1);
+      }
+  } else if(!addFreeCampignRef.availed) {
+      var adFreeExpAvailed = addFreeCampignRef.counter >= Number(counter);
+      if(adFreeExpAvailed) {
+          var updatedObj = {lastVisitedTime: +new Date(), availed: true, eligible: false, counter: Number(window.objVc.adfree_campign_counter || 20)}
+          jStorage.set('adFreeCampign_' + ssoGrxId, updatedObj);
+      } else {
+          addFreeCampignRef.lastVisitedTime = +new Date();
+          if(!isSameDay(+new Date())) {
+            addFreeCampignRef.counter = addFreeCampignRef.counter + 1;
+            //grxEvent('event', {'event_category': 'Adfree expired',  'event_action': 'True', 'event_label':  ''}, 1);
+          }
+          jStorage.set('adFreeCampign_' + ssoGrxId, addFreeCampignRef);
+          setAdFreeExp("adFree", ssoid, dispatch);
+      }
+  }
+}
+
+export const adFreeEx = () => {
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime, permissions, ssoid, ticketId } = state.login;
+
+  var isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
+      isExpiredUser = permissions.indexOf("expired_subscription") !== -1,
+      getSSOID = ssoid || getCookie('_grx'),
+      addFreeCampignRef = jStorage.get('adFreeCampign_'+getSSOID);
+
+      if(isExpiredUser && Number(isAddFreeEnabled)) {
+        setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, ticketId, dispatch);
+    }
+    
+    if(!Number(isAddFreeEnabled)) {
+      jStorage.deleteKey('adFreeCampign_'+ssoid);
+    }
+}

@@ -17,7 +17,6 @@ const Footer = ({ dynamicFooterData, page }) => {
       <footer id="webFooter">
         <DynamicFooter dynamicFooterData={dynamicFooterData} page={page} />
         <StickyFooter bandObj={bandObj} />
-        <UserProfiling />
       </footer>
     </>
   );

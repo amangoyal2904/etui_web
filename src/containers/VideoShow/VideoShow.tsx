@@ -46,7 +46,7 @@ const VideoShow = (props) => {
   const { msid } = parameters || {};
   const { cpd_wap = "0" }: any = version_control || {};
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
 
   const subsecNames = props?.seo?.subsecnames;
 
@@ -173,7 +173,7 @@ const VideoShow = (props) => {
           </a>
         </div>
         <ReadMore readMoreText={result?.relKeywords} />
-        {!isPrime && (
+        {!isPink && (
           <div className="adContainer">
               <div id={`taboola-mid-article-thumbnails-${result.msid}`} 
               className="wdt-taboola" 
@@ -186,7 +186,7 @@ const VideoShow = (props) => {
         <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
       </section>
       <aside className="sidebar">
-        {!isPrime && (
+        {!isPink && (
           <>
             <div className="adContainer">
               <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={version_control} />
@@ -199,12 +199,12 @@ const VideoShow = (props) => {
         <MostViewVideos data={mostViewedVideos} />
         <Trending data={trendingVideos?.data} title={trendingVideos?.title} />
         <MostPopularNews data={mostPopularNews} />
-        <div className="adContainer">
+        {!isPink && <div className="adContainer">
         <DfpAds adInfo={{ key: "btf300", index: 2 }} objVc={version_control} />
-        </div>
+        </div>}
       
       </aside> 
-      {!isPrime && (
+      {!isPink && (
           <div className="adContainer">
             <DfpAds adInfo={{ key: "btf", index: 3 }} objVc={version_control} />
           </div>

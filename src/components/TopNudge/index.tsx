@@ -12,7 +12,7 @@ import jStorage from "jstorage-react";
 
 export default function TopNudge({objVc}) {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, permissions, isPink } = state.login;
   const [metaInfo, setMetaInfo] = useState<any>({});
 
   const fetchSubsc = async () => {
@@ -292,7 +292,7 @@ export default function TopNudge({objVc}) {
 
   return (
     <>      
-      <div className={`${styles.breadCrumb} ${isPrime ? styles.pink_theme : ""}`}>
+      <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`}>
         <div className={styles.breadCrumbWrap}>
           {metaInfo?.banner_enabled === "on" && <NudgeContainer data={metaInfo} />}
         </div>

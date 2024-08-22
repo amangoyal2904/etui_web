@@ -39,7 +39,7 @@ const nlChannelId = '5f5a00075651d4e45e1b67d6';
 const useNewsletterSubscription = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
 
   // Function to initialize newsletter subscription
   const initSubscription = async (config: any, callback: (cbData: any) => void) => {

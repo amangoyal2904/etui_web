@@ -8,13 +8,13 @@ interface BreadCrumbProps {
 
 export default function BreadCrumb({ data }: BreadCrumbProps) {
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   console.log("BreadCrumbProps ----", data)
   
   return (
     <>      
-      <div className={`${styles.breadCrumb} ${isPrime ? styles.pink_theme : ""}`}>
+      <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`}>
         <div className={styles.breadCrumbWrap}>
           {data?.map((item, i) => (
             <Fragment key={i}>

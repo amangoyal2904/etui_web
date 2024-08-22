@@ -14,7 +14,9 @@ const initialState = {
     ticketId: "",
     email: "",
     error: null,
-    permissions: []
+    permissions: [],
+    isAdfree: "",
+    isPink: false
   }
 };
 

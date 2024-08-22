@@ -9,7 +9,7 @@ const IfrOnboarding = (onClose) => {
   const [showIframe, setShowIframe] = useState(false);
   //const [onboardApiHit, setOnboardApiHit] = useState(false);
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime, ssoid, email } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, ssoid, email, isPink } = state.login;
   const onboardTimerRef = useRef<any>(null);
   let onboardApiHit = false;
 
