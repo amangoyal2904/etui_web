@@ -140,6 +140,7 @@ const VideoShow = (props) => {
                 hostId: result.hostid,
                 type: "5"
               }}
+              articleData={result}
             />
           </div>
           <div className={`vidWrapInner ${!isPopupVidClosed && isPopupVid ? styles.popupVid : ""}`}>
