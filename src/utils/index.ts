@@ -4,7 +4,6 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
-import { useStateContext } from "../store/StateContext";
 
 // const { publicRuntimeConfig = {} } = getConfig();
 export const APP_ENV = "development";  //(process.env.NODE_ENV && process.env.NODE_ENV.trim()) || "production";
@@ -765,22 +764,4 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
           setAdFreeExp("adFree", ssoid, dispatch);
       }
   }
-}
-
-export const adFreeEx = () => {
-  const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime, permissions, ssoid, ticketId } = state.login;
-
-  var isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
-      isExpiredUser = permissions.indexOf("expired_subscription") !== -1,
-      getSSOID = ssoid || getCookie('_grx'),
-      addFreeCampignRef = jStorage.get('adFreeCampign_'+getSSOID);
-
-      if(isExpiredUser && Number(isAddFreeEnabled)) {
-        setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, ticketId, dispatch);
-    }
-    
-    if(!Number(isAddFreeEnabled)) {
-      jStorage.deleteKey('adFreeCampign_'+ssoid);
-    }
 }
