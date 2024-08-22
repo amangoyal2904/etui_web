@@ -21,7 +21,10 @@ export default function TopNudge({objVc}) {
     const res = await Service.get({
       url,
       params: { merchantCode: "ET", isGroupUser },
-      withCredentials: true
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     const resData = res?.data || [];
 
