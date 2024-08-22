@@ -28,8 +28,6 @@ export default function TopNudge({objVc}) {
     });
     const resData = res?.data || [];
 
-    /* const isGroupUser = window.objInts.permissions.includes("group_subscription");
-    const url = `https://${objVc.subscriptions}.economictimes.indiatimes.com/subscription/allUserSubscriptions?merchantCode=ET&isGroupUser=${isGroupUser}`;
 
     fetch(url , {
         method: 'GET',
@@ -38,11 +36,11 @@ export default function TopNudge({objVc}) {
         .then(res => res.json())
         .then(nextCommentsData => {
           console.log(nextCommentsData, 'nextCommentsData');
-          checkNudgeType();
+          checkNudgeType(nextCommentsData);
         })
         .catch(err => {
           console.log('error: ', err);
-        }) */
+        });
 
 
         // const data = [{
