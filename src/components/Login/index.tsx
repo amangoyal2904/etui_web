@@ -12,19 +12,37 @@ import {
   delete_cookie,
   saveLogs,
   userMappingData,
-  adFreeEx
+  setAdFreeData,
+  getCookie
 } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import Image from "next/image";
 import APIS_CONFIG from "../../network/config.json";
 import { gotoPlanPage } from '../../utils/utils';
+import jStorage from "jstorage-react";
 
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree, permissions, ssoid, ticketId } = state.login;
 
   //console.log(state.login);
+
+  const adFreeEx = () => {
+  
+    var isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
+        isExpiredUser = permissions.indexOf("expired_subscription") !== -1,
+        getSSOID = ssoid || getCookie('_grx'),
+        addFreeCampignRef = jStorage.get('adFreeCampign_'+getSSOID);
+  
+        if(isExpiredUser && Number(isAddFreeEnabled)) {
+          setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, ticketId, dispatch);
+      }
+      
+      if(!Number(isAddFreeEnabled)) {
+        jStorage.deleteKey('adFreeCampign_'+ssoid);
+      }
+  }
 
   const verifyLoginSuccessCallback = async () => {
     try {
