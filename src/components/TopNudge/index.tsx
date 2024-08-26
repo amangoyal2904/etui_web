@@ -16,12 +16,14 @@ export default function TopNudge({objVc}) {
   const [metaInfo, setMetaInfo] = useState<any>({});
 
   const fetchSubsc = async () => {
-    const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
     const isGroupUser = permissions?.includes("group_subscription") || false;
-    fetch(url , {
+    const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
+    const finalUrl = `${url}?merchantCode=ET&isGroupUser=${isGroupUser}`;
+
+    fetch(finalUrl , {
       method: 'GET',
       credentials: 'include'
-  })
+    })
       .then(res => res.json())
       .then(nextCommentsData => {
         console.log(nextCommentsData, 'nextCommentsData');
@@ -33,7 +35,7 @@ export default function TopNudge({objVc}) {
 
     
     const res = await Service.get({
-      url,
+      finalUrl,
       params: { merchantCode: "ET", isGroupUser },
       withCredentials: true,
       headers: {
