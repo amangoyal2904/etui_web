@@ -35,6 +35,7 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
 
   const commodityNewsApi = (listcount: number, msid: number) => {
     const url = APIS_CONFIG.commodityNews[window.APP_ENV];
+    //@ts-ignore
     Service?.get({
       url,
       params: { feedtype: "etjson", listcount, msid }
