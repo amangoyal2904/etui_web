@@ -175,10 +175,11 @@ const VideoShow = (props) => {
           <div className="adContainer">
               <div id={`taboola-mid-article-thumbnails-${result.msid}`} 
               className="wdt-taboola" 
-              data-mode="thumbnails-mid-mobile" 
+              data-mode="thumbnails-300x250" 
               data-target_type="mix" 
-              style={{height: '310px', marginTop:'7px', overflow:'hidden'}}
-              data-placement={`Mid Article Thumbnails`} />
+              style={{height: '280px', marginTop:'7px', overflow:'hidden', width:'300px'}}
+              data-placement-name = {`Mid Video Thumbnails`}
+              data-placement={`Mid Video Thumbnails`} />
           </div>
         )}
         <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
