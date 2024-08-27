@@ -56,13 +56,18 @@
   }
 }
 
-#skinleft {
-  position: fixed;
-  top: 0;
-  left: 0;
-  margin-left: calc((100% - 1003px) / 2 - -1004px);
+// #skinleft {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   margin-left: calc((100% - 1003px) / 2 - -1004px);
+// }
+.innov {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    margin-left: calc((100% - 1003px) / 2 - -1004px);
 }
-
 .layout {
   display: flex;
   justify-content: space-between;

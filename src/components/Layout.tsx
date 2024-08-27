@@ -88,7 +88,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
         <RedeemVoucher />
       </main>
 
-      {!isPink && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
+      {!isPink && <div className="innov"><DfpAds adInfo={{ key: "skinning" }} objVc={objVc} /></div>}
       {!isPink && <RotatingCube objVc={objVc} />}
     </>
   );
