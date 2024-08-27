@@ -1,13 +1,9 @@
 import { headers, cookies } from 'next/headers';
-import {prepareMoreParams } from "../../utils";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from '../../containers/';
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
-import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
-import { pageType } from 'utils/utils';
-import { Suspense } from 'react';
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
