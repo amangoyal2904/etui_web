@@ -3,7 +3,6 @@ import CubeFace from "./CubeFace";
 import styles from "./styles.module.scss";
 import { getMarketBandData } from "utils/utils";
 import APIS_CONFIG from "../../network/config.json";
-import { APP_ENV } from "../../utils";
 
 // Declare global variables
 declare const geoinfo: any;
@@ -54,7 +53,7 @@ const RotatingCube: React.FC<RotatingCubeProps> = ({ objVc }) => {
 
       try {
         const response = await fetch(
-          `${APIS_CONFIG.DOMAIN[APP_ENV]}cubefeed.cms?feedtype=etjson&platform=web&cube_faces=${cube_faces}&cube_fullad=${cube_fullad}&cube_landingon=${cube_landingon}`
+          `${APIS_CONFIG.DOMAIN[window.APP_ENV]}cubefeed.cms?feedtype=etjson&platform=web&cube_faces=${cube_faces}&cube_fullad=${cube_fullad}&cube_landingon=${cube_landingon}`
         );
 
         if (!response.ok) {
@@ -141,7 +140,7 @@ const RotatingCube: React.FC<RotatingCubeProps> = ({ objVc }) => {
         ))}
       </div>
       <iframe
-        src={`${APIS_CONFIG.DOMAIN[APP_ENV]}comscore_cube.cms`}
+        src={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}comscore_cube.cms`}
         width={0}
         height={0}
         frameBorder={0}

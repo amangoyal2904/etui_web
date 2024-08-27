@@ -47,20 +47,28 @@ export default async function Page({ params, searchParams }: {
       if (response && response.error) page = "notfound";
     }
     //==== gets dyanmic footer data =====
-    const footerMenuPromise = Service.get({
-      api,
-      params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page , platform:'web'},
-    });
+    // const footerMenuPromise = Service.get({
+    //   api,
+    //   params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page , platform:'web'},
+    // });
+    const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
+    
+    const extraParamsQuery = Object.keys(extraParams).map(key => `${key}=${extraParams[key]}`).join('&');
+    const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson&template_name=${page}${extraParamsQuery ? `&${extraParamsQuery}` : ''}`;
+    console.log("footerMenuApi: ", footerMenuApi)
+    // const footerMenuPromise = fetch(footerMenuApi);
     //==== gets menu data =====
-    const navBarPromise = Service.get({
-      api,
-      params: { type: "menu", feedtype: "etjson", msid: extraParams?.subsec1 },
-    });
+    // const navBarPromise = Service.get({
+    //   api,
+    //   params: { type: "menu", feedtype: "etjson", msid: extraParams?.subsec1 },
+    // });
+    // const navBarPromise = fetch(`${baseUrl}/reactfeed_menu.cms?platform=web&feedtype=etjson&msid=${extraParams?.subsec1}`)
+    const navBarApi = `${baseUrl}/reactfeed_menu.cms?platform=web&feedtype=etjson&msid=${extraParams?.subsec1}`
+    const promiseApis = [footerMenuApi, navBarApi];
 
-    const [footerMenuResult, navBarResult] = await Promise.all([footerMenuPromise, navBarPromise]);
-
-    dynamicFooterData = footerMenuResult?.data || {};
-    menuData = navBarResult?.data;     
+    const [footerMenuResult, navBarResult] = await Promise.all(promiseApis.map(api => fetch(api).then(res => res.json())));
+    dynamicFooterData = footerMenuResult || {};
+    menuData = navBarResult || {};
   }catch(error){
     console.log("Error: ", error)
   }

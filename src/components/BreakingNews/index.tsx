@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import APIS_CONFIG from "../../network/config.json";
-import { APP_ENV } from "utils";
 import styles from './styles.module.scss';
 import useEmblaCarousel from 'embla-carousel-react';
 import Fade from 'embla-carousel-fade';
@@ -30,7 +29,7 @@ const BreakingNews: React.FC = () => {
 
   const fetchNews = useCallback(async () => {
     //console.log('Fetching news...');
-    const url = APIS_CONFIG["BreakingNews"][APP_ENV];
+    const url = APIS_CONFIG["BreakingNews"][window.APP_ENV];
     try {
       const response = await fetch(url, {
           method: 'GET',

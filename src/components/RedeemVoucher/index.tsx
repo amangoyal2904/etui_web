@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { dateFormat } from "../../utils/utils";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
-import { APP_ENV, getCookie, setCookieToSpecificTime } from "../../utils"; // Correct import path
+import { getCookie, setCookieToSpecificTime } from "../../utils"; // Correct import path
 import { X_CLIENT_ID, ET_IMG_DOMAIN } from "../../utils/common";
 import { grxEvent } from "utils/ga";
 
@@ -109,7 +109,7 @@ const RedeemVoucher = () => {
     if (!loading) {
       setLoading(true);
       if (voucherCode && voucherCode.length) {
-        const url = APIS_CONFIG.redeemVoucher[APP_ENV];
+        const url = APIS_CONFIG.redeemVoucher[window.APP_ENV];
         const otr = getCookie("OTR");
         const payload = {
           merchantCode: "ET",
@@ -121,7 +121,7 @@ const RedeemVoucher = () => {
         try {
           const headers = {          
             "X-TOKEN": otr,
-            "X-CLIENT-ID": X_CLIENT_ID[APP_ENV],
+            "X-CLIENT-ID": X_CLIENT_ID[window.APP_ENV],
             "Content-type": "application/x-www-form-urlencoded",
           }
           let params = Object.keys(payload).map(function(k) {
