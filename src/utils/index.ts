@@ -442,7 +442,7 @@ export const logout = async () => {
   });
 };
 
-export const createPeuuid = async () => {
+export const createPeuuid = async (cb) => {
   try {
     let url = (APIS_CONFIG as any)?.PERSONALISATION[window.APP_ENV];
     url = url + `?type=0&source=${API_SOURCE}`;
@@ -458,6 +458,9 @@ export const createPeuuid = async () => {
     if (data && data.id != 0) {
       const peuuid: any = data.id;
       setCookieToSpecificTime("peuuid", peuuid, 365, 0, 0);
+      if (typeof cb == "function") {
+        cb(peuuid);
+      }
     }
   } catch (e) {
     console.log("error in creating peuuid ", e);
@@ -472,7 +475,7 @@ export const verifyLogin = () => {
 
       if (typeof window.objUser == "undefined") window.objUser = {};
       //generateFpid(true);
-      createPeuuid();
+      createPeuuid({});
       window.objUser.ticketId = response.data.ticketId;
       setUserData();
     } else {

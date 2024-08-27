@@ -18,6 +18,7 @@ import PopulateComment from "components/Comments/PopulateComment";
 import { log } from "console";
 import Trending from "components/Trending";
 import { useStateContext } from "../../store/StateContext";
+import Bookmark from "components/Bookmark";
 
 declare global {
   interface Window {
@@ -123,9 +124,7 @@ const VideoShow = (props) => {
           <div>
             {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
           </div>
-          <span className={styles.bookmarkCta}>
-            <img src="https://img.etimg.com/photo/63696304.cms" alt="bookmark icon" />
-          </span>
+          <Bookmark msid={result.msid} hostId={result.hostid} type="5" />
           <PostComments />
         </div>
         <div className={styles.vidWrapper} ref={vidRef}>
