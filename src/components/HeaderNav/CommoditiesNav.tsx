@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styles from "./styles.module.scss";
 import Service from "network/service";
 import APIS_CONFIG from "network/config.json";
-import { APP_ENV } from 'utils';
 
 // Define the interface for the story object returned by the commodity news API
 interface CommodityNewsStory {
@@ -35,8 +34,8 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
   }, []);
 
   const commodityNewsApi = (listcount: number, msid: number) => {
-    const url = APIS_CONFIG.commodityNews[APP_ENV];
-    Service.get({
+    const url = APIS_CONFIG.commodityNews[window.APP_ENV];
+    Service?.get({
       url,
       params: { feedtype: "etjson", listcount, msid }
     })
@@ -136,7 +135,7 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
                   {l1.nm}
                 </a>
                 {
-                    l1?.sec.map((l2, index2) => {
+                    l1?.sec?.map((l2, index2) => {
                       return (
                         <React.Fragment key={`commodities_nav_t_l2_${index1}_${index2}`}>
                           <a href={l2.link} data-ga-onclick={l2.link} className={styles.subsec2}>

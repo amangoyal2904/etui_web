@@ -1,17 +1,17 @@
 // @ts-nocheck
 
 import * as Config from "./common";
-import * as utils from ".";
 import { getCookie } from "../utils/index"
 import APIS_CONFIG from "../network/config.json"
-import { APP_ENV } from "../utils/index";
 import Service from "../network/service";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import grxMappingObj from "../utils/grxMappingObj.json";
 import cdpObj from "../utils/cdpObj.json";
-import { usePathname } from "next/navigation";
 import jStorageReact from "./jStorage";
 
+export const grxEvent = (type, data) => {
+
+};
 
 export const pageview = (url) => {
   window["gtag"] &&
@@ -47,11 +47,7 @@ export const gaObserverInit = (newImpressionNodes = [], newClickNodes = []) => {
               gaData[2] = gaData[2].replace("href", href);
             }
             gaData[2] = gaData[2].replace("url", window.location.href);
-            if (gaData.length > 2) {
-              console.log(gaData);
-              //window.ga("set", window.customDimension);
-              //window.ga("send", "event", gaData[0], gaData[1], gaData[2]);
-              // Growth RX Event
+            if (gaData.length > 2) {                            
               grxEvent("event", {
                 event_category: gaData[0],
                 event_action: gaData[1],
@@ -235,7 +231,7 @@ export const trackPushData = (
   redirect,
   cdpSend,
 ) => {
-  let url = (APIS_CONFIG as any)?.PUSHDATA[APP_ENV],
+  let url = (APIS_CONFIG as any)?.PUSHDATA[window.APP_ENV],
     grxMapObj = {},
     newGrxMapObj = grxMappingObj,
     objUserData = {},
@@ -264,7 +260,7 @@ export const trackPushData = (
   cdpData = { ...cdpData, ...cdpSend };
 
   if (typeof grx != "undefined") {
-    grx("init", (GLOBAL_CONFIG as any)[APP_ENV]?.grxId);
+    grx("init", (GLOBAL_CONFIG as any)[window.APP_ENV]?.grxId);
     grx("track", cdpData.event_name, cdpData);
   }
   const dataToPost = {
@@ -283,7 +279,7 @@ export const trackPushData = (
     ? `&ticketid=${getCookie("encTicket")}`
     : "";
   const ACQ_SUB_SOURCE = `${sendGTMdata?.item_category}|${sendGTMdata?.item_category2}|${sendGTMdata?.item_category3}|${sendGTMdata?.item_category4.replace(" ", "_")}`;
-  const planUrl = (GLOBAL_CONFIG as any)[APP_ENV]["Plan_PAGE"];
+  const planUrl = (GLOBAL_CONFIG as any)[window.APP_ENV]["Plan_PAGE"];
   const newPlanUrl =
     planUrl +
     (planUrl.indexOf("?") == -1 ? "?" : "&") +

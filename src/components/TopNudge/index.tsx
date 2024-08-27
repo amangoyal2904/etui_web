@@ -3,7 +3,6 @@ import APIS_CONFIG from "../../network/config.json";
 import { currPageType, APP_ENV } from "utils";
 import NudgeContainer from "./NudgeContainer";
 import { grxEvent } from "utils/ga";
-import Service from "network/service";
 
 import styles from "./styles.module.scss";
 import { fetchAllMetaInfo } from "utils/articleUtility";
@@ -32,59 +31,6 @@ export default function TopNudge({objVc}) {
       .catch(err => {
         console.log('error: ', err);
       });
-
-    
-    // const res = await Service.get({
-    //   finalUrl,
-    //   params: { merchantCode: "ET", isGroupUser },
-    //   withCredentials: true,
-    //   headers: {
-    //     "content-type": "application/json; charset=utf-8"
-    //   }
-    // });
-    // const resData = res?.data || [];
-
-
-    
-
-        // const data = [{
-        //     "merchantCode": "ET",
-        //     "productCode": "ETPR",
-        //     "productName": "ET Prime",
-        //     "planName": "Annual Membership",
-        //     "purchaseDate": "2023-01-18 15:14:48",
-        //     "expiryDate": "2024-02-01 15:14:48",
-        //     "paymentMode": "ETPAY",
-        //     "recurring": 0,
-        //     "price": 2499,
-        //     "finalBillingAmount": 2499,
-        //     "discount": 0,
-        //     "currency": "INR",
-        //     "userSubscriptionId": "63c7bf90cb571cfa97a1dc4e",
-        //     "subscriptionStatus": "active",
-        //     "trialExpiryDate": "2023-02-01 15:14:48",
-        //     "trial": false,
-        //     "refundable": false,
-        //     "canRenew": true,
-        //     "planPeriod": 1,
-        //     "planPeriodUnit": "YEAR",
-        //     "planId": 28,
-        //     "userAcquisitionType": "REGULAR_PLAN_PURCHASE",
-        //     "paymentMethod": "CC",
-        //     "trialEndDate": "2023-02-01 15:14:48",
-        //     "showRenew": true,
-        //     "eligibleForUpgrade": false,
-        //     "eligibleForExtension": false,
-        //     "graceEndDate": "2024-02-17 15:14:48",
-        //     "subscriptionStartDate": "2023-01-18 15:14:48",
-        //     "planCode": "etprAnnualPlan",
-        //     "daysLeft": 16,
-        //     "eligibleForSiMandate": false,
-        //     "siteAppCodeType": "ET",
-        //     "planPriceCurrency": "INR",
-        //     "planShortName": "Yearly"
-        // }]
-        //checkNudgeType(data);
   }
 
   const checkNudgeType = (data) => {

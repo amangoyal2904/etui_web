@@ -36,18 +36,18 @@ const SearchBar = (props) => {
     if (typeof specialKeywords[keyword] != "undefined") {
       loc = specialKeywords[keyword];
     }
-    window.location.href = (APP_ENV !== 'production' ? "https://etdev8243.indiatimes.com" : "https://economictimes.indiatimes.com") + loc;
+    window.location.href = (window.APP_ENV !== 'production' ? "https://etdev8243.indiatimes.com" : "https://economictimes.indiatimes.com") + loc;
   };
 
   const generateRedirectUrl = (keyword: string, specialKeywords: any) => {
-    const url = `${APIS_CONFIG["DOMAIN"][APP_ENV]}.com/jcms_search.cms?feedtype=json&keywords=${keyword}`;
+    const url = `${APIS_CONFIG["DOMAIN"][window.APP_ENV]}.com/jcms_search.cms?feedtype=json&keywords=${keyword}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
         const redirectURL = res.url;
         if (redirectURL) {
           window.location = redirectURL.indexOf("https://") == -1 && redirectURL.indexOf("http://") == -1
-            ? APIS_CONFIG["DOMAIN"][APP_ENV] + redirectURL : redirectURL;
+            ? APIS_CONFIG["DOMAIN"][window.APP_ENV] + redirectURL : redirectURL;
         } else {
           defaultRedirect(keyword.toLowerCase(), specialKeywords);
         }
@@ -78,10 +78,10 @@ const SearchBar = (props) => {
   const fetchSearchData = () => {
     let searchValue = searchKey.trim()
     if (searchValue) {
-      const ethomeURL = APIS_CONFIG.SEARCH.ethome[APP_ENV];
-      const newsSearchURL = APIS_CONFIG.SEARCH.definition[APP_ENV];
-      const defSearchURL = APIS_CONFIG.SEARCH.news[APP_ENV];
-      const reptrSearchURL = APIS_CONFIG.SEARCH.reporter[APP_ENV];
+      const ethomeURL = APIS_CONFIG.SEARCH.ethome[window.APP_ENV];
+      const newsSearchURL = APIS_CONFIG.SEARCH.definition[window.APP_ENV];
+      const defSearchURL = APIS_CONFIG.SEARCH.news[window.APP_ENV];
+      const reptrSearchURL = APIS_CONFIG.SEARCH.reporter[window.APP_ENV];
       Promise.all([
         fetch(`${ethomeURL}?ticker=${searchValue}&matchCompanyName=true&realstate=true&dvr=true&idr=true&trust=true&mcx=true&mf=true&crypto=true&nps=true&insideet=true&detail=false&forex=false&index=true&mecklai=true&etf=true&nonList=true&pagesize=6&language=&outputtype=json`),
         fetch(`${newsSearchURL}?query=${searchValue}`),
