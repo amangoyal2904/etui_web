@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import {
-  APP_ENV,
   verifyLogin,
   initSSOWidget,
   logout,
@@ -25,6 +24,7 @@ import jStorage from "jstorage-react";
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree, permissions, ssoid, ticketId } = state.login;
+  const APP_ENV = window.APP_ENV;
 
   //console.log(state.login);
 

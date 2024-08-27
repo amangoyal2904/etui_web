@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./styles.module.scss";
 import APIS_CONFIG from "network/config.json";
-import { APP_ENV } from 'utils';
 import SearchList from './SearchList';
 import { grxEvent } from '../../utils/ga';
 import { useStateContext } from "../../store/StateContext";
@@ -68,7 +67,7 @@ const SearchBar = (props) => {
         nifty50: niftyLink,
         "nifty 50": niftyLink
       };
-      grxEvent("event", { event_category: "Search Bar", event_action: window.location.href, event_label: keyword.toLowerCase() }, 1);
+      grxEvent("event", { event_category: "Search Bar", event_action: window.location.href, event_label: keyword.toLowerCase() });
       generateRedirectUrl(keyword, specialKeywords);
     } else {
       alert("Enter some text to search");

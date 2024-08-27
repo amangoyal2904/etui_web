@@ -5,7 +5,6 @@ import Service from 'network/service';
 declare global {
     interface Window {
         objVc: any;
-        objUser: any;
     }
 }
 
