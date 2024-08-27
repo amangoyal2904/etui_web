@@ -20,71 +20,71 @@ export default function TopNudge({objVc}) {
     const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
     const finalUrl = `${url}?merchantCode=ET&isGroupUser=${isGroupUser}`;
 
-    fetch(finalUrl , {
-      method: 'GET',
-      credentials: 'include'
-    })
-      .then(res => res.json())
-      .then(nextCommentsData => {
-        console.log(nextCommentsData, 'nextCommentsData');
-        checkNudgeType(nextCommentsData);
-      })
-      .catch(err => {
-        console.log('error: ', err);
-      });
+    // fetch(finalUrl , {
+    //   method: 'GET',
+    //   credentials: 'include'
+    // })
+    //   .then(res => res.json())
+    //   .then(nextCommentsData => {
+    //     console.log(nextCommentsData, 'nextCommentsData');
+    //     checkNudgeType(nextCommentsData);
+    //   })
+    //   .catch(err => {
+    //     console.log('error: ', err);
+    //   });
 
     
-    const res = await Service.get({
-      finalUrl,
-      params: { merchantCode: "ET", isGroupUser },
-      withCredentials: true,
-      headers: {
-        "content-type": "application/json; charset=utf-8"
-      }
-    });
-    const resData = res?.data || [];
+    // const res = await Service.get({
+    //   finalUrl,
+    //   params: { merchantCode: "ET", isGroupUser },
+    //   withCredentials: true,
+    //   headers: {
+    //     "content-type": "application/json; charset=utf-8"
+    //   }
+    // });
+    // const resData = res?.data || [];
 
 
     
 
-        // const data = [{
-        //     "merchantCode": "ET",
-        //     "productCode": "ETPR",
-        //     "productName": "ET Prime",
-        //     "planName": "Annual Membership",
-        //     "purchaseDate": "2023-01-18 15:14:48",
-        //     "expiryDate": "2024-02-01 15:14:48",
-        //     "paymentMode": "ETPAY",
-        //     "recurring": 0,
-        //     "price": 2499,
-        //     "finalBillingAmount": 2499,
-        //     "discount": 0,
-        //     "currency": "INR",
-        //     "userSubscriptionId": "63c7bf90cb571cfa97a1dc4e",
-        //     "subscriptionStatus": "active",
-        //     "trialExpiryDate": "2023-02-01 15:14:48",
-        //     "trial": false,
-        //     "refundable": false,
-        //     "canRenew": true,
-        //     "planPeriod": 1,
-        //     "planPeriodUnit": "YEAR",
-        //     "planId": 28,
-        //     "userAcquisitionType": "REGULAR_PLAN_PURCHASE",
-        //     "paymentMethod": "CC",
-        //     "trialEndDate": "2023-02-01 15:14:48",
-        //     "showRenew": true,
-        //     "eligibleForUpgrade": false,
-        //     "eligibleForExtension": false,
-        //     "graceEndDate": "2024-02-17 15:14:48",
-        //     "subscriptionStartDate": "2023-01-18 15:14:48",
-        //     "planCode": "etprAnnualPlan",
-        //     "daysLeft": 16,
-        //     "eligibleForSiMandate": false,
-        //     "siteAppCodeType": "ET",
-        //     "planPriceCurrency": "INR",
-        //     "planShortName": "Yearly"
-        // }]
-        checkNudgeType(resData);
+        const data = [{
+            "merchantCode": "ET",
+            "productCode": "ETPR",
+            "productName": "ET Prime",
+            "planName": "Annual Membership",
+            "purchaseDate": "2023-01-18 15:14:48",
+            "expiryDate": "2024-02-01 15:14:48",
+            "paymentMode": "ETPAY",
+            "recurring": 0,
+            "price": 2499,
+            "finalBillingAmount": 2499,
+            "discount": 0,
+            "currency": "INR",
+            "userSubscriptionId": "63c7bf90cb571cfa97a1dc4e",
+            "subscriptionStatus": "active",
+            "trialExpiryDate": "2023-02-01 15:14:48",
+            "trial": false,
+            "refundable": false,
+            "canRenew": true,
+            "planPeriod": 1,
+            "planPeriodUnit": "YEAR",
+            "planId": 28,
+            "userAcquisitionType": "REGULAR_PLAN_PURCHASE",
+            "paymentMethod": "CC",
+            "trialEndDate": "2023-02-01 15:14:48",
+            "showRenew": true,
+            "eligibleForUpgrade": false,
+            "eligibleForExtension": false,
+            "graceEndDate": "2024-02-17 15:14:48",
+            "subscriptionStartDate": "2023-01-18 15:14:48",
+            "planCode": "etprAnnualPlan",
+            "daysLeft": 16,
+            "eligibleForSiMandate": false,
+            "siteAppCodeType": "ET",
+            "planPriceCurrency": "INR",
+            "planShortName": "Yearly"
+        }]
+        checkNudgeType(data);
   }
 
   const checkNudgeType = (data) => {
@@ -100,10 +100,10 @@ export default function TopNudge({objVc}) {
         const isCancelledNonRec = (expiryDaysLeft > eu_benchmark) && isUserCancelled;
         const istimesPrimeUser = data[0].userAcquisitionType === "GROUP_SUBSCRIPTION" && data[0].userAcquisitionCode === "times_internet" && data[0].planPeriod == 3 && data[0].planPeriodUnit == "MONTH";
         const isGracePeriodOn = timestampNow > +new Date(data[0].expiryDate) && timestampNow < +new Date(data[0].graceEndDate);
-        const isExpired = subStatus === "expired" || window.objInts.permissions.includes("expired_subscription");
+        const isExpired = subStatus === "expired" || permissions?.includes("expired_subscription");
         const isB2CUser = (data[0].paymentMode.includes("OFFLINE") || data[0].paymentMode.includes("ETPAY")) && (subStatus === "cancelled" || subStatus === "active");
         const isVoucherUser = data[0].userAcquisitionType === "VOUCHER_CODE";
-        const isGroupUser = window.objInts.permissions.includes("group_subscription");;
+        const isGroupUser = permissions?.includes("group_subscription");
         const isRecurring = data[0].recurring;
 
         const isAboutToExpire = data[0].daysLeft <= eu_benchmark && expiryDaysLeft > 0;
@@ -300,7 +300,7 @@ export default function TopNudge({objVc}) {
     <>      
       <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`}>
         <div className={styles.breadCrumbWrap}>
-          {metaInfo?.banner_enabled === "on" && <NudgeContainer data={metaInfo} />}
+          {metaInfo?.banner_enabled === "off" && <NudgeContainer data={metaInfo} />}
         </div>
       </div>
     </>
