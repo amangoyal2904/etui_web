@@ -5,8 +5,6 @@ const MostPopularNews = (props: { data: any }) => {
   const title = listingData?.title;
   const relatedVideoData = listingData?.data ? listingData?.data : "";
 
-  console.log("relatedVideoData ---", relatedVideoData)
-
   const relatedVideoHandler = () => {
     let htmlListData: any = [];
     if (relatedVideoData) {

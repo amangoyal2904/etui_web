@@ -1,13 +1,12 @@
-import { NextPage } from "next";
 import styles from "./styles.module.scss";
 interface readMoreProps {
   url: string;
   title: string;
 }
 
-const ReadMore = (readMoreText:any) => {
+const ReadMore = ({ readMoreText }) => {  
   const _readMore = readMoreText?.length ? readMoreText : [];
-  const readMoreHtml = () => {
+  const readMoreHtml = () => {    
     let _moreNodehtml: any = [];
     if (_readMore) {
       _readMore?.map((item: readMoreProps) => {

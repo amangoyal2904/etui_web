@@ -1,32 +1,28 @@
 import { headers, cookies } from 'next/headers';
-import Service from "../../network/service";
-import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from '../../containers/';
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
 
-export default async function Page({ params, searchParams }: {
+export default async function Page({ params }: {
   params: { all: string[] }
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const headersList = headers();
   const domain = headersList.get("host") || "";
   const isDev = getDevStatus(domain);
-  const APP_ENV = isDev ? "development" : "production";
-  
+  const APP_ENV = isDev ? "development" : "production";  
   const slugArr = params?.all || [];
+  const isprimeuser = cookies().get('isprimeuser') || false;
 
-  const isprimeuser = cookies().get('isprimeuser') || false,
-  { all = [] } = params,
-  lastUrlPart: string = all?.slice(-1).toString(),
-  api = APIS_CONFIG.FEED,
-  REQUEST = APIS_CONFIG.REQUEST;
+  console.log( { params })
 
   let page = getPageName(slugArr),
   extraParams: any = {},
   response: any = {},
   menuData: any = {},
   dynamicFooterData: any = {};
+
+  console.log({page})
 
   try {
    
