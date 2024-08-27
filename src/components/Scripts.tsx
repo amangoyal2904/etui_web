@@ -69,6 +69,9 @@ declare global {
         primaryEmail: string;
         firstName: string;
         ssoid: any;
+        isLogged: any;
+        mobile: any;
+        lastName: any;
       };
       isPrime?: any;
       permissions?: any;

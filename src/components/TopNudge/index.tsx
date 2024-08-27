@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import APIS_CONFIG from "../../network/config.json";
-import { currPageType, APP_ENV } from "utils";
+import { currPageType } from "utils";
 import NudgeContainer from "./NudgeContainer";
 import { grxEvent } from "utils/ga";
 
@@ -16,7 +16,7 @@ export default function TopNudge({objVc}) {
 
   const fetchSubsc = async () => {
     const isGroupUser = permissions?.includes("group_subscription") || false;
-    const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
+    const url = APIS_CONFIG["AllUserSubscriptions"][window.APP_ENV];
     const finalUrl = `${url}?merchantCode=ET&isGroupUser=${isGroupUser}`;
 
     fetch(finalUrl , {
