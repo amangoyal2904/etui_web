@@ -1,94 +1,93 @@
-import { APP_ENV } from "../utils";
 import { ET_WAP_URL } from "../utils/common";
 
-const env = APP_ENV || "production";
 
 declare global {
   interface Window {
     fromIframeNewVideo: any;
+
   }
 }
 
 const playerEvents = {
-  onPlayerError: (player, eventName, eventData) => {
+  onPlayerError: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onInit: (player, eventName, eventData) => {
+  onInit: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onVideoStarted: (player, eventName, eventData) => {
+  onVideoStarted: () => {
     //console.log('Player event ', eventName, eventData);
     // if(!slikePlayerProps.isamp && isPwa == null) {
     //     parent && parent.onVideoStart && parent.onVideoStart();
     // }
   },
-  onVideoResumed: (player, eventName, eventData) => {
+  onVideoResumed: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onVideoPaused: (player, eventName, eventData) => {
+  onVideoPaused: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onVolumeChange: (player, eventName, eventData) => {
+  onVolumeChange: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onVideoMuted: (player, eventName, eventData) => {
+  onVideoMuted: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onVideoCompleted: (player, eventName, eventData) => {
+  onVideoCompleted: () => {
     //console.log('Player event ', eventName, eventData, player);
   },
-  onVideoEnded: (player, eventName, eventData) => {
+  onVideoEnded: () => {
     //console.log('Player event ', eventName, eventData, player);
   },
-  onVideoProgress: (player, eventName, eventData) => {
+  onVideoProgress: () => {
     //console.log('Player event ', eventName, eventData);
   },
-  onVideoFullscreenchange: (player, eventName, eventData) => {
+  onVideoFullscreenchange: () => {
     //console.log('Player event ', eventName, eventData);
   },
   onVideoNext: (player, eventName, eventData) => {
     //console.log('Player event Next Video ', eventName, eventData);
-    if (window.top.fromIframeNewVideo) {
+    if (window?.top?.fromIframeNewVideo) {
       window.top.fromIframeNewVideo(eventData);
     }
   },
   onVideoPrev: (player, eventName, eventData) => {
     //console.log('Player event Prev Video  ', eventName, eventData);
-    if (window.top.fromIframeNewVideo) {
+    if (window?.top?.fromIframeNewVideo) {
       window.top.fromIframeNewVideo(eventData);
     }
   }
 };
 
 const adEvents = {
-  onAdComplete: (player, eventName, eventData) => {
+  onAdComplete: () => {
     //console.log('Ad Event ', eventName, eventData);
     // if(!slikePlayerProps.isamp && isPwa == null) {
     //     parent && parent.onadComplete && parent.onadComplete();
     // }
   },
-  onAdSkip: (player, eventName, eventData) => {
+  onAdSkip: () => {
     //console.log('Ad Event ', eventName, eventData);
   },
-  onAdLoaded: (player, eventName, eventData) => {
+  onAdLoaded: () => {
     //console.log('Ad Event ', eventName, eventData);
   },
-  onAdRequest: (player, eventName, eventData) => {
+  onAdRequest: () => {
     //console.log('Ad Event ', eventName, eventData);
   },
-  onAdError: (player, eventName, eventData) => {
+  onAdError: () => {
     // if(!slikePlayerProps.isamp && isPwa == null) {
     //     parent && parent.onadComplete && parent.onadComplete();
     // }
     //console.log('Ad Event ', eventName, eventData);
   },
-  onAdResume: (player, eventName, eventData) => {
+  onAdResume: () => {
     //console.log('Ad Event ', eventName, eventData);
   },
-  onAdStart: (player, eventName, eventData) => {
+  onAdStart: () => {
     //console.log('Ad Event ', eventName, eventData);
   },
-  onAdPause: (player, eventName, eventData) => {
+  onAdPause: () => {
     //console.log('Ad Event ', eventName, eventData);
   }
 };

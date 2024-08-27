@@ -1,10 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import Service from 'network/service';
 import APIS_CONFIG from "network/config.json";
-import axios from 'axios';
 import styles from './styles.module.scss'
 import CommentCard from './CommentCard';
-import { APP_ENV } from 'utils';
 interface commentsProps {
   msid: number | string;
 }
@@ -14,9 +11,9 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
   const [commentsData,setCommentsData] = useState<Object []>([]);
   const [activeIndex, setActiveIndex] = useState({"isReplyActive":null,"isFlagActive":null});
   const loadMoreCount = useRef(1);
-  const visibleComments = useRef(2);
-  console.log('Populate comment :', msid);
-  const url = APIS_CONFIG.comments[APP_ENV]+`&msid=${msid}`;
+  const visibleComments = useRef(2);  
+  const url = APIS_CONFIG.comments[window.APP_ENV]+`&msid=${msid}`;
+
   useEffect(() => {
     fetch(url + "&pagenum=1&size=2", {
       method: 'GET',
@@ -44,11 +41,11 @@ const PopulateComment:FC<commentsProps> = ({msid}) => {
       })
   };
 
-  const commentCount = commentsData[0];
+  const commentCount: any = commentsData[0];
   const recentMessageCount = commentCount?.totalcount;
   function populate(cards:Object[],level=1){
-    let commentList = [];
-    cards.forEach((item,index)=>{
+    let commentList: any = [];
+    cards.forEach((item: any,index)=>{
       commentList.push(<CommentCard key = {item._id} commentCardId = {item._id} activeIndex = {activeIndex} setActiveIndex = {setActiveIndex} userFullName = {item.F_NAME} commentTime = {item.C_D} commentText = {item.C_T} statusPoints = {item.user_reward?.statusPoints} level = {level} imgprofile={item.PIU}/>);
       if(item.CHILD){
         commentList.push(populate(item.CHILD,level+1));

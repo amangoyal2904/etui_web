@@ -10,12 +10,12 @@ function findBannerType(page) {
   const pageObject = allPageTypes.find(obj => obj.page === page);
   return pageObject;
 }
-const Footer = ({ dynamicFooterData, page }) => {
+const Footer = ({ dynamicFooterData, page, APP_ENV }) => {
   const bandObj = findBannerType(page);
   return (
     <>
       <footer id="webFooter">
-        <DynamicFooter dynamicFooterData={dynamicFooterData} page={page} />
+        <DynamicFooter dynamicFooterData={dynamicFooterData} page={page} APP_ENV={APP_ENV} />
         <StickyFooter bandObj={bandObj} />
       </footer>
     </>

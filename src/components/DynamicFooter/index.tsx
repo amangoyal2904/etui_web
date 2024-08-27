@@ -5,11 +5,8 @@ import { isNoFollow } from "utils";
 import SearchBar from "components/SearchBar";
 import { useStateContext } from "../../store/StateContext";
 import Global_Config from "../../network/global_config.json";
-import {
-  APP_ENV
-} from "../../utils";
 
-const DynamicFooter: FC<{ dynamicFooterData: any, page: any }> = ({ dynamicFooterData, page }) => {
+const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> = ({ dynamicFooterData, page, APP_ENV }) => {
   const [isExpanded, setIsExpanded] = useState({});
   const hide_footer = false;
 

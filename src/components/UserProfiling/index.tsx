@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './styles.module.scss';
 import APIS_CONFIG from "../../network/config.json";
-import { APP_ENV } from '../../utils';
 import { useStateContext } from "../../store/StateContext";
 interface Option {
     key: string;
@@ -179,7 +178,7 @@ const UserProfile = (onClose) => {
                 // });
             }
         } else {
-            const url = (APIS_CONFIG as any)["SAVEPROFILE"][APP_ENV];
+            const url = (APIS_CONFIG as any)["SAVEPROFILE"][window.APP_ENV];
             const header = {
                 "Content-Type": "application/json",
             }

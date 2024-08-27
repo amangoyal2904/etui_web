@@ -1,12 +1,7 @@
-import getConfig from "next/config";
-import { pageview } from "./ga";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
-
-// const { publicRuntimeConfig = {} } = getConfig();
-export const APP_ENV = "development";  //(process.env.NODE_ENV && process.env.NODE_ENV.trim()) || "production";
 
 declare global {
   interface Window {
@@ -28,22 +23,9 @@ declare var ssoWidget: any;
 const API_SOURCE = 0;
 
 export const isBrowser = () => typeof window !== "undefined";
-export const processEnv =
-  (process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim()) || "production";
 export const queryString = (params) =>
   Object.keys(params)?.map((key) => key + "=" + params[key]).join("&");
 
-// export function loadScript(src) {
-//   return new Promise(function (resolve, reject) {
-//     const script = document.createElement("script");
-//     script.src = src;
-
-//     script.onload = () => resolve(script);
-//     script.onerror = () => reject(new Error(`Script load error for ${src}`));
-
-//     document.head.append(script);
-//   });
-// }
 export const loadScript = (
   src: string,
   async: boolean = true,
@@ -310,7 +292,7 @@ export const saveLogs = (data: any) => {
     // Check if running in a browser environment
     if (data) {
       try {
-        const isLive = APP_ENV == "development" ? 0 : 1;
+        const isLive = window.APP_ENV == "development" ? 0 : 1;
         data.TicketId = getCookie("TicketId");
         data.ssoid = getCookie("ssoid");
         data.gid = getCookie("_grx") || "-";
@@ -380,8 +362,8 @@ export const delete_cookie = (name: any) => {
 
 export const loadPrimeApi = async () => {
   try {
-    const url = (APIS_CONFIG as any)["AUTH_TOKEN"][APP_ENV],
-      oauthClientId = (GLOBAL_CONFIG as any)[APP_ENV]["X_CLIENT_ID"],
+    const url = (APIS_CONFIG as any)["AUTH_TOKEN"][window.APP_ENV],
+      oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
       deviceId = getCookie("_grx"),
       ticketId = getCookie("TicketId"),
       userSsoId = window?.objUser?.ssoid || getCookie("ssoid");
@@ -397,7 +379,7 @@ export const loadPrimeApi = async () => {
       "X-CLIENT-ID": oauthClientId,
       "X-DEVICE-ID": deviceId,
       "x-sso-id": userSsoId,
-      "x-site-app-code": (GLOBAL_CONFIG as any)[APP_ENV]["X_SITE_CODE"],
+      "x-site-app-code": (GLOBAL_CONFIG as any)[window.APP_ENV]["X_SITE_CODE"],
     };
 
     const response = await service.post({
@@ -429,8 +411,8 @@ export const logout = async () => {
       delete_cookie("peuuid");
       delete_cookie("fpid");
 
-      const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][APP_ENV],
-        oauthClientId = (GLOBAL_CONFIG as any)[APP_ENV]["X_CLIENT_ID"],
+      const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
+        oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
         deviceId = getCookie("_grx"),
         userSsoId = window?.objUser?.ssoid || getCookie("ssoid"),
         ticketId = getCookie("TicketId");
@@ -440,7 +422,7 @@ export const logout = async () => {
         "X-CLIENT-ID": oauthClientId,
         "X-DEVICE-ID": deviceId,
         "x-sso-id": userSsoId,
-        "x-site-app-code": (GLOBAL_CONFIG as any)[APP_ENV]["X_SITE_CODE"],
+        "x-site-app-code": (GLOBAL_CONFIG as any)[window.APP_ENV]["X_SITE_CODE"],
       };
 
       const response = await service.post({
@@ -462,7 +444,7 @@ export const logout = async () => {
 
 export const createPeuuid = async () => {
   try {
-    let url = (APIS_CONFIG as any)?.PERSONALISATION[APP_ENV];
+    let url = (APIS_CONFIG as any)?.PERSONALISATION[window.APP_ENV];
     url = url + `?type=0&source=${API_SOURCE}`;
     const res: any = await fetch(url, {
       method: "GET",
@@ -547,7 +529,7 @@ export const ssoLoginWidget = () => {
       }
       sc.src = s;
       document.getElementsByTagName("head")[0].appendChild(sc);
-    })(window, (GLOBAL_CONFIG as any)[APP_ENV]["ssoWidget"], "ssoWidget");
+    })(window, (GLOBAL_CONFIG as any)[window.APP_ENV]["ssoWidget"], "ssoWidget");
   }
 };
 
@@ -751,3 +733,33 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
       }
   }
 }
+
+export const getPageSpecificDimensions = (seo) => {
+  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
+  const dateArray = updated.split(",");
+  const dateString = dateArray[0] || "";
+  const timeString = dateArray[1] || "";
+  const { subsec1, subsecname1, subsecname2, subsecname3 } = subsecnames;
+  const sectionsList =
+    subsecname1 && subsecname2 && subsecname3
+      ? `/${subsecname1}/${subsecname2}/${subsecname3}/`
+      : subsecname1 && subsecname2
+      ? `$/${subsecname1}/${subsecname2}/`
+      : subsecname1
+      ? `/${subsecname1}/`
+      : "";
+
+  const payload = {
+    dimension4: agency,
+    dimension8: dateString,
+    dimension9: subsecname2,
+    dimension12: keywords,
+    dimension13: timeString,
+    dimension25: page,
+    dimension26: subsecname1,
+    dimension27: sectionsList,
+    dimension29: subsec1,
+    dimension48: msid
+  };
+  return payload;
+};
