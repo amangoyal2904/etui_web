@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import BreadCrumb from "components/BreadCrumb";
 import RedeemVoucher from "./RedeemVoucher";
 import DfpAds from "./Ad/DfpAds";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { callJsOnRouteChange } from "utils/priority";
 import TopNudge from "./TopNudge";
 import BreakingNews from "./BreakingNews";
@@ -18,7 +18,6 @@ import { useStateContext } from "../store/StateContext";
 const RotatingCube = dynamic(() => import("./RotatingCube"), {
   ssr: false
 });
-import { AnyListenerPredicate } from '@reduxjs/toolkit';
 
 interface Props {
   page?: string;
