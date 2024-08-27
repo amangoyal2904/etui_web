@@ -622,7 +622,7 @@ export const initSSOWidget = () => {
       localStorage.setItem("primeUserLoginMap_check", "1");
       verifyLogin();
       ssoClose();
-      window.location.reload();
+      //window.location.reload();
     },
     signupForm: {
       defaultFirstName: "Guest",
