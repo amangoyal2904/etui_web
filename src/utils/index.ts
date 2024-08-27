@@ -28,19 +28,57 @@ declare var ssoWidget: any;
 const API_SOURCE = 0;
 
 export const isBrowser = () => typeof window !== "undefined";
+export const processEnv =
+  (process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim()) || "production";
+export const queryString = (params) =>
+  Object.keys(params)?.map((key) => key + "=" + params[key]).join("&");
 
-export function loadScript(src) {
-  return new Promise(function (resolve, reject) {
+// export function loadScript(src) {
+//   return new Promise(function (resolve, reject) {
+//     const script = document.createElement("script");
+//     script.src = src;
+
+//     script.onload = () => resolve(script);
+//     script.onerror = () => reject(new Error(`Script load error for ${src}`));
+
+//     document.head.append(script);
+//   });
+// }
+export const loadScript = (
+  src: string,
+  async: boolean = true,
+  type: string = "text/javascript",
+  position: "head" | "body" = "body",
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
     const script = document.createElement("script");
+    script.type = type;
+    script.async = async;
     script.src = src;
 
-    script.onload = () => resolve(script);
-    script.onerror = () => reject(new Error(`Script load error for ${src}`));
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
 
-    document.head.append(script);
+    if (position === "head") {
+      document.head.appendChild(script);
+    } else {
+      document.body.appendChild(script);
+    }
   });
-}
-
+};
+export const sendMouseFlowEvent = async (): Promise<void> => {
+  try {
+    await loadScript(
+      "//cdn.mouseflow.com/projects/81baae85-f91c-464e-ac38-15a987752b7a.js",
+    );
+    if (typeof window !== "undefined") {
+      window._mfq = window._mfq || [];
+      window._mfq.push(["setVariable", "ETCore"]);
+    }
+  } catch (error) {
+    console.error("Failed to load Mouseflow script", error);
+  }
+};
 export const setCookieToSpecificTime = (
   name: string,
   value: string | number | boolean,
@@ -83,7 +121,6 @@ export const setCookieToSpecificTime = (
     console.log("setCookieToSpecificTime Error:", e);
   }
 };
-
 
 export const getCookie = (name) => {
   try {
@@ -145,27 +182,6 @@ export const prepareMoreParams = ({ all, page, msid }) => {
 
 export const getMSID = (url) => (url && url.split(".cms")[0]) || "";
 
-//Get any parameter value from URL
-export const getParameterByName = (name) => {
-  try {
-    if (name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      const regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    } else {
-      return "";
-    }
-  } catch (e) {
-    console.log("getParameterByName", e);
-  }
-};
-
-export const processEnv =
-  (process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim()) || "production";
-export const queryString = (params) =>
-  Object.keys(params)?.map((key) => key + "=" + params[key]).join("&");
-
 export const getMobileOS = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera || "";
   if (/android/i.test(userAgent)) {
@@ -180,36 +196,6 @@ export const getMobileOS = () => {
 export const removeBackSlash = (val) => {
   val = val && typeof val != "object" ? val.replace(/\\/g, "") : "";
   return val;
-};
-
-export const getPageSpecificDimensions = (seo) => {
-  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
-  const dateArray = updated.split(",");
-  const dateString = dateArray[0] || "";
-  const timeString = dateArray[1] || "";
-  const { subsec1, subsecname1, subsecname2, subsecname3 } = subsecnames;
-  const sectionsList =
-    subsecname1 && subsecname2 && subsecname3
-      ? `/${subsecname1}/${subsecname2}/${subsecname3}/`
-      : subsecname1 && subsecname2
-      ? `$/${subsecname1}/${subsecname2}/`
-      : subsecname1
-      ? `/${subsecname1}/`
-      : "";
-
-  const payload = {
-    dimension4: agency,
-    dimension8: dateString,
-    dimension9: subsecname2,
-    dimension12: keywords,
-    dimension13: timeString,
-    dimension25: page,
-    dimension26: subsecname1,
-    dimension27: sectionsList,
-    dimension29: subsec1,
-    dimension48: msid
-  };
-  return payload;
 };
 
 export const isBotAgent = () => {

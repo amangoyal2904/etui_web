@@ -9,9 +9,9 @@ export function InitialJsOnAppLoad(): void {
   try {
     window["arrPageAds"] = [];
     window.adDivIds = [];
-    document.addEventListener('gaLoaded', ()=> {
-      ga.gaObserverInit();
-    });
+    // document.addEventListener('gaLoaded', ()=> {
+    //   ga.gaObserverInit();
+    // });
     ga.growthRxInit();
     // ga.GTMInit();
   } catch (error) {
@@ -21,6 +21,7 @@ export function InitialJsOnAppLoad(): void {
 
 export function callJsOnRouteChange(url?): void {
   console.log("callJsOnRouteChange called");
+  ga.setVisitInfo();
   window.adDivIds = [];
   //=== destroy all dfp ad slots on route change
   if (typeof window.googletag != "undefined" && window.googletag.apiReady) {      

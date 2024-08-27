@@ -1,11 +1,12 @@
 'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import { FC, useEffect } from "react";
-import { APP_ENV, updateDimension } from "../utils";
+import { FC, useEffect, useState } from "react";
+import { APP_ENV, getCookie, sendMouseFlowEvent, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 import GLOBAL_CONFIG from "../network/global_config.json";
+import { getUserType, trackingEvent } from "utils/ga";
 import {loadAndBeyondScript, loadTaboolaScript} from "./Ad/AdScript";
 import { useStateContext } from "../store/StateContext";
 
@@ -18,6 +19,14 @@ interface Props {
 declare global {
   interface Window {
     optCheck: boolean;
+    dataLayer: [];
+    geolocation: any;
+    customDimension: any;
+    grxDimension_cdp: any;
+    opera?: string;
+    MSStream?: string;
+    geoinfo: any;
+    pageSeo: any;
     e$: {
       jStorage: {
         set(arg1: string, arg2: any, arg3: Object): any;
@@ -25,8 +34,8 @@ declare global {
         deleteKey(arg1: string);
       };
     };
-    objInts: any;
-    __APP: any;
+    objInts:any;
+    __APP:any;
     google: {
       accounts: {
         id: {
@@ -45,13 +54,13 @@ declare global {
       v1VerifyAlternateMobile?: any;
     };
     isSurveyLoad: any;
-    dataLayer: [];
     ssoWidget?: any;
     verifyLoginSuccess?: any;
     objUser: {
       ssoid?: any;
       ticketId?: any;
       email?: any;
+      prevPath?: string;
       isPink?: any;
       info?: {
         thumbImageUrl: any;
@@ -69,34 +78,85 @@ declare global {
     _sva: any;
   }
 }
-
 declare var JssoCrosswalk: any;
 
 const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
-
-  console.log({ APP_ENV });
-
-
+  console.log({APP_ENV});
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
-
+  const [prevPath, setPrevPath] = useState<any>(null);
   const minifyJS = APP_ENV === "development" ? 0 : 1;
-
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
   const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
+  
   let execution = 0;
-
+  const surveyLoad = () => {
+    if (window._sva && window._sva.setVisitorTraits) {
+      const subscribeStatus =
+        typeof window.objUser != "undefined" && window?.objUser?.permissions
+          ? getUserType(window.objUser.permissions)
+          : "";
+      var jString = localStorage.getItem("jStorage"),
+        objJstorage = (jString && JSON.parse(jString)) || {};
+      var cnt = Object.keys(objJstorage).filter(function (key) {
+        return key.indexOf("et_article_") != -1;
+      }).length;
+      var loyalCount = 15;
+      window._sva.setVisitorTraits({
+        user_subscription_status: subscribeStatus,
+        user_login_status:
+          typeof window.objUser != "undefined" ? "logged-in" : "logged-out",
+        prime_funnel_last_step: "",
+        country_code: (window.geoinfo && window.geoinfo.CountryCode) || "",
+        email_id: window?.objUser?.info?.primaryEmail
+          ? window?.objUser?.info?.primaryEmail
+          : "",
+        grx_id: getCookie("_grx"),
+        Loyal: cnt >= loyalCount ? "Yes" : "No",
+      });
+    }
+  };
   useEffect(() => {
-    // window.optCheck = router.asPath.indexOf("opt=1") != -1;
-    //updateDimension();
+    try {
+      prevPath !== null &&
+        trackingEvent("et_push_pageload", {
+          url: window.location.href,
+          prevPath: prevPath,
+        });
+      setPrevPath(pathName || document.referrer);
+      if (typeof window.objUser == "undefined") window.objUser = {};
+      window.objUser && (window.objUser.prevPath = prevPath);
+      if (window.isSurveyLoad) {
+        surveyLoad();
+      } else {
+        document.addEventListener(
+          "surveyLoad",
+          () => {
+            window.isSurveyLoad = true;
+            surveyLoad();
+          },
+          { once: true },
+        );
+      }
+    } catch (e) {
+      console.log("Error-- ", e);
+    }
+  }, [router, isPrime]);
+
+  useEffect(() => {    
     if(typeof isPrime != "undefined" && typeof permissions!="undefined" && execution == 0){
       loadAndBeyondScript(isPrime);
       loadTaboolaScript(isPrime);
       execution = 1;
     }
   }, [isPrime, permissions]);
+
+  useEffect(() => {
+    sendMouseFlowEvent();
+  }, []);
 
   return (
     <>
@@ -171,7 +231,44 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           }
         `}
       </Script>
-
+      <Script
+        src="https://survey.survicate.com/workspaces/0be6ae9845d14a7c8ff08a7a00bd9b21/web_surveys.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          const surveyLoad = new Event("surveyLoad");
+          document.dispatchEvent(surveyLoad);
+        }}
+      />
+      <Script
+        id="tag-manager-init"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GLOBAL_CONFIG.gtmId}');
+          `,
+        }}
+      />
+      <Script
+        id="growthrx-analytics"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: `
+                  (function (g, r, o, w, t, h, rx) {
+                  g[t] = g[t] || function () {(g[t].q = g[t].q || []).push(arguments)
+                  }, g[t].l = 1 * new Date();
+                  g[t] = g[t] || {}, h = r.createElement(o), rx = r.getElementsByTagName(o)[0];
+                  h.async = 1;h.src = w;rx.parentNode.insertBefore(h, rx)
+              })(window, document, 'script', 'https://static.growthrx.in/js/v2/web-sdk.js', 'grx');
+                  grx('init', '${(GLOBAL_CONFIG as any)[APP_ENV]?.grxId}');
+                  const grxLoaded = new Event('grxLoaded');
+                  document.dispatchEvent(grxLoaded);               
+            `,
+        }}
+      />
       {!searchParams?.get('opt') && (
         <>
           <Script
@@ -186,43 +283,6 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
               ga('create', '${Config.GA.GA_ID}', 'auto');
               const gaLoaded = new Event('gaLoaded');
               document.dispatchEvent(gaLoaded);
-              `
-            }}
-          />
-          <Script
-            id="growthrx-analytics"
-            strategy="lazyOnload"
-            dangerouslySetInnerHTML={{
-              __html: `
-               (function (g, r, o, w, t, h, rx) {
-                    g[t] = g[t] || function () {(g[t].q = g[t].q || []).push(arguments)
-                    }, g[t].l = 1 * new Date();
-                    g[t] = g[t] || {}, h = r.createElement(o), rx = r.getElementsByTagName(o)[0];
-                    h.async = 1;h.src = w;rx.parentNode.insertBefore(h, rx)
-                })(window, document, 'script', 'https://static.growthrx.in/js/v2/web-sdk.js', 'grx');
-                grx('init', window.objVc.growthRxId || 'gc2744074');
-                window.customDimension = { ...window["customDimension"], url: window.location.href };
-                //grx('track', 'page_view', {url: window.location.href});
-                const grxLoaded = new Event('grxLoaded');
-                document.dispatchEvent(grxLoaded);                
-              `
-            }}
-          />
-          <Script
-            id="tag-manager"
-            strategy="lazyOnload"
-            src={`https://www.googletagmanager.com/gtag/js?id=${Config.GA.GTM_KEY}`}
-          />
-          {/* {isTopicPage ? ( */}
-          <Script
-            id="tag-manager-init"
-            strategy="lazyOnload"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag() { dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', '${Config.GA.GTM_ID}', { page_path: window.location.pathname });
               `
             }}
           />

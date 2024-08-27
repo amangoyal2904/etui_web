@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import BreadCrumb from "components/BreadCrumb";
 import RedeemVoucher from "./RedeemVoucher";
 import DfpAds from "./Ad/DfpAds";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { callJsOnRouteChange } from "utils/priority";
 import TopNudge from "./TopNudge";
 import BreakingNews from "./BreakingNews";
@@ -27,6 +27,7 @@ interface Props {
   isprimeuser?: any;
   data: any;
   children?: ReactElement;
+  pageSeo: any;
 }
 
 interface ChildProps {
@@ -35,7 +36,8 @@ interface ChildProps {
   data: any;
 }
 
-const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children }) => {
+const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children, pageSeo }) => { 
+  
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
 
@@ -47,6 +49,7 @@ const Layout: FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isp
 
   if (typeof window !== "undefined") {
     window.objVc = objVc;
+    window.pageSeo = pageSeo; 
     window.tpName = page;
   }
 

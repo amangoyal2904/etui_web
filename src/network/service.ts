@@ -1,4 +1,4 @@
-import { getParameterByName, APP_ENV } from "../utils";
+import { APP_ENV } from "../utils";
 import axios from "axios";
 import { isBrowser } from "utils";
 
@@ -16,8 +16,6 @@ const getApiUrl = (config, index) => {
 };
 
 export const get = (config) => {
- 
- 
   try {
     const url = getApiUrl(config, 0);    
     if (!config.headers) {

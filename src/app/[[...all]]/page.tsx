@@ -4,7 +4,6 @@ import APIS_CONFIG from "../../network/config.json";
 import { VideoShow } from '../../containers/';
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
-import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 
 export default async function Page({ params, searchParams }: {
   params: { all: string[] }
@@ -64,12 +63,12 @@ export default async function Page({ params, searchParams }: {
   }catch(error){
     console.log("Error: ", error)
   }
-  
+  const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
-  
-  return <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser}>          
+  return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo}>          
       <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
   </Layout>
+
   ;
 }
 

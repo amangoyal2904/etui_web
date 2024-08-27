@@ -49,7 +49,6 @@ const VideoShow = (props) => {
   const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
 
   const subsecNames = props?.seo?.subsecnames;
-
   const vidRef = useRef(null);
 
   useEffect(() => {
@@ -59,7 +58,6 @@ const VideoShow = (props) => {
     window.customDimension = { ...window.customDimension, ...payload };
 
     const subSecs = getSubsecString(subsecNames);
-
     let adSection = "videoshow",
       isDeferredPreRoll = false;
     if (subsecNames?.subsec1 == 13352306) {
