@@ -70,6 +70,20 @@
         border-bottom: 0;
         /* Styling for down arrow */
 
+        &.marketData_i:before{
+          content: '';
+          width: 16px;
+          height: 19px;
+          background-position: 0 -449px;
+          vertical-align: top;
+          position: relative;
+          top: -2px;
+          margin-right: 2px;
+          background: url(https://img.etimg.com/photo/msid-110919509,quality-100/common-sprite.jpg) no-repeat;
+          background-size: 109%;
+          display: inline-block;
+        }
+
         &.current{
           background-color: #FFF;
           color: #ed193b;
