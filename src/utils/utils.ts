@@ -1,7 +1,5 @@
 import os from "os";
 const serverHost = os.hostname() || "";
-import { useRouter } from "next/navigation";
-import { grxPushData } from "./articleUtility";
 
 declare global {
   interface Window {
@@ -131,55 +129,6 @@ export const getCookie = (name) => {
     console.log("getCookie", e);
   }
 };
-// Check if GDPR policy allowed for current location
-export const allowGDPR = () => {
-  try {
-    var flag = false,
-      ginfo = window["geoinfo"] || {};
-    if (window.geolocation && window.geolocation != 5 && (window.geolocation != 2 || ginfo.region_code != "CA")) {
-      flag = true;
-    }
-    return flag;
-  } catch (e) {
-    console.log("allowGDPR", e);
-  }
-};
-export const pageType = (pathurl) => {
-  if (pathurl == "/" || pathurl == "/index.html") {
-    return "home";
-  } else if (pathurl.indexOf("primearticleshow") != -1) {
-    return "primearticle";
-  } else if (pathurl.indexOf("articleshow") != -1) {
-    return "articleshow";
-  } else if (pathurl.indexOf("primearticlelist") != -1 || /prime\/\w/.test(pathurl)) {
-    return "primearticlelist";
-  } else if (pathurl == "/prime") {
-    return "primehome";
-  } else if (pathurl.indexOf("/et-tech") != -1) {
-    return "techhome";
-  } else if (pathurl.indexOf("/videoshow/") != -1) {
-    return "videoshow";
-  } else if (pathurl.indexOf("/topic/") != -1) {
-    return "topic";
-  } else {
-    return "articlelist";
-  }
-};
-//Get any parameter value from URL
-export const getParameterByName = (name) => {
-  try {
-    if (name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    } else {
-      return "";
-    }
-  } catch (e) {
-    console.log("getParameterByName", e);
-  }
-};
 //Email validate
 export const validateEmail = () => {
   try {
@@ -244,8 +193,6 @@ export const dateFormat = (dt, format = "%Y-%M-%d") => {
   }
   return newDate;
 };
-export const processEnv =
-  (process.env.NODE_ENV && process.env.NODE_ENV.toString().toLowerCase().trim()) || "production";
 export const queryString = (params) =>
   Object.keys(params)
     ?.map((key) => key + "=" + params[key])
@@ -457,52 +404,8 @@ export const urlValidation = (url: string) => {
     return _url.split("https://economictimes.indiatimes.com").pop();
   }
   return url;
-}
-// export const detectBrowser = browser => {
-//   let isBrowser:any = "";
-//   try {
-//     switch (browser) {
-//       case "chrome":
-//         isBrowser =
-//           !!window.chrome &&
-//           (!!window.chrome.webstore || !!window.chrome.runtime);
-//         break;
-//       case "firefox":
-//         isBrowser = typeof InstallTrigger !== "undefined";
-//         break;
-//       case "safari":
-//         isBrowser =
-//           /constructor/i.test(window.HTMLElement) ||
-//           (function(p) {
-//             return p.toString() === "[object SafariRemoteNotification]";
-//           })(
-//             !window["safari"] ||
-//               (typeof safari !== "undefined" && safari.pushNotification)
-//           );
-//         break;
-//       case "ie":
-//         isBrowser = false || !!document.documentMode;
-//         break;
-//       case "edge":
-//         isBrowser = !isIE && !!window.StyleMedia;
-//         break;
-//       case "opera":
-//         isBrowser =
-//           (!!window.opr && !!opr.addons) ||
-//           !!window.opera ||
-//           navigator.userAgent.indexOf(" OPR/") >= 0;
-//         break;
-//       case "blink":
-//         isBrowser = (isChrome || isOpera) && !!window.CSS;
-//         break;
-//       default:
-//         isBrowser = "unknown";
-//     }
-//   } catch (e) {
-//     console.log("detectBrowser:", e);
-//   }
-//   return isBrowser;
-// };
+};
+
 export const isMobileSafari = () => {
   let result: any = "";
   try {
@@ -524,61 +427,6 @@ let output = {
   isDevEnv,
   isProductionEnv,
   queryString,
-  processEnv,
-  dateFormat,
-  appendZero,
-  validateEmail,
-  getParameterByName,
-  allowGDPR,
-  pageType,
-  mgidGeoCheck
-};
-
-export default output;
-
-export const getDevStatus = (host: string | string[]) => {
-  if (host.indexOf("localhost") !== -1 || host.indexOf("etwebpre.indiatimes.com") !== -1) {
-    return true;
-  }
-  return false;
-};
-export const gotoPlanPage = (options: any) => {
-  options = options || {};
-  // options = {
-  //   upgrade : true,
-  //   url: 'https://dev-buy.indiatimes.com/ET/plans'
-  // }
-  console.log("customDimension params", window.customDimension, options, window.isprimeuser);
-  const planDim = window.customDimension || {};
-  if (options.cd) {
-    planDim.dimension28 = options.cd;
-  }
-  if (options.dim1) {
-    planDim.dimension1 = options.dim1;
-  }
-  if (options.dim48) {
-    planDim.dimension48 = options.dim48;
-  }
-
-  var planUrl =
-    options.upgrade || window.isprimeuser
-      ? window.objVc && window.objVc.planPageUpgrade
-      : window.objVc && window.objVc.planPage;
-  if (options.url) {
-    planUrl = options.url;
-  }
-  grxPushData(planDim, planUrl);
-};
-
-let output = {
-  urlValidation,
-  socialUrl,
-  removeBackSlash,
-  isVisible,
-  isDevEnv,
-  isProductionEnv,
-  queryString,
-  processEnv,
   dateFormat,
   appendZero,
   validateEmail,

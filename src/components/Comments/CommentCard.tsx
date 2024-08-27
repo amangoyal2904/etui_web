@@ -4,19 +4,19 @@ import APIS_CONFIG from "network/config.json";
 import styles from "./styles.module.scss";
 import ReplyOnComment from "./ReplyOnComment";
 import OffensiveCommentBox from "./OffensiveCommentBox";
-interface commentCardProps {
-  commentCardId:any;
-  userFullName:any;
-  commentTime:any;
-  statusPoints:any;
-  commentText:any;
-  level:any;
-  activeIndex:any;
-  setActiveIndex:any;
-  item:any;
-}
+// interface commentCardProps {
+//   commentCardId:any;
+//   userFullName:any;
+//   commentTime:any;
+//   statusPoints:any;
+//   commentText:any;
+//   level:any;
+//   activeIndex:any;
+//   setActiveIndex:any;
+//   item:any;
+// }
 
-const CommentCard:FC<commentCardProps> = (props) => {
+const CommentCard = (props: any) => {
   const { commentCardId , userFullName, commentTime, statusPoints, commentText, level, activeIndex, setActiveIndex, imgprofile } = props;
   const [showOffensiveMark, setShowOffensiveMark] = useState(false);
   return (

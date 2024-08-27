@@ -12,6 +12,7 @@ export default async function Page({ params, searchParams }: {
   const headersList = headers();
   const domain = headersList.get("host") || "";
   const isDev = getDevStatus(domain);
+  const APP_ENV = isDev ? "development" : "production";
   
   const slugArr = params?.all || [];
 
@@ -65,11 +66,9 @@ export default async function Page({ params, searchParams }: {
   }
   const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
-  return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo}>          
+  return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
       <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
-  </Layout>
-
-  ;
+  </Layout>;
 }
 
 export async function generateMetadata({ params }) {
@@ -143,22 +142,9 @@ async function getData(isDev, page, msid) {
 
 function getPageName(slugArr) {
   const slug = Array.isArray(slugArr) ? slugArr.join("/") : "";
-  // console.log({ slug });
   if (/\/videoshow\/[0-9]+\.cms$/.test(slug)) {
     return "videoshow";
   }
-  if (/\/articleshow\/[0-9]+\.cms$/.test(slug)) {
-    return "articleshow";
-  }
-  // if url is like /topic/yogi or /topic/yogi/news or /topic/yogi/videos where yogi is dynamic keyword
-  if (/^topic\/[a-zA-Z0-9-]+/.test(slug)) {
-    return "topic";
-  }
-  // if url is like /quickreads or /quickreads/111083896
-  if (/^quickreads/.test(slug)) {
-    return "quickreads";
-  }
-
   return "notfound";
 }
 

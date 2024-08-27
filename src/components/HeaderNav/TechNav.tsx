@@ -2,7 +2,6 @@ import React, { useEffect, useState, MouseEvent } from 'react';
 import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
-import { APP_ENV } from '../../utils';
 
 // Define the type for the props passed to TechNav component
 interface TechNavProps {
@@ -28,7 +27,7 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
   const [error, setError] = useState<string | null>(null);
 
   const getTechArticleList = async (msid: number) => {
-    const url = APIS_CONFIG.techNavArticleList[APP_ENV];
+    const url = APIS_CONFIG.techNavArticleList[window.APP_ENV];
     
     try {
       const res = await Service.get({
@@ -168,7 +167,7 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
             <React.Fragment key={`tech_nav_${obj.msid}_${index}`}>
               {
                 obj.status == "loading" ? <div data-rel-id={obj.msid} data-loading-id="loading"><p>Loading...</p></div> : (<div data-rel-id={obj.msid} >
-                  {obj?.data?.slice(0, 1).map((data, index1) => {
+                  {obj?.data?.slice(0, 1)?.map((data, index1) => {
                     return (
                       <React.Fragment key={`tech_nav_first_${obj.msid}_${index}_${index1}`}>
                         <div className={styles.first}>
@@ -184,7 +183,7 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
                     );
                   })}
                   <div className={`${styles.other} ${obj.msid == 94299203 && styles.eventsBlockTech}`}>
-                    {obj?.data?.slice(1).map((data, index1) => {
+                    {obj?.data?.slice(1)?.map((data, index1) => {
                       return (
                         <React.Fragment key={`tech_nav_other_${obj.msid}_${index}_${index1}`}>
                           {(obj.msid == 94299203 ? (

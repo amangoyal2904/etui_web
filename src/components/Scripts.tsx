@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { FC, useEffect, useState } from "react";
-import { APP_ENV, getCookie, sendMouseFlowEvent, updateDimension } from "../utils";
+import { getCookie, sendMouseFlowEvent, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import { getUserType, trackingEvent } from "utils/ga";
@@ -14,6 +14,7 @@ import { useStateContext } from "../store/StateContext";
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
+  APP_ENV: string;
 }
 
 declare global {
@@ -56,6 +57,7 @@ declare global {
     isSurveyLoad: any;
     ssoWidget?: any;
     verifyLoginSuccess?: any;
+    APP_ENV: string;
     objUser: {
       ssoid?: any;
       ticketId?: any;
@@ -80,7 +82,7 @@ declare global {
 }
 declare var JssoCrosswalk: any;
 
-const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
+const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   console.log({APP_ENV});
   const router = useRouter();
   const pathName = usePathname();
@@ -155,6 +157,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   }, [isPrime, permissions]);
 
   useEffect(() => {
+    window.APP_ENV = APP_ENV;
     sendMouseFlowEvent();
   }, []);
 

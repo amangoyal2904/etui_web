@@ -28,6 +28,7 @@ interface Props {
   data: any;
   children?: ReactElement;
   pageSeo: any;
+  APP_ENV: string;
 }
 
 interface ChildProps {
@@ -36,7 +37,7 @@ interface ChildProps {
   data: any;
 }
 
-const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children, pageSeo }) => { 
+const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children, pageSeo, APP_ENV }) => { 
   
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
@@ -76,13 +77,14 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           subsecnames={data?.seo?.subsecnames}
           sectiondetail={data?.seo?.sectionDetail}
           commonMeta={data?.commonMeta || {}}
+          APP_ENV={APP_ENV}
         />
         <BreadCrumb data={data?.seo?.breadcrumb} />
         <BreakingNews />
         <div className="layout">{children}</div>
-        <Scripts objVc={objVc} isprimeuser={isPink} />
+        <Scripts objVc={objVc} isprimeuser={isPink} APP_ENV={APP_ENV}/>
         {!isPink && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
-        <Footer dynamicFooterData={dynamicFooterData} page={page} />
+        <Footer dynamicFooterData={dynamicFooterData} page={page} APP_ENV={APP_ENV}/>
         <RedeemVoucher />
       </main>
 
