@@ -7,6 +7,7 @@ import { currPageType } from "utils";
 import { gotoPlanPage } from "utils/utils";
 
 function NudgeContainer({data}) {
+    const [nudgeShow, setNudgeShow] = useState(true);
     useEffect(() => {
         if(data?.bannerType) {
             grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Viewed - True', 'event_label': data?.bannerType + ' | Banner Location '+ currPageType()});
@@ -21,7 +22,7 @@ function NudgeContainer({data}) {
         }
         if(!isCloseRef) {
             grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Click', 'event_label': data.bannerType + ' | Banner Location '+ currPageType()});
-            gotoPlanPage({url: data?.button_link.replace('https://economictimes.indiatimes.com','') || ""});   
+            gotoPlanPage({url: data?.button_link.replace('https://economictimes.indiatimes.com','https://dev-buy.indiatimes.com/ET') || ""});   
         }
     }
 
@@ -36,10 +37,12 @@ function NudgeContainer({data}) {
         // $("#topnavBlk").css("top", "0");
         // $('.topUserInfoBand').slideUp();
         // $('.topUserInfoBand').remove();
+        setNudgeShow(false);
     }
 
     return (
-            <div className={`${styles?.topUserInfoBand} ${data?.banner_type}`} onClick={onBannerClick}>
+        <>
+            {nudgeShow && <div className={`${styles?.topUserInfoBand} ${data?.banner_type}`} onClick={onBannerClick}>
                 {/* style={`background: ${banner_bg}`} */}
                 <div className={styles?.info_content}>
                     <span className={styles?.info_icon}>
@@ -52,7 +55,8 @@ function NudgeContainer({data}) {
                     <a className={styles?.info_cta} data-url={data?.button_link}>{data?.button_text}</a>
                 </div>
                 {data?.banner_cross === 'true' && <span className={styles?.info_cross} data-frequency={data?.cross_frequency} onClick={onCloseClick} />}
-            </div>
+            </div>}
+        </>
     );
 }
 

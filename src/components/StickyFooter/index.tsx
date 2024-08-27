@@ -10,7 +10,7 @@ const StickyFooter = (props:any) => {
   
   useEffect(()=>{
     const fetchMetaInfo = async() => {
-    const allMetaData = await fetchAllMetaInfo(bandObj.contentCmsId) || {};
+    const allMetaData = await fetchAllMetaInfo(bandObj?.contentCmsId) || {};
     setAllMeta(allMetaData);
     }
     fetchMetaInfo();
