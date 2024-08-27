@@ -146,15 +146,17 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
     }
   }, [router, isPrime]);
 
-  useEffect(() => {
-    sendMouseFlowEvent();
-    console.log("mouse flow start________");
+  useEffect(() => {    
     if(typeof isPrime != "undefined" && typeof permissions!="undefined" && execution == 0){
       loadAndBeyondScript(isPrime);
       loadTaboolaScript(isPrime);
       execution = 1;
     }
   }, [isPrime, permissions]);
+
+  useEffect(() => {
+    sendMouseFlowEvent();
+  }, []);
 
   return (
     <>
