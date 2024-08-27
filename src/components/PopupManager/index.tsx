@@ -13,8 +13,9 @@ const PopupManager: React.FC = () => {
   
 
   const popups = [
-    'onboarding',
+    'userprofiling',
     'primeLoginMap',
+    'onboarding',
   ];
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const PopupManager: React.FC = () => {
               case 'primeLoginMap':
                 return <PrimeLoginMap onClose={handleClose} />;
               case 'userprofiling':
-                <UserProfiling onClose={handleClose} />  
+                return  <UserProfiling onClose={handleClose} />  
               default:
                 return <div>No component found</div>;
             }

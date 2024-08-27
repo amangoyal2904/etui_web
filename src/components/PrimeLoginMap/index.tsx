@@ -18,8 +18,13 @@ const PrimeLoginMap = (onClose) => {
 
     useEffect(() => {
         console.log("popupContent --- checkElegibility" , isPrime, checkElegibility('launch'))
-        if (!isPrime && checkElegibility('launch')) {
+        if(isPrime !== null){
+          if (!isPrime && checkElegibility('launch')) {
             appendDialog();
+          }else{
+            const event = new Event('nextPopup');
+            window.dispatchEvent(event);
+          }
         }
     }, [isPrime]);
 

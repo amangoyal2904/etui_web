@@ -154,7 +154,8 @@ const UserProfile = (onClose) => {
         setShowProfileForm(false);
         typeof window.e$ !== 'undefined' && window.e$.jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
         document.body.classList.remove(styles.noscroll);
-        onClose();
+        const event = new Event('nextPopup');
+        window.dispatchEvent(event);
     }
     const setDefaultData = userInfo => {
         if (typeof window.geoinfo !== "undefined" && window.geoinfo) {

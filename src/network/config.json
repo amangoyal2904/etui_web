@@ -145,5 +145,9 @@
   "FetchQuestionnaire": {
     "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json",
     "production": "https://etonboard.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json"
+  },
+  "BreakingNews": {
+    "development": "https://economictimes.indiatimes.com/etstatic/breakingnews/etjson_bnews.html",
+    "production": "https://economictimes.indiatimes.com/etstatic/breakingnews/etjson_bnews.html"
   }
 }

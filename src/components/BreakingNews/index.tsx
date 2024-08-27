@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import axios from 'axios';
+import APIS_CONFIG from "../../network/config.json";
+import { APP_ENV } from "utils";
 import styles from './styles.module.scss';
 import useEmblaCarousel from 'embla-carousel-react';
 import Fade from 'embla-carousel-fade';
@@ -29,11 +30,17 @@ const BreakingNews: React.FC = () => {
 
   const fetchNews = useCallback(async () => {
     //console.log('Fetching news...');
+    const url = APIS_CONFIG["BreakingNews"][APP_ENV];
     try {
-      const response = await axios.get('https://etdev8243.indiatimes.com/json_bnews1.cms', {
-        responseType: 'text'
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'text/plain'
+          }
       });
-      const match = response.data.match(/breakingnews\(\s*(\[.*\])\s*\);?/);
+      const responseData = await response.text();
+
+      const match = responseData?.match(/breakingnews\(\s*(\[.*\])\s*\);?/);
       if (match && match[1]) {
         const newsData = JSON.parse(match[1]);
         setNews(newsData);
