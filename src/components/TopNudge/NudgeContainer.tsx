@@ -18,7 +18,7 @@ function NudgeContainer({data}) {
         var isCloseRef = e.target.classList.contains('info_cross');
         if(e.target.classList.contains('adFree')) {
             // customDimension.dimension1 = 'Adfree expired';
-            grxEvent('event', {'event_category': 'Subscription Flow ET',  'event_action': 'SYFT | Flow Started', 'event_label': "Adfree expired"}, 1);
+            grxEvent('event', {'event_category': 'Subscription Flow ET',  'event_action': 'SYFT | Flow Started', 'event_label': "Adfree expired"});
         }
         if(!isCloseRef) {
             grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Click', 'event_label': data.bannerType + ' | Banner Location '+ currPageType()});
