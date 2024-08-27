@@ -1,4 +1,5 @@
 import os from "os";
+import { grxPushData } from "./articleUtility";
 const serverHost = os.hostname() || "";
 
 declare global {
@@ -417,6 +418,34 @@ export const isMobileSafari = () => {
     console.log("isMobileSafari:", e);
   }
   return result;
+};
+
+export const gotoPlanPage = (options: any) => {
+  options = options || {};
+  // options = {
+  //   upgrade : true,
+  //   url: 'https://dev-buy.indiatimes.com/ET/plans'
+  // }
+  console.log("customDimension params", window.customDimension, options, window.isprimeuser);
+  const planDim = window.customDimension || {};
+  if (options.cd) {
+    planDim.dimension28 = options.cd;
+  }
+  if (options.dim1) {
+    planDim.dimension1 = options.dim1;
+  }
+  if (options.dim48) {
+    planDim.dimension48 = options.dim48;
+  }
+
+  var planUrl =
+    options.upgrade || window.isprimeuser
+      ? window.objVc && window.objVc.planPageUpgrade
+      : window.objVc && window.objVc.planPage;
+  if (options.url) {
+    planUrl = options.url;
+  }
+  grxPushData(planDim, planUrl);
 };
 
 let output = {
