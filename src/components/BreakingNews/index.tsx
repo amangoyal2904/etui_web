@@ -25,7 +25,7 @@ const BreakingNews: React.FC = () => {
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   const fetchNews = useCallback(async () => {
     //console.log('Fetching news...');
@@ -110,8 +110,8 @@ const BreakingNews: React.FC = () => {
   }, [isPageVisible, startFetchingNews, stopFetchingNews]);
 
   const svgHTML = () => (
-    <span className={`svg-container ${isPrime ? styles.blueClr : ''}`}>
-      {isPrime ? (<svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="0 0 50 40" fill="none">
+    <span className={`svg-container ${isPink ? styles.blueClr : ''}`}>
+      {isPink ? (<svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="0 0 50 40" fill="none">
         <g id="node_1_0">
           <path id="third" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#FFFFFF"></path>
           <path id="second" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H3.76004L20 19.8974L3.76004 40H0L15.9563 19.8974L0 0Z" fill="#FFFFFF"></path>
@@ -135,7 +135,7 @@ const BreakingNews: React.FC = () => {
 
   return (
     news.length > 0 ? (
-      <div id="breakingNews" className={`${styles.breakingNewsWap} ${isPrime ? styles.pink_theme : ''}`}>
+      <div id="breakingNews" className={`${styles.breakingNewsWap} ${isPink ? styles.pink_theme : ''}`}>
         <div className={`embla ${styles.bnewsWrp}`}>
           <div ref={emblaRef} className={styles.emblaWrp}>
             <ul className={`embla__container`}>

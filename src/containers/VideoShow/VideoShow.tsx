@@ -17,6 +17,7 @@ import PostComments from "components/Comments/PostComments";
 import PopulateComment from "components/Comments/PopulateComment";
 import { log } from "console";
 import Trending from "components/Trending";
+import { useStateContext } from "../../store/StateContext";
 
 declare global {
   interface Window {
@@ -37,7 +38,6 @@ const VideoShow = (props) => {
   const [isPopupVid, setIsPopupVid] = useState(false);
   const [isPopupVidClosed, setIsPopupVidClosed] = useState(false);
   const result = props?.searchResult?.find((item) => item.name === "videoshow")?.data as VideoShowProps;
-  console.log({result})
   const mostPopularNews = props?.searchResult?.find((item) => item.name === "most_popular_news");
   const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
   const trendingVideos = props?.searchResult?.find((item) => item.name === "trending_videos") as any;
@@ -45,10 +45,18 @@ const VideoShow = (props) => {
   const { seo = {}, version_control, parameters, isprimeuser } = props;
   const { msid } = parameters || {};
   const { cpd_wap = "0" }: any = version_control || {};
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
+
   const subsecNames = props?.seo?.subsecnames;
   const vidRef = useRef(null);
 
   useEffect(() => {
+    // set page specific customDimensions
+    //renderInterstatialAds();
+    const payload = getPageSpecificDimensions(seo);
+    window.customDimension = { ...window.customDimension, ...payload };
+
     const subSecs = getSubsecString(subsecNames);
     let adSection = "videoshow",
       isDeferredPreRoll = false;
@@ -100,7 +108,7 @@ const VideoShow = (props) => {
     setIsPopupVidClosed(true);
   };
 
-  const jsonLd = seo.seoschema || {};
+  const jsonLd = seo.pageSchema || {};
 
   return (
     result ? 
@@ -130,6 +138,7 @@ const VideoShow = (props) => {
                 hostId: result.hostid,
                 type: "5"
               }}
+              articleData={result}
             />
           </div>
           <div className={`vidWrapInner ${!isPopupVidClosed && isPopupVid ? styles.popupVid : ""}`}>
@@ -162,18 +171,23 @@ const VideoShow = (props) => {
           </a>
         </div>
         <ReadMore readMoreText={result?.relKeywords} />
-        {!isprimeuser && (
+        {!isPink && (
           <div className="adContainer">
-            <DfpAds adInfo={{ key: "mid1" }} objVc={version_control} />
+              <div id={`taboola-mid-article-thumbnails-${result.msid}`} 
+              className="wdt-taboola" 
+              data-mode="thumbnails-mid-mobile" 
+              data-target_type="mix" 
+              style={{height: '310px', marginTop:'7px', overflow:'hidden'}}
+              data-placement={`Mid Article Thumbnails`} />
           </div>
         )}
         <Listing type="grid" title={relatedVideos.title} data={relatedVideos} />
       </section>
       <aside className="sidebar">
-        {!isprimeuser && (
+        {!isPink && (
           <>
             <div className="adContainer">
-              <DfpAds adInfo={{ key: "atf", index: 0 }} objVc={version_control} />
+              <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={version_control} />
             </div>
             <div className="adContainer">
               <DfpAds adInfo={{ key: "mtf", index: 1 }} objVc={version_control} />
@@ -183,12 +197,16 @@ const VideoShow = (props) => {
         <MostViewVideos data={mostViewedVideos} />
         <Trending data={trendingVideos?.data} title={trendingVideos?.title} />
         <MostPopularNews data={mostPopularNews} />
-        {!isprimeuser && (
+        {!isPink && <div className="adContainer">
+        <DfpAds adInfo={{ key: "btf300", index: 2 }} objVc={version_control} />
+        </div>}
+      
+      </aside> 
+      {!isPink && (
           <div className="adContainer">
-            <DfpAds adInfo={{ key: "btf", index: 1 }} objVc={version_control} />
+            <DfpAds adInfo={{ key: "btf", index: 3 }} objVc={version_control} />
           </div>
         )}
-      </aside> 
     </>:""
   );
 };

@@ -7,12 +7,13 @@ import { APP_ENV, getCookie, sendMouseFlowEvent, updateDimension } from "../util
 import * as Config from "../utils/common";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import { getUserType, trackingEvent } from "utils/ga";
-import { useStateContext } from "store/StateContext";
+import {loadAndBeyondScript, loadTaboolaScript} from "./Ad/AdScript";
+import { useStateContext } from "../store/StateContext";
+
 
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
-  page?: string;
 }
 
 declare global {
@@ -44,10 +45,13 @@ declare global {
     };
     googletag: any;
     ispopup: any;
+    tpName: any;
     jsso?: {
       getValidLoggedInUser?: any;
       getUserDetails?: any;
       signOutUser?: any;
+      v1AddUpdateMobile?: any;
+      v1VerifyAlternateMobile?: any;
     };
     isSurveyLoad: any;
     ssoWidget?: any;
@@ -57,18 +61,21 @@ declare global {
       ticketId?: any;
       email?: any;
       prevPath?: string;
+      isPink?: any;
       info?: {
         thumbImageUrl: any;
         primaryEmail: string;
         firstName: string;
+        ssoid: any;
       };
       isPrime?: any;
       permissions?: any;
       accessibleFeatures?: any;
       primeInfo?: any;
+      afterLoginCall?: any;
+      loadSsoApi?: any;
     };
     _sva: any;
-    tpName?: string;
   }
 }
 declare var JssoCrosswalk: any;
@@ -83,9 +90,9 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   const jsDomain = "https://etdev8243.indiatimes.com"; //APP_ENV === "development" ? "https://etdev8243.indiatimes.com" : "https://js.etimg.com";
   const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
   
-  //let execution = 0;
+  let execution = 0;
   const surveyLoad = () => {
     if (window._sva && window._sva.setVisitorTraits) {
       const subscribeStatus =
@@ -142,7 +149,12 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
   useEffect(() => {
     sendMouseFlowEvent();
     console.log("mouse flow start________");
-  }, []);
+    if(typeof isPrime != "undefined" && typeof permissions!="undefined" && execution == 0){
+      loadAndBeyondScript(isPrime);
+      loadTaboolaScript(isPrime);
+      execution = 1;
+    }
+  }, [isPrime, permissions]);
 
   return (
     <>
@@ -276,10 +288,10 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {} }) => {
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
 
           <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
-		      <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js"  onLoad={() => {
-                  const slikeReady = new Event("slikeReady");
-                  document.dispatchEvent(slikeReady);
-                }}/>
+          <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js" onLoad={() => {
+            const slikeReady = new Event("slikeReady");
+            document.dispatchEvent(slikeReady);
+          }} />
 
           {!isprimeuser && (
             <>

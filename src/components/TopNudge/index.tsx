@@ -1,34 +1,52 @@
 import { useEffect, useState } from "react";
-
-import { currPageType } from "utils";
+import APIS_CONFIG from "../../network/config.json";
+import { currPageType, APP_ENV } from "utils";
 import NudgeContainer from "./NudgeContainer";
 import { grxEvent } from "utils/ga";
+import Service from "network/service";
 
 import styles from "./styles.module.scss";
 import { fetchAllMetaInfo } from "utils/articleUtility";
 import { useStateContext } from "../../store/StateContext";
+import jStorage from "jstorage-react";
 
 export default function TopNudge({objVc}) {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, permissions, isPink } = state.login;
   const [metaInfo, setMetaInfo] = useState<any>({});
 
-  const fetchSubsc = () => {
-    /* const isGroupUser = window.objInts.permissions.includes("group_subscription");
-    const url = `https://${objVc.subscriptions}.economictimes.indiatimes.com/subscription/allUserSubscriptions?merchantCode=ET&isGroupUser=${isGroupUser}`;
+  const fetchSubsc = async () => {
+    const isGroupUser = permissions?.includes("group_subscription") || false;
+    const url = APIS_CONFIG["AllUserSubscriptions"][APP_ENV];
+    const finalUrl = `${url}?merchantCode=ET&isGroupUser=${isGroupUser}`;
 
-    fetch(url , {
-        method: 'GET',
-        credentials: 'include'
-    })
-        .then(res => res.json())
-        .then(nextCommentsData => {
-          console.log(nextCommentsData, 'nextCommentsData');
-          checkNudgeType();
-        })
-        .catch(err => {
-          console.log('error: ', err);
-        }) */
+    // fetch(finalUrl , {
+    //   method: 'GET',
+    //   credentials: 'include'
+    // })
+    //   .then(res => res.json())
+    //   .then(nextCommentsData => {
+    //     console.log(nextCommentsData, 'nextCommentsData');
+    //     checkNudgeType(nextCommentsData);
+    //   })
+    //   .catch(err => {
+    //     console.log('error: ', err);
+    //   });
+
+    
+    // const res = await Service.get({
+    //   finalUrl,
+    //   params: { merchantCode: "ET", isGroupUser },
+    //   withCredentials: true,
+    //   headers: {
+    //     "content-type": "application/json; charset=utf-8"
+    //   }
+    // });
+    // const resData = res?.data || [];
+
+
+    
+
         const data = [{
             "merchantCode": "ET",
             "productCode": "ETPR",
@@ -82,10 +100,10 @@ export default function TopNudge({objVc}) {
         const isCancelledNonRec = (expiryDaysLeft > eu_benchmark) && isUserCancelled;
         const istimesPrimeUser = data[0].userAcquisitionType === "GROUP_SUBSCRIPTION" && data[0].userAcquisitionCode === "times_internet" && data[0].planPeriod == 3 && data[0].planPeriodUnit == "MONTH";
         const isGracePeriodOn = timestampNow > +new Date(data[0].expiryDate) && timestampNow < +new Date(data[0].graceEndDate);
-        const isExpired = subStatus === "expired" || window.objInts.permissions.includes("expired_subscription");
+        const isExpired = subStatus === "expired" || permissions?.includes("expired_subscription");
         const isB2CUser = (data[0].paymentMode.includes("OFFLINE") || data[0].paymentMode.includes("ETPAY")) && (subStatus === "cancelled" || subStatus === "active");
         const isVoucherUser = data[0].userAcquisitionType === "VOUCHER_CODE";
-        const isGroupUser = window.objInts.permissions.includes("group_subscription");;
+        const isGroupUser = permissions?.includes("group_subscription");
         const isRecurring = data[0].recurring;
 
         const isAboutToExpire = data[0].daysLeft <= eu_benchmark && expiryDaysLeft > 0;
@@ -98,10 +116,10 @@ export default function TopNudge({objVc}) {
   }
 
   const appendBand = async(bannerType) => {
-    var nudgeSavedObj = window.e$.jStorage.get('topNudgeObj') && JSON.parse(window.e$.jStorage.get('topNudgeObj'));
+    var nudgeSavedObj = jStorage.get('topNudgeObj') && JSON.parse(jStorage.get('topNudgeObj'));
     var reActivatedEnabled = nudgeSavedObj ? +new Date() > nudgeSavedObj.reActivatedOn : true;
     var topNudgeEnabled = objVc.top_nudge_enable && Number(objVc.top_nudge_enable) || 0;
-    var accessPassData = window.e$.jStorage.get('accessPassData');
+    var accessPassData = jStorage.get('accessPassData');
     var isOnBoardingeligibile = accessPassData && accessPassData.eligible;
 
     if(reActivatedEnabled && topNudgeEnabled && !isOnBoardingeligibile) {
@@ -273,16 +291,16 @@ export default function TopNudge({objVc}) {
   }
 
   useEffect(() => {
-    if(isLogin && !Number(objVc?.ads_primeuser_enable)) {
+    if(isPrime != "" && isLogin && !Number(objVc?.ads_primeuser_enable)) {
       fetchSubsc();
     }
-  }, []);
+  }, [isPrime]);
 
   return (
     <>      
-      <div className={`${styles.breadCrumb} ${isPrime ? styles.pink_theme : ""}`}>
+      <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`}>
         <div className={styles.breadCrumbWrap}>
-          {metaInfo?.banner_enabled === "on" && <NudgeContainer data={metaInfo} />}
+          {metaInfo?.banner_enabled === "off" && <NudgeContainer data={metaInfo} />}
         </div>
       </div>
     </>

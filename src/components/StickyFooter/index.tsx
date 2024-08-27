@@ -10,7 +10,7 @@ const StickyFooter = (props:any) => {
   
   useEffect(()=>{
     const fetchMetaInfo = async() => {
-    const allMetaData = await fetchAllMetaInfo(bandObj.contentCmsId) || {};
+    const allMetaData = await fetchAllMetaInfo(bandObj?.contentCmsId) || {};
     setAllMeta(allMetaData);
     }
     fetchMetaInfo();
@@ -19,7 +19,7 @@ const StickyFooter = (props:any) => {
   const handleClose = () =>{
     setIsVisible(false);
   }
-  console.log("@@@ bandObj --->???????????? ", allMetaData);
+  // console.log("@@@ bandObj --->???????????? ", allMetaData);
   return(
     <>
     {isVisible && bandObj?.bannerType === "type1" && (

@@ -11,7 +11,7 @@ import {
 
 const PrimeLoginMap = (onClose) => {
     const { state, dispatch } = useStateContext();
-    const { isLogin, userInfo, ssoReady, isPrime, ssoid, email } = state.login;
+    const { isLogin, userInfo, ssoReady, isPrime, ssoid, email, isPink } = state.login;
     const [primeUserData, setPrimeUserData] = useState<any>({});
     const [primeSavedEmail, setPrimeSavedEmail] = useState("");
     const [isElegible, setIsElegible] = useState(false);

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./styles.module.scss";
-import Service from "../../network/service";
-import APIS_CONFIG from "../../network/config.json";
 import { useStateContext } from "../../store/StateContext";
 
 interface SideNavData {
@@ -15,28 +13,28 @@ const SideNav = () => {
   const [sideNavData, setSideNav] = useState<SideNavData[] | null>(null);
   const [closeClass, setCloseClass] = useState<boolean>(false);
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   useEffect(() => {
     const sideNavRef = document.getElementById("sideMenu");
     sideNavRef?.addEventListener('mouseenter', handleSideNavApi);
 
+    // Add event listener for document clicks
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sideNavRef && !sideNavRef.contains(event.target as Node)) {
+        setCloseClass(false);
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+
     return () => {
       sideNavRef?.removeEventListener('mouseenter', handleSideNavApi);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
   const handleSideNavApi = () => {
-    // const api = APIS_CONFIG.FEED;
-
-    // Service.get({
-    //   api,
-    //   params: { type: "menu", feedtype: "etjson", pos: "lhsmenu" }
-    // }).then(res => {
-    //   res.data && setSideNav(res.data);
-    // }).catch(err => {
-    //   console.error(`error in sideMenuApi catch`, err);
-    // });
 
     const navbarData =  sessionStorage.getItem("navbar_data") || "";
     if(navbarData){
@@ -86,7 +84,7 @@ const SideNav = () => {
 
   return (
     <>
-      <div className={`${styles.sections} ${styles.hamberMenu} ${closeClass && styles.closeMenu} ${isPrime ? styles.pink_theme : ""}`} onClick={() => setCloseClass(!closeClass)} id="sideMenu">
+      <div className={`${styles.sections} ${styles.hamberMenu} ${closeClass && styles.closeMenu} ${isPink ? styles.pink_theme : ""}`} onClick={() => setCloseClass(!closeClass)} id="sideMenu">
         <span className={`${styles.hamberIcon} ${styles.commonSprite}`} />
         <nav id="sideBarNav" className={styles.ddNav} >
           {sideNavData ? sideNavApiHtml() : <div>Loading...</div>} {/* Conditional rendering */}

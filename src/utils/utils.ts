@@ -4,15 +4,182 @@ import { useRouter } from "next/navigation";
 import { grxPushData } from "./articleUtility";
 
 declare global {
-    interface Window { 
-      geolocation: any;
-      geoinfo: any;
-      chrome:any;
-      _mfq?: any[];
-    }
+  interface Window {
+    geolocation: any;
+    geoinfo: any;
+    chrome: any;
+    _mfq?: any[];
+  }
 }
 
+export const getMarketBandData = (): (() => void) => {
+  let interval: NodeJS.Timeout;
+  let currentInterval = 0;
 
+  const fetchData = async () => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // Set a 5-second timeout
+
+    try {
+      const response = await fetch("https://bselivefeeds.indiatimes.com/marketband.json", {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+
+      const text = await response.text();
+
+      // Extract JSON data from the response text
+      const jsonData = extractJsonFromText(text);
+
+      // Process and store the band data
+      processBandData(jsonData);
+
+      // Adjust the interval based on market status
+      const newInterval = jsonData?.marketStatus?.currentMarketStatus !== "LIVE" ? 120e3 : 12e3; // 2 min or 12 sec
+      if (newInterval !== currentInterval) {
+        updateInterval(newInterval);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+
+      // If fetching fails, set the interval to retry after 2 minutes
+      updateInterval(120e3); // 2 minutes in milliseconds
+    }
+  };
+
+  const extractJsonFromText = (text: string): any => {
+    try {
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf(")");
+      const jsonText = text.substring(start, end);
+      return JSON.parse(jsonText);
+    } catch (e) {
+      throw new Error("Failed to parse JSON data");
+    }
+  };
+
+  const processBandData = (data: any) => {
+    if (data && data.marketBandList) {
+      window.objMarketBand = window.objMarketBand || {};
+      window.objMarketBand.bandData = {};
+
+      data.marketBandList.forEach((item: any) => {
+        window.objMarketBand.bandData[item.sectionName] = item.bandServiceMetas;
+      });
+
+      window.objMarketBand.bandData["common"] = data.marketStatus;
+    }
+  };
+
+  const updateInterval = (newInterval: number) => {
+    if (interval) {
+      clearInterval(interval);
+    }
+    currentInterval = newInterval;
+    interval = setInterval(fetchData, newInterval);
+  };
+
+  fetchData();
+
+  return () => clearInterval(interval);
+};
+
+export const setCookieToSpecificTime = (name, value, time, seconds) => {
+  try {
+    let domain = ".indiatimes.com";
+    location.hostname == "localhost" ? (domain = "localhost") : (domain = ".indiatimes.com");
+    let cookiestring = "";
+    if (name && value && time) {
+      cookiestring =
+        name +
+        "=" +
+        value +
+        "; expires=" +
+        new Date(new Date().toDateString() + " " + time).toUTCString() +
+        "; domain=" +
+        domain +
+        "; path=/;";
+    }
+    if (name && value && seconds) {
+      //temp cookie
+      let exdate = new Date();
+      exdate.setSeconds(exdate.getSeconds() + seconds);
+      let c_value =
+        value + (seconds == null ? "" : "; expires=" + exdate.toUTCString()) + "; domain=" + domain + "; path=/;";
+      cookiestring = name + "=" + c_value;
+    }
+    document.cookie = cookiestring;
+  } catch (e) {
+    console.log("setCookieToSpecificTime", e);
+  }
+};
+export const getCookie = (name) => {
+  try {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  } catch (e) {
+    console.log("getCookie", e);
+  }
+};
+// Check if GDPR policy allowed for current location
+export const allowGDPR = () => {
+  try {
+    var flag = false,
+      ginfo = window["geoinfo"] || {};
+    if (window.geolocation && window.geolocation != 5 && (window.geolocation != 2 || ginfo.region_code != "CA")) {
+      flag = true;
+    }
+    return flag;
+  } catch (e) {
+    console.log("allowGDPR", e);
+  }
+};
+export const pageType = (pathurl) => {
+  if (pathurl == "/" || pathurl == "/index.html") {
+    return "home";
+  } else if (pathurl.indexOf("primearticleshow") != -1) {
+    return "primearticle";
+  } else if (pathurl.indexOf("articleshow") != -1) {
+    return "articleshow";
+  } else if (pathurl.indexOf("primearticlelist") != -1 || /prime\/\w/.test(pathurl)) {
+    return "primearticlelist";
+  } else if (pathurl == "/prime") {
+    return "primehome";
+  } else if (pathurl.indexOf("/et-tech") != -1) {
+    return "techhome";
+  } else if (pathurl.indexOf("/videoshow/") != -1) {
+    return "videoshow";
+  } else if (pathurl.indexOf("/topic/") != -1) {
+    return "topic";
+  } else {
+    return "articlelist";
+  }
+};
+//Get any parameter value from URL
+export const getParameterByName = (name) => {
+  try {
+    if (name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    } else {
+      return "";
+    }
+  } catch (e) {
+    console.log("getParameterByName", e);
+  }
+};
 //Email validate
 export const validateEmail = () => {
   try {
@@ -191,7 +358,7 @@ export const removeBackSlash = (val) => {
   return val;
 };
 
-export const loadAssets = (filename, fileType, attrType, position, cb = "", attr?, attrVal?, objAttr?) => {
+export const loadAssets = (filename, fileType, attrType, position, cb, attr?, attrVal?, objAttr?) => {
   try {
     if (filename) {
       let fileRef: any = "";
@@ -401,4 +568,31 @@ export const gotoPlanPage = (options: any) => {
     planUrl = options.url;
   }
   grxPushData(planDim, planUrl);
+};
+
+let output = {
+  urlValidation,
+  socialUrl,
+  removeBackSlash,
+  isVisible,
+  isDevEnv,
+  isProductionEnv,
+  queryString,
+  processEnv,
+  dateFormat,
+  appendZero,
+  validateEmail,
+  getParameterByName,
+  allowGDPR,
+  pageType,
+  mgidGeoCheck
+};
+
+export default output;
+
+export const getDevStatus = (host: string | string[]) => {
+  if (host.indexOf("localhost") !== -1 || host.indexOf("etwebpre.indiatimes.com") !== -1) {
+    return true;
+  }
+  return false;
 };

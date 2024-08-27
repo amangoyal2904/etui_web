@@ -13,6 +13,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { callJsOnRouteChange } from "utils/priority";
 import TopNudge from "./TopNudge";
 import BreakingNews from "./BreakingNews";
+import { useStateContext } from "../store/StateContext";
 
 const RotatingCube = dynamic(() => import("./RotatingCube"), {
   ssr: false
@@ -38,6 +39,9 @@ interface ChildProps {
 
 const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, isprimeuser, children, pageSeo }) => { 
   
+  const { state, dispatch } = useStateContext();
+  const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
+
   if (!data?.seo?.subsecnames || !data?.seo?.sectionDetail) {
     data.seo = {};
     data.seo.subsecnames = {};
@@ -59,17 +63,12 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
 
   return (
     <>
-      {!isprimeuser && (
-        <div className="topAdContainer">
-          <DfpAds adInfo={{ key: "topad" }} objVc={objVc} />
-        </div>
-      )}
       <TopNudge objVc={objVc} />
       <Headers />
       <main className={`pageHolder container`}>
-        {!isprimeuser && (
+        {!isPink && (
           <div className="topAdContainer">
-            <DfpAds adInfo={{ key: "topad" }} objVc={objVc} />
+            <DfpAds adInfo={{ key: "atf" }} objVc={objVc} />
           </div>
         )}
         <HeaderMain
@@ -82,14 +81,14 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
         <BreadCrumb data={data?.seo?.breadcrumb} />
         <BreakingNews />
         <div className="layout">{children}</div>
-        <Scripts objVc={objVc} isprimeuser={isprimeuser} />
-        {!isprimeuser && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
+        <Scripts objVc={objVc} isprimeuser={isPink} />
+        {!isPink && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
         <Footer dynamicFooterData={dynamicFooterData} page={page} />
         <RedeemVoucher />
       </main>
 
-      {!isprimeuser && <DfpAds adInfo={{ key: "skinleft" }} objVc={objVc} />}
-      {!isprimeuser && <RotatingCube objVc={objVc} />}
+      {!isPink && <DfpAds adInfo={{ key: "skinning" }} objVc={objVc} />}
+      {!isPink && <RotatingCube objVc={objVc} />}
     </>
   );
 };

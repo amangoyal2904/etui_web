@@ -10,7 +10,8 @@ interface SocialShareProps {
     msid: number | string;
     hostId: number | string;
     type: number | string;
-  }
+  },
+  articleData:any
 }
 
 const SocialShare: FC<SocialShareProps> = (props) => {  
@@ -68,7 +69,7 @@ const SocialShare: FC<SocialShareProps> = (props) => {
           }
           
         </div>
-       {showMail ? <EmailStory closeMailHandler={closeMailHandler}/> :""}
+       {showMail ? <EmailStory mailData={props.mailData} articleData={props.articleData} closeMailHandler={closeMailHandler}/> :""}
     </Share>
   );
 };

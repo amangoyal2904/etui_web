@@ -8,11 +8,15 @@ const initialState = {
   login: {
     ssoReady: "",
     isLogin: "",
+    isPrime: "",
     userInfo: {},
     ssoid: "",
     ticketId: "",
     email: "",
     error: null,
+    permissions: [],
+    isAdfree: "",
+    isPink: false
   }
 };
 

@@ -2,13 +2,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from "./styles.module.scss";
 import { useStateContext } from "../../store/StateContext";
-import { delete_cookie, getCookie, setCookieToSpecificTime } from 'utils';
+import { delete_cookie, getCookie, setCookieToSpecificTime, APP_ENV } from 'utils';
+import APIS_CONFIG from "../../network/config.json";
 
 const IfrOnboarding = (onClose) => {
   const [showIframe, setShowIframe] = useState(false);
   //const [onboardApiHit, setOnboardApiHit] = useState(false);
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime, ssoid, email } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, ssoid, email, isPink } = state.login;
   const onboardTimerRef = useRef<any>(null);
   let onboardApiHit = false;
 
@@ -23,7 +24,7 @@ const IfrOnboarding = (onClose) => {
   }
 
   const fetchHit = async () => {
-    let serviceUrl = 'https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json';
+    let serviceUrl = APIS_CONFIG["FetchQuestionnaire"][APP_ENV]; //'https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json';
 
     // Parameters to be sent with the GET request
     const params = new URLSearchParams({
@@ -141,7 +142,7 @@ const IfrOnboarding = (onClose) => {
           <iframe
               id="ifr_onboarding"
               className={`${styles.onboardFrame}`}
-              src={`https://etdev8243.indiatimes.com/onboarding.cms?obd_ifrm=1`}
+              src={APIS_CONFIG["Ifm_Onboarding"][APP_ENV]}
           />
         </div>
       }

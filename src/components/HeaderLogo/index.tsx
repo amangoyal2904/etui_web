@@ -97,7 +97,7 @@ const HeaderLogo = (props) => {
   const {page, subsecnames, sectiondetail, headertext} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
   const { state, dispatch } = useStateContext();
-  const { isPrime } = state.login;
+  const { isPrime, isPink } = state.login;
 
   // const loginState = useSelector((state: any) => state.login);
   // const isPrimeUserCls = loginState.login && loginState.isprimeuser ? 'prime_user' : '';
@@ -105,7 +105,7 @@ const HeaderLogo = (props) => {
   // console.log(sectiondetail)
 
   return (
-    <div className={`${styles.logo_part} ${isPrime ? styles.pink_theme : ""}`}>
+    <div className={`${styles.logo_part} ${isPink ? styles.pink_theme : ""}`}>
       <div id="headerWrap" className={`${styles.headerWrap}`}>
         <a title="The Economic Times" href="/">
           <img src={etLogo} width={etLogoWidth} height={etLogoHeight} className="dib" alt="The Economic Times"/>
