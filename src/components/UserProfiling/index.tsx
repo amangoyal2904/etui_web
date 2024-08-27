@@ -63,6 +63,9 @@ const UserProfile = (onClose) => {
     const [wrongOtp, setWrongOtp] = useState<boolean>(false);
 
     useEffect(() => {
+
+        console.log("popmanage -- UserProfile", )
+
         if (typeof window.objUser != 'undefined') {
             fetchProfileQuestions();
         } else {
@@ -110,6 +113,9 @@ const UserProfile = (onClose) => {
                         setDefaultData(userInfo);
                         // fireGaEvent('Popup Shown', window.location.href);
                         document.body.classList.add(styles.noscroll);
+                    }else{
+                        const event = new Event('nextPopup');
+                        window.dispatchEvent(event);    
                     }
                 });
         }
