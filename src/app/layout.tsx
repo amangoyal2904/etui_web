@@ -12,6 +12,9 @@ const DynamicPopupManager = dynamic(() => import('../components/PopupManager'), 
 export const metadata: Metadata = {
   title: 'Home',
   description: '',
+  icons: {
+    icon: "/img/etfavicon.ico",
+  },
 };
 
 interface RootLayoutProps {

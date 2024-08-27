@@ -17,6 +17,7 @@ const PrimeLoginMap = (onClose) => {
     const [isElegible, setIsElegible] = useState(false);
 
     useEffect(() => {
+      console.log("popmanage -- PrimeLoginMap", )
         console.log("popupContent --- checkElegibility" , isPrime, checkElegibility('launch'))
         if(isPrime !== null){
           if (!isPrime && checkElegibility('launch')) {

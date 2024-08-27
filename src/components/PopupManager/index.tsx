@@ -52,7 +52,7 @@ const PopupManager: React.FC = () => {
 
   return (
     <>
-      {isLogin != "" && showPopup && currentPopupIndex < popups.length && (
+      {isLogin != null && showPopup && currentPopupIndex < popups.length && (
         <div className={`popupManager ${popups[currentPopupIndex]}`}>
           {(() => {
             switch (popups[currentPopupIndex]) {

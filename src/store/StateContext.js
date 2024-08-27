@@ -7,7 +7,7 @@ import loginReducer from "../Reducers/loginReducer.ts";
 const initialState = {
   login: {
     ssoReady: "",
-    isLogin: "",
+    isLogin: null,
     isPrime: null,
     userInfo: {},
     ssoid: "",

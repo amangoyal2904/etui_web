@@ -105,6 +105,8 @@ const IfrOnboarding = (onClose) => {
     }else if(!isLogin){
       delete_cookie("showOnboard");
       delete_cookie("onboardShown");
+      const event = new Event('nextPopup');
+      window.dispatchEvent(event);
     }
   }
 
@@ -113,6 +115,7 @@ const IfrOnboarding = (onClose) => {
   }, [onboardApiHit]);
 
   useEffect(() => {
+    console.log("popmanage -- ifrOnboarding", )
     const handleMessage = (event) => {
       if (event.data === 'removeIframe') {
         setShowIframe(false);
@@ -131,7 +134,10 @@ const IfrOnboarding = (onClose) => {
   }, []);
 
   useEffect(() => {
-    checkOnboard();
+    if(isPrime != null){
+      checkOnboard();
+    }
+    
   }, [isPrime]);
 
   return (
