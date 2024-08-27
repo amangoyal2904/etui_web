@@ -202,11 +202,6 @@ const VideoShow = (props) => {
         </div>}
       
       </aside> 
-      {!isPink && (
-          <div className="adContainer">
-            <DfpAds adInfo={{ key: "btf", index: 3 }} objVc={version_control} />
-          </div>
-        )}
     </>:""
   );
 };
