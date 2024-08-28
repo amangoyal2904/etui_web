@@ -1,4 +1,4 @@
-import { ET_WAP_URL } from "../utils/common";
+import { ET_WEB_URL } from "../utils/common";
 
 
 declare global {
@@ -171,8 +171,8 @@ export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, page
   playerConfig.contEl = "id_" + result?.msid;
   playerConfig.video.id = result?.slikeid;
   playerConfig.video.playerType = result?.playertype;
-  playerConfig.video.shareUrl = ET_WAP_URL + result?.url;
-  playerConfig.player.description_url = ET_WAP_URL + result?.url; // no need to modify; added specifically for tracking purpose by Slike team
+  playerConfig.video.shareUrl = ET_WEB_URL + result?.url;
+  playerConfig.player.description_url = ET_WEB_URL + result?.url; // no need to modify; added specifically for tracking purpose by Slike team
   playerConfig.video.image = result?.img;
   playerConfig.video.title = result?.title;
   playerConfig.player.msid = result?.msid;

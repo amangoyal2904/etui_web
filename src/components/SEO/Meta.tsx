@@ -25,7 +25,7 @@ const Meta: NextPage<SEOProps> = ({data, page}) => {
   const alternateUrl = data.actualURL && data.actualURL.replace(ET_WAP_URL, ET_WEB_URL) || "";
 
   if (data) {
-    const canonical = data.canonical || ET_WAP_URL;
+    const canonical = data.canonical || ET_WEB_URL;
     meta = (
       <>
         <title>{removeBackSlash(data.title)}</title>
