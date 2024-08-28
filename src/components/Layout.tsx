@@ -80,7 +80,7 @@ const Layout:FC<Props> = ({ page, dynamicFooterData, menuData, objVc, data, ispr
           APP_ENV={APP_ENV}
         />
         <BreadCrumb data={data?.seo?.breadcrumb} />
-        <BreakingNews />
+        <BreakingNews APP_ENV={APP_ENV} />
         <div className="layout">{children}</div>
         <Scripts objVc={objVc} isprimeuser={isPink} APP_ENV={APP_ENV}/>
         {!isPink && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}

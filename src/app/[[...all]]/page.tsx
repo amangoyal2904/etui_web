@@ -1,7 +1,9 @@
 import { headers, cookies } from 'next/headers';
-import { VideoShow } from '../../containers/';
+import dynamic from "next/dynamic";
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
+
+const VideoShow = dynamic(() => import("../../containers/VideoShow"), { ssr: true });
 
 export default async function Page({ params }: {
   params: { all: string[] }
@@ -71,7 +73,7 @@ export default async function Page({ params }: {
   const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
   return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
-      <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
+    <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
   </Layout>;
 }
 
