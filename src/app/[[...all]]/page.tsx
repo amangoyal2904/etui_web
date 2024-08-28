@@ -99,6 +99,8 @@ export async function generateMetadata({ params }) {
   pageContent = data;
 
   const seo = pageContent?.seo || {};
+  const m_actualURL = seo?.actualURL?.replace("https://economictimes.indiatimes.com/", "https://m.economictimes.com/");
+  const amp_actualURL = m_actualURL?.replace("/videoshow/", "/amp_videoshow/");
 
   return {
     title: seo?.title || "",
@@ -108,24 +110,50 @@ export async function generateMetadata({ params }) {
     // "geo.region": "uk",
     alternates: {
       canonical: seo?.actualURL || "",
+      media: {
+        'only screen and (max-width: 640px)': m_actualURL,
+        'handheld': m_actualURL
+      },
     },
     openGraph: {
       images: seo?.image,
       url: seo?.url,
-      siteName: ""
+      siteName: '@EconomicTimes',
+      type: 'website',
     },
-    // icons: {
-    //   other: [
-    //     {
-    //       rel: "amphtml",
-    //       url: seo?.ampURL || ""
-    //     },
-    //     {
-    //       rel: "alternate",
-    //       url: seo?.actualURL?.replace(ET_WAP_URL, ET_WEB_URL)
-    //     }
-    //   ]
-    // }
+    twitter: {
+      card: 'summary_large_image',
+      title: seo?.title || "",
+      description: seo?.description || "",
+      site: '@EconomicTimes',
+      images: [seo?.image], // Must be an absolute URL
+      url: seo?.url,
+    },
+    facebook: {
+      appId: ['21540067693', '117787264903013'],
+      admins: '556964827',
+    },
+    icons: {
+      icon: "/img/etfavicon.ico",
+      other: [
+        {
+          rel: "amphtml",
+          url: amp_actualURL || ""
+        },
+        {
+          rel: "image_src",
+          url: seo?.image
+        }
+      ]
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      }
+    }
   };
 }
 
