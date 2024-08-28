@@ -10,7 +10,7 @@ import {
 } from '../CarouselArrowBtn';
 import { useStateContext } from "../../store/StateContext";
 
-const BreakingNews: React.FC = () => {
+const BreakingNews = ({APP_ENV}) => {
   const [news, setNews] = useState<any[]>([]);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const options = {};
@@ -27,9 +27,8 @@ const BreakingNews: React.FC = () => {
   const { state, dispatch } = useStateContext();
   const { isPrime, isPink } = state.login;
 
-  const fetchNews = useCallback(async () => {
-    //console.log('Fetching news...');
-    const url = APIS_CONFIG["BreakingNews"][window.APP_ENV];
+  const fetchNews = useCallback(async () => {    
+    const url = APIS_CONFIG["BreakingNews"][APP_ENV];    
     try {
       const response = await fetch(url, {
           method: 'GET',

@@ -81,7 +81,7 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
           elm: (
             <div>
               <div key={`subsec2_${l2.msid}_${index}`}>
-                <a href={l2.link} className={styles.subsec2}>
+                <a href={l2.link} className={`${styles.subsec2} ${l2.msid == "50943206" ? styles.cart : ''}`}>
                   {l2.nm}
                 </a>
               </div>

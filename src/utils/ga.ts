@@ -9,7 +9,7 @@ import grxMappingObj from "../utils/grxMappingObj.json";
 import cdpObj from "../utils/cdpObj.json";
 import jStorageReact from "./jStorage";
 
-export const grxEvent = (type, data) => {
+export const grxEvent = (type, data, isGA = 0) => {
 
 };
 

@@ -28,7 +28,7 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         userInfo: action.payload.userInfo,
         accessibleFeatures: action.payload.accessibleFeatures,
         permissions: action.payload.permissions, 
-        email: action.payload.userInfo.primaryEmail,
+        email: action.payload.userInfo?.primaryEmail,
         isAdfree: action.payload.isAdfree,
         isPink: action.payload.isPink,
         error: null 

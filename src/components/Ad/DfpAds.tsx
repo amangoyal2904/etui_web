@@ -125,7 +125,7 @@ const DfpAds = function(props:Props) {
                   let __auds =
                     typeof window._auds !== "undefined"
                       ? window._auds
-                      : JSON.parse(localStorage.getItem("audienceData"));
+                      : JSON.parse(window.localStorage.getItem("audienceData") || "{}");
                   let _hdl = typeof window.hdl !== "undefined" ? window.hdl : "";
                   let _arc1 = typeof window.arc1 !== "undefined" ? window.arc1 : "";
                   let _hyp1 = typeof window.hyp1 !== "undefined" ? window.hyp1 : "";
@@ -135,6 +135,7 @@ const DfpAds = function(props:Props) {
                   let _keyword =
                     typeof window.spcKeyword !== "undefined" ? window.spcKeyword : "";
 
+                // @ts-ignore
                   slot.addService(googleTag.pubads());
                   googleTag.pubads().collapseEmptyDivs();
                   if (window.extCampaignVal) {
