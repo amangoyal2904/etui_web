@@ -30,7 +30,8 @@ const SubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => {
   return (
     <div key={keyName} data-ga-action={data.nm} className={data.sec ? styles.subLevel : ""}>
       {/* Add a unique key for the main link */}
-      <a href={data.link} className={subsec2 == data.msid ? styles.current : ''} data-ga-onclick={data.link}>
+      <a itemProp="url" href={data.link} className={subsec2 == data.msid ? styles.current : ''} data-ga-onclick={data.link}>
+        <meta content={data.nm} itemProp="name" />
         {data.nm}
         {/* Add a unique key for the down arrow */}
         {data.sec && <span key={`arrow_${index}`} className={styles.downArw}></span>}
