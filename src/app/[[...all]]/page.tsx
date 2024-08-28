@@ -105,7 +105,6 @@ export async function generateMetadata({ params }) {
     description: seo?.description || "",
     keywords: seo?.keywords || "",
     authors: seo?.authors || "",
-    // "geo.region": "uk",
     alternates: {
       canonical: seo?.actualURL || "",
     },

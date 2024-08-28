@@ -80,6 +80,7 @@ declare global {
       afterLoginCall?: any;
       loadSsoApi?: any;
     };
+    _ibeat_track?:any;
     _sva: any;
   }
 }
@@ -161,6 +162,10 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
 
   useEffect(() => {
     window.APP_ENV = APP_ENV;
+    window._ibeat_track = {
+      "visitor_cat" : (isPrime ? 1 : isLogin ? 2 : 3),
+      "ct" : (window.tpName == 'videoshow' ? 2 : 20)
+    }
     sendMouseFlowEvent();
   }, []);
 
