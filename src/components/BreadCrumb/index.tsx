@@ -14,13 +14,15 @@ export default function BreadCrumb({ data }: BreadCrumbProps) {
   
   return (
     <>      
-      <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`}>
-        <div className={styles.breadCrumbWrap}>
+      <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`} >
+        <div className={styles.breadCrumbWrap} itemType="https://schema.org/BreadcrumbList" itemScope>
           {data?.map((item, i) => (
             <Fragment key={i}>
               {item.url ? (
-                <span>
+                <span itemType="https://schema.org/ListItem" itemScope itemProp="itemListElement">
+                  <meta content={`${i+1}`} itemProp="position" />
                   <a href={item.url} itemProp="item">
+                    <meta content={item.title} itemProp="name" />
                     {item.title}
                   </a>
                 </span>

@@ -8,6 +8,8 @@ interface SubSection {
   msid: number;
   moreCount: number;
   sec: any[];
+  link: any;
+  nm: any;
 }
 
 interface Props {
@@ -16,7 +18,7 @@ interface Props {
 }
 
 const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
-  const { msid, moreCount, sec } = subSectionList[0];
+  const { msid, moreCount, sec, link, nm } = subSectionList[0];
   const { state } = useStateContext();
   const {  isPrime, isPink} = state.login;
 
@@ -30,7 +32,11 @@ const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
 
   return (
     <div className={`${styles.sbnv_wrapper} ${isPink ? styles.pink_theme : ""}`}>
-      <nav className={styles.subsec_nav}>
+      <nav className={styles.subsec_nav} itemType="https://www.schema.org/SiteNavigationElement" itemScope>
+        <meta content="/" itemProp="url" />
+        <meta content="Home" itemProp="name" />
+        <meta itemProp="url" content={link} />
+        <meta content={nm} itemProp="name" />
         {Array.isArray(sec) && sec.slice(0, (moreCount || 0) - 1).map((data, index) => (
           <SubSecNavHtml
             subsecnames={subsecnames}

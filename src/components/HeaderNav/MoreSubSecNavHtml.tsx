@@ -34,7 +34,8 @@ const MoreSubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => 
   return (
     <React.Fragment key={keyName}>
       {/* Add a unique key for the main link */}
-      <a key={`l2_${index}`} href={data.link}  className={`${subsec2 == data.msid && styles.current} ${styles.subsec1}`}>
+      <a key={`l2_${index}`} href={data.link} itemProp="url"  className={`${subsec2 == data.msid && styles.current} ${styles.subsec1}`}>
+        <meta content={`${data.nm}`} itemProp="name" />
         {data.nm}
       </a>
       {/* Check if there are any sub-sections */}
