@@ -162,8 +162,7 @@ export const dynamicPlayerConfig = {
       autoPause: true
     },
     showTitle: true
-  },
-  gaId: "UA-198011-5"
+  }
 };
 
 export function setGetPlayerConfig({ dynamicPlayerConfig, result, autoPlay, pageTpl, isPrimeUser = false, subSecs, adSection='default', isDeferredPreRoll=false, relvideo }) {

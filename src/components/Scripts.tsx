@@ -297,10 +297,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
               `
             }}
           />
-          <Script strategy="lazyOnload" src="https://agi-static.indiatimes.com/cms-common/ibeat.min.js?etnextweb=1" onLoad={() => {
-            console.log('Script loaded successfully');
-            alert('hello');
-          }} />
+          <Script strategy="lazyOnload" src="https://agi-static.indiatimes.com/cms-common/ibeat.min.js" />
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
 
           <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
