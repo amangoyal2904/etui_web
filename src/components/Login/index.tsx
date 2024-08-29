@@ -65,14 +65,14 @@ const Login = ({headertext}) => {
           primeRes.data.accessibleFeatures || [];
         window.objUser.primeInfo = primeRes?.data;
         window.objUser.isPrime = isPrime;
-        window.objUser.isPink = true; //isPrime ? true : false;
+        window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
         if (primeRes && primeRes?.token) {
           setCookieToSpecificTime("OTR", primeRes.token, 30, 0, 0, "");
         }
 
         
-        window.objUser.isPink && document.body.classList.add("isprimeuser");
+        isPink && document.body.classList.add("isprimeuser");
 
         if(isExpired){
           adFreeEx();
