@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './styles.module.scss';
 import APIS_CONFIG from "../../network/config.json";
 import { useStateContext } from "../../store/StateContext";
+import jStorageReact from 'utils/jStorage';
 interface Option {
     key: string;
     value: string;
     name: string;
+    selected: boolean;
     questions?: Question[];
 }
 interface Question {
@@ -14,6 +16,7 @@ interface Question {
     name: string;
     showQuestion: boolean;
     question: string;
+    answer: string;
     options?: Option[];
 }
 // Define types for profile data
@@ -22,7 +25,7 @@ interface ProfileData {
     email: string;
     mobile: string;
     location: string;
-    occupation: string;
+    occupation: object;
 }
 
 // Define types for OTP state
@@ -49,7 +52,7 @@ const UserProfile = (onClose) => {
         email: "",
         mobile: "",
         location: "",
-        occupation: ""
+        occupation: {}
     });
     const [showProfileForm, setShowProfileForm] = useState<boolean>(false);
     const [occupation, setOccupation] = useState<Question[]>([]);
@@ -78,12 +81,11 @@ const UserProfile = (onClose) => {
     }, []);
 
     const fetchProfileQuestions = () => {
-        const isLive = window.location.host.includes('https://economictimes.indiatimes.com/');
+        const isLive = window.location.host.includes('economictimes.indiatimes.com');
         const onboardingDomain = isLive ? "etonboard" : "etonboard-stg";
         const isPaidUser = typeof window.objUser !== 'undefined' && window.objUser.permissions && window.objUser.permissions.includes('subscribed');
         const email = typeof window.objUser !== 'undefined' && window.objUser.info && window.objUser.info.primaryEmail || '';
-        const isPopupShown = typeof window.e$ !== 'undefined' && window.e$.jStorage.get('profile_update_shown') || 0;
-
+        const isPopupShown = jStorageReact.get('profile_update_shown');
         if (!isPopupShown) {
             const url = `https://${onboardingDomain}.economictimes.indiatimes.com/etonboard/api/v3/fetchQuestionnaire.json?isPaidUser=true&email=${email}&isEdit=true`;
             fetch(url, {
@@ -93,22 +95,29 @@ const UserProfile = (onClose) => {
                 }
             }).then(response => response.json())
                 .then(res => {
-                    const profile = res.questionnaireDto?.screens?.filter(ele => ele.key === "screen1") || [];
+                    const profile = res?.questionnaireDto?.screens?.filter(ele => ele.key === "screen1") || [];
                     const isProfileComplete = profile.length > 0 && profile[0].status.toLowerCase() === "complete";
-                    const questionnaire = res.questionnaireDto?.screens?.[0].questions || [];
-                    console.log("@@@ questionnaire ->", questionnaire)
-                    console.log("@@@ questionnaire11 ->", questionnaire[2]?.options?.[0].questions)
+                    const questionnaire = res?.questionnaireDto?.screens?.[0].questions || [];
                     setQuestionnaire(questionnaire);
                     questionnaire?.map(question => {
-                        if (question.key == 'occupation') {
-                            const firstQues = question.options?.find(() => true);
-                            console.log("@@@ questionOpyyyyy", firstQues.questions)
-                            setOccupation(firstQues.questions);
+                        if (question?.key == 'occupation') {
+                            const firstQues = question?.options?.find(() => true) || {};
+                            const selectedOption = question?.options.find(option => option?.selected) || {};
+                            if (selectedOption === undefined) {
+
+                                setOccupation(firstQues?.questions)
+                                setProfileObj((prevData) => ({ ...prevData, occupation: { name: firstQues.name, value: firstQues.value, selected: true, key: firstQues.key } }));
+                            } else {
+                                setOccupation(selectedOption?.questions)
+                                setProfileObj((prevData) => ({ ...prevData, occupation: { name: selectedOption.name, value: selectedOption.value, selected: true, key: selectedOption.key } }));
+                            }
+
                         }
                     })
                     setUuid(res.userUuid || "");
                     if (!isProfileComplete && email) {
                         const userInfo = typeof window.objUser !== 'undefined' && window.objUser.info;
+
                         setShowProfileForm(true);
                         setDefaultData(userInfo);
                         // fireGaEvent('Popup Shown', window.location.href);
@@ -123,16 +132,16 @@ const UserProfile = (onClose) => {
     const handleOccupationChange = (e: any) => {
         const { name, value } = e.target;
         questionnaire?.map(question => {
-            if (question.key == name) {
+            if (question?.key == name) {
                 question?.options?.map(option => {
-                    if (option.value == value) {
-                        if (option.questions) {
+                    if (option?.value == value) {
+                        if (option?.questions) {
                             occupation && occupation.length && occupation?.map(data => {
                                 setProfileObj((prevData) => ({ ...prevData, [data.key]: "" }))
                             })
-                            setOccupation(option.questions);
+                            setOccupation(option?.questions);
                         }
-                        setProfileObj((prevData) => ({ ...prevData, [name]: { name: option.name, value: option.value, selected: true, key: option.key } }));
+                        setProfileObj((prevData) => ({ ...prevData, [name]: { name: option?.name, value: option?.value, selected: true, key: option?.key } }));
                     }
                 })
             }
@@ -141,10 +150,10 @@ const UserProfile = (onClose) => {
     const handleOccupOptionChange = (e: any) => {
         const { name, value } = e.target;
         occupation?.map(question => {
-            if (question.key == name) {
+            if (question?.key == name) {
                 question?.options?.map(option => {
-                    if (option.value == value) {
-                        setProfileObj((prevData) => ({ ...prevData, [name]: { name: option.name, value: option.value, selected: true, key: option.key } }));
+                    if (option?.value == value) {
+                        setProfileObj((prevData) => ({ ...prevData, [name]: { name: option?.name, value: option?.value, selected: true, key: option?.key } }));
                     }
                 })
             }
@@ -157,7 +166,7 @@ const UserProfile = (onClose) => {
     const onPopUpClose = () => {
         // fireGaEvent('Popup Closed', window.location.href);
         setShowProfileForm(false);
-        typeof window.e$ !== 'undefined' && window.e$.jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
+        jStorageReact?.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
         document.body.classList.remove(styles.noscroll);
         const event = new Event('nextPopup');
         window.dispatchEvent(event);
@@ -166,22 +175,22 @@ const UserProfile = (onClose) => {
         if (typeof window.geoinfo !== "undefined" && window.geoinfo) {
             setProfileObj((prevData) => ({ ...prevData, location: window.geoinfo.city }));
         }
-        setProfileObj((prevData) => ({ ...prevData, name: userInfo.firstName ? userInfo.firstName : "" + " " + userInfo.lastName ? userInfo.lastName : "" }));
-        setProfileObj((prevData) => ({ ...prevData, email: userInfo.primaryEmail }));
-        const mobileNumber = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile ? userInfo.mobileData.Verified.mobile : "";
+        setProfileObj((prevData) => ({ ...prevData, name: userInfo?.firstName ? userInfo?.firstName : "" + " " + userInfo?.lastName ? userInfo?.lastName : "" }));
+        setProfileObj((prevData) => ({ ...prevData, email: userInfo?.primaryEmail }));
+        const mobileNumber = userInfo?.mobileData && userInfo?.mobileData?.Verified && userInfo?.mobileData?.Verified?.mobile ? userInfo?.mobileData?.Verified?.mobile : "";
         setMobile(mobileNumber);
         setProfileObj((prevData) => ({ ...prevData, mobile: mobileNumber }));
     }
 
     const saveProfileData = (otpVerified = false) => {
-        if (profileObj.mobile != Mobile && !otpVerified) {
-            if (profileObj.mobile.length < 10) {
+        if (profileObj?.mobile != Mobile && !otpVerified) {
+            if (profileObj?.mobile?.length < 10) {
                 alert('Please enter 10 digit Valid Mobile No.');
                 // fireGaEvent('Popup Error', 'Incorrect Mobile number');
                 document.getElementById("mobile")?.focus();
             } else {
                 // window.objUser && window.objUser.loadSsoApi(function () {
-                window.jsso?.v1AddUpdateMobile(profileObj.mobile, submitMobileCallbak)
+                window.jsso?.v1AddUpdateMobile(profileObj?.mobile, submitMobileCallbak)
                 // });
             }
         } else {
@@ -212,12 +221,11 @@ const UserProfile = (onClose) => {
             fetch(url, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    console.log("result", result);
                     if (result.statusCode == 200) {
                         // fireGaEvent('Popup Completed', 'CTA Clicked');
                         setShowThankYouPopup(true);
                         // fireGaEvent('Thank you Popup Shown');
-                        typeof window.e$ !== 'undefined' && window.e$.jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
+                        jStorageReact?.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
                         setTimeout(() => {
                             // fireGaEvent('Thank you Popup Closed');
                             document.body.classList.remove(styles.noscroll);
@@ -240,7 +248,7 @@ const UserProfile = (onClose) => {
         if (Object.keys(errors).length == 0) {
             const mobileOtp = `${otp.digit1}${otp.digit2}${otp.digit3}${otp.digit4}${otp.digit5}${otp.digit6}`;
             // fireGaEvent('OTP Popup Clicked', 'Verify');
-            window.jsso?.v1VerifyAlternateMobile(profileObj.mobile, mobileOtp, uuid, submitMobileOtpCallbak);
+            window.jsso?.v1VerifyAlternateMobile(profileObj?.mobile, mobileOtp, uuid, submitMobileOtpCallbak);
         } else {
 
         }
@@ -285,14 +293,13 @@ const UserProfile = (onClose) => {
         return errors;
     }
     const submitMobileCallbak = (res) => {
-        console.log("@@@@@@mobile", res);
-        if (res.status == "SUCCESS" && res.code == 200) {
-            const uuid = res && res.data && res.data.uuid || "";
+        if (res?.status == "SUCCESS" && res?.code == 200) {
+            const uuid = res && res?.data && res?.data?.uuid || "";
             uuid && setUuid(uuid);
             setIsMobileChanged(true);
             // fireGaEvent('OTP Popup Shown');
         } else {
-            alert('Error message is ' + res.message);
+            alert('Error message is ' + res.message + ' ---> ' + res.messageDesc);
             //saveProfileData(true);
         }
     }
@@ -319,11 +326,11 @@ const UserProfile = (onClose) => {
 
     }
     const submitMobileOtpCallbak = (res: any) => {
-        if (res.status == "SUCCESS" && res.code == 200) {
+        if (res?.status == "SUCCESS" && res?.code == 200) {
             saveProfileData(true);
-        } else if (res.status == "FAILURE") {
+        } else if (res?.status == "FAILURE") {
             //setErrors({msg:"Something Went Wrong"});
-            if (res.message == "ALREADY_VERIFIED") {
+            if (res?.message == "ALREADY_VERIFIED") {
                 saveProfileData(true);
             } else {
                 setWrongOtp(true);
@@ -340,11 +347,11 @@ const UserProfile = (onClose) => {
     }
     const resendOtp = () => {
         // fireGaEvent('OTP Popup Clicked', 'Resend');
-        window.jsso?.v1AddUpdateMobile(profileObj.mobile, resendOTPCallbak);
+        window.jsso?.v1AddUpdateMobile(profileObj?.mobile, resendOTPCallbak);
     }
     const resendOTPCallbak = (res) => {
         if (res.status == "SUCCESS") {
-            alert('We have sent a 6 digit code to your mobile ' + profileObj.mobile);
+            alert('We have sent a 6 digit code to your mobile ' + profileObj?.mobile);
             setOtp({});
         } else {
             alert('some error message is  ' + res.message);
@@ -359,6 +366,7 @@ const UserProfile = (onClose) => {
         ms = (b.getTime() - a.getTime());
         return ms;
     }
+
     return (
         <>
             {showProfileForm ? <div className={styles.shadowUserProfile}>
@@ -382,7 +390,7 @@ const UserProfile = (onClose) => {
                             </span>
                             <span className={styles.close} onClick={onPopUpClose} />
                             <p className={styles.otpScreenTitle}>Verify your mobile</p>
-                            <p className={styles.otpScreenMsg}>We have sent you a verification code at <b>{profileObj.mobile}</b>. please enter the code below to verify your mobile.</p>
+                            <p className={styles.otpScreenMsg}>We have sent you a verification code at <b>{profileObj?.mobile}</b>. please enter the code below to verify your mobile.</p>
                             <div className={styles.otpBoxSec}>
                                 <div className={styles.optBoxMain}>
 
@@ -423,7 +431,7 @@ const UserProfile = (onClose) => {
                                     if (question.type === 'Text' && question.showQuestion && !['name', 'email', 'location'].includes(question.key)) {
                                         return <div className={styles.fieldGroup} key={`field_${i}`}>
                                             <label>{question.name}</label>
-                                            <input className={profileObj[question.key] ? "" : styles.highLightField} type="text" id={question.key} disabled={question.key == "email"} value={profileObj[question.key]} name={question.key} onChange={(e) => onChangeHandler(e)} />
+                                            <input className={!question?.answer ? "" : styles.highLightField} type="text" id={question.key} disabled={question.key == "email"} value={profileObj[question.key]} name={question.key} onChange={(e) => onChangeHandler(e)} />
                                         </div>
                                     }
 
@@ -432,11 +440,11 @@ const UserProfile = (onClose) => {
                                             return <>
                                                 <div className={styles.fieldGroup} key={`field_${i}`}>
                                                     <label>{question.name}</label>
-                                                    <select name={question.key} className={profileObj[question.key] ? "" : styles.highLightField} onChange={(e) => { handleOccupationChange(e) }}>
-                                                        {/* <option selected disabled value="">{question.question}</option> */}
+                                                    <select name={question.key} className={question?.answer ? "" : styles.highLightField} onChange={(e) => { handleOccupationChange(e) }}>
+                                                        {/* <option selected disabled value={question.question}>{question.question}</option> */}
                                                         {
                                                             question.options?.map((option, j) => (
-                                                                <option key={option.key} value={option.name}>{option.value}</option>
+                                                                <option key={option.key} value={option.name} selected={option.selected}>{option.value}</option>
                                                             ))
                                                         }
                                                     </select>
@@ -446,18 +454,18 @@ const UserProfile = (onClose) => {
                                                         if (question.type === 'Text' && question.showQuestion) {
                                                             return <div className={styles.fieldGroup} key={`field_${i}`}>
                                                                 <label>{question.name}</label>
-                                                                <input className={profileObj[question.key] ? "" : styles.highLightField} type="text" name={question.key} onChange={(e) => onChangeHandler(e)} />
+                                                                <input className={question?.answer ? "" : styles.highLightField} type="text" name={question.key} value={question.answer} onChange={(e) => onChangeHandler(e)} />
                                                             </div>
                                                         }
 
                                                         if (question.type === 'DropDown' && question.showQuestion) {
                                                             return <div className={styles.fieldGroup} key={`field_${i}`}>
                                                                 <label>{question.name}</label>
-                                                                <select className={profileObj[question.key] ? "" : styles.highLightField} name={question.key} onChange={(e) => { handleOccupOptionChange(e) }}>
-                                                                    <option selected disabled value="">{question.question}</option>
+                                                                <select className={question?.answer ? "" : styles.highLightField} name={question.key} onChange={(e) => { handleOccupOptionChange(e) }}>
+                                                                    <option selected disabled value={question.question}>{question.question}</option>
                                                                     {
                                                                         question.options?.map((option, j) => (
-                                                                            <option key={option.key} value={option.name}>{option.value}</option>
+                                                                            <option key={option.key} selected={option.selected} value={option.name}>{option.value}</option>
                                                                         ))
                                                                     }
                                                                 </select>
@@ -470,7 +478,7 @@ const UserProfile = (onClose) => {
 
                                             return <div className={styles.fieldGroup} key={`field_${i}`}>
                                                 <label>{question.name}</label>
-                                                <select name={question.key} className={profileObj[question.key] ? "" : styles.highLightField} onChange={(e) => { handleOccupationChange(e) }}>
+                                                <select name={question.key} className={!question?.answer ? "" : styles.highLightField} onChange={(e) => { handleOccupationChange(e) }}>
                                                     <option selected disabled value="">{question.question}</option>
                                                     {
                                                         question.options?.map((option, j) => (
