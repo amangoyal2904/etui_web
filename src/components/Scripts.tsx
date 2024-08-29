@@ -240,6 +240,26 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             const geoLoaded = new Event("geoLoaded");
             document.dispatchEvent(geoLoaded);
           }
+
+          document.addEventListener("geoLoaded", () => {
+            if (window.geoinfo && window.geoinfo.CountryCode != "IN") {
+                function loadOnetrustSdk() {
+                  const script = document.createElement('script');
+                  script.src = 'https://cdn.cookielaw.org/consent/9c436ed7-68da-4e62-86c3-bc55a27afd97/otSDKStub.js';
+                  script.async = true; 
+                  script.charSet = 'UTF-8';
+                  script.setAttribute('data-domain-script', '9c436ed7-68da-4e62-86c3-bc55a27afd97');
+                  document.head.appendChild(script);
+                }
+                if('requestIdleCallback' in window){
+                  window.requestIdleCallback(function(){          
+                    loadOnetrustSdk();
+                  }, { timeout: 2500 })
+                } else {
+                  loadOnetrustSdk();
+                }
+            }
+          });
         `}
       </Script>
       <Script
