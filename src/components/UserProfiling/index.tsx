@@ -99,10 +99,12 @@ const UserProfile = (onClose) => {
                     questionnaire?.map(question => {
                         if (question?.key == 'occupation') {
                             const firstQues = question?.options?.find(() => true) || {};
-                            const selectedOption = question?.options.find(option => option?.selected) || {};
+                            const selectedOption = question?.options.find(option => option?.selected);
+                            console.log("@@@ firstQues", firstQues)
+                            console.log("@@@ selectedOption", selectedOption)
                             if (selectedOption === undefined) {
 
-                                setOccupation(firstQues?.questions)
+                                setOccupation(firstQues.questions)
                                 setProfileObj((prevData) => ({ ...prevData, occupation: { name: firstQues.name, value: firstQues.value, selected: true, key: firstQues.key } }));
                             } else {
                                 setOccupation(selectedOption?.questions)
