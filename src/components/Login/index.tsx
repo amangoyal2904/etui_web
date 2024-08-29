@@ -72,7 +72,7 @@ const Login = ({headertext}) => {
         }
 
         
-        isPink && document.body.classList.add("isprimeuser");
+        (isPink || isPrime) && document.body.classList.add("isprimeuser");
 
         if(isExpired){
           adFreeEx();
