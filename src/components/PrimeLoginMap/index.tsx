@@ -33,6 +33,7 @@ const PrimeLoginMap = (onClose) => {
     };
 
     const appendDialog = () => {
+      console.log("popupContent - appendDialog - ", primeUserData)
         if (primeUserData.loginId) {
             setIsElegible(true);
             primeUserData.lastClosedNudgeDate = Date.now();
