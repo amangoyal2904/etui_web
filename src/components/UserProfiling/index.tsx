@@ -73,8 +73,10 @@ const UserProfile = (onClose) => {
             if(isLogin){
                 fetchProfileQuestions();
             }else{
-                const event = new Event('nextPopup');
-                window.dispatchEvent(event);      
+                setTimeout(function(){
+                    const event = new Event('nextPopup');
+                    window.dispatchEvent(event); 
+                }, 500)     
             }
         }
         
