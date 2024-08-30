@@ -135,6 +135,9 @@ const UserProfile = (onClose) => {
                         window.dispatchEvent(event);    
                     }
                 });
+        }else{
+            const event = new Event('nextPopup');
+            window.dispatchEvent(event);      
         }
     };
     const handleOccupationChange = (e: any) => {
