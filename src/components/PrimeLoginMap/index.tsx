@@ -16,19 +16,6 @@ const PrimeLoginMap = (onClose) => {
     const [primeSavedEmail, setPrimeSavedEmail] = useState("");
     const [isElegible, setIsElegible] = useState(false);
 
-    useEffect(() => {
-      console.log("popmanage -- PrimeLoginMap", )
-        console.log("popupContent --- checkElegibility" , isPrime, checkElegibility('launch'))
-        if(isPrime !== null){
-          if (!isPrime && checkElegibility('launch')) {
-            appendDialog();
-          }else{
-            const event = new Event('nextPopup');
-            window.dispatchEvent(event);
-          }
-        }
-    }, [isPrime]);
-
     const checkElegibility = (flag) => {
         const primeData = JSON.parse(jStorage.get('primeUserLoginMap') || localStorage.getItem('primeUserLoginMap'));
         console.log("popupContent --- checkElegibility -- primeData" , primeData)
@@ -94,15 +81,28 @@ const PrimeLoginMap = (onClose) => {
         return phoneNumber.substr(phoneNumber.length - 10, 10).replace(/^(\d{6})(\d+)/, '******$2');
     };
 
+    useEffect(() => {
+      console.log("popmanage -- PrimeLoginMap", )
+        if(isPrime !== null){
+          console.log("popupContent --- checkElegibility" , isPrime, (!isPrime && checkElegibility('launch')))
+          if (!isPrime && checkElegibility('launch')) {
+            appendDialog();
+          }else{
+            const event = new Event('nextPopup');
+            window.dispatchEvent(event);
+          }
+        }
+    }, [isPrime]);
+
     return (
         <>
             {console.log("popupContent --- isElegible", isElegible)}
           {isElegible && (
             <>
-              <div className={styles.BgLayer} onClick={closeDialog} />
+              <div className={styles.BgLayer} onClick={() => closeDialog()} />
               <div className={styles.BottomNudgePopUp}>
                 <div className={styles.BottomNudgePopUpContent}>
-                  <span className={styles.CloseIcon} onClick={closeDialog}>
+                  <span className={styles.CloseIcon} onClick={() => closeDialog()}>
                     <img src="https://img.etimg.com/photo/msid-102770784,quality-100/close.jpg" width="75" alt="Close" />
                   </span>
                   <div className={styles.HeaderText}>Prime Account Detected!</div>
