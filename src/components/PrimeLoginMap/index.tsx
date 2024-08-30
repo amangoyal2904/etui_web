@@ -12,7 +12,6 @@ import {
 const PrimeLoginMap = (onClose) => {
     const { state, dispatch } = useStateContext();
     const { isLogin, userInfo, ssoReady, isPrime, ssoid, email, isPink } = state.login;
-    const [primeUserData, setPrimeUserData] = useState<any>({});
     const [primeSavedEmail, setPrimeSavedEmail] = useState("");
     const [isElegible, setIsElegible] = useState(false);
 
@@ -21,7 +20,6 @@ const PrimeLoginMap = (onClose) => {
         console.log("popupContent --- checkElegibility -- primeData" , primeData)
         if (!primeData) return false;
         
-        setPrimeUserData(primeData);
         const isSameDay = new Date(primeData.lastClosedNudgeDate).getDate() === new Date().getDate();
         const isOverlayExist = document.querySelector('.bottomNudgePopUp') !== null;
 
@@ -33,12 +31,14 @@ const PrimeLoginMap = (onClose) => {
     };
 
     const appendDialog = () => {
-      console.log("popupContent - appendDialog - ", primeUserData)
-        if (primeUserData.loginId) {
+      
+      const primeData = JSON.parse(jStorage.get('primeUserLoginMap') || localStorage.getItem('primeUserLoginMap'));
+      console.log("popupContent - appendDialog - ", primeData)
+        if (primeData.loginId) {
             setIsElegible(true);
-            primeUserData.lastClosedNudgeDate = Date.now();
-            setData()
-            const primeId = primeUserData.loginId;
+            primeData.lastClosedNudgeDate = Date.now();
+            setData(primeData)
+            const primeId = primeData.loginId;
             const isEmailId = primeId.includes('@');
             const maskedID = isEmailId ? maskEmail(primeId) : maskPhoneNumber(primeId);
             setPrimeSavedEmail(maskedID);
@@ -46,8 +46,9 @@ const PrimeLoginMap = (onClose) => {
     };
 
     const closeDialog = () => {
-        primeUserData.count_web -= 1;
-        setData();
+      const primeData = JSON.parse(jStorage.get('primeUserLoginMap') || localStorage.getItem('primeUserLoginMap'));
+      primeData.count_web -= 1;
+        setData(primeData);
         setIsElegible(false);
         const event = new Event('nextPopup');
         window.dispatchEvent(event);
@@ -63,8 +64,8 @@ const PrimeLoginMap = (onClose) => {
         }
     };
 
-    const setData = () => {
-        jStorage.set('primeUserLoginMap', JSON.stringify(primeUserData));
+    const setData = (primeData) => {
+        jStorage.set('primeUserLoginMap', JSON.stringify(primeData));
     };
 
     const maskEmail = (email) => {
@@ -93,7 +94,7 @@ const PrimeLoginMap = (onClose) => {
             window.dispatchEvent(event);
           }
         }
-    }, [isPrime, primeUserData]);
+    }, [isPrime]);
 
     return (
         <>
