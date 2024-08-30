@@ -45,7 +45,7 @@ interface Errors {
 type Questionnaire = Question[];
 const UserProfile = (onClose) => {
     const { state, dispatch } = useStateContext();
-    const { isPrime, isPink } = state.login;
+    const { isPrime, isPink, isLogin } = state.login;
     const otpBoxReference = useRef<HTMLInputElement[]>([]);
     const [profileObj, setProfileObj] = useState<ProfileData>({
         name: "",
@@ -69,14 +69,11 @@ const UserProfile = (onClose) => {
 
         console.log("popmanage -- UserProfile", )
 
-        if (typeof window.objUser != 'undefined') {
+        if(isLogin){
             fetchProfileQuestions();
-        } else {
-            document.addEventListener('verifyLoginSuccess', fetchProfileQuestions);
         }
         return () => {
             document.body.classList.remove(styles.noscroll);
-            document.removeEventListener('verifyLoginSuccess', fetchProfileQuestions);
         }
     }, []);
 
