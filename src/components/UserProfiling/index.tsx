@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './styles.module.scss';
 import APIS_CONFIG from "../../network/config.json";
 import { useStateContext } from "../../store/StateContext";
+import jStorage from "jstorage-react";
 interface Option {
     key: string;
     value: string;
@@ -87,7 +88,7 @@ const UserProfile = (onClose) => {
         const onboardingDomain = isLive ? "etonboard" : "etonboard-stg";
         const isPaidUser = typeof window.objUser !== 'undefined' && window.objUser.permissions && window.objUser.permissions.includes('subscribed');
         const email = typeof window.objUser !== 'undefined' && window.objUser.info && window.objUser.info.primaryEmail || '';
-        const isPopupShown = typeof window.e$ !== 'undefined' && window.e$.jStorage.get('profile_update_shown') || 0;
+        const isPopupShown = jStorage.get('profile_update_shown') || 0;
 
         if (!isPopupShown) {
             const url = `https://${onboardingDomain}.economictimes.indiatimes.com/etonboard/api/v3/fetchQuestionnaire.json?isPaidUser=true&email=${email}&isEdit=true`;
@@ -162,7 +163,7 @@ const UserProfile = (onClose) => {
     const onPopUpClose = () => {
         // fireGaEvent('Popup Closed', window.location.href);
         setShowProfileForm(false);
-        typeof window.e$ !== 'undefined' && window.e$.jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
+        jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
         document.body.classList.remove(styles.noscroll);
         const event = new Event('nextPopup');
         window.dispatchEvent(event);
@@ -222,7 +223,7 @@ const UserProfile = (onClose) => {
                         // fireGaEvent('Popup Completed', 'CTA Clicked');
                         setShowThankYouPopup(true);
                         // fireGaEvent('Thank you Popup Shown');
-                        typeof window.e$ !== 'undefined' && window.e$.jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
+                        jStorage.set('profile_update_shown', 1, { TTL: timeLeftForNextDay() });
                         setTimeout(() => {
                             // fireGaEvent('Thank you Popup Closed');
                             document.body.classList.remove(styles.noscroll);
