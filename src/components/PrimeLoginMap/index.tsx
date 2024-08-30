@@ -93,7 +93,7 @@ const PrimeLoginMap = (onClose) => {
             window.dispatchEvent(event);
           }
         }
-    }, [isPrime]);
+    }, [isPrime, primeUserData]);
 
     return (
         <>
