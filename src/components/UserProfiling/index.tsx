@@ -66,13 +66,19 @@ const UserProfile = (onClose) => {
 
         console.log("popmanage -- UserProfile", )
 
-        if(isLogin){
-            fetchProfileQuestions();
+        if(isLogin !== null){
+            if(isLogin){
+                fetchProfileQuestions();
+            }else{
+                const event = new Event('nextPopup');
+                window.dispatchEvent(event);      
+            }
         }
+        
         return () => {
             document.body.classList.remove(styles.noscroll);
         }
-    }, []);
+    }, [isLogin]);
 
     const fetchProfileQuestions = () => {
         const isLive = window.location.host.includes('https://economictimes.indiatimes.com/');
