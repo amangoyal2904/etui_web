@@ -3,7 +3,7 @@
     "ssoWidget": "https://jssocdnstg.indiatimes.com/crosswalk/161/widget/main.bundle.js",
     "jssoSDK": "https://jssostg.indiatimes.com/staticsso/cdn/crosswalk_sdk/sdk/jsso_crosswalk_0.7.97.js",
     "ET_WEB_URL": "https://etdev8243.indiatimes.com/",
-    "ET_WAP_URL": "https://m.economictimes.com/",
+    "ET_WAP_URL": "https://spmdev8243.economictimes.com/",
     "MY_SUBS": "https://dev-buy.indiatimes.com/ET/mysubscription?fornav=1",
     "Prime_Page": "https://etdev8243.indiatimes.com/prime",
     "Plan_PAGE": "https://dev-buy.indiatimes.com/ET/plans",
@@ -24,7 +24,6 @@
     "grxId": "gf999c70d"
   },
   "gaId": "UA-198011-5",
-  "grxId": "g7af6dd9d",
   "gtmId": "GTM-566NCXC",
   "ET_IMG_DOMAIN": "https://img.etimg.com/",
   "PAGES_REFRESH": {}

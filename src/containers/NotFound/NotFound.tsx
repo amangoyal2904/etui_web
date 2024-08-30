@@ -1,4 +1,4 @@
-import { ET_WAP_URL } from "utils/common";
+import { ET_WEB_URL } from "utils/common";
 import styles from "./NotFound.module.scss";
 import { FC, Fragment, useEffect, useState } from "react";
 import { grxEvent } from "utils/ga";
@@ -77,7 +77,7 @@ const NotFound: FC<PageProps> = (props) => {
         </p>
         <br />
         <p>
-          Go to <a href={ET_WAP_URL}>EconomicTimes.com</a> Home Page
+          Go to <a href={ET_WEB_URL}>EconomicTimes.com</a> Home Page
         </p>
       </div>
       <div className={`${styles.footerAd} adContainer`}>
