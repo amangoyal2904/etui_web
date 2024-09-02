@@ -5,7 +5,7 @@
   border-top: 1px solid #e6e6e6;
   background-color: $black;
   color: white;
-  margin-top:5px;
+  margin-top: 5px;
 
   .dynamicCategories {
     padding: 15px;
@@ -50,7 +50,8 @@
           white-space: nowrap;
         }
       }
-      .show_hide_interlinking{
+
+      .show_hide_interlinking {
         // color: #fff;
         float: right;
         margin-right: 123px;
@@ -59,7 +60,8 @@
         font-size: 13px;
         text-decoration: underline;
       }
-      .show_hide_interlinking::after{
+
+      .show_hide_interlinking::after {
         content: '';
         border: solid #fff;
         border-width: 0 2px 2px 0;
@@ -68,13 +70,24 @@
         padding: 3px;
         margin-bottom: 1px;
         transform: rotate(45deg);
-      }
-      .moreStyle{
-        margin-top: 10px;
+        transition: .7s ease;
       }
 
+      // .moreStyle {
+      //   margin-top: 10px;
+      // }
+
+      &.visible {
+        .moreStyle {
+          &::after {
+            margin-bottom: -3px;
+            transform: rotate(222deg);
+          }
+        }
+      }
     }
-    .visible{
+
+    .visible {
       height: auto;
     }
   }
@@ -275,50 +288,58 @@
   }
 }
 
-.pink_theme{
-  background-color: #ffded4; 
-  .dynamicContainer{
-    width:1260px;
+.pink_theme {
+  background-color: #ffded4;
+
+  .dynamicContainer {
+    width: 1260px;
     margin: 0 auto;
-    background-color: transparent; 
+    background-color: transparent;
     color: #000;
-    .divider{
-      background-color: #ffded4; 
+
+    .divider {
+      background-color: #ffded4;
     }
 
-    .sbr_wrap{
+    .sbr_wrap {
       display: flex;
       align-items: flex-start;
     }
 
-    .category{
-      .show_hide_interlinking:after{
+    .category {
+      .show_hide_interlinking:after {
         border: solid #000;
         border-width: 0 2px 2px 0;
       }
     }
-    .browseCompany{
+
+    .browseCompany {
       border-bottom: 0px solid;
       width: 50%;
       border-left: 1px solid #ebc3b7;
-      .browse{
-        .browseTitle{
+
+      .browse {
+        .browseTitle {
           color: #99756b;
           margin-bottom: 5px;
-          span{
+
+          span {
             font-weight: 400;
           }
-          .comp{
+
+          .comp {
             display: inline-block;
             font-size: 18px;
             margin-left: 5px;
           }
         }
-        .compList{
+
+        .compList {
           border-left: 0px solid;
           padding-left: 0;
           margin-left: 0;
-          a{
+
+          a {
             color: #644c45;
             background-color: #FFF;
             border: 0px;
@@ -332,50 +353,58 @@
       }
     }
 
-    .downloadSection{
-      .row{
-        .shareIcons{
-          .fbShare{
+    .downloadSection {
+      .row {
+        .shareIcons {
+          .fbShare {
             background-position: -354px -254px;
             width: 40px;
             height: 40px;
           }
-          .inShare{
+
+          .inShare {
             background-position: -404px -254px;
             width: 40px;
             height: 40px;
           }
-          .twShare{
+
+          .twShare {
             background-position: -354px -304px;
             width: 40px;
             height: 40px;
           }
-          .rss{
+
+          .rss {
             background-position: -404px -304px;
             width: 40px;
             height: 40px;
           }
         }
-        .appstoredownload{
+
+        .appstoredownload {
           background-position: -234px -221px;
           width: 98px;
           height: 27px;
         }
-        .gpdownload{
+
+        .gpdownload {
           background-position: -348px -219px;
           width: 88px;
           height: 27px;
         }
-        .primeLogo{
+
+        .primeLogo {
           background-position: -338px -160px;
         }
-        p{
-          color:#000;
+
+        p {
+          color: #000;
         }
-        h4{
+
+        h4 {
           color: #000;
         }
       }
     }
-  } 
+  }
 }
