@@ -209,7 +209,7 @@ const Login = ({headertext}) => {
   };
 
   const fetchQuestionnaireHit = async () => {
-    let serviceUrl = APIS_CONFIG["FetchQuestionnaire"][window.APP_ENV];
+    let serviceUrl = APIS_CONFIG["FetchQuestionnaire_v3"][window.APP_ENV];
 
     const params = new URLSearchParams({
       isPaidUser: isPrime,
@@ -246,7 +246,7 @@ const Login = ({headertext}) => {
   }
 
   useEffect(() => {
-    if(isPrime !== null){
+    if(isPrime !== null && typeof isPrime != "undefined"){
       fetchQuestionnaireHit();
     }
   }, [isPrime])
