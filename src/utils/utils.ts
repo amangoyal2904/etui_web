@@ -20,7 +20,7 @@ export const getMarketBandData = (): (() => void) => {
     const timeoutId = setTimeout(() => controller.abort(), 5000); // Set a 5-second timeout
 
     try {
-      const response = await fetch("https://bselivefeeds.indiatimes.com/marketband.json", {
+      const response = await fetch(`https://${window.isDev ? '' : 'json.'}bselivefeeds.indiatimes.com/marketband.json`, {
         signal: controller.signal
       });
       clearTimeout(timeoutId);
