@@ -58,6 +58,7 @@ declare global {
     ssoWidget?: any;
     verifyLoginSuccess?: any;
     APP_ENV: string;
+    isDev: boolean;
     objUser: {
       ssoid?: any;
       ticketId?: any;
@@ -162,6 +163,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
 
   useEffect(() => {
     window.APP_ENV = APP_ENV;
+    window.isDev = APP_ENV === "development";
     window._ibeat_track = {
       "visitor_cat" : (isPrime ? 1 : isLogin ? 2 : 3),
       "ct" : (window.tpName == 'videoshow' ? 2 : 20)
@@ -213,8 +215,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             }
 
             if(value) {
-              var comps = value.split(',')
-              (function(item) { return item.trim(); });                                              
+              var comps = value.split(',').map(function(item) { return item.trim(); });
               var map = {'CC': 'CountryCode', 'RC': 'region_code', 'CT': 'city', 'CO': 'Continent', 'GL': 'geolocation'}
               for(var i=0; i<comps.length; i++) {
                 var compSplit = comps[i].split(':');
