@@ -31,12 +31,12 @@ const MoreNav: React.FC<MoreNavProps> = ({ sec }) => {
           if (nm !== "Brand Solutions") {
             return (
               <React.Fragment key={`more-nav-${index}`}>
-                <a href={nmSection.link} className={styles.subsec1} rel={nmSection.rel}>{nmSection.nm}</a>
+                <a href={nmSection.link ? nmSection.link : 'javascript:;'} className={styles.subsec1} rel={nmSection.rel}>{nmSection.nm}</a>
                 {/* only render sub-sections if they exist */}
                 {subSec && subSec?.map((subSection, index2) => {
                   return (
                     <React.Fragment key={`more-nav-${index}-${index2}`}>
-                      <a href={subSection.link} className={styles.subsec2} rel={subSection.rel}>{subSection.nm}</a> 
+                      <a href={subSection.link ? subSection.link : 'javascript:;'} className={styles.subsec2} rel={subSection.rel}>{subSection.nm}</a> 
                     </React.Fragment>
                   )
                 })}
@@ -59,11 +59,11 @@ const MoreNav: React.FC<MoreNavProps> = ({ sec }) => {
                   return (
                     <div key={`brand-solution-${index}-${index2}`} className={`${styles.BSChild}`}>
                       {/* only render the image if the "im" property exists */}
-                      {subSection.im && <a href={subSection.link} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>
+                      {subSection.im && <a href={subSection.link ? subSection.link : 'javascript:;'} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>
                         <img src={subSection.im} width="77" height="63" alt={subSection.nm} />
                       </a>}
                       <h5>
-                        <a href={subSection.link} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>{subSection.nm}</a>
+                        <a href={subSection.link ? subSection.link : 'javascript:;'} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>{subSection.nm}</a>
                       </h5>
                     </div>
                   )

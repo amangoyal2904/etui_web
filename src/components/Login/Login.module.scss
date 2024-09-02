@@ -101,6 +101,9 @@
       display: block;
       line-height: 30px;
       padding: 0 7px;
+      .new_badge{
+        vertical-align: middle;
+      }
       &:before{
         content: '';
         margin-right: 7px;
@@ -121,6 +124,13 @@
         background-position: -231px -26px;
         width: 12px;
         height: 11px;
+      }
+      &.refer:before{
+        background-position: -283px -25px;
+        width: 15px;
+        height: 13px;
+        zoom: 1;
+        margin-right: 5px;
       }
       &.etBenefits:before{
         background-position: -268px -26px;

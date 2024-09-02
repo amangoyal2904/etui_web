@@ -66,7 +66,7 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
           sec.slice(0, 2)?.map((l1, index1) => {
             return (
               <React.Fragment key={`commodities_nav_f_${index1}`}>
-                <a href={l1.link} data-ga-onclick={l1.link} className={styles.subsec1}>
+                <a href={l1.link ? l1.link : 'javascript:;'} data-ga-onclick={l1.link} className={styles.subsec1}>
                   {l1.nm}
                 </a>
                 {viewsCommoditiesData && l1.nm == "Views" && <div className={styles.cn_list1}> 
@@ -108,14 +108,14 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
           sec.slice(2, 4)?.map((l1, index1) => {
             return (
               <React.Fragment key={`commodities_nav_s_${index1}`}>
-                <a href={l1.link} data-ga-onclick={l1.link} className={styles.subsec1}>
+                <a href={l1.link ? l1.link : 'javascript:;'} data-ga-onclick={l1.link} className={styles.subsec1}>
                   {l1.nm}
                 </a>
                 {
                     l1?.sec?.map((l2, index2) => {
                       return (
                         <React.Fragment key={`commodities_nav_s_l2_${index1}_${index2}`}>
-                          <a href={l2.link} data-ga-onclick={l2.link} className={styles.subsec2}>
+                          <a href={l2.link ? l2.link : 'javascript:;'} data-ga-onclick={l2.link} className={styles.subsec2}>
                             {l2.nm}
                           </a>
                         </React.Fragment>
@@ -132,14 +132,14 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
           sec?.slice(4)?.map((l1, index1) => {
             return (
               <React.Fragment key={`commodities_nav_t_${index1}`}>
-                <a href={l1.link} data-ga-onclick={l1.link} className={styles.subsec1}>
+                <a href={l1.link ? l1.link : 'javascript:;'} data-ga-onclick={l1.link} className={styles.subsec1}>
                   {l1.nm}
                 </a>
                 {
                     l1?.sec?.map((l2, index2) => {
                       return (
                         <React.Fragment key={`commodities_nav_t_l2_${index1}_${index2}`}>
-                          <a href={l2.link} data-ga-onclick={l2.link} className={styles.subsec2}>
+                          <a href={l2.link ? l2.link : 'javascript:;'} data-ga-onclick={l2.link} className={styles.subsec2}>
                             {l2.nm}
                           </a>
                         </React.Fragment>
