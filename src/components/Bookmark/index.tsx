@@ -107,7 +107,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type }) => {
         }
     }
     return (
-        <span className={`bookmark ${isBookmarked ? 'saved' : ''}`} onClick={() => {saveBookmark}}>
+        <span className={`bookmark ${isBookmarked ? 'saved' : ''}`} onClick={saveBookmark}>
             <img src={`https://img.etimg.com/photo/${isBookmarked ? '63696446' : '63696304'}.cms`} alt="bookmark icon" />
             <style jsx>{`
                 .bookmark {
