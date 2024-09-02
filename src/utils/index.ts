@@ -711,8 +711,8 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
   var addFreeCampignRef = jStorage.get('adFreeCampign_' + ssoGrxId);
 
   if(!addFreeCampignRef) {
-      var userDetails = jStorage.get('prime_' + ticketId);
-      var timeStampDiff = (+new Date()) - (+new Date(userDetails.subscriptionDetail.graceEndDate));
+      var userDetails = window?.objUser?.primeInfo; //jStorage.get('prime_' + ticketId);
+      var timeStampDiff = (+new Date()) - (+new Date(userDetails?.subscriptionDetail.graceEndDate));
       var dayDiff = Math.round(timeStampDiff / (1000 * 3600 * 24));
       var isValidForCampaign = Number(window.objVc.adfree_campign_eud || 900) > dayDiff;
       if(isValidForCampaign) {
