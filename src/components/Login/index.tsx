@@ -213,8 +213,8 @@ const Login = ({headertext}) => {
 
     const params = new URLSearchParams({
       isPaidUser: isPrime,
-        email: email,
-        isEdit: 'true'
+      email: email,
+      isEdit: 'true'
     });
 
     try{
@@ -246,7 +246,7 @@ const Login = ({headertext}) => {
   }
 
   useEffect(() => {
-    if(isPrime !== null && typeof isPrime != "undefined"){
+    if(isPrime !== null && typeof isPrime != "undefined" && ssoid && email){
       fetchQuestionnaireHit();
     }
   }, [isPrime])
