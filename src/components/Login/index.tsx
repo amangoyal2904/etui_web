@@ -69,7 +69,7 @@ const Login = ({headertext}) => {
         window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
         if (primeRes && primeRes?.data?.token) {
-          setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, "");
+          setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, ".indiatimes.com");
         }
 
         
