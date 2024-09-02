@@ -68,8 +68,8 @@ const Login = ({headertext}) => {
         window.objUser.isPrime = isPrime;
         window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
-        if (primeRes && primeRes?.token) {
-          setCookieToSpecificTime("OTR", primeRes.token, 30, 0, 0, "");
+        if (primeRes && primeRes?.data?.token) {
+          setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, "");
         }
 
         
@@ -98,7 +98,7 @@ const Login = ({headertext}) => {
         window.objUser.primeInfo = {};
         window.objUser.isPrime = false;
         delete_cookie("isprimeuser");
-        if (primeRes && primeRes.token) {
+        if (primeRes && primeRes?.data?.token) {
           delete_cookie("OTR");
         }
         saveLogs({
