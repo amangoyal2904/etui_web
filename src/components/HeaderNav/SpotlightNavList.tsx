@@ -37,10 +37,10 @@ const SpotlightNavList = ( props ) => {
                                     return (
                                         <>
                                         <div className={styles.spotlightContent} key={index2}>
-                                            <a href={value2.link}>
+                                            <a href={value2.link ? value2.link : 'javascript:;'}>
                                             <img src={value2.im} width="120" height="70" alt={value2.nm} />
                                             </a>
-                                            <a className={styles.txt} href={value2.link}>
+                                            <a className={styles.txt} href={value2.link ? value2.link : 'javascript:;'}>
                                             {value2.nm}
                                             </a>
                                         </div>

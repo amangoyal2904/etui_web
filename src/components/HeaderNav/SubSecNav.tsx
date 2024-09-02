@@ -48,7 +48,7 @@ const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
 
         {Array.isArray(sec) && sec.length > (moreCount || 0) && (
           <div className={`${styles.subLevel} ${isCurrentInMoreSection ? styles.current : ''}`}>
-            <a>
+            <a href="javascript:;">
               More
               <span className={styles.downArw}></span>
             </a>

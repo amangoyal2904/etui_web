@@ -52,7 +52,7 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
       secType: "subsec1",
       elm: (
         <div key={`subsec1_${l1.msid}_${index}`}>
-          <a href={l1.link} className={styles.subsec1}>
+          <a href={l1.link ? l1.link : 'javascript:;'} className={styles.subsec1}>
             {l1.nm}
           </a>
         </div>
@@ -68,7 +68,7 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
           l2.sec.forEach((l3, index) => {
             subSecArr_3.push(
               <div key={`subsec3_${l3.msid}_${index}`}>
-                <a href={l3.link} className={styles.subsec3}>
+                <a href={l3.link ? l3.link : 'javascript:;'} className={styles.subsec3}>
                   {l3.nm}
                 </a>
               </div>
@@ -81,7 +81,7 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
           elm: (
             <div>
               <div key={`subsec2_${l2.msid}_${index}`}>
-                <a href={l2.link} className={`${styles.subsec2} ${l2.msid == "50943206" ? styles.cart : ''}`}>
+                <a href={l2.link ? l2.link : 'javascript:;'} className={`${styles.subsec2} ${l2.msid == "50943206" ? styles.cart : ''}`}>
                   {l2.nm}
                 </a>
               </div>
