@@ -181,7 +181,7 @@ const Login = ({headertext}) => {
       },
     });
 
-    fetchQuestionnaireHit()
+    
   };
 
   const authFailCallback = () => {
@@ -244,6 +244,12 @@ const Login = ({headertext}) => {
 
     }
   }
+
+  useEffect(() => {
+    if(isPrime !== null){
+      fetchQuestionnaireHit();
+    }
+  }, [isPrime])
 
   useEffect(() => {
     document.addEventListener("jssoLoaded", jssoLoadedCallback);
