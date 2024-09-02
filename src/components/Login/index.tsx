@@ -23,7 +23,8 @@ import jStorage from "jstorage-react";
 
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
-  const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree, permissions, ssoid, ticketId } = state.login;
+  const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree, permissions, ssoid, ticketId, email } = state.login;
+  const [profileStatus, setProfileStatus] = useState(false);
 
   //console.log(state.login);
 
@@ -179,6 +180,8 @@ const Login = ({headertext}) => {
         permissions: window.objUser.permissions,
       },
     });
+
+    fetchQuestionnaireHit()
   };
 
   const authFailCallback = () => {
@@ -204,6 +207,43 @@ const Login = ({headertext}) => {
   const jssoLoadedCallback = () => {
     verifyLogin();
   };
+
+  const fetchQuestionnaireHit = async () => {
+    let serviceUrl = APIS_CONFIG["FetchQuestionnaire"][window.APP_ENV];
+
+    const params = new URLSearchParams({
+      isPaidUser: isPrime,
+        email: email,
+        isEdit: 'true'
+    });
+
+    try{
+      // Fetching the questionnaire data
+      const fetchQues = await fetch(`${serviceUrl}?${params.toString()}`, {
+          method: 'GET',
+          headers: {
+              'Authorization': ssoid,
+              'Content-Type': 'application/json'
+          }
+      });
+
+      // Checking if the response is OK (status code 200-299)
+      if (!fetchQues.ok) {
+          throw new Error(`HTTP error! Status: ${fetchQues.status}`);
+      }
+
+      // Parsing the response to JSON
+      const jsonFetchQues = await fetchQues.json();
+
+      const profileObj = jsonFetchQues.questionnaireDto && jsonFetchQues.questionnaireDto.screens.filter(ele => ele.key === "screen1");
+      const profileCompleted = profileObj && profileObj.length && profileObj[0].status.toLowerCase() === "complete";
+      if(!profileCompleted){
+        setProfileStatus(true);
+      }
+    }catch(error){
+
+    }
+  }
 
   useEffect(() => {
     document.addEventListener("jssoLoaded", jssoLoadedCallback);
@@ -276,7 +316,7 @@ const Login = ({headertext}) => {
                     <div className={styles.outerContainer}>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`}>Edit Profile</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>
                         {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
                         <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
                         <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>

@@ -28,7 +28,7 @@ const IfrOnboarding = (onClose) => {
 
     // Parameters to be sent with the GET request
     const params = new URLSearchParams({
-        isPaidUser: 'true',
+        isPaidUser: isPrime,
         email: email,
         isEdit: 'false'
     });
