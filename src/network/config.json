@@ -9,7 +9,7 @@
         "https://etdev8243.indiatimes.com/"
       ],
       "production": [
-        "https://etdev8243.indiatimes.com/"
+        "https://economictimes.indiatimes.com/"
       ]
     },
     "path": "reactfeed"
@@ -103,11 +103,11 @@
     "development": "https://etservices2.indiatimes.com/et/consent"
   },
   "commodityNews": {
-    "production": "https://etdev8243.indiatimes.com/feed_sectionnews.cms",
+    "production": "https://economictimes.indiatimes.com/feed_sectionnews.cms",
     "development": "https://etdev8243.indiatimes.com/feed_sectionnews.cms"
   },
   "techNavArticleList": {
-    "production": "https://etdev8243.indiatimes.com/reactfeed_technav.cms",
+    "production": "https://economictimes.indiatimes.com/reactfeed_technav.cms",
     "development": "https://etdev8243.indiatimes.com/reactfeed_technav.cms"
   },
   "redeemVoucher": {
