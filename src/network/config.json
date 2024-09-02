@@ -146,6 +146,10 @@
     "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json",
     "production": "https://etonboard.economictimes.indiatimes.com/etonboard/api/v2/fetchQuestionnaire.json"
   },
+  "FetchQuestionnaire_v3": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v3/fetchQuestionnaire.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/api/v3/fetchQuestionnaire.json"
+  },
   "BreakingNews": {
     "development": "https://economictimes.indiatimes.com/etstatic/breakingnews/etjson_bnews.html",
     "production": "https://economictimes.indiatimes.com/etstatic/breakingnews/etjson_bnews.html"

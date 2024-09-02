@@ -38,7 +38,7 @@ const BreakingNews = ({APP_ENV}) => {
       });
       const responseData = await response.text();
 
-      const match = responseData?.match(/breakingnews\(\s*(\[.*\])\s*\);?/);
+      const match = responseData?.match(/breakingnews\(\s*(\[\s*[\s\S]*?\s*\])\s*\);?/);
       if (match && match[1]) {
         const newsData = JSON.parse(match[1]);
         setNews(newsData);
