@@ -16,15 +16,11 @@ export default async function Page({ params }: {
   const slugArr = params?.all || [];
   const isprimeuser = cookies().get('isprimeuser') || false;
 
-  console.log( { params })
-
   let page = getPageName(slugArr),
   extraParams: any = {},
   response: any = {},
   menuData: any = {},
   dynamicFooterData: any = {};
-
-  console.log({page})
 
   try {
    
@@ -44,26 +40,13 @@ export default async function Page({ params }: {
 
       if (response && response.error) page = "notfound";
     }
-    //==== gets dyanmic footer data =====
-    // const footerMenuPromise = Service.get({
-    //   api,
-    //   params: { type: "footermenu", feedtype: "etjson", ...extraParams, template_name: page , platform:'web'},
-    // });
+    //==== gets dyanmic footer data =====    
     const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
     
     const extraParamsQuery = Object.keys(extraParams).map(key => `${key}=${extraParams[key]}`).join('&');
-    const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson&template_name=${page}${extraParamsQuery ? `&${extraParamsQuery}` : ''}`;
-    console.log("footerMenuApi: ", footerMenuApi)
-    // const footerMenuPromise = fetch(footerMenuApi);
-    //==== gets menu data =====
-    // const navBarPromise = Service.get({
-    //   api,
-    //   params: { type: "menu", feedtype: "etjson", msid: extraParams?.subsec1 },
-    // });
-    // const navBarPromise = fetch(`${baseUrl}/reactfeed_menu.cms?platform=web&feedtype=etjson&msid=${extraParams?.subsec1}`)
+    const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson&template_name=${page}${extraParamsQuery ? `&${extraParamsQuery}` : ''}`;    
     const navBarApi = `${baseUrl}/reactfeed_menu.cms?platform=web&feedtype=etjson&msid=${extraParams?.subsec1}`
     const promiseApis = [footerMenuApi, navBarApi];
-
     const [footerMenuResult, navBarResult] = await Promise.all(promiseApis.map(api => fetch(api).then(res => res.json())));
     dynamicFooterData = footerMenuResult || {};
     menuData = navBarResult || {};
@@ -126,7 +109,7 @@ export async function generateMetadata({ params }) {
       description: seo?.description || "",
       site: '@EconomicTimes',
       images: [seo?.image], // Must be an absolute URL
-      url: seo?.url,
+      url: seo?.url || "",
     },
     facebook: {
       appId: ['21540067693', '117787264903013'],
