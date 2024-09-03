@@ -53,7 +53,7 @@
       "https://etua-stg.economictimes.indiatimes.com/users/api/logdata/uuid/resolve"
     ],
     "production": [
-      "https://idm.economictimes.com/personalisation/logdata/uuid/resolve"
+      "https://idm.economictimes.indiatimes.com/personalisation/logdata/uuid/resolve"
     ]
   },
   "SEARCH": {
