@@ -19,7 +19,7 @@ const IfrOnboarding = (onClose) => {
       // Your timeout logic here
       console.log("popupContent --- handleOnboardvisibility" , showIframe)
       setShowIframe(true);
-      setCookieToSpecificTime('onboardShown', true,  1, 0, 0, "")
+      setCookieToSpecificTime('onboardShown', true,  1, 0, 0, ".indiatimes.com")
     }, secondsOpenDialog * 1000);
   }
 
@@ -57,10 +57,10 @@ const IfrOnboarding = (onClose) => {
         let status = questionnaireDto && questionnaireDto.status;
         let displayFrame = !noShow && (status != 'Complete');
 
-        setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
+        setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, ".indiatimes.com");
 
-        getCookie("showOnboard") == undefined && setCookieToSpecificTime('showOnboard', displayFrame ? '1' : '0', 1, 0, 0, "")
-        setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, "");
+        getCookie("showOnboard") == undefined && setCookieToSpecificTime('showOnboard', displayFrame ? '1' : '0', 1, 0, 0, ".indiatimes.com")
+        setCookieToSpecificTime('secondsToOpen', secondsOpenDialog, 1, 0, 0, ".indiatimes.com");
 
         if(displayFrame){
           handleOnboardvisibility(secondsOpenDialog);
