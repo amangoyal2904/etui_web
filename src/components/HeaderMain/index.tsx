@@ -9,7 +9,7 @@ interface PageProps {
 
 const HeaderMain = (props) => {
 const { page, menuData, subsecnames, sectiondetail, commonMeta } = props;
-const {headerText} = commonMeta || {};
+const {headerText = " "} = commonMeta || {};
  //console.log("commonMeta", commonMeta, headerText)
   return (
     <header>
