@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 
 export default function Explainers({ data, title }) {
@@ -7,10 +8,10 @@ export default function Explainers({ data, title }) {
     const slider = document.querySelector(".slider");
     // const itemsCount = document.querySelectorAll(".slider .item").length;
 
-    const itemWrapWidth = itemWrap.offsetWidth;
-    const sliderWidth = slider.offsetWidth;
+    const itemWrapWidth = itemWrap?.offsetWidth || 0;
+    const sliderWidth = slider?.offsetWidth || 0;
 
-    const itemWrapMarginLeft = itemWrap.style.marginLeft || 0;
+    const itemWrapMarginLeft = itemWrap?.style?.marginLeft || 0;
     itemWrap.style.transition = "margin-left 0.5s";
     
     if(direction === "left") {

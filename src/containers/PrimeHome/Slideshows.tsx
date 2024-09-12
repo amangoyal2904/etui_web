@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import React from 'react'
 
 export default function Slideshows({ title, data }) {
@@ -67,6 +69,7 @@ export default function Slideshows({ title, data }) {
         position: absolute;
         width: 100%;
         margin-top: -17.5px;
+        display: none;
 
         .btn {
           width: 32px;

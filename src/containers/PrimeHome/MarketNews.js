@@ -7,6 +7,12 @@ export default function MarketNews({ title, data }) {
     <section className="politics">
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News"}}/>
+      <div className="third">
+        <div className="liveIcon">
+          <span className="text">Live</span>
+          <span className="ripple"><i></i></span>
+        </div>
+      </div>
     </section>
     <style jsx>{`
       .politics {

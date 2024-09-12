@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
@@ -469,6 +471,7 @@ export const createPeuuid = async (cb) => {
 };
 
 export const verifyLogin = () => {
+  //@ts-nocheck
   window.objUser = {
     "prevPath": "/small-biz/sme-sector/sidbi-msme-conclave-bhubaneswar-opening-keynote-on-fueling-odishas-future-sidbis-startup-impact/videoshow/108297056.cms",
     "ticketId": "6d00067d42154d929955349dac736d5f",
