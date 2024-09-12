@@ -89,8 +89,8 @@ export async function generateMetadata({ params }) {
 }
 
 async function getData(isDev) {
-  //const baseUrl = `https://etpwaapi${isDev ? "pre" : ""}.economictimes.com`;
-  const baseUrl = `http://localhost:1300`;
+  const baseUrl = `https://etpwaapi${isDev ? "pre" : ""}.economictimes.com`;
+  // const baseUrl = `http://localhost:1300`;
   let apiEndPoint = `${baseUrl}/request?type=web_primehome`;
 
   const res = await fetch(apiEndPoint);
