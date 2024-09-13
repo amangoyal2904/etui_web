@@ -12,8 +12,9 @@ import Tech from "./Tech";
 import Wealth from "./Wealth";
 import MutualFunds from "./MutualFunds";
 import MarketNews from "./MarketNews";
+import TopSectionLayout from "./TopSectionLayout";
 
-function PrimeHome({ searchResult }) {
+function PrimeHome({ searchResult }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
@@ -31,6 +32,7 @@ function PrimeHome({ searchResult }) {
 
   return (
     <>
+      <TopSectionLayout searchResult={searchResult} />
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} />
