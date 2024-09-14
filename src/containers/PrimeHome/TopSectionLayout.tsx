@@ -1,8 +1,11 @@
 import React from 'react'
 import TodayNews from './TodayNews'
+import PrimeBenefitsBucket from './PrimeBenefitsBucket';
+import PrimeExclusives from './PrimeExclusives';
 
 export default function TopSectionLayout({ searchResult }) {
   const topNews = searchResult?.find(item => item?.name === "top_news") || {};
+  const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   // console.log("topNews", searchResult);
   return (
     <>
@@ -21,6 +24,8 @@ export default function TopSectionLayout({ searchResult }) {
               <span className="">MARKET FOCUS</span>
             </span>
           </div>
+          <PrimeBenefitsBucket />
+          <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} />
         </div>
         <div className="col3">
           <div className="title">MARKETS</div>
