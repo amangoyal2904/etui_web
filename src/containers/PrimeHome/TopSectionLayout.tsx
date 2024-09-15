@@ -2,6 +2,11 @@ import React from 'react'
 import TodayNews from './TodayNews'
 import PrimeBenefitsBucket from './PrimeBenefitsBucket';
 import PrimeExclusives from './PrimeExclusives';
+import InvestmentIdeas from './InvestmentIdeas';
+import ETEpaper from './ETEpaper';
+import LessonsFromGrandmasters from './LessonsFromGrandmasters';
+import MarketsTopNews from './MarketsTopNews';
+import IndicesWidget from './IndicesWidget';
 
 export default function TopSectionLayout({ searchResult }) {
   const topNews = searchResult?.find(item => item?.name === "top_news") || {};
@@ -26,9 +31,14 @@ export default function TopSectionLayout({ searchResult }) {
           </div>
           <PrimeBenefitsBucket />
           <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} />
+          <InvestmentIdeas />
+          <ETEpaper />
+          <LessonsFromGrandmasters />
         </div>
         <div className="col3">
           <div className="title">MARKETS</div>
+          <MarketsTopNews />
+          <IndicesWidget />
         </div>
       </section>
       <style jsx>{` 

@@ -1,0 +1,106 @@
+.top {
+  display: flex;
+  justify-content: space-between;
+  font-family: Montserrat;
+  h2 {
+    font-size: 16px;
+    font-weight: 600;    
+  }
+  .status {
+    font-weight: 400;
+    font-size: 10px;
+    color: #EA2227;
+  }
+  .date {
+    margin-left: 5px;
+  }
+}
+
+.durations {
+  display: inline-flex;
+  gap: 10px;
+  padding: 10px;
+  text-transform: uppercase;
+
+  .duration {
+    cursor: pointer;
+  }
+
+  .active {
+    font-weight: 600;
+    border-bottom: 2px solid;
+  }
+}
+
+.indiceTabs {
+  display: inline-flex;   
+
+  .indiceTab {
+    padding: 7px 8px;
+    cursor: pointer;
+
+    &:not(.active) {
+      border-bottom: 1px solid #ccc;
+    }
+  }
+  .active {
+    border-radius: 8px 8px 0 0;
+    background: #fffbfa;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    position: relative;
+  }
+}
+
+.arrowIcons {
+  position: relative;
+  display: inline-block;
+  background: url(https://img.etimg.com/photo/msid-94028410,quality-100/mkt-sprite.jpg);
+  background-repeat: no-repeat;
+  background-size: 385px 186px;
+  vertical-align: middle;
+}
+
+.up {
+  color: #0e9687;
+}
+
+.down {
+  color: #da2337;
+}
+
+.eticon_up_arrow {
+  width: 6px;
+  height: 11px;
+  margin-right: 4px;
+  top: -1px;
+  background-position: -121px -14px;
+}
+
+.eticon_down_arrow {
+  width: 6px;
+  height: 11px;
+  margin-right: 4px;
+  top: -1px;
+  background-position: -133px -15px;
+}
+
+.chartContainer {
+  background-color: #fffbfa;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-radius: 0 0 8px 8px;
+
+  .chart {
+    border: 0;
+    width: 100%;
+  }
+
+  .chartFooter {
+    text-align: right;
+    font-size: 10px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+}

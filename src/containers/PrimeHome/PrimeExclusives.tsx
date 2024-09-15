@@ -1,3 +1,4 @@
+import ArrowRnd from 'components/Icons/ArrowRnd'
 import React from 'react'
 
 export default function PrimeExclusives({ title, data }) {
@@ -34,31 +35,72 @@ export default function PrimeExclusives({ title, data }) {
                 <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
               </div>
               <div className="meta">
-                  <span className="left">
-                    <span className="duration">4 mins read</span>
-                    <span className="author">By <a href="#">Shishir Prasad</a></span>
-                  </span>
-                  <span className="bookmarkIcon"></span>
-                </div>
+                <span className="left">
+                  <span className="duration">4 mins read</span>
+                  <span className="author">By <a href="#">Shishir Prasad</a></span>
+                </span>
+                <span className="bookmarkIcon"></span>
+              </div>
             </div>
             <div className="col">
-              <div className="content">
-                <div className="text">
-                  <span className="category">INVESTING</span>
-                  <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
+              <div className="innerCol">
+                <div className="content">
+                  <div className="text">
+                    <span className="category">ARTIFICAL INTELLGENCE</span>
+                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
+                  </div>                
                 </div>
-                <div className="meta">
-                  <span className="left">
-                    <span className="duration">4 mins read</span>
-                    <span className="author">By <a href="#">Shishir Prasad</a></span>
-                  </span>
-                  <span className="bookmarkIcon"></span>
-                </div>
+                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
               </div>
-              <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                          
+              <div className="meta">
+                <span className="left">
+                  <span className="duration">4 mins read</span>
+                  <span className="author">By <a href="#">Shishir Prasad</a></span>
+                </span>
+                <span className="bookmarkIcon"></span>
+              </div>
+            </div>
+          </div>     
+          <div className="row">    
+            <div className="col">
+              <div className="innerCol">
+                <div className="content">
+                  <div className="text">
+                    <span className="category">ARTIFICAL INTELLGENCE</span>
+                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
+                  </div>                
+                </div>
+                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
+              </div>
+              <div className="meta">
+                <span className="left">
+                  <span className="duration">4 mins read</span>
+                  <span className="author">By <a href="#">Shishir Prasad</a></span>
+                </span>
+                <span className="bookmarkIcon"></span>
+              </div>
+            </div>
+            <div className="col">
+              <div className="innerCol">
+                <div className="content">
+                  <div className="text">
+                    <span className="category">ARTIFICAL INTELLGENCE</span>
+                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
+                  </div>                
+                </div>
+                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
+              </div>
+              <div className="meta">
+                <span className="left">
+                  <span className="duration">4 mins read</span>
+                  <span className="author">By <a href="#">Shishir Prasad</a></span>
+                </span>
+                <span className="bookmarkIcon"></span>
+              </div>
             </div>
           </div>        
         </div>
+        <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>
       </div>
       <style jsx>{`
         .primeExclusives {
@@ -96,9 +138,16 @@ export default function PrimeExclusives({ title, data }) {
               gap: 20px;
 
               .col {
+                display: block;
                 padding-top: 17px;
                 border-top: 1px solid #e8d2cb;
                 margin-top: 30px;
+
+                .innerCol {
+                  display: flex;
+                  gap: 20px;
+                  justify-content: space-between;
+                } 
 
                 .heading {
                   font: 18px Faustina;
@@ -120,9 +169,24 @@ export default function PrimeExclusives({ title, data }) {
               .content {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
+                justify-content: space-between;                
 
-                .author {
+              .category {
+                color: #930017;
+                text-transform: uppercase;
+                display: inline-block;
+                margin-bottom: 5px;
+              }
+
+              a.heading {
+                display: block;
+                font-size: 30px;
+                line-height: 1.17;
+                font-family: Faustina;
+              }
+            }
+
+            .author {
 
                   &::before {
                     background-color: #ed193b;
@@ -142,6 +206,7 @@ export default function PrimeExclusives({ title, data }) {
                   display: inline-flex;
                   align-items: center;
                   justify-content: space-between;
+                  width: 100%;
                 }
                 
                 .bookmarkIcon {
@@ -152,22 +217,16 @@ export default function PrimeExclusives({ title, data }) {
                   height: 15px;
                   background-position: -79px -6px;
                 }
-
-              .category {
-                color: #930017;
-                text-transform: uppercase;
-                display: inline-block;
-                margin-bottom: 5px;
-              }
-
-              a.heading {
-                display: block;
-                font-size: 30px;
-                line-height: 1.17;
-                font-family: Faustina;
-              }
-            }
-          }
+          }          
+        }
+        .seeAllLink {
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 700;
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 1rem;
+          padding-bottom: 1.5rem;
         }
       `}</style>
     </>
