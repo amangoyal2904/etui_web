@@ -21,6 +21,7 @@ export default function Politics({ title, data }) {
           border-top: 3px solid #9b8680;
           text-transform: uppercase;
           margin-bottom: 20px;
+          margin-top: 1px;
 
           a {
             &::after {
