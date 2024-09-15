@@ -7,6 +7,12 @@ import ETEpaper from './ETEpaper';
 import LessonsFromGrandmasters from './LessonsFromGrandmasters';
 import MarketsTopNews from './MarketsTopNews';
 import IndicesWidget from './IndicesWidget';
+import MarketDashboard from './MarketDashboard';
+import StockRecos from './StockRecos';
+import Separator from 'components/Separator';
+import StockReportPlus from './StockReportPlus';
+import BigBullPortfolio from './BigBullPortfolio';
+import MarketMood from './MarketMood';
 
 export default function TopSectionLayout({ searchResult }) {
   const topNews = searchResult?.find(item => item?.name === "top_news") || {};
@@ -39,6 +45,15 @@ export default function TopSectionLayout({ searchResult }) {
           <div className="title">MARKETS</div>
           <MarketsTopNews />
           <IndicesWidget />
+          <MarketDashboard />
+          <Separator />
+          <StockRecos />
+          <Separator />
+          <StockReportPlus />
+          <Separator />
+          <BigBullPortfolio />
+          <Separator />
+          <MarketMood />
         </div>
       </section>
       <style jsx>{` 
@@ -52,7 +67,7 @@ export default function TopSectionLayout({ searchResult }) {
           }
 
           .col2 {
-            width: 655px;       
+            width: 605px;       
 
             .titleNSwitch {
               display: flex;
@@ -95,7 +110,7 @@ export default function TopSectionLayout({ searchResult }) {
           }
 
           .col3 {
-            width: 270px;
+            width: 320px;
 
             .title {
               font-size: 20px;

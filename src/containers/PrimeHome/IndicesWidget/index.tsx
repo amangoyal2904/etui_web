@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { formatNumber, chartIntervals, durationOptions } from 'utils/market';
+import HeadingWithRightArrow from '../HeadingWithRightArrow';
 
 export default function index() {
   const [indicesData, setIndicesData]: any = useState([]);
@@ -31,7 +32,7 @@ export default function index() {
   return (
     <div>
       <div className={styles.top}>
-        <h2>Indices</h2>
+        <HeadingWithRightArrow title="Indices" />
         <span className="statusNDate">
           <span className={styles.status}>{indicesData?.marketStatusDto?.currentMarketStatus}</span>
           <span className={styles.date}>| As on {}</span>
