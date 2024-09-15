@@ -13,6 +13,7 @@ import Wealth from "./Wealth";
 import MutualFunds from "./MutualFunds";
 import MarketNews from "./MarketNews";
 import TopSectionLayout from "./TopSectionLayout";
+import Podcast from "./Podcast";
 
 function PrimeHome({ searchResult }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -27,7 +28,7 @@ function PrimeHome({ searchResult }) {
   const panache = searchResult?.find(item => item?.name === "panache") || {};
   const explainers = searchResult?.find(item => item?.name === "explainers") || {};
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
-
+  const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   // console.log("explainers", explainers);
 
   return (
@@ -39,6 +40,7 @@ function PrimeHome({ searchResult }) {
       <Tech data={tech?.data || []} title={tech?.title || ""} />
       <Rise data={rise?.data || []} title={rise?.title || ""} />
       <CryptocurrencyNews data={cryptocurrencyNews?.data || []} title={cryptocurrencyNews?.title || ""} />
+      <Podcast data={podcast || []}/>
       <Politics data={politics?.data || []} title={politics?.title || ""} />
       <Slideshows data={slideshows?.data || []} title={slideshows?.title || ""} />
       <WebStories data={webStories?.data || []} title={webStories?.title || ""} />
