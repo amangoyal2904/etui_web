@@ -153,5 +153,9 @@
   "BreakingNews": {
     "development": "https://economictimes.indiatimes.com/etstatic/breakingnews/etjson_bnews.html",
     "production": "https://economictimes.indiatimes.com/etstatic/breakingnews/etjson_bnews.html"
+  },
+  "Podcast":{
+    "development":"https://etdev8243.indiatimes.com/feeds/podcast_iframe.cms",
+    "production":"https://economictimes.indiatimes.com/feeds/podcast_iframe.cms"
   }
 }
