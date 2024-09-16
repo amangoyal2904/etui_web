@@ -1,17 +1,20 @@
 import React from 'react'
 
-export default function LessonsFromGrandmasters() {
+export default function LessonsFromGrandmasters({ focusArea }) {
   return (
     <>
-      <div className="grandmaster">
+      <div className={`grandmaster ${focusArea}`}>
         <h2 className="title">Lessons From the Grandmasters</h2>
       </div>
       <style jsx>{`
         .grandmaster{
-          padding-left: 20px;
-          border-left: 1px dotted #9b8680;
+          padding-left: 20px;          
           margin-top: 1px;
           position: relative;
+
+          &.news {
+            border-left: 1px dotted #9b8680;
+          }
 
           .title {
             border-bottom: 1px solid#9b8680;

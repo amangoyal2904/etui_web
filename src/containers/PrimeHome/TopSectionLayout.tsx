@@ -15,6 +15,7 @@ import BigBullPortfolio from './BigBullPortfolio';
 import MarketMood from './MarketMood';
 
 export default function TopSectionLayout({ searchResult }) {
+  const [focusArea, setFocusArea] = React.useState("news");
   const topNews = searchResult?.find(item => item?.name === "top_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   // console.log("topNews", searchResult);
@@ -28,32 +29,64 @@ export default function TopSectionLayout({ searchResult }) {
           <div className="titleNSwitch">
             <span className="title">ETPRIME</span>
             <span className="switch">
-              <span className="active">NEWS FOCUS</span>
-              <span className="switchIcon">
-                <i></i>
+              <span className={focusArea === "news" ? "active" : ""} onClick={() => setFocusArea("news")}>NEWS FOCUS</span>
+              <span className="switchIcon" onClick={() => {
+                focusArea === "news" ? setFocusArea("market") : setFocusArea("news")
+              }}>
+                <i className={focusArea === "news" ? "left" : "right"}></i>
               </span>
-              <span className="">MARKET FOCUS</span>
+              <span className={focusArea === "market" ? "active" : ""} onClick={() => setFocusArea("market")}>MARKET FOCUS</span>
             </span>
           </div>
-          <PrimeBenefitsBucket />
-          <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} />
-          <InvestmentIdeas />
-          <ETEpaper />
-          <LessonsFromGrandmasters />
+          <PrimeBenefitsBucket focusArea={focusArea}/>
+          { focusArea === "news" && <>            
+            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
+            <InvestmentIdeas focusArea={focusArea}/>
+            <ETEpaper focusArea={focusArea}/>
+            <LessonsFromGrandmasters focusArea={focusArea}/>
+          </>
+          }
+
+          {
+            focusArea === "market" && <>
+              <MarketsTopNews />
+              <IndicesWidget />
+              <MarketDashboard />
+              <Separator />
+              <StockRecos />
+              <Separator />
+              <StockReportPlus />
+              <Separator />
+              <BigBullPortfolio />
+              <Separator />
+              <MarketMood />
+            </>
+          }
         </div>
         <div className="col3">
-          <div className="title">MARKETS</div>
-          <MarketsTopNews />
-          <IndicesWidget />
-          <MarketDashboard />
-          <Separator />
-          <StockRecos />
-          <Separator />
-          <StockReportPlus />
-          <Separator />
-          <BigBullPortfolio />
-          <Separator />
-          <MarketMood />
+          { focusArea === "market" && <>            
+            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
+            <InvestmentIdeas focusArea={focusArea}/>
+            <ETEpaper focusArea={focusArea}/>
+            <LessonsFromGrandmasters focusArea={focusArea}/>
+          </>
+          }
+
+          { focusArea === "news" && <>
+            <div className="title">MARKETS</div>
+            <MarketsTopNews />
+            <IndicesWidget />
+            <MarketDashboard />
+            <Separator />
+            <StockRecos />
+            <Separator />
+            <StockReportPlus />
+            <Separator />
+            <BigBullPortfolio />
+            <Separator />
+            <MarketMood />
+          </>
+          }
         </div>
       </section>
       <style jsx>{` 
@@ -83,6 +116,7 @@ export default function TopSectionLayout({ searchResult }) {
 
               .switch {
                 font-size: 11px;
+                cursor: pointer;
 
                 .active {
                   font-weight: 700;
@@ -103,7 +137,11 @@ export default function TopSectionLayout({ searchResult }) {
                   width: 6px;
                   height: 6px;
                   display: inline-block;
-                  border-radius: 50%;                  
+                  border-radius: 50%;  
+                  
+                  &.right {
+                    margin-left: 14px;
+                  }
                 }
               }
             }

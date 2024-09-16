@@ -4,6 +4,7 @@ import HeadingWithRightArrow from '../HeadingWithRightArrow';
 import { useState } from 'react';
 import Tabs from '../Tabs';
 import ViewAllCta from '../ViewAllCta';
+import ViewReportCta from '../ViewReportCta';
 
 export default function StockRecos() {
   const [activeTab, setActiveTab] = useState(0);
@@ -38,7 +39,7 @@ export default function StockRecos() {
               Current Price
               <span>635.45</span>
             </span>
-            <a href="https://img.etimg.com/photo/113322366.cms" title="Kolte-Patil Dev. View Report" target="_blank" className={styles.viewReport}><span className={styles.pdfIcon}></span> View Report</a>
+            <ViewReportCta />
           </div>  
         </div>
         <div className={styles.footer}>
@@ -70,7 +71,7 @@ export default function StockRecos() {
               Current Price
               <span>635.45</span>
             </span>
-            <a href="https://img.etimg.com/photo/113322366.cms" title="Kolte-Patil Dev. View Report" target="_blank" className={styles.viewReport}><span className={styles.pdfIcon}></span> View Report</a>
+            <ViewReportCta />
           </div>  
         </div>
         <div className={styles.footer}>
@@ -78,7 +79,7 @@ export default function StockRecos() {
         </div>
         <span className={styles.addToWatchListIcon}>&#43;</span>
       </div>
-      
+
       <ViewAllCta title="Stock Recos" url="/stock-recos" />
     </div>
   )

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function ETEpaper() {
+export default function ETEpaper({ focusArea }) {
   return (
     <>
-      <div className="etEPaper">
+      <div className={`etEPaper ${focusArea}`}>
         <h2 className="title">ET ePaper </h2>
       </div>
       <style jsx>{`

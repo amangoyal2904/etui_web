@@ -1,10 +1,10 @@
 import ArrowRnd from 'components/Icons/ArrowRnd'
 import React from 'react'
 
-export default function PrimeExclusives({ title, data }) {
+export default function PrimeExclusives({ title, data, focusArea }) {
   return (
     <>
-      <div className="primeExclusives">
+      <div className={`primeExclusives ${focusArea}`}>
         <h2 className="title">{title}</h2>
         <div className="grid">
           <div className="col first">            

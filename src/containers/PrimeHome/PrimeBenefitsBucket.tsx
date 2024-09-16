@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PrimeBenefitsBucket() {
+export default function PrimeBenefitsBucket({focusArea}) {
   const items = [
     {
       title: "Prime Exclusives",
@@ -42,7 +42,7 @@ export default function PrimeBenefitsBucket() {
 
   return (
     <>
-      <div className="primeBenefitsBucket">
+      <div className={`primeBenefitsBucket ${focusArea}`}>
         <div className="itemWrap">
         {
           items.map((item, index) => (
@@ -58,8 +58,10 @@ export default function PrimeBenefitsBucket() {
         .primeBenefitsBucket {
           overflow: hidden;
           padding: 15px 0 5px 10px;
-          border-left: 1px dotted #9b8680;
-          
+
+          &.news {
+            border-left: 1px dotted #9b8680;
+          }
           .itemWrap {
             display: inline-flex;
             gap: 10px;

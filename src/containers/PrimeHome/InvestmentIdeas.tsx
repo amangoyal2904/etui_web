@@ -1,10 +1,10 @@
 import ArrowRnd from 'components/Icons/ArrowRnd'
 import React from 'react'
 
-export default function InvestmentIdeas() {
+export default function InvestmentIdeas({ focusArea }) {
   return (
     <>
-      <div className="investmentIdeas">
+      <div className={`investmentIdeas ${focusArea}`}>
         <h2 className="title">Investment Ideas</h2>
         <a href="#" className="first">
           <img width="248" height="186" title="As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%" alt="As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%" src="https://img.etimg.com/thumb/msid-113351575,imgsize-39678,width-248,height-186,quality-100/as-valuations-stay-elevated-be-selective-and-choose-right-business-5-large-cap-stocks-from-different-sectors-with-upside-potential-of-up-to-34.jpg" />
