@@ -61,6 +61,9 @@ function PrimeHome({ searchResult }) {
           box-sizing: border-box;
           padding-bottom: 50px;
         }
+        a[href*="articleshow"]:visited, a[href*="videoshow"]:visited, a[href*="slideshow"]:visited, a[href*="liveblog"]:visited {
+            color: #636363;
+        }
       `}</style>
     </>
   )

@@ -1,11 +1,22 @@
 import ArrowRnd from 'components/Icons/ArrowRnd'
 import React from 'react'
+import HeadingWithRightArrow from './HeadingWithRightArrow'
+import PrimeIcon from 'components/Icons/PrimeIcon'
 
 export default function InvestmentIdeas({ focusArea }) {
   return (
     <>
       <div className={`investmentIdeas ${focusArea}`}>
-        <h2 className="title">Investment Ideas</h2>
+        {
+          focusArea == 'market' && <>
+            <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/>
+            <HeadingWithRightArrow title="Investment Ideas" /> 
+          </>
+        }
+        {
+          focusArea == 'news' && <h2 className="title">Investment Ideas</h2>
+        }
+
         <a href="#" className="first">
           <img width="248" height="186" title="As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%" alt="As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%" src="https://img.etimg.com/thumb/msid-113351575,imgsize-39678,width-248,height-186,quality-100/as-valuations-stay-elevated-be-selective-and-choose-right-business-5-large-cap-stocks-from-different-sectors-with-upside-potential-of-up-to-34.jpg" />
           As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%
@@ -33,11 +44,28 @@ export default function InvestmentIdeas({ focusArea }) {
         <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a>
       </div>
       <style jsx>{`
-        .investmentIdeas {
-          padding-left: 20px;
-          border-left: 1px dotted #9b8680;
+        .investmentIdeas {          
           margin-top: 1px;
           position: relative;
+
+          &.news {
+            padding-left: 20px;
+            border-left: 1px dotted #9b8680;
+          }
+
+          &.market {
+            .first {
+              flex-direction: column;
+              font-size: 20px;
+              gap: 5px;
+              line-height: 24px;
+
+              img {
+                width: 100%;
+                height: auto;
+              }
+            }
+          }
 
           .title {
             border-bottom: 1px solid#9b8680;
@@ -62,7 +90,7 @@ export default function InvestmentIdeas({ focusArea }) {
 
           .first {
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             padding-top: 10px;
             gap: 15px;
             font: 30px Faustina;
