@@ -80,6 +80,7 @@ const NewsByIndustry = ({data, title}) => {
     ]);
 
     const [showTab, setShowTab] = useState('13352306');
+    const selectedObj = IndustryTabsJSON.find(item => Number(item?.msid) == Number(showTab));
 
     const articleListApiHit = (listMsid) => {
         // console.log("test ---- ", articleData?.some(article => console.log("article test", Number(article.msid), listMsid)))
@@ -257,7 +258,7 @@ const NewsByIndustry = ({data, title}) => {
                     News by <span className="sec_heading">Industry</span>
                 </a>
                 <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href="/industry">FEATURED</a>
+                <a className="curr_secname font_faus" target="_blank" href={selectedObj?.link}>{selectedObj?.tabName}</a>
             </div>
             <div className="news_menu tabsView tabVertical">
                 <ul className="tabs">
