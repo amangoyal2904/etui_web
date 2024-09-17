@@ -15,6 +15,7 @@ import MarketNews from "./MarketNews";
 import TopSectionLayout from "./TopSectionLayout";
 import Podcast from "./Podcast";
 import NewsByIndustry from "./NewsByIndustry";
+import MostReadStories from './MostReadStories'
 
 function PrimeHome({ searchResult }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -31,12 +32,14 @@ function PrimeHome({ searchResult }) {
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
+  const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
   // console.log("explainers", explainers);
 
   return (
     <>
       <TopSectionLayout searchResult={searchResult} />
       <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+      <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} />

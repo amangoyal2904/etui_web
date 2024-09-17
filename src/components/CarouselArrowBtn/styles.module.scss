@@ -17,6 +17,37 @@
     align-items: center;
     justify-content: center;
 
+    &.mostReadStories{
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      top: 50%;
+      transform: translate(-50%, 0);
+
+      &.prevbtn{
+        left: 200px;
+      }
+
+      &.nextbtn{
+        right: -24px;
+      }
+
+      .btn{
+        width: 32px;
+        height: 32px;
+        z-index: 11;
+        cursor: pointer;
+      }
+
+      .nextbtn{
+        background-position: -429px -477px;
+      }
+  
+      .prevbtn{
+        background-position: -359px -477px;
+      }
+    }
+
     &.red{
       color: #ff454f;  
     }
@@ -31,4 +62,10 @@
   .embla__button__svg {
     width: 50%;
     height: 50%;
+  }
+
+  .cSprite {
+    background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+    display: inline-block;
+    background-size: 475px;
   }

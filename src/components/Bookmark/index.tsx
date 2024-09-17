@@ -11,9 +11,10 @@ interface BookmarkProps {
     msid: string;
     hostId: string;
     type: string;
+    widget: string;
 }
 
-const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type }) => {
+const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget }) => {
     const { state } = useStateContext();
     const [isBookmarked, setIsBookmarked] = useState(0);
     const { isLogin } = state.login;
@@ -107,7 +108,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type }) => {
         }
     }
     return (
-        <span className={`bookmark ${isBookmarked ? 'saved' : ''}`} onClick={saveBookmark}>
+        <span className={`${widget == 'mostread_primehome' ? 'mostread_bookmark' : 'bookmark'}  ${isBookmarked ? 'saved' : ''}`} onClick={saveBookmark}>
             <img src={`https://img.etimg.com/photo/${isBookmarked ? '63696446' : '63696304'}.cms`} alt="bookmark icon" />
             <style jsx>{`
                 .bookmark {
@@ -123,6 +124,16 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type }) => {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                }
+
+                .mostread_bookmark{
+                    position: relative; 
+                    width: 22px;
+                    height: 22px;
+                    display: inline-flex;
+                    align-items: flex-start;
+                    justify-content: center;
+                    cursor: pointer;
                 }
             `}</style>
         </span>

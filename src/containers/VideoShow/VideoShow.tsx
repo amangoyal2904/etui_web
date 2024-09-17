@@ -124,7 +124,7 @@ const VideoShow = (props) => {
           <div>
             {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
           </div>
-          <Bookmark msid={result.msid} hostId={result.hostid} type="5" />
+          <Bookmark msid={result.msid} hostId={result.hostid} type="5" widget={``} />
           <PostComments />
         </div>
         <div className={styles.vidWrapper} ref={vidRef}>
