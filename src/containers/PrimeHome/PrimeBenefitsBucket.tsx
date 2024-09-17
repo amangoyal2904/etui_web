@@ -62,6 +62,12 @@ export default function PrimeBenefitsBucket({focusArea}) {
           &.news {
             border-left: 1px dotted #9b8680;
           }
+
+          &.market {
+            padding-left: 0;
+            margin-bottom: 25px;
+          }
+
           .itemWrap {
             display: inline-flex;
             gap: 10px;

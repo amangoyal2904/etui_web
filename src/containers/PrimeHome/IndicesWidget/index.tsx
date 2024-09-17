@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { formatNumber, chartIntervals, durationOptions } from 'utils/market';
 import HeadingWithRightArrow from '../HeadingWithRightArrow';
 
-export default function index() {
+export default function IndicesWidget() {
   const [indicesData, setIndicesData]: any = useState([]);
   const [activeIndex, setActiveIndex] = useState("2369");
   const [period, setPeriod] = useState("1w");

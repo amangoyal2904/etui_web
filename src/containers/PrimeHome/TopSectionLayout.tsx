@@ -49,7 +49,7 @@ export default function TopSectionLayout({ searchResult }) {
 
           {
             focusArea === "market" && <>
-              <MarketsTopNews />
+              <MarketsTopNews focusArea={focusArea}/>
               <IndicesWidget />
               <MarketDashboard />
               <Separator />
@@ -74,7 +74,7 @@ export default function TopSectionLayout({ searchResult }) {
 
           { focusArea === "news" && <>
             <div className="title">MARKETS</div>
-            <MarketsTopNews />
+            <MarketsTopNews focusArea={focusArea}/>
             <IndicesWidget />
             <MarketDashboard />
             <Separator />
