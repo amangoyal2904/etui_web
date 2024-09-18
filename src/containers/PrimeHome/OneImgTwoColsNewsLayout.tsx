@@ -21,7 +21,10 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
           </div>
         </div>
       </div>
-    <style jsx>{`
+      <style jsx>{`
+        .wrap {
+          display: inline-block;
+        }
         .first {
           width: 335px;
           margin-right: 20px;
@@ -71,10 +74,8 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
               margin-top: 10px;
             }
           }
-        }
-      
-
-    `}</style>
+        }        
+      `}</style>
     </>
   )
 }
