@@ -1,5 +1,6 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
+import LiveIcon from 'components/Icons/LiveIcon'
 
 export default function MarketNews({ title, data }) {  
   return (
@@ -8,10 +9,7 @@ export default function MarketNews({ title, data }) {
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News"}}/>
       <div className="second">
-        <div className="liveIcon">
-          <span className="text">Live</span>
-          <span className="ripple"><i></i></span>
-        </div>
+        <LiveBlog />
       </div>
       <div className="third">
         <Podcast />
@@ -54,6 +52,7 @@ export default function MarketNews({ title, data }) {
           width: 250px;
           display: inline-block;
           vertical-align: top;
+          margin: 0 20px;
         }
 
         .third {
@@ -415,3 +414,83 @@ function MyWatchlist() {
     `}</style>
   </>;
 }
+
+function LiveBlog() {
+
+  return <>
+    <div className="liveblog">
+      <div className="liveIcon">
+        <span className="text">LIVE </span>
+        <LiveIcon />
+      </div>
+      <div className="lhead"><a target="_blank" href="/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-23-august-2024/liveblog/112724849.cms">Sensex Today | Stock Market LIVE Updates | Sensex flat, Nifty tests 24,800; banks &amp; financials under pressure</a></div>
+      <div className="content"><span>08:21 PM</span>Powell has set the stage for rate cuts: David Doyle of Macquarie Group</div>
+      <div className="content"><span>08:19 PM</span>Inflation, labor data opens the door to 50s (rate cut) at some point: ...</div>
+      <div className="content"><span>08:17 PM</span>Powell validates market expectations for a September rate cut: Uto Shi...</div>
+    </div>      
+    <style jsx>{`
+      .liveblog {
+        .liveIcon {
+          .text {
+            background-color: #ed193b;
+            color: #FFF;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 1px;
+            padding: 2px 5px;
+            margin-right: 5px;
+          }
+        }
+
+        .lhead {
+          font-family: Faustina;
+          font-size: 18px;
+          font-weight: 600;
+          padding-bottom: 10px;
+        }
+
+        .content {
+          font-family: Faustina;
+          font-size: 14px;
+          font-weight: 400;
+          border-left: 2px solid #979797;
+          padding: 0 0 10px 15px;
+          position: relative;
+
+          span {
+            font-family: Montserrat;
+            font-size: 11px;
+            font-weight: 400;
+            color: #727272;
+            display: block;
+            padding-top: 2px;
+          }
+
+          &:before {
+            content: '';
+            height: 7px;
+            width: 7px;
+            background: red;
+            display: inline-block;
+            position: absolute;
+            left: -6px;
+            border-radius: 50%;
+            top: 0;
+            margin: 3px 0;
+            border: 2px solid #ffe9e2;
+          }
+        }
+      }
+    `}</style>
+  </>;
+}
+
+// function ExpertViews() {
+
+//   return <>
+//     <div>
+
+//     </div>
+//   </>;
+// }
