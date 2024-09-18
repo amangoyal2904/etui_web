@@ -80,6 +80,7 @@ const NewsByIndustry = ({data, title}) => {
     ]);
 
     const [showTab, setShowTab] = useState('13352306');
+    const [showLoading, setShowLoading] = useState(false);
     const selectedObj = IndustryTabsJSON.find(item => Number(item?.msid) == Number(showTab));
 
     const articleListApiHit = (listMsid) => {
@@ -89,13 +90,15 @@ const NewsByIndustry = ({data, title}) => {
             // console.log("articleData --- ", articleData);
             const pllistArr = [13352306, 107115, 81585238, 78404305, 18606290];
             const typeVal = pllistArr.includes(listMsid) ? "plist" : "articlelist";
-            const apiLink = `https://etpwaapipre.economictimes.com/request?type=${typeVal}&msid=${listMsid}`
+            const apiLink = `https://etpwaapipre.economictimes.com/request?type=${typeVal}&msid=${listMsid}`;
+            setShowLoading(true);
 
             fetch(apiLink)
             .then(response => response.json())
             .then(res => {
                 const resData = typeVal == "plist" ? res?.searchResult[0]?.data : res?.searchResult?.find(item => item?.name === "articlelist")?.data?.news;
                 setArticleData(prev => [...prev, { msid:res?.parameters?.msid , articleList: resData }]);
+                setShowLoading(false);
             })
             .catch(error => {
             console.error('Error:', error);
@@ -150,7 +153,7 @@ const NewsByIndustry = ({data, title}) => {
                                 return (
                                     <>
                                         {
-                                            index > 1 ? <div className="otherDiv">
+                                            index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv">
                                                 <a target="_blank" className="flt" href={value.url}>
                                                     <img 
                                                         width="88" 
@@ -218,6 +221,10 @@ const NewsByIndustry = ({data, title}) => {
                                 padding: 11px 0 15px 0;
                                 vertical-align: top;
 
+                                &:nth-child(even) {
+                                    margin-left: 20px;
+                                }
+
                                 &:nth-child(1),  &:nth-child(2){
                                     border-top: 0;
                                 }
@@ -279,7 +286,7 @@ const NewsByIndustry = ({data, title}) => {
                 <div className="stories_sec content tabsContent">
                     <ul className="font_faus">
                         {
-                            articleData?.map((value, key) => {
+                            showLoading ? <li>Loading.....</li> : articleData?.map((value, key) => {
                                 return (
                                     <>
                                          {articleHtml(value.articleList, value.msid)} 
@@ -376,6 +383,7 @@ const NewsByIndustry = ({data, title}) => {
                         line-height: 20px;
                         cursor: pointer;
                         border: 0;
+                        position: relative;
 
                         &.active, &:hover{
                             background: #ffe9e2;
@@ -510,11 +518,12 @@ const NewsByIndustry = ({data, title}) => {
                 }
 
                 .tabsContent{
-                    max-width: 732px;
+                    width: 732px;
                     padding: 17px 19px 0 21px;
                     border: solid 1px #e6cdc4;
                     display: table-cell;
                     vertical-align: top;
+                    box-shadow: -2px 1px 4px 0 rgba(0,0,0,0.11)
                 }
             }
 
