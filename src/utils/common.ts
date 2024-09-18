@@ -59,3 +59,8 @@ export const X_CLIENT_ID = {
   'development': 'w2a8e883ec676f417520f422068a4741',
   'production': 'b2a8e883ec676f417520f422068a4742'
 }
+
+export const SITE_APP_CODE = {
+  'development': 'd8bf11298a038d8f20be2c4486c3c728',
+  'production': 'c21b937c35b0d7cc7c6659d3b57e3d4a'
+}

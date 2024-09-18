@@ -13,17 +13,18 @@ import Separator from 'components/Separator';
 import StockReportPlus from './StockReportPlus';
 import BigBullPortfolio from './BigBullPortfolio';
 import MarketMood from './MarketMood';
+import LiveStream from './LiveStream';
 
 export default function TopSectionLayout({ searchResult }) {
   const [focusArea, setFocusArea] = React.useState("news");
-  const topNews = searchResult?.find(item => item?.name === "top_news") || {};
+  const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   // console.log("topNews", searchResult);
   return (
     <>
       <section className="topLayout">
         <div className="col1">
-          <TodayNews topNews={topNews} />
+          <TodayNews todayNews={todayNews} />
         </div>
         <div className="col2">
           <div className="titleNSwitch">
@@ -49,7 +50,7 @@ export default function TopSectionLayout({ searchResult }) {
 
           {
             focusArea === "market" && <>
-              <MarketsTopNews />
+              <MarketsTopNews focusArea={focusArea}/>
               <IndicesWidget />
               <MarketDashboard />
               <Separator />
@@ -66,6 +67,7 @@ export default function TopSectionLayout({ searchResult }) {
         <div className="col3">
           { focusArea === "market" && <>            
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
+            <Separator />
             <InvestmentIdeas focusArea={focusArea}/>
             <ETEpaper focusArea={focusArea}/>
             <LessonsFromGrandmasters focusArea={focusArea}/>
@@ -74,7 +76,7 @@ export default function TopSectionLayout({ searchResult }) {
 
           { focusArea === "news" && <>
             <div className="title">MARKETS</div>
-            <MarketsTopNews />
+            <MarketsTopNews focusArea={focusArea}/>
             <IndicesWidget />
             <MarketDashboard />
             <Separator />
@@ -87,6 +89,8 @@ export default function TopSectionLayout({ searchResult }) {
             <MarketMood />
           </>
           }
+
+          <LiveStream />
         </div>
       </section>
       <style jsx>{` 

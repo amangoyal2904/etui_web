@@ -1,14 +1,19 @@
+import LiveIcon from 'components/Icons/LiveIcon';
 import React from 'react'
 
-export default function TodayNews({ topNews }) {
+export default function TodayNews({ todayNews }) {
+  console.log("todayNews", todayNews);
   return (
     <>
-      <div className="title">Today's News</div>
+      <div className="title">{todayNews?.title}</div>
       <ul>
         {
-          topNews?.data?.map((item, index) => (
+          todayNews?.data?.map((item, index) => (
             <li key={index}>
-              <a href={item?.link} target="_blank">{item?.title}</a>
+              <a href={item?.url} target="_blank">
+                {item.type == "liveblog" &&  <LiveIcon />}
+                {item?.title}
+              </a>
             </li>
           ))
         }
@@ -29,6 +34,10 @@ export default function TodayNews({ topNews }) {
             padding: 14px 0;
             border-bottom: 1px solid #e8d2cb;
             font: 18px Faustina, Georgia, serif;
+
+            &:first-child {
+              font-weight: 600;
+      }
           }
         }
       `}</style>

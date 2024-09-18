@@ -1,11 +1,12 @@
 import ArrowRnd from 'components/Icons/ArrowRnd'
+import PrimeIcon from 'components/Icons/PrimeIcon'
 import React from 'react'
 
 export default function PrimeExclusives({ title, data, focusArea }) {
   return (
     <>
       <div className={`primeExclusives ${focusArea}`}>
-        <h2 className="title">{title}</h2>
+        <h2 className="title">{ focusArea == 'market' && <PrimeIcon />}  {title}</h2>
         <div className="grid">
           <div className="col first">            
             <img width="248" height="186" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />            
@@ -14,13 +15,15 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 <span className="category">FMCG</span>
                 <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
               </div>
-              <div className="meta">
+              {
+              focusArea == 'news' && <div className="meta">
                 <span className="left">
                   <span className="duration">4 mins read</span>
                   <span className="author">By <a href="#">Shishir Prasad</a></span>
                 </span>
                 <span className="bookmarkIcon"></span>
               </div>
+              }
             </div>
           </div>
           <div className="row">    
@@ -34,6 +37,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </div>
                 <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
               </div>
+              {focusArea == 'news' &&
               <div className="meta">
                 <span className="left">
                   <span className="duration">4 mins read</span>
@@ -41,6 +45,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </span>
                 <span className="bookmarkIcon"></span>
               </div>
+              }
             </div>
             <div className="col">
               <div className="innerCol">
@@ -52,6 +57,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </div>
                 <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
               </div>
+              {focusArea == 'news' &&
               <div className="meta">
                 <span className="left">
                   <span className="duration">4 mins read</span>
@@ -59,6 +65,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </span>
                 <span className="bookmarkIcon"></span>
               </div>
+              }
             </div>
           </div>     
           <div className="row">    
@@ -72,6 +79,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </div>
                 <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
               </div>
+              {focusArea == 'news' &&
               <div className="meta">
                 <span className="left">
                   <span className="duration">4 mins read</span>
@@ -79,6 +87,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </span>
                 <span className="bookmarkIcon"></span>
               </div>
+              }
             </div>
             <div className="col">
               <div className="innerCol">
@@ -90,6 +99,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </div>
                 <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
               </div>
+              {focusArea == 'news' &&
               <div className="meta">
                 <span className="left">
                   <span className="duration">4 mins read</span>
@@ -97,17 +107,68 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 </span>
                 <span className="bookmarkIcon"></span>
               </div>
+              }
             </div>
           </div>        
         </div>
-        <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>
+        {focusArea == 'news' && <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>}
       </div>
       <style jsx>{`
-        .primeExclusives {
-          padding-left: 20px;
-          border-left: 1px dotted #9b8680;
+        .primeExclusives {                
           margin-top: 1px;
           position: relative;
+
+          &.news {
+            border-left: 1px dotted #9b8680;
+            padding-left: 20px;    
+
+            .row {
+              .col {
+                .heading {
+                  font-size: 18px;
+                  padding-bottom: 20px;
+                }
+              }
+            }
+          }
+
+          &.market {
+            .first {
+              flex-direction: column;
+
+              img {
+                width: 100%;
+                height: auto;
+              }
+              .content {
+                .heading {                  
+                  font-size: 20px !important;
+                  font-weight: 600;
+                  line-height: 24px !important;                  
+                }
+              }
+            }
+
+            .title {
+              padding-top: 0;
+              border-bottom: 3px solid #9b8680;
+              &:before {
+                display: none;
+              }
+            }
+
+            .row {
+              display: block !important;
+
+              .col {
+                margin-top: 15px !important;
+
+                .heading {
+                  font-size: 16px;
+                }
+              }
+            }            
+          }
 
           .title {
             border-bottom: 1px solid #9b8680;
@@ -150,8 +211,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 } 
 
                 .heading {
-                  font: 18px Faustina;
-                  padding-bottom: 20px;
+                  font-family: Faustina;                  
                 }
 
                 .text {
@@ -228,6 +288,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
           margin-top: 1rem;
           padding-bottom: 1.5rem;
         }
+        
       `}</style>
     </>
   )
