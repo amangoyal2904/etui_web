@@ -21,17 +21,18 @@
     border-right: 1px solid #ebebeb;  
 
     h1 {
-        font-size: 36px;
-        font-weight: 400;
-        line-height: 36px;
-        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 24px;
+        margin: 15px 0 10px 0;
     }
 
     .byline {
         display: flex;
+        color: #565656;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 17px;
+        margin: 17px 0;
 
         .right {
             display: flex;
@@ -63,19 +64,36 @@
         display: flex;
 
         .shareBar {
-            min-height: 420px;
-            width: 75px;
+            width: 640px;
+            float: left;
         }
     }    
 
     .videoDesc {
-        background-color: #000;        
-        color: #FFF;
+        background: #f8f8f8;
+        border-top: 2px solid #fff;
+        width: 610px;
+        border-radius: 8px;
         font-size: 14px;
         line-height: 18px;
         margin-top: 2px;        
         padding: 12px;
-        width: 611px;
+        .expanded{
+            height: 100%;
+        }
+        .collapsed{
+            height: 50px;
+            overflow: hidden;
+        }
+        .showMLBtn{
+            display: flex;
+            font-size: 12px;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
     }
 
     .sideBar{
@@ -124,7 +142,7 @@
         left: -16px;
     }
 }
-
+.readMore{display:flex;margin:10px 0 10px 0;width:640px;}
 .twitterFollowButton{
     position: relative;
     display: inline-block;
@@ -138,12 +156,20 @@
     font-weight: 500;
     font-size: 12px;
 }
+.shareBar{
+    float: left;
+    width: 635px;
+    margin: 20px 0;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 20px;
+}
 .bookmarkCta{
     padding: 2px;
     border: 1px solid;
     border-radius: 50%;
     width: 22px;
     height: 22px;
+    margin-top: 10px;
     
     span{
         width: 20px;
