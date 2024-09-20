@@ -3,6 +3,9 @@
     border-bottom: 1px solid #FFF;
     padding: 10px 0;
     position: relative;
+    width: 35px;
+    height: 35px;
+    float: left;
     span{
         display: inline-block;
         vertical-align: top;
@@ -17,9 +20,8 @@
         padding: 5px;
         width: 325px;
         top: 0;
-        left: 78px;
+        left: 27px;
         background: #f5f5f5;
-        border-left: 0;
         text-align: left;
         .readUrl {
             border: 1px solid #b3adad;
@@ -40,6 +42,7 @@
             font-size: 10px;
             height: 36px;
           }
+          
       }
       .close {
         display: inline-block;
@@ -65,6 +68,14 @@
         font-style: normal;
         font-weight: bold;
       }
+      .copy{
+        background-position: 5px -856px;
+        cursor: pointer;
+        display: inline;
+        display: inline-block;
+        width: 37px;
+        height: 35px;
+      }
   }
 
   .codeMailVideo{
@@ -72,16 +83,20 @@
     border-top: 1px solid #FFF;
     padding: 10px 0;
     text-align: center;
+    width: 35px;
+    height: 35px;
+    float: left;
+    
     .email{
-        background: url(https://img.etimg.com/photo/21021468.cms) no-repeat -150px -296px;
+        // background: url(https://img.etimg.com/photo/21021468.cms) no-repeat -150px -296px;
         cursor: pointer;
         display: inline;
         display: inline-block;
-        height: 17px;
-        margin: 0 10px;
-        width: 17px;
-        zoom: 1;
+        width: 37px;
+        height: 35px;
+        background-position: 7px -681px;
       }
   }
+  
 
   

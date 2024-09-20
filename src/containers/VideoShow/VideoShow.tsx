@@ -19,7 +19,7 @@ import { log } from "console";
 import Trending from "components/Trending";
 import { useStateContext } from "../../store/StateContext";
 import Bookmark from "components/Bookmark";
-
+import ShowMoreText from "components/ShowMoreText";
 declare global {
   interface Window {
     isprimeuser: number;
@@ -38,6 +38,7 @@ const options = {
 const VideoShow = (props) => {
   const [isPopupVid, setIsPopupVid] = useState(false);
   const [isPopupVidClosed, setIsPopupVidClosed] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const result = props?.searchResult?.find((item) => item.name === "videoshow")?.data as VideoShowProps;
   const mostPopularNews = props?.searchResult?.find((item) => item.name === "most_popular_news");
   const mostViewedVideos = props?.searchResult?.find((item) => item.name === "most_viewed_videos");
@@ -52,6 +53,9 @@ const VideoShow = (props) => {
   const subsecNames = props?.seo?.subsecnames;
   const vidRef = useRef(null);
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
   useEffect(() => {
     // set page specific customDimensions
     //renderInterstatialAds();
@@ -119,27 +123,7 @@ const VideoShow = (props) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-        <h1>{result.title}</h1>
-        <div className={styles.byline}>
-          <div>
-            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
-          </div>
-          <Bookmark msid={result.msid} hostId={result.hostid} type="5" />
-          <PostComments />
-        </div>
-        <div className={styles.vidWrapper} ref={vidRef}>
-          <div className={styles.shareBar}>
-            <SocialShare
-              mailData={{
-                shareUrl: ET_WEB_URL + result.url,
-                title: result.title,
-                msid: result.msid,
-                hostId: result.hostid,
-                type: "5"
-              }}
-              articleData={result}
-            />
-          </div>
+      <div className={styles.vidWrapper} ref={vidRef}>
           <div className={`vidWrapInner ${!isPopupVidClosed && isPopupVid ? styles.popupVid : ""}`}>
             {!isPopupVidClosed && isPopupVid && (
               <div>
@@ -157,19 +141,34 @@ const VideoShow = (props) => {
             <div id={`id_${result.msid}`} className={`${styles.vidContainer} ${styles.vid}`}></div>
           </div>
         </div>
-        <div className={styles.videoDesc}>
-          <p>{result.synopsis}</p>
-          <a
-            href="https://twitter.com/EconomicTimes"
-            rel="nofollow"
-            className="twitter-follow-button"
-            data-show-count="false"
-            data-lang="en"
-          >
-            Follow @EconomicTimes
-          </a>
+        <h1>{result.title}</h1>
+        <div className={styles.byline}>
+          <div>
+            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
+          </div>
         </div>
+        
+        <div className={styles.videoDesc}>
+          <p className={isExpanded ? styles.expanded : styles.collapsed}>{result.synopsis}</p>
+          <a onClick={toggleExpand} title="showMoreLess" className={styles.showMLBtn}>{isExpanded ? 'Show Less' : 'Show More'}</a>
+        </div>
+        <div className={styles.shareBar}>
+            <SocialShare
+              mailData={{
+                shareUrl: ET_WEB_URL + result.url,
+                title: result.title,
+                msid: result.msid,
+                hostId: result.hostid,
+                type: "5"
+              }}
+              articleData={result}
+            />
+            <Bookmark msid={result.msid} hostId={result.hostid} type="5" />
+            <PostComments />
+          </div>
+        <div className={styles.readMore}>
         <ReadMore readMoreText={result?.relKeywords} />
+        </div>
         {!isPink && (
           <div className="adContainer">
               <div id={`taboola-mid-article-thumbnails-${result.msid}`} 

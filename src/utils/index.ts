@@ -740,6 +740,26 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
 export const getPageSpecificDimensions = (seo) => {
   const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
   const dateArray = updated.split(",");
+  function formatDate(inputDate) {
+    // Parse the input date string
+      const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+      const parsedDate = new Date(inputDate);
+
+      // Extract and format the date parts
+      const year = parsedDate.getFullYear();
+      const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-11
+      const day = String(parsedDate.getDate()).padStart(2, '0');
+      const hours = String(parsedDate.getHours()).padStart(2, '0');
+      const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+      const seconds = String(parsedDate.getSeconds()).padStart(2, '0');
+
+      // Format as "YYYY-MM-DD HH:mm:ss"
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+  const dateValue = dateArray;
+  const formattedDate = formatDate(dateValue);
+  //console.log("Date Value:-" + formattedDate);
+
   const dateString = dateArray[0] || "";
   const timeString = dateArray[1] || "";
   const { subsec1, subsecname1, subsecname2, subsecname3 } = subsecnames;
@@ -754,7 +774,7 @@ export const getPageSpecificDimensions = (seo) => {
 
   const payload = {
     dimension4: agency,
-    dimension8: dateString,
+    dimension8: formattedDate,
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,
@@ -764,5 +784,6 @@ export const getPageSpecificDimensions = (seo) => {
     dimension29: subsec1,
     dimension48: msid
   };
+  console.log("test for date:--" + dateString);
   return payload;
 };
