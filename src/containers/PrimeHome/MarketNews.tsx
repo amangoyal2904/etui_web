@@ -1,6 +1,7 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import LiveIcon from 'components/Icons/LiveIcon'
+import MoreFromLink from './MoreFromLink'
 
 export default function MarketNews({ title, data }) {  
   return (
@@ -10,6 +11,8 @@ export default function MarketNews({ title, data }) {
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News"}}/>
       <div className="second">
         <LiveBlog />
+        <ExpertViews />
+        <MarketMoguls />
       </div>
       <div className="third">
         <Podcast />
@@ -486,11 +489,146 @@ function LiveBlog() {
   </>;
 }
 
-// function ExpertViews() {
+function ExpertViews() {
 
-//   return <>
-//     <div>
+  return <>
+    <div className="expertViews">
+      <div className="title">
+        <a className="title" href="/markets/expert-views/articlelist/50649960.cms" data-ga-onclick="Title - Expert Views - href" target="_blank">Expert Views</a>
+      </div>
+      <div className="content">
+      <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" align="left" />
+        
+        <span className="right">
+          <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href="/markets/expert-view/will-nbfcs-and-banks-lead-indian-markets-next-rally-hemang-jani-answers/articleshow/113479290.cms">Will NBFCs &amp; banks lead the next rally?</a>
+          <span className="author">Hemang Jani</span>
+        </span>
+      </div>
+      <MoreFromLink href="/markets/expert-views/articlelist/50649960.cms" appendText="Expert Views" moreText="More" />
+    </div>
+    <style jsx>{`
+      .expertViews {
+        border-top: 2px solid #000;
+        padding-top: 10px;
+        margin-top: 16px;
 
-//     </div>
-//   </>;
-// }
+        .content {
+          display: inline-flex;
+          gap: 10px;          
+          border-bottom: 1px solid #ddc2bb;
+          padding-bottom: 10px;
+          margin-bottom: 10px;
+          
+          .author {
+            font-family: Montserrat;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.67;
+            display: block;            
+          }
+        }
+      }
+
+      .title {
+        margin-bottom: 10px;
+        a {
+          font-family: Montserrat;
+          font-size: 18px;
+          font-weight: 700;          
+          margin-bottom: 5px;
+
+          &:after {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            top: -1px;
+            left: 2px;
+            border-top: 2px solid #ed193b;
+            border-left: 2px solid #ed193b;
+            position: relative;
+            cursor: pointer;
+            transform: rotate(135deg);
+          }
+        }
+      }
+    `}</style>
+  </>;
+}
+
+function MarketMoguls() {
+  
+    return <>
+      <div className="marketMoguls">
+        <div className="title">
+          <a className="title" href="/markets/market-moguls/articlelist/50649959.cms" data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
+        </div>
+        <div className="content">
+          <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" align="left" />
+          
+          <span className="right">
+            <span className="author">Ajit Menon</span>
+            <span className="dib">CEO, PGIM India Asset Management</span>
+            <a data-ga-onclick="Market Moguls - 1 - href" target="_blank" title="The gravity of equity markets: Rationality, boom, and defiance" href="/markets/stocks/news/the-gravity-of-equity-markets-rationality-boom-and-defiance/articleshow/113390420.cms">The gravity of equity markets: Rationality, boom, and defiance</a>
+          </span>
+        </div>
+        <MoreFromLink href="/markets/market-moguls/articlelist/50649959.cms" appendText="Market Moguls" moreText="More" />
+      </div>
+      <style jsx>{`
+        .marketMoguls {
+          border-top: 2px solid #000;
+          padding-top: 10px;
+          margin-top: 16px;
+  
+          .content {
+            display: inline-flex;
+            gap: 10px;          
+            border-bottom: 1px solid #ddc2bb;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            
+            .author {
+              font-family: Montserrat;
+              font-size: 12px;
+              font-weight: 700;
+              line-height: 1.67;
+              display: block;            
+            }
+
+            .dib {
+              font-family: Montserrat;
+              font-size: 11px;
+              font-weight: 300;
+              font-style: italic;
+              display: block;
+              margin-bottom: 5px;
+            }
+          }
+        }
+  
+        .title {
+          margin-bottom: 10px;
+          a {
+            font-family: Montserrat;
+            font-size: 18px;
+            font-weight: 700;          
+            margin-bottom: 5px;
+  
+            &:after {
+              content: '';
+              display: inline-block;
+              width: 7px;
+              height: 7px;
+              top: -1px;
+              left: 2px;
+              border-top: 2px solid #ed193b;
+              border-left: 2px solid #ed193b;
+              position: relative;
+              cursor: pointer;
+              transform: rotate(135deg);
+            }
+          }
+        }
+      `}</style>
+    </>;
+}

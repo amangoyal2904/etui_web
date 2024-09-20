@@ -1,4 +1,5 @@
 import React from 'react'
+import MoreFromLink from './MoreFromLink'
 
 export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
   const first = data[0]
@@ -16,9 +17,8 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
           {rest.map((item, index) => (
             <a href={item?.url} key={index}>{item?.title}</a>
           ))}
-          <div className="more">
-            <a target="_blank" href="/news/politics-nation" data-ga-onclick="More - href">More From »</a>
-          </div>
+          
+          <MoreFromLink href="/news/politics-nation" appendText={more.text} />
         </div>
       </div>
       <style jsx>{`
@@ -61,17 +61,6 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
 
             &:first-child {
               padding-top: 0;
-            }
-          }
-
-          .more {
-            a {
-              font-size: 12px;
-              color: #ed193b;
-              font-family: 'Montserrat', sans-serif;
-              border: 0;
-              text-align: right;
-              margin-top: 10px;
             }
           }
         }        
