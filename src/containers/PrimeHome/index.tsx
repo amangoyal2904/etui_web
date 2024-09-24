@@ -22,6 +22,7 @@ function PrimeHome({ searchResult }) {
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
   const tech = searchResult?.find(item => item?.name === "tech") || {};
+  const techNewsLetters = searchResult?.find(item => item?.name === "tech_newsletters") || {};
   const rise = searchResult?.find(item => item?.name === "rise") || {};
   const cryptocurrencyNews = searchResult?.find(item => item?.name === "cryptocurrency_news") || {};
   const politics = searchResult?.find(item => item?.name === "politics") || {};
@@ -43,7 +44,7 @@ function PrimeHome({ searchResult }) {
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} />
-      <Tech data={tech?.data || []} title={tech?.title || ""} />
+      <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
       <Rise data={rise?.data || []} title={rise?.title || ""} />
       <CryptocurrencyNews data={cryptocurrencyNews?.data || []} title={cryptocurrencyNews?.title || ""} />
       <Podcast data={podcast || []}/>
