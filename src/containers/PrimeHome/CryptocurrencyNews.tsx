@@ -1,7 +1,8 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 
-export default function CryptocurrencyNews({ title, data }) {  
+export default function CryptocurrencyNews({ title, data}) {  
+
   return (
     <>
     <section className="politics">
@@ -89,6 +90,7 @@ export default function CryptocurrencyNews({ title, data }) {
             }
           }
         }
+        
       }
 
     `}</style>
