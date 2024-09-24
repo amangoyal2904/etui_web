@@ -1,15 +1,21 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
+import TextImageMiddile from 'components/TextImageMiddile';
 
-export default function Rise({ title, data }) {  
+export default function Rise({ title, data }) { 
+  const smallBizMiddle = data.slice(1,6);
   return (
     <>
-    <section className="politics">
+    <section className="rise">
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Rise"}} />
+      <div className="second">
+      <TextImageMiddile data={smallBizMiddle} heading="Popular in Small Biz"/>
+      </div>
+      <div className="third">Third Div</div>
     </section>
     <style jsx>{`
-      .politics {
+      .rise {
         padding-bottom: 50px;
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
@@ -89,6 +95,18 @@ export default function Rise({ title, data }) {
             }
           }
         }
+        .second{
+          width: 255px;
+          display: inline-block;
+          vertical-align: top;
+          margin: 0 20px;
+        }
+        .third {
+          width: 275px;
+          display: inline-block;
+          vertical-align: top;
+        }
+          
       }
 
     `}</style>

@@ -91,6 +91,7 @@ export default function CryptocurrencyNews({ title, data, dataTv, dataExpert, ti
             }
           }
         }
+        
       }
 
     `}</style>

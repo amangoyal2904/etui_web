@@ -1,12 +1,22 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
+import TextImageMiddile from 'components/TextImageMiddile'
+import WealthWebstory from 'components/WealthWebstory';
 
-export default function Wealth({ title, data }) {  
+export default function Wealth({ title, data, wealthslideshow}) {  
+  
+  const slideData = data.slice(0,5);
   return (
     <>
     <section className="wealth">
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Wealth"}}/>
+      <div className="second">
+        <TextImageMiddile data={wealthslideshow.data || []} heading={wealthslideshow.title || ""} />
+      </div>
+      <div className="third">
+      <WealthWebstory data={slideData} heading="Web Stories"/>
+      </div>
     </section>
     <style jsx>{`
       .wealth {
@@ -37,6 +47,17 @@ export default function Wealth({ title, data }) {
               transform: rotate(135deg);
             }
           }
+        }
+        .second{
+          width: 255px;
+          display: inline-block;
+          vertical-align: top;
+          margin: 0 20px;
+        }
+        .third {
+          width: 275px;
+          display: inline-block;
+          vertical-align: top;
         }
       }
 

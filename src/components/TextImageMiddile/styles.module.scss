@@ -1,0 +1,67 @@
+
+    .riseMiddle {
+        width: 255px;
+        margin-left: 10px;
+        .heading {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 0 0 12px 0;
+            border-top: 0 solid;
+        }
+      .content {
+        display: inline-flex;
+        gap: 10px;   
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+
+        ul{list-style: none;
+
+            li{position: relative;
+                counter-increment: list;
+                font-size: 16px;
+                font-family: Faustina;
+                list-style: none;
+                width: 100%;
+                display: table;
+                a.imglink{
+                  position: relative;
+                  display: inline-block;
+                  float:left;
+                }
+                img{
+                    float:left;
+                    margin-right: 10px;
+                }
+            }
+        }
+        li+li {
+            border-top: 1px solid #ddc2bb;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+      }
+    }
+
+    .title {
+      margin-bottom: 10px;
+      a {
+        font-family: Montserrat;
+        font-size: 18px;
+        font-weight: 700;          
+        margin-bottom: 5px;
+      }
+    }
+    .subSprite {
+      background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+      display: inline-block;
+      background-size: 475px;
+    }
+    .slideIcon {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background-position: -273px -286px;
+      bottom: 0;
+      left: 0;
+  }
+  
