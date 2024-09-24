@@ -161,5 +161,9 @@
   "grandMasters":{
     "development":"https://api.economictimes.indiatimes.com/v1/grandmaster",
     "production":"https://api.economictimes.indiatimes.com/v1/grandmaster"
+  },
+  "cryptoDomain":{
+    "development":"https://qcbselivefeeds.indiatimes.com",
+    "production":"https://etcrypto.indiatimes.com"
   }
 }

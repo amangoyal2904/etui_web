@@ -76,7 +76,7 @@ export default function IndicesWidget() {
         }
       </div>
       <div className={styles.chartContainer}>
-        <iframe className={styles.chart} src={`https://${window.isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/renderchart.cms?type=index&symbol=NSE Index&exchange=NSE&period=1d&height=220&transparentBg=1`} />
+        <iframe className={styles.chart} src={`https://${window?.isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/renderchart.cms?type=index&symbol=NSE Index&exchange=NSE&period=1d&height=220&transparentBg=1`} />
         <div className={styles.chartFooter}>
           <a href="#">View Nifty 50</a>
         </div>
