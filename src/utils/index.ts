@@ -900,3 +900,27 @@ export const getPageSpecificDimensions = (seo) => {
   };
   return payload;
 };
+
+export const convertMilliseconds = (milliseconds) => {
+  // Convert milliseconds to total seconds
+  let totalSeconds = Math.floor(milliseconds / 1000);
+  
+  // Calculate hours, minutes, and remaining seconds
+  let hours = Math.floor(totalSeconds / 3600);
+  let minutes = Math.floor((totalSeconds % 3600) / 60);
+  let remainingSeconds = totalSeconds % 60;
+  
+  // Add leading zeros to minutes and seconds
+  minutes = String(minutes).padStart(2, '0');
+  remainingSeconds = String(remainingSeconds).padStart(2, '0');
+  
+  // Conditional formatting based on available hours and minutes
+  if (hours > 0) {
+      hours = String(hours).padStart(2, '0');
+      return `${hours}:${minutes}:${remainingSeconds}`;
+  } else if (minutes > 0) {
+      return `${minutes}:${remainingSeconds}`;
+  } else {
+      return `00:${remainingSeconds}`;
+  }
+}
