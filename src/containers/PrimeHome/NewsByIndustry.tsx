@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Loading from "../../components/Loading";
+
 const IndustryTabsJSON = [
     {
         tabName: "FEATURED",
@@ -112,73 +114,6 @@ const NewsByIndustry = ({data, title}) => {
     const articleHtml = (articleList, apiMsid) => {
         return (
             <>
-                <li data-msid={apiMsid} className={`tabContentView ${showTab == apiMsid ? 'active' : ''}`}>
-                    {
-                        articleList?.map((value, index) => {
-                            return (
-                                <>
-                                    {
-                                        index == 0 && <div className="first ">
-                                            <a target="_blank" href={value.url}>
-                                                <img 
-                                                    width="293" 
-                                                    height="226" 
-                                                    title={value.title}
-                                                    alt={value.title} 
-                                                    src={value.img}
-                                                    loading="lazy" 
-                                                />
-                                            </a>
-                                            <div className="firstData">
-                                                <h4>
-                                                    <a 
-                                                        className="hl" 
-                                                        target="_blank" 
-                                                        href={value.url}
-                                                    >{value.title}</a>
-                                                </h4>
-                                                <p className="desc wrapLines l3">
-                                                    {value.synopsis}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    }
-                                </>
-                            )
-                        })  
-                    }
-                    <div className=" others mt20">
-                        {
-                            articleList?.map((value, index) => {
-                                return (
-                                    <>
-                                        {
-                                            index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv">
-                                                <a target="_blank" className="flt" href={value.url}>
-                                                    <img 
-                                                        width="88" 
-                                                        height="66" 
-                                                        title={value.title}
-                                                        alt={value.title} 
-                                                        src={value.img}
-                                                        loading="lazy" 
-                                                    />
-                                                </a>
-                                                <div className=" data">
-                                                    <h4 className="otherDivH">
-                                                        <a target="_blank" href={value.url} className="font_faus">
-                                                            {value.title}
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                            </div> : ""
-                                        }
-                                    </>
-                                )
-                            })  
-                        }
-                    </div>                              
-                </li>
                 <style jsx>{`
                     .tabContentView{
                         list-style: none;
@@ -253,53 +188,85 @@ const NewsByIndustry = ({data, title}) => {
                         -webkit-box-orient: vertical;
                     }
                 `}</style>
+                <li data-msid={apiMsid} className={`tabContentView ${showTab == apiMsid ? 'active' : ''}`}>
+                    {
+                        articleList?.map((value, index) => {
+                            return (
+                                <>
+                                    {
+                                        index == 0 && <div className="first ">
+                                            <a target="_blank" href={value.url}>
+                                                <img 
+                                                    width="293" 
+                                                    height="226" 
+                                                    title={value.title}
+                                                    alt={value.title} 
+                                                    src={value.img}
+                                                    loading="lazy" 
+                                                />
+                                            </a>
+                                            <div className="firstData">
+                                                <h4>
+                                                    <a 
+                                                        className="hl" 
+                                                        target="_blank" 
+                                                        href={value.url}
+                                                    >{value.title}</a>
+                                                </h4>
+                                                <p className="desc wrapLines l3">
+                                                    {value.synopsis}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    }
+                                </>
+                            )
+                        })  
+                    }
+                    <div className=" others mt20">
+                        {
+                            articleList?.map((value, index) => {
+                                return (
+                                    <>
+                                        {
+                                            index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv">
+                                                <a target="_blank" className="flt" href={value.url}>
+                                                    <img 
+                                                        width="88" 
+                                                        height="66" 
+                                                        title={value.title}
+                                                        alt={value.title} 
+                                                        src={value.img}
+                                                        loading="lazy" 
+                                                    />
+                                                </a>
+                                                <div className=" data">
+                                                    <h4 className="otherDivH">
+                                                        <a target="_blank" href={value.url} className="font_faus">
+                                                            {value.title}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                            </div> : ""
+                                        }
+                                    </>
+                                )
+                            })  
+                        }
+                    </div>                              
+                </li>
             </>  
         )
     }
 
   return (
     <>
-        <section id="newsInds">
-            <div className="heading_box">
-                <a href="/industry" target="_blank" className="secname">
-                    News by <span className="sec_heading">Industry</span>
-                </a>
-                <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href={selectedObj?.link}>{selectedObj?.tabName}</a>
-            </div>
-            <div className="news_menu tabsView tabVertical">
-                <ul className="tabs">
-                    {
-                        IndustryTabsJSON?.map((value: any, key: any) => {
-                            return (
-                                <>
-                                    <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)}>
-                                        <span data-msid={value?.msid} className="subSprite tabIcon"></span>
-                                        <span>{value?.tabName}</span>
-                                        <span className="subSprite nav_arw"></span>
-                                    </li>
-                                </>
-                            )    
-                        })
-                    }
-                </ul>
-                <div className="stories_sec content tabsContent">
-                    <ul className="font_faus">
-                        {
-                            showLoading ? <li>Loading.....</li> : articleData?.map((value, key) => {
-                                return (
-                                    <>
-                                         {articleHtml(value.articleList, value.msid)} 
-                                    </>
-                                )
-                            })
-                        }    
-                    </ul>
-                </div>
-            </div>
-        </section>
-
         <style jsx>{`
+            .loadingLiWrp{
+                height: 612px;
+                position:relative;
+                list-style:none;
+            }
             .secBox {
                 padding-top: 1px;
                 position: relative;
@@ -534,6 +501,45 @@ const NewsByIndustry = ({data, title}) => {
                 background-size: 475px;
             }
         `}</style>
+        <section id="newsInds">
+            <div className="heading_box">
+                <a href="/industry" target="_blank" className="secname">
+                    News by <span className="sec_heading">Industry</span>
+                </a>
+                <span className="semi_oval"></span>
+                <a className="curr_secname font_faus" target="_blank" href={selectedObj?.link}>{selectedObj?.tabName}</a>
+            </div>
+            <div className="news_menu tabsView tabVertical">
+                <ul className="tabs">
+                    {
+                        IndustryTabsJSON?.map((value: any, key: any) => {
+                            return (
+                                <>
+                                    <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)}>
+                                        <span data-msid={value?.msid} className="subSprite tabIcon"></span>
+                                        <span>{value?.tabName}</span>
+                                        <span className="subSprite nav_arw"></span>
+                                    </li>
+                                </>
+                            )    
+                        })
+                    }
+                </ul>
+                <div className="stories_sec content tabsContent">
+                    <ul className="font_faus">
+                        {
+                            showLoading ? <li className="loadingLiWrp"><Loading /></li> : articleData?.map((value, key) => {
+                                return (
+                                    <>
+                                         {articleHtml(value.articleList, value.msid)} 
+                                    </>
+                                )
+                            })
+                        }    
+                    </ul>
+                </div>
+            </div>
+        </section>
     </>
   )
 }

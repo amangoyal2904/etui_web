@@ -1,19 +1,29 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
+import TopMF from './TopMFWidget'
 
 export default function MutualFunds({ title, data }) {  
   return (
     <>
     <section className="politics">
       <h2><a href="">{title}</a></h2>
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds"}} />
+      <div className='mfWrap'>
+        <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds"}} />
+        <TopMF />
+      </div>
     </section>
+
     <style jsx>{`
       .politics {
         padding-bottom: 50px;
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
         border-bottom: 1px solid #9b8680;
+
+        .mfWrap{
+          display: flex;
+          justify-content: space-between;
+        }
 
         h2 {
           font-size: 36px;

@@ -1,108 +1,31 @@
+import { Authors } from 'components/Authors';
 import ArrowRnd from 'components/Icons/ArrowRnd'
 import PrimeIcon from 'components/Icons/PrimeIcon'
 import React from 'react'
 
 export default function PrimeExclusives({ title, data, focusArea }) {
+  const firstRow = data[0];
+  const secondRow = data.slice(1, 3);
+  const thirdRow = data.slice(3, 5);
+
+  const rest = [secondRow, thirdRow];
+
   return (
     <>
       <div className={`primeExclusives ${focusArea}`}>
         <h2 className="title">{ focusArea == 'market' && <PrimeIcon />}  {title}</h2>
         <div className="grid">
           <div className="col first">            
-            <img width="248" height="186" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />            
+            <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
             <div className="content">
               <div className="text">
-                <span className="category">FMCG</span>
-                <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
+                <a href={firstRow.categoryLink} className="category" target="_blank">{firstRow.categoryName}</a>
+                <a href={firstRow.url} className="heading" target="_blank">{firstRow.title}</a>
               </div>
               {
               focusArea == 'news' && <div className="meta">
                 <span className="left">
-                  <span className="duration">4 mins read</span>
-                  <span className="author">By <a href="#">Shishir Prasad</a></span>
-                </span>
-                <span className="bookmarkIcon"></span>
-              </div>
-              }
-            </div>
-          </div>
-          <div className="row">    
-            <div className="col">
-              <div className="innerCol">
-                <div className="content">
-                  <div className="text">
-                    <span className="category">ARTIFICAL INTELLGENCE</span>
-                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
-                  </div>                
-                </div>
-                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
-              </div>
-              {focusArea == 'news' &&
-              <div className="meta">
-                <span className="left">
-                  <span className="duration">4 mins read</span>
-                  <span className="author">By <a href="#">Shishir Prasad</a></span>
-                </span>
-                <span className="bookmarkIcon"></span>
-              </div>
-              }
-            </div>
-            <div className="col">
-              <div className="innerCol">
-                <div className="content">
-                  <div className="text">
-                    <span className="category">ARTIFICAL INTELLGENCE</span>
-                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
-                  </div>                
-                </div>
-                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
-              </div>
-              {focusArea == 'news' &&
-              <div className="meta">
-                <span className="left">
-                  <span className="duration">4 mins read</span>
-                  <span className="author">By <a href="#">Shishir Prasad</a></span>
-                </span>
-                <span className="bookmarkIcon"></span>
-              </div>
-              }
-            </div>
-          </div>     
-          <div className="row">    
-            <div className="col">
-              <div className="innerCol">
-                <div className="content">
-                  <div className="text">
-                    <span className="category">ARTIFICAL INTELLGENCE</span>
-                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
-                  </div>                
-                </div>
-                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
-              </div>
-              {focusArea == 'news' &&
-              <div className="meta">
-                <span className="left">
-                  <span className="duration">4 mins read</span>
-                  <span className="author">By <a href="#">Shishir Prasad</a></span>
-                </span>
-                <span className="bookmarkIcon"></span>
-              </div>
-              }
-            </div>
-            <div className="col">
-              <div className="innerCol">
-                <div className="content">
-                  <div className="text">
-                    <span className="category">ARTIFICAL INTELLGENCE</span>
-                    <a href="#" className="heading">Left out in a hot market, how a melted ice cream business gave HUL the chills</a>
-                  </div>                
-                </div>
-                <img width="100" height="75" title="Left out in a hot market, how a melted ice cream business gave HUL the chills" alt="Left out in a hot market, how a melted ice cream business gave HUL the chills" src="https://img.etimg.com/thumb/msid-113338491,imgsize-119648,width-248,height-186,quality-100/left-out-in-a-hot-market-how-a-melted-ice-cream-business-gave-hul-the-chills.jpg" />                                            
-              </div>
-              {focusArea == 'news' &&
-              <div className="meta">
-                <span className="left">
-                  <span className="duration">4 mins read</span>
+                  <span className="duration">{firstRow.readtime} mins read</span>
                   <span className="author">By <a href="#">Shishir Prasad</a></span>
                 </span>
                 <span className="bookmarkIcon"></span>
@@ -110,6 +33,38 @@ export default function PrimeExclusives({ title, data, focusArea }) {
               }
             </div>
           </div>        
+          {
+            rest.map((item, index) => {
+              return (
+                <div className="row" key={index}>
+                  {item.map((item, index) => {
+                    return (
+                      <div className="col" key={`col-${index}`}>
+                        <div className="innerCol">
+                          <div className="content">
+                            <div className="text">
+                              <span className="category">{item.categoryName}</span>
+                              <a href={item.url} className="heading">{item.title}</a>
+                            </div>                
+                          </div>
+                          <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />
+                        </div>
+                        {focusArea == 'news' &&
+                        <div className="meta">
+                          <span className="left">
+                            <span className="duration">{item.readtime} mins read</span>
+                            <span className="author">By <Authors authors={item.authors} /> </span>
+                          </span>
+                          <span className="bookmarkIcon"></span>
+                        </div>
+                        }
+                      </div> 
+                    )
+                  })}
+                </div>
+              )
+            })
+          }
         </div>
         {focusArea == 'news' && <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>}
       </div>
@@ -195,17 +150,20 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             display: grid;   
             
             .row {
-              display: flex;
+              display: grid;
               gap: 20px;
+              grid-template-columns: repeat(2, 1fr);
 
               .col {
-                display: block;
+                display: flex;
+                flex-direction: column;
                 padding-top: 17px;
                 border-top: 1px solid #e8d2cb;
                 margin-top: 30px;
 
                 .innerCol {
                   display: flex;
+                  flex: 1;
                   gap: 20px;
                   justify-content: space-between;
                 } 
