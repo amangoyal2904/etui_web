@@ -161,5 +161,9 @@
   "grandMasters":{
     "development":"https://api.economictimes.indiatimes.com/v1/grandmaster",
     "production":"https://api.economictimes.indiatimes.com/v1/grandmaster"
+  },
+  "SPONSER_BANNER_DATA": {
+    "development": "https://qc-subscriptionsbff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo",
+    "production": "https://subscriptions-bff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo"
   }
 }
