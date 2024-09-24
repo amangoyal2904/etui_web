@@ -10,6 +10,9 @@ import HandleHoverSecHtml from "./HandleHoverSecHtml";
 import TechNav from "./TechNav";
 import SpotlightNav from "./SpotlightNav";
 import { useStateContext } from "../../store/StateContext";
+import SponserBanner from "../SponserBanner";
+import { getCookie } from "utils/utils";
+import jStorageReact from "utils/jStorage";
 
 interface HeaderNavProps {
   menuData: {
@@ -19,6 +22,7 @@ interface HeaderNavProps {
 }
 
 const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
+  const [showSponserBanner, setShowSponserBanner] = useState(false);
   const [searchBar, setSearchBar] = useState<boolean>(false);
   const [hoverSubSec, setHoverSubSec] = useState<any[]>([]); // setHoverSubSec to array of any type
   const sectionList = menuData.sec;
@@ -34,6 +38,13 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
 
   useEffect(() => {
     document.addEventListener('mousemove', handleHoverSubSec);
+    
+    /* Logic to Toggle Sponser banner for Prime Group Users only */
+    const ticketId = getCookie("TicketId");
+    const userAccountDetails = ticketId && jStorageReact.get(`prime_${ticketId}`);
+    const sponsorPartnerCode = userAccountDetails?.subscriptionDetails?.[0]?.sponsorPartnerCode || '';
+    setShowSponserBanner(sponsorPartnerCode ? true : false);
+
     return () => {
       document.removeEventListener('mousemove', handleHoverSubSec);
     };
@@ -132,6 +143,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
         </nav>
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
+      {showSponserBanner && <SponserBanner />}
     </>
   );
 };

@@ -15,13 +15,16 @@ import MarketNews from "./MarketNews";
 import TopSectionLayout from "./TopSectionLayout";
 import Podcast from "./Podcast";
 import NewsByIndustry from "./NewsByIndustry";
-import MostReadStories from './MostReadStories'
+import MostReadStories from './MostReadStories';
+import VideoWidget from "./VideoWidget";
+import Opinion from "./Opinion";
 
 function PrimeHome({ searchResult }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
   const tech = searchResult?.find(item => item?.name === "tech") || {};
+  const techNewsLetters = searchResult?.find(item => item?.name === "tech_newsletters") || {};
   const rise = searchResult?.find(item => item?.name === "rise") || {};
   const cryptocurrencyNews = searchResult?.find(item => item?.name === "cryptocurrency_news") || {};
   const cryptoTv = searchResult?.find(item => item?.name === "crypto_tv") || {};
@@ -35,6 +38,8 @@ function PrimeHome({ searchResult }) {
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
+  const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
+  const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
   // console.log("explainers", explainers);
 
   return (
@@ -42,10 +47,12 @@ function PrimeHome({ searchResult }) {
       <TopSectionLayout searchResult={searchResult} />
       <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
+      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} />
+      <Opinion OpinionData={OpinionData?.data || []} />
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} />
-      <Tech data={tech?.data || []} title={tech?.title || ""} />
+      <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
       <Rise data={rise?.data || []} title={rise?.title || ""} />
       <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} />
       <Podcast data={podcast || []}/>

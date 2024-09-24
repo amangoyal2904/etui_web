@@ -165,5 +165,9 @@
   "cryptoDomain":{
     "development":"https://qcbselivefeeds.indiatimes.com",
     "production":"https://etcrypto.indiatimes.com"
+  },
+  "SPONSER_BANNER_DATA": {
+    "development": "https://qc-subscriptionsbff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo",
+    "production": "https://subscriptions-bff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo"
   }
 }
