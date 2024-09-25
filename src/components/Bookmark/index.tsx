@@ -123,6 +123,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type }) => {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    margin-top: 10px;
                 }
             `}</style>
         </span>
