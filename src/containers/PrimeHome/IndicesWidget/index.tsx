@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { formatNumber, chartIntervals, durationOptions } from 'utils/market';
 import HeadingWithRightArrow from '../HeadingWithRightArrow';
 
-export default function IndexComponent() {
+export default function IndicesWidget() {
   const [indicesData, setIndicesData]: any = useState([]);
   const [activeIndex, setActiveIndex] = useState("2369");
   const [period, setPeriod] = useState("1w");
@@ -76,7 +76,7 @@ export default function IndexComponent() {
         }
       </div>
       <div className={styles.chartContainer}>
-        <iframe className={styles.chart} src={`https://${window.isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/renderchart.cms?type=index&symbol=NSE Index&exchange=NSE&period=1d&height=220&transparentBg=1`} />
+        <iframe className={styles.chart} src={`https://${window?.isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/renderchart.cms?type=index&symbol=NSE Index&exchange=NSE&period=1d&height=220&transparentBg=1`} />
         <div className={styles.chartFooter}>
           <a href="#">View Nifty 50</a>
         </div>

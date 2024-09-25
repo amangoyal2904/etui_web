@@ -24,8 +24,12 @@ function PrimeHome({ searchResult }) {
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
   const tech = searchResult?.find(item => item?.name === "tech") || {};
+  const techNewsLetters = searchResult?.find(item => item?.name === "tech_newsletters") || {};
   const rise = searchResult?.find(item => item?.name === "rise") || {};
   const cryptocurrencyNews = searchResult?.find(item => item?.name === "cryptocurrency_news") || {};
+  const wealthslideshow = searchResult?.find(item => item?.name === "et_wealth_slideshow") || {};
+  const cryptoTv = searchResult?.find(item => item?.name === "crypto_tv") || {};
+  const cryptoExpert = searchResult?.find(item => item?.name === "crypto_expert_speak") || {};
   const politics = searchResult?.find(item => item?.name === "politics") || {};
   const slideshows = searchResult?.find(item => item?.name === "slideshows") || {};
   const webStories = searchResult?.find(item => item?.name === "web_stories") || {};
@@ -48,10 +52,10 @@ function PrimeHome({ searchResult }) {
       <Opinion OpinionData={OpinionData?.data || []} />
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
-      <Wealth data={wealth?.data || []} title={wealth?.title || ""} />
-      <Tech data={tech?.data || []} title={tech?.title || ""} />
+      <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
+      <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
       <Rise data={rise?.data || []} title={rise?.title || ""} />
-      <CryptocurrencyNews data={cryptocurrencyNews?.data || []} title={cryptocurrencyNews?.title || ""} />
+      <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} />
       <Podcast data={podcast || []}/>
       <Politics data={politics?.data || []} title={politics?.title || ""} />
       <Slideshows data={slideshows?.data || []} title={slideshows?.title || ""} />
@@ -69,6 +73,9 @@ function PrimeHome({ searchResult }) {
           border-top: 1px solid #9b8680;
           box-sizing: border-box;
           padding-bottom: 50px;
+        }
+        a[href*="articleshow"]:visited, a[href*="videoshow"]:visited, a[href*="slideshow"]:visited, a[href*="liveblog"]:visited {
+            color: #636363;
         }
       `}</style>
     </>

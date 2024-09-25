@@ -1,7 +1,9 @@
 import LiveIcon from 'components/Icons/LiveIcon'
 import React from 'react'
+import HeadingWithRightArrow from './HeadingWithRightArrow'
 
-export default function MarketsTopNews() {
+export default function MarketsTopNews({ focusArea }) {
+  console.log("focusArea", focusArea);
   const data = [
     {
       title: "Sensex extends losses to Day 4, drops 280 pts",
@@ -37,6 +39,7 @@ export default function MarketsTopNews() {
   return (
     <>
     <div>
+      {focusArea === "market" && <HeadingWithRightArrow title="News" />}
       <ul>
         {
           data.map((item, index) => (
