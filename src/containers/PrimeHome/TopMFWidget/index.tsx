@@ -138,11 +138,14 @@ const TopMF = () => {
                     <li data-scat="Featured" data-cat="promotedFeatured">Featured</li>
                 </ul>
                 <div className="tmf_drn_wrap">
-                    <label htmlFor="tmf_duration">Return Duration:</label>
+                    <label htmlFor="tmf_duration">Return<br/> Duration:</label>
                     <select
                         id="tmf_duration"
                         value={selectedYear}
-                        onChange={(e) => setSelectedYear(e.target.value)}
+                        onChange={(e) => {
+                            setTopMFScheme([])
+                            setSelectedYear(e.target.value)
+                        }}
                     >
                         <option disabled>Select Duration</option>
                         <option value="r1Month">1M</option>
