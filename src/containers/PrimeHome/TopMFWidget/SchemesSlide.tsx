@@ -189,7 +189,120 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
             `}</style>
           </div>
         );
-      };
+    };
+
+    const topMfSchemList = (value5, index5, s_type) => {
+
+        return (
+            <>
+                <li className='schemeList' key={`topmf_schemelist_${index5}`}>
+                    <div className='mfinfo_wrap'>
+                        {s_type == "promotedSchemes" && <div className="promoted_text">FEATURED</div>}
+                        <div className='tmf_s_name'>
+                            <a target="_blank" href={`/${value5.seoName}/mffactsheet/schemeid-${value5.schemeId}.cms`}>{value5.nameOfScheme}</a>
+                            <div className='tmf_s_rating'>
+                                {renderStars(value5.vrRating)}
+                            </div>
+                        </div>
+                        <div className='tmf_s_info'>
+                            <div className={getClassName(value5[selectedYear])}>
+                                <span>{getPeriodShortName(selectedYear)} RETURN</span>
+                                <span>{renderReturnValue(value5[selectedYear])}</span>
+                            </div>
+                            <div className="tmf_s_fund">
+                                <span>FUND SIZE</span>
+                                <span>{`${parseFloat(value5.assetSize).toFixed(2)} Crs`}</span>
+                            </div>
+                            {CategoryReturnsGraph({yearval: selectedYear, data: value5})}
+                        </div>
+                    </div>
+                </li>
+
+                <style jsx>{`
+                    .schemeList{
+                        padding: 8px 9px 9px 10px;
+                        border-bottom: 1px solid #ecc0b3;
+
+                        &:hover {
+                            box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.15);
+                        }
+
+                        .promoted_text {
+                            font-size: 9px;
+                            color: #000;
+                            padding: 2px 0;
+                        }
+
+                        .tmf_s_name {
+                            margin-bottom: 2px;
+                            display: flex;
+
+                            a{
+                                font-size: 12px;
+                                font-weight: bold;
+                                width: 80%;
+                            }
+
+                            .tmf_s_rating {
+                                width: 20%;
+                                text-align: center;
+                                font-size: 15px;
+                                line-height: 1;
+
+                                .rating {
+                                    color: #e39f20;
+                                }
+                            }
+                        }
+
+                        .tmf_s_return {
+                            width: 21%;
+                            border-right: 2px solid #e5cdc7;
+                            margin-right: 2%;
+                        }
+
+                        .tmf_s_info{
+                            display: flex;
+                            & > * span:first-child {
+                                display: block;
+                                font-size: 9px;
+                                color: #9b9b9b;
+                                line-height: 16px;
+                                text-transform: uppercase;
+                            }
+                        }
+
+                        .tmf_s_return, .top_mf_wdgt, .tmf_s_fund {
+                            & span:last-child {
+                                font-size: 13px;
+                                line-height: 18px;
+                                color: #4a4a4a;
+                                font-weight: bold;
+                            }
+                        }
+
+                        .tmf_s_return{
+                            &.green{
+                                span:last-child {
+                                    color: #009b2c;
+                                }
+                            }
+
+                            &.red{
+                                color: #C00;
+                            }
+                        }
+
+                        .tmf_s_fund {
+                            width: 26%;
+                            border-right: 2px solid #e5cdc7;
+                            margin-right: 2%;
+                        }
+                    }
+                `}</style>
+            </>
+        )
+    }
 
     return (
         <>
@@ -209,39 +322,22 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                                                     <>
                                                         {console.log("selectedSlideName 45", value3?.response)}
                                                         {
-                                                            value3?.secondaryObj == value1.value && value3?.response?.map((value4, index4) => {
+                                                            value3?.secondaryObj == value1.value ? value3?.response?.map((value4, index4) => {
                                                                 return (
                                                                     <>
                                                                         {
-                                                                            value4?.schemeList?.map((value5, index5) => {
-                                                                                return (
-                                                                                    <li className='schemeList'>
-                                                                                        <div className='mfinfo_wrap'>
-                                                                                            <div className='tmf_s_name'>
-                                                                                                <a target="_blank" href={`/${value5.seoName}/mffactsheet/schemeid-${value5.schemeId}.cms`}>{value5.nameOfScheme}</a>
-                                                                                                <div className='tmf_s_rating'>
-                                                                                                    {renderStars(value5.vrRating)}
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div className='tmf_s_info'>
-                                                                                                <div className={getClassName(value5[selectedYear])}>
-                                                                                                    <span>{getPeriodShortName(selectedYear)} RETURN</span>
-                                                                                                    <span>{renderReturnValue(value5[selectedYear])}</span>
-                                                                                                </div>
-                                                                                                <div className="tmf_s_fund">
-                                                                                                    <span>FUND SIZE</span>
-                                                                                                    <span>{`${parseFloat(value5.assetSize).toFixed(2)} Crs`}</span>
-                                                                                                </div>
-                                                                                                {CategoryReturnsGraph({yearval: selectedYear, data: value5})}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                )
-                                                                            })
+                                                                          (Array.isArray(value4?.promotedSchemes) ? value4?.promotedSchemes : [value4?.promotedSchemes]).map((value6, index6) => topMfSchemList(value6, index6, 'promotedSchemes'))
+                                                                        }
+                                                                        {
+                                                                            value4?.schemeList ? 
+                                                                            value4?.schemeList?.slice(0, (value4?.promotedSchemes?.length > 1 ? 3 : 4)).map((value5, index5) => topMfSchemList(value5, index5, 'schemeList')) :
+                                                                            <li>
+                                                                                <h2 className="tmf_error">Sorry, we couldn't find any schemes that match our criteria of top funds for this category. Please proceed to other categories.</h2>
+                                                                            </li>
                                                                         }
                                                                     </>    
                                                                 )
-                                                            })
+                                                            }) : !value3?.response ? <li><Loading /></li> : null
                                                         }
                                                     </>
                                                 )
@@ -249,9 +345,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                                         )
                                     })
                                 }
-                                <li>
-                                    <Loading />
-                                </li>
+                                
                             </ul>
                             
                         </div>
@@ -298,74 +392,13 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                         padding: 0 0 8px 0;
                         list-style: none;
 
-                        .schemeList{
-                            padding: 8px 9px 9px 10px;
-                            border-bottom: 1px solid #ecc0b3;
-                            .tmf_s_name {
-                                margin-bottom: 2px;
-                                display: flex;
-
-                                a{
-                                    font-size: 12px;
-                                    font-weight: bold;
-                                    width: 80%;
-                                }
-
-                                .tmf_s_rating {
-                                    width: 20%;
-                                    text-align: center;
-                                    font-size: 15px;
-                                    line-height: 1;
-
-                                    .rating {
-                                        color: #e39f20;
-                                    }
-                                }
-                            }
-
-                            .tmf_s_return {
-                                width: 21%;
-                                border-right: 2px solid #e5cdc7;
-                                margin-right: 2%;
-                            }
-
-                            .tmf_s_info{
-                                display: flex;
-                                & > * span:first-child {
-                                    display: block;
-                                    font-size: 9px;
-                                    color: #9b9b9b;
-                                    line-height: 16px;
-                                    text-transform: uppercase;
-                                }
-                            }
-
-                            .tmf_s_return, .top_mf_wdgt, .tmf_s_fund {
-                                & span:last-child {
-                                    font-size: 13px;
-                                    line-height: 18px;
-                                    color: #4a4a4a;
-                                    font-weight: bold;
-                                }
-                            }
-
-                            .tmf_s_return{
-                                &.green{
-                                    span:last-child {
-                                        color: #009b2c;
-                                    }
-                                }
-
-                                &.red{
-                                    color: #C00;
-                                }
-                            }
-
-                            .tmf_s_fund {
-                                width: 26%;
-                                border-right: 2px solid #e5cdc7;
-                                margin-right: 2%;
-                            }
+                        .tmf_error {
+                            margin-top: 9px;
+                            border-top: 2px solid #000;
+                            font-size: 15px;
+                            padding: 20px 0;
+                            text-align: center;
+                            color: #8b8b8b;
                         }
                     }
                 }

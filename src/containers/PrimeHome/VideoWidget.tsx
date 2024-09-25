@@ -104,7 +104,7 @@ const VideoWidget = ({VideoWidgetData}) => {
                         <div className="heading ">VIDEOS</div>
                         <ul className="etab">
                             {
-                                tabListJSON.map((value, index) => <li data-msid={value.msid} className={showTab == value.msid ? 'active' : ''} onClick={() => tabClick(value.msid)}>{value.name}</li>)
+                                tabListJSON.map((value, index) => <li key={`videoBoxWidget_key_tab_${index}`} data-msid={value.msid} className={showTab == value.msid ? 'active' : ''} onClick={() => tabClick(value.msid)}>{value.name}</li>)
                             }
                         </ul>
                     </div>
@@ -115,7 +115,7 @@ const VideoWidget = ({VideoWidgetData}) => {
                                     videoData?.some(item => Number(item.msid) == Number(showTab)) ? videoData?.map((value: any, index: any) => {
                                         return (
                                             <>
-                                                <li data-msid={value.msid} className={showTab != value.msid ? 'hide' : ''}>
+                                                <li key={`videowidget_etabsContent_key_${index}`} data-msid={value.msid} className={showTab != value.msid ? 'hide' : ''}>
                                                     <div className='vdListWrp'>
                                                         <div className='vplayer'>
                                                             <iframe className="lazyIframe" data-threshold="300" src={`https://etdev8243.indiatimes.com/videodash.cms?autostart=0&msid=${selectVideo[0]}&rlvideo=&fallBackMute=true&skipad=1&widget=subsriberhome&prerollurl=true`}/>
@@ -123,11 +123,11 @@ const VideoWidget = ({VideoWidgetData}) => {
                                                         </div>
                                                         <div className='vdList'>
                                                             {
-                                                                value?.videoListData.map((listData, index) => {
+                                                                value?.videoListData.map((listData, index2) => {
                                                                     return (
                                                                         <>
                                                                             {
-                                                                                index < 8 && <div className='listDiv font_faus'>
+                                                                                index < 8 && <div key={`videoListData_key_${index2}`} className='listDiv font_faus'>
                                                                                     <div className='content vid' onClick={() => {videoClick(listData?.msid, listData?.title)}} data-msid={listData?.msid}>
                                                                                         <div className='imgDiv'>
                                                                                             <div className='active leayer hide'>

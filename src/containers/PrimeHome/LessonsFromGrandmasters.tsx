@@ -90,7 +90,7 @@ export default function LessonsFromGrandmasters({ focusArea }) {
     if (isPrimeUser && ticketID && token && formRef) {
       formRef?.submit();
     } else {
-      window.location.href = `https://${__APP.isLive ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`;
+      window.location.href = `https://${window?.isDev ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`;
     }
   };
 

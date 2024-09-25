@@ -497,7 +497,7 @@ function ExpertViews() {
         <a className="title" href="/markets/expert-views/articlelist/50649960.cms" data-ga-onclick="Title - Expert Views - href" target="_blank">Expert Views</a>
       </div>
       <div className="content">
-        <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" align="left" />
+        <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg"  />
         
         <span className="right">
           <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href="/markets/expert-view/will-nbfcs-and-banks-lead-indian-markets-next-rally-hemang-jani-answers/articleshow/113479290.cms">Will NBFCs &amp; banks lead the next rally?</a>
@@ -564,7 +564,7 @@ function MarketMoguls() {
           <a className="title" href="/markets/market-moguls/articlelist/50649959.cms" data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
         </div>
         <div className="content">
-          <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" align="left" />
+          <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" />
           
           <span className="right">
             <span className="author">Ajit Menon</span>
