@@ -29,6 +29,7 @@ const CryptoChart = () => {
           {coinsData?.map((ele, index) => {
             return (
               <div
+                key={`coin_tabs_wrap_key_${index}`}
                 className={`${coin === ele?.symbol ? "active" : ""} ${
                   ele?.percentChange >= 0 ? "positive" : "negative"
                 }`}
