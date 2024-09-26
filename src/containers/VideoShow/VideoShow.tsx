@@ -19,7 +19,6 @@ import { log } from "console";
 import Trending from "components/Trending";
 import { useStateContext } from "../../store/StateContext";
 import Bookmark from "components/Bookmark";
-import ShowMoreText from "components/ShowMoreText";
 declare global {
   interface Window {
     isprimeuser: number;
