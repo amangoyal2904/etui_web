@@ -73,7 +73,7 @@ export default function SponserBanner() {
 
   return (
     <>
-      {!hideBanner ? <>
+      {!hideBanner && <>
           {bannersDetail?.homeBanner?.sponsorMsg ?  
               <div id={styles.bannerBox} className={styles.sponserBannerContainer}>
                 <div className={styles.sponserContainer}>
@@ -92,15 +92,15 @@ export default function SponserBanner() {
                 </div>
               </div>
             :
-            (bannersDetail?.homeBanner?.logo && bannersDetail?.homeBanner.ctaUrl) ? 
+            (bannersDetail?.homeBanner?.logo && bannersDetail?.homeBanner.ctaUrl) &&
               <div id='bannerBox' className={`${styles.sponserBannerContainer} ${styles.imgOnlyContainer}`}>
                 <img onClick={() => onRedirect(bannersDetail?.homeBanner.ctaUrl)} className={styles.imageOnlyBanner} height='76' src={bannersDetail?.homeBanner?.logo} />
                 <div className={styles.closeIconBox}>
                   <img className={styles.closeIcon} height='14' src='https://economictimes.indiatimes.com/photo/105255513.cms' onClick={hideBannerCB}/>
                 </div>
               </div>
-            : <></>
-          } </> : <></>
+          }
+        </>
       }
     </>
   )
