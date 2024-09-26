@@ -16,6 +16,8 @@
     .closeIcon {border: 1px solid rgba(0, 0, 0, 0.2); padding: 4px; border-radius: 50%; cursor: pointer; cursor: pointer;}
     .sponserMsg {font-size: 22px; font-weight: 400; margin: 0 12px;}
     .sponserTitle {font-size: 23px;font-weight: 500;}
-    .imgOnlyContainer .closeIconBox {position: absolute;right: 0;}
-    .imageOnlyBanner {margin: 0 auto; cursor: pointer;}
+    &.imgOnlyContainer {
+        .closeIconBox {position: absolute;right: 0; height: auto;}
+        .imageOnlyBanner {margin: 0 auto; cursor: pointer;}
+    } 
 }
