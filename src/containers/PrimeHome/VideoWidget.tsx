@@ -127,7 +127,7 @@ const VideoWidget = ({VideoWidgetData}) => {
                                                                     return (
                                                                         <>
                                                                             {
-                                                                                index < 8 && <div key={`videoListData_key_${index2}`} className='listDiv font_faus'>
+                                                                                index2 < 8 && <div key={`videoListData_key_${index2}`} className='listDiv font_faus'>
                                                                                     <div className='content vid' onClick={() => {videoClick(listData?.msid, listData?.title)}} data-msid={listData?.msid}>
                                                                                         <div className='imgDiv'>
                                                                                             <div className='active leayer hide'>

@@ -105,6 +105,16 @@ a {
   background-color: #bfbfbf;
   margin: 0 2px;
 }
+
+.embla__dot.topMfWDDots{
+  width: 24px;
+  height: 5px;
+  border-radius: 2.5px;
+  background-color: #d8d8d8;
+  display: inline-block;
+  margin-right: 6px;
+  cursor: pointer;
+}
 /* .embla__dot:after {
   box-shadow: inset 0 0 0 0.2rem rgb(234, 234, 234);
   width: 1.4rem;
