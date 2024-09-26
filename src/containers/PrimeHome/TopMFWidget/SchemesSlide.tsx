@@ -8,7 +8,7 @@ import {
 } from '../../../components/CarouselArrowBtn';
 import { DotButton, useDotButton } from '../../../components/CarouselDotBtn';
 
-const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, selectedTab, topMFSchemes, selectedYear, mainEmblaApi, primaryIndex, setChildEmbla }) => {
+const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, selectedTab, topMFSchemes, selectedYear, mainEmblaApi, primaryIndex }) => {
     const OPTIONS = { loop: false, dragFree: false };
     const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
     const { onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
@@ -64,15 +64,8 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
             //emblaApi.on('pointerUp', logSlidesInViewOnce);
             emblaApi.on('settle', logSlidesInViewOnce);
             // emblaApi.on('select', handleScroll);
-            setChildEmbla(emblaApi);
         } 
     }, [emblaApi, logSlidesInViewOnce]);
-
-    useEffect(() => {
-        if (emblaApi){
-            setChildEmbla(emblaApi);
-        } 
-    }, [emblaApi]);
 
     const renderStars = (vrRating) => {
         const totalStars = 5;

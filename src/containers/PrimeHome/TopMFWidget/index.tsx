@@ -29,7 +29,6 @@ const TopMF = () => {
     const [selectedTab, setSelectedTab] = useState<any>({});
     const [topMFSchemes, setTopMFScheme] = useState<any>([]);
     const [selectedYear, setSelectedYear] = useState("r3Year");
-    const [childEmbla, setChildEmbla] = useState<any>("");
 
     const fetchTabs = useCallback(async () => {
         try{
@@ -185,7 +184,6 @@ const TopMF = () => {
                                 selectedYear={selectedYear}
                                 mainEmblaApi={emblaApi}
                                 primaryIndex={index}
-                                setChildEmbla={setChildEmbla}
                             />
                         </div>
                     ))}
@@ -204,7 +202,6 @@ const TopMF = () => {
                             selectedYear={selectedYear}
                             mainEmblaApi={emblaApi}
                             primaryIndex={tabList.length}
-                            setChildEmbla={setChildEmbla}
                         />
                     </div>
                 </div>
