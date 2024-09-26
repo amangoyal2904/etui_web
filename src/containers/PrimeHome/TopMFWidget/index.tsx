@@ -29,6 +29,7 @@ const TopMF = () => {
     const [selectedTab, setSelectedTab] = useState<any>({});
     const [topMFSchemes, setTopMFScheme] = useState<any>([]);
     const [selectedYear, setSelectedYear] = useState("r3Year");
+    const [childEmbla, setChildEmbla] = useState<any>("");
 
     const fetchTabs = useCallback(async () => {
         try{
@@ -58,6 +59,15 @@ const TopMF = () => {
             console.log("selectedSlideName", selectedTab, primaryObj, secondaryObj)
 
             if (!checkExistingPrimaryObj || !existingScheme) {
+                setTopMFScheme((prev) => [
+                    ...prev.filter((item) => item.primaryObj !== primaryObj),
+                    {
+                        primaryObj,
+                        schemeData: existingPrimaryObj
+                            ? [...existingPrimaryObj.schemeData, { secondaryObj, status: 'loading', response: [] }]
+                            : [{ secondaryObj, status: 'loading', response: [] }]
+                    },
+                ]);
                 const res = await Service.get({
                     url: `https://etdev8243.indiatimes.com/topmf_schemesjson.cms`,
                     params: { feedtype: "etjson", primaryObj, secondaryObj, year: selectedYear },
@@ -69,12 +79,12 @@ const TopMF = () => {
                     {
                         primaryObj,
                         schemeData: existingPrimaryObj
-                            ? [...existingPrimaryObj.schemeData, { secondaryObj, response: [response] }]
-                            : [{ secondaryObj, response: [response] }]
+                            ? [...existingPrimaryObj.schemeData, { secondaryObj, status: 'success', response: [response] }]
+                            : [{ secondaryObj, status: 'success', response: [response] }]
                     },
                 ]);
 
-                console.log("selectedSlideName 23", topMFSchemes)
+                //console.log("selectedSlideName 23", topMFSchemes)
             }
         } catch (error) {
             console.error('Error fetching top MF schemes:', error);
@@ -113,7 +123,10 @@ const TopMF = () => {
     const getSecObj = useCallback((secObj) => secObj.slice(0, 6).map((item) => item.value).join(','), []);
 
     const onThumbClick = useCallback((index, primaryObj) => {
-        setSelectedTab(primaryObj);
+        const selectedSubSlide = document.querySelector(`.tmf_cat_wrap[data-cat="${primaryObj}"] .embla__slide--selected`);
+        const selectedSubSlideName = selectedSubSlide?.getAttribute('data-type')
+        // setSelectedTab(primaryObj, selectedSubSlideName);
+        selectedTabClick(primaryObj, selectedSubSlideName);
         if (emblaApi && emblaThumbsApi) emblaApi.scrollTo(index);
     }, [emblaApi, emblaThumbsApi]);
 
@@ -135,7 +148,7 @@ const TopMF = () => {
                             {value.primaryObj.value}
                         </li>
                     ))}
-                    <li data-scat="Featured" data-cat="promotedFeatured">Featured</li>
+                    <li data-scat="Featured" className={selectedTab?.primaryObj === "promotedFeatured" ? 'active' : ''} data-cat="promotedFeatured" onClick={() => onThumbClick(tabList.length, "promotedFeatured")}>Featured</li>
                 </ul>
                 <div className="tmf_drn_wrap">
                     <label htmlFor="tmf_duration">Return<br/> Duration:</label>
@@ -161,7 +174,7 @@ const TopMF = () => {
             <div ref={emblaRef} className="tmf_scheme_wrap embla">
                 <div className="embla__container">
                     {tabList.map((value, index) => (
-                        <div className="embla__slide" key={index}>
+                        <div className="embla__slide" key={`tmf_scheme_wrap_${index}`}>
                             <SchemesSlide
                                 keyIndex={index}
                                 selectedTab={selectedTab}
@@ -170,9 +183,30 @@ const TopMF = () => {
                                 secondaryObj={value.primaryObj.secondaryObj.slice(0, 6)}
                                 topMFSchemes={topMFSchemes}
                                 selectedYear={selectedYear}
+                                mainEmblaApi={emblaApi}
+                                primaryIndex={index}
+                                setChildEmbla={setChildEmbla}
                             />
                         </div>
                     ))}
+
+                    <div className="embla__slide" key={`tmf_scheme_wrap_${tabList.length}`}>
+                        <SchemesSlide
+                            keyIndex={tabList.length}
+                            selectedTab={selectedTab}
+                            selectedTabClick={selectedTabClick}
+                            primaryName={`promotedFeatured`}
+                            secondaryObj={[{
+                                rank: 1,
+                                value: "Featured"
+                                }]}
+                            topMFSchemes={topMFSchemes}
+                            selectedYear={selectedYear}
+                            mainEmblaApi={emblaApi}
+                            primaryIndex={tabList.length}
+                            setChildEmbla={setChildEmbla}
+                        />
+                    </div>
                 </div>
             </div>
             <style jsx>{`

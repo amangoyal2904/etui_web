@@ -8,7 +8,7 @@ import {
 } from '../../../components/CarouselArrowBtn';
 import { DotButton, useDotButton } from '../../../components/CarouselDotBtn';
 
-const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, selectedTab, topMFSchemes, selectedYear }) => {
+const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, selectedTab, topMFSchemes, selectedYear, mainEmblaApi, primaryIndex, setChildEmbla }) => {
     const OPTIONS = { loop: false, dragFree: false };
     const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
     const { onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
@@ -16,18 +16,63 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
     // const selectTopMFCat = topMFSchemes.find(item => item.primaryObj == primaryName);
 
+    const handleScroll = useCallback(() => {
+        const currentSnap: any = emblaApi?.selectedScrollSnap();
+        const previousSnap: any = emblaApi?.previousScrollSnap();
+        
+        if (currentSnap > previousSnap) {
+            console.log("selectedSlideName 34 3 Next slide");
+            return "Next slide";
+        } else if (currentSnap < previousSnap) {
+            console.log("selectedSlideName 34 3 Previous slide");
+            return "Previous slide";
+        } else {
+            console.log("selectedSlideName 34 3 No slide change");
+            return "No slide change";
+        }
+    }, [emblaApi]);
+
     const logSlidesInViewOnce = useCallback(() => {
         const selectedSlideName = emblaApi?.slideNodes()[emblaApi.selectedScrollSnap()].getAttribute("data-type");
-        console.log("selectedSlideName 34", selectedTab, selectedSlideName, (selectedSlideName !== selectedTab.secondaryObj))
-        //if (selectedSlideName !== selectedTab.secondaryObj) {
-            selectedTabClick(primaryName, selectedSlideName);
-        //}
+        console.log("selectedSlideName 34", selectedTab, selectedSlideName, (selectedSlideName !== selectedTab.secondaryObj), emblaApi?.canScrollNext());
+
+        const slideDirection = handleScroll();
+
+        if(slideDirection == "Next slide" && !emblaApi?.canScrollNext()){
+            console.log("selectedSlideName 34 1",primaryName, selectedSlideName, primaryIndex)
+            if(primaryIndex == mainEmblaApi.slideNodes().length - 1){
+                mainEmblaApi.scrollTo(0)
+            } else {
+                mainEmblaApi.scrollTo(primaryIndex + 1)    
+            }
+        }
+
+        if(slideDirection == "Previous slide" && !emblaApi?.canScrollPrev()){
+            console.log("selectedSlideName 34 2",primaryName, selectedSlideName, primaryIndex)
+            if(primaryIndex == 0){
+                mainEmblaApi.scrollTo(5)
+            } else {
+                mainEmblaApi.scrollTo(primaryIndex -1)    
+            } 
+        }
+        selectedTabClick(primaryName, selectedSlideName);
         //emblaApi?.off('pointerUp', logSlidesInViewOnce);
     }, [emblaApi]);
 
     useEffect(() => {
-        if (emblaApi) emblaApi.on('pointerUp', logSlidesInViewOnce);
+        if (emblaApi){
+            //emblaApi.on('pointerUp', logSlidesInViewOnce);
+            emblaApi.on('settle', logSlidesInViewOnce);
+            // emblaApi.on('select', handleScroll);
+            setChildEmbla(emblaApi);
+        } 
     }, [emblaApi, logSlidesInViewOnce]);
+
+    useEffect(() => {
+        if (emblaApi){
+            setChildEmbla(emblaApi);
+        } 
+    }, [emblaApi]);
 
     const renderStars = (vrRating) => {
         const totalStars = 5;
@@ -191,32 +236,84 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
         );
     };
 
+    const mfBuyclientButton = (value5) => {
+        // Extract the clientTypeId from the mfBuyclientObject
+        const clientType1 = (Array.isArray(value5?.mfBuyclientObject) ? value5?.mfBuyclientObject : [value5?.mfBuyclientObject])?.find((obj) => obj?.clientTypeId == 1);
+        const clientType2 = (Array.isArray(value5?.mfBuyclientObject) ? value5?.mfBuyclientObject : [value5?.mfBuyclientObject])?.find((obj) => obj?.clientTypeId == 2);
+
+        // Conditional logic for promotedURL and clientName
+        const promotedURL = clientType1?.buyNowUrl || clientType2?.buyNowUrl || '';
+        const buttonText = clientType1?.buttonText || clientType2?.buttonText || '';
+
+        return (
+            <>
+                {
+                    promotedURL && <div className="tmf_s_btns">
+                        <a target="_blank" rel="nofollow sponsered" href={promotedURL}>{buttonText}</a>
+                    </div>
+                }
+                <style jsx>{`
+                    .tmf_s_btns {
+                        width: 21%;
+
+                        a{
+                            background-color: #183651;
+                            color: #fff;
+                            text-transform: uppercase;
+                            border-radius: 2px;
+                            display: inline-block;
+                            padding: 8px 14px;
+                            margin-top: 3px;
+                            text-decoration: none;
+                            font-weight: 600;
+                            font-size: 10px;
+                        }
+                    }
+                `}</style>
+            </>
+        )
+    }
+
+    const schemeURL = (value5) => {
+        const clientType1 = (Array.isArray(value5?.mfBuyclientObject) ? value5?.mfBuyclientObject : [value5?.mfBuyclientObject])?.find((obj) => obj?.clientTypeId == 1);
+        const clientType2 = (Array.isArray(value5?.mfBuyclientObject) ? value5?.mfBuyclientObject : [value5?.mfBuyclientObject])?.find((obj) => obj?.clientTypeId == 2);
+        
+        const promotedURL = clientType1?.buyNowUrl || clientType2?.buyNowUrl || '';
+
+        // {console.log("selectedSlideName 45", value5)}
+
+        return promotedURL ? promotedURL : `/${value5?.seoName}/mffactsheet/schemeid-${value5?.schemeId}.cms`;
+    }
+
     const topMfSchemList = (value5, index5, s_type) => {
 
         return (
             <>
-                <li className='schemeList' key={`topmf_schemelist_${index5}`}>
-                    <div className='mfinfo_wrap'>
-                        {s_type == "promotedSchemes" && <div className="promoted_text">FEATURED</div>}
-                        <div className='tmf_s_name'>
-                            <a target="_blank" href={`/${value5.seoName}/mffactsheet/schemeid-${value5.schemeId}.cms`}>{value5.nameOfScheme}</a>
-                            <div className='tmf_s_rating'>
-                                {renderStars(value5.vrRating)}
+                {
+                    value5 && <li className={`schemeList`} key={`topmf_schemelist_${index5}`}>
+                        <div className='mfinfo_wrap'>
+                            {s_type == "promotedSchemes" && <div className="promoted_text">FEATURED</div>}
+                            <div className='tmf_s_name'>
+                                <a target="_blank" href={schemeURL(value5)}>{value5?.nameOfScheme}</a>
+                                <div className='tmf_s_rating'>
+                                    {renderStars(value5.vrRating)}
+                                </div>
+                            </div>
+                            <div className='tmf_s_info'>
+                                <div className={getClassName(value5[selectedYear])}>
+                                    <span>{getPeriodShortName(selectedYear)} RETURN</span>
+                                    <span>{renderReturnValue(value5[selectedYear])}</span>
+                                </div>
+                                <div className="tmf_s_fund">
+                                    <span>FUND SIZE</span>
+                                    <span>{`${parseFloat(value5.assetSize).toFixed(2)} Crs`}</span>
+                                </div>
+                                {CategoryReturnsGraph({yearval: selectedYear, data: value5})}
+                                {mfBuyclientButton(value5)}
                             </div>
                         </div>
-                        <div className='tmf_s_info'>
-                            <div className={getClassName(value5[selectedYear])}>
-                                <span>{getPeriodShortName(selectedYear)} RETURN</span>
-                                <span>{renderReturnValue(value5[selectedYear])}</span>
-                            </div>
-                            <div className="tmf_s_fund">
-                                <span>FUND SIZE</span>
-                                <span>{`${parseFloat(value5.assetSize).toFixed(2)} Crs`}</span>
-                            </div>
-                            {CategoryReturnsGraph({yearval: selectedYear, data: value5})}
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                }
 
                 <style jsx>{`
                     .schemeList{
@@ -309,7 +406,9 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
             <div ref={emblaRef} key={`tmf_cat_wrap_${keyIndex}`} className="embla tmf_cat_wrap" data-cat={primaryName}>
                 <div className="embla__container">
                     {secondaryObj.map((value1, index1) => (
-                        <div className="tmf_scat_wrap embla__slide" data-type={value1.value} key={index1}>
+                        <div className={`tmf_scat_wrap embla__slide`.concat(
+                            index1 === selectedIndex ? ' embla__slide--selected' : ''
+                        )} data-type={value1.value} key={index1}>
                             <div className="tmf_scat_head">
                                 <h3>{value1.value}</h3>
                             </div>
@@ -320,24 +419,23 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                                             value2?.primaryObj == primaryName && value2?.schemeData?.map((value3, index3) => {
                                                 return (
                                                     <>
-                                                        {console.log("selectedSlideName 45", value3?.response)}
                                                         {
-                                                            value3?.secondaryObj == value1.value ? value3?.response?.map((value4, index4) => {
+                                                            value3?.secondaryObj == value1.value && value3?.response.length > 0  ? value3?.response?.map((value4, index4) => {
                                                                 return (
                                                                     <>
                                                                         {
-                                                                          (Array.isArray(value4?.promotedSchemes) ? value4?.promotedSchemes : [value4?.promotedSchemes]).map((value6, index6) => topMfSchemList(value6, index6, 'promotedSchemes'))
+                                                                          value4?.promotedSchemes && (Array.isArray(value4?.promotedSchemes) ? value4?.promotedSchemes : [value4?.promotedSchemes]).map((value6, index6) => topMfSchemList(value6, index6, 'promotedSchemes'))
                                                                         }
                                                                         {
                                                                             value4?.schemeList ? 
-                                                                            value4?.schemeList?.slice(0, (value4?.promotedSchemes?.length > 1 ? 3 : 4)).map((value5, index5) => topMfSchemList(value5, index5, 'schemeList')) :
+                                                                            value4?.schemeList?.slice(0, (value4?.promotedSchemes?.length == 0 ? 5 : value4?.promotedSchemes?.length > 1 ? 3 : 4)).map((value5, index5) => topMfSchemList(value5, index5, 'schemeList')) :
                                                                             <li>
                                                                                 <h2 className="tmf_error">Sorry, we couldn't find any schemes that match our criteria of top funds for this category. Please proceed to other categories.</h2>
                                                                             </li>
                                                                         }
                                                                     </>    
                                                                 )
-                                                            }) : !value3?.response ? <li><Loading /></li> : null
+                                                            }) : value3?.status == "loading" ? <li><Loading /></li> : null
                                                         }
                                                     </>
                                                 )
@@ -351,16 +449,23 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                         </div>
                     ))}
                 </div>
-                <div className="embla__dots mostreadDots">
-                {scrollSnaps.map((_, index) => (
-                    <DotButton
-                    key={index}
-                    onClick={() => onDotButtonClick(index)}
-                    className={'embla__dot'.concat(
-                        index === selectedIndex ? ' embla__dot--selected red' : ''
-                    )}
-                    />
-                ))}
+                <div className='topMFButtonWrp'>
+                    {/* <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`topMFWd`} /> */}
+                    <PrevButton onClick={onPrevButtonClick} color={'red'} widget={`topMFWd`} />
+                    <div className="embla__dots topMfDots">
+                        {scrollSnaps.map((_, index) => (
+                            <DotButton
+                            key={index}
+                            onClick={() => onDotButtonClick(index)}
+                            className={'topMfWDDots embla__dot'.concat(
+                                index === selectedIndex ? ' embla__dot--selected red' : ''
+                            )}
+
+                            />
+                        ))}
+                    </div>
+                    {/* <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`topMFWd`} /> */}
+                    <NextButton onClick={onNextButtonClick} color={'red'} widget={`topMFWd`} />
                 </div> 
             </div>
             <style jsx>{`
@@ -401,6 +506,26 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                             color: #8b8b8b;
                         }
                     }
+                }
+
+                .topMfDots{
+                    justify-content: center;
+
+                    .embla__dot{
+                        width: 24px;
+                        height: 5px;
+                        border-radius: 2.5px;
+                        background-color: #d8d8d8;
+                        display: inline-block;
+                        margin-right: 6px;
+                        cursor: pointer;
+                    }
+                }
+
+                .topMFButtonWrp{
+                    display: flex;
+                    justify-content: space-between;
+                    height: 30px;
                 }
             }
         `}</style>
