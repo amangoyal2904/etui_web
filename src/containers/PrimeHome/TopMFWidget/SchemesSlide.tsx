@@ -34,12 +34,12 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
 
     const logSlidesInViewOnce = useCallback(() => {
         const selectedSlideName = emblaApi?.slideNodes()[emblaApi.selectedScrollSnap()].getAttribute("data-type");
-        console.log("selectedSlideName 34", selectedTab, selectedSlideName, (selectedSlideName !== selectedTab.secondaryObj), emblaApi?.canScrollNext());
+        //console.log("selectedSlideName 34", selectedTab, selectedSlideName, (selectedSlideName !== selectedTab.secondaryObj), emblaApi?.canScrollNext());
 
         const slideDirection = handleScroll();
 
         if(slideDirection == "Next slide" && !emblaApi?.canScrollNext()){
-            console.log("selectedSlideName 34 1",primaryName, selectedSlideName, primaryIndex)
+            //console.log("selectedSlideName 34 1",primaryName, selectedSlideName, primaryIndex)
             if(primaryIndex == mainEmblaApi.slideNodes().length - 1){
                 mainEmblaApi.scrollTo(0)
             } else {
@@ -48,7 +48,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
         }
 
         if(slideDirection == "Previous slide" && !emblaApi?.canScrollPrev()){
-            console.log("selectedSlideName 34 2",primaryName, selectedSlideName, primaryIndex)
+            //console.log("selectedSlideName 34 2",primaryName, selectedSlideName, primaryIndex)
             if(primaryIndex == 0){
                 mainEmblaApi.scrollTo(5)
             } else {

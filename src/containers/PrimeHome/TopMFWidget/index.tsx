@@ -56,7 +56,7 @@ const TopMF = () => {
             const checkExistingPrimaryObj:any = topMFSchemes.some((item:any) => item?.primaryObj === primaryObj);
             const existingScheme = existingPrimaryObj?.schemeData?.some((item) => item.secondaryObj === secondaryObj);
 
-            console.log("selectedSlideName", selectedTab, primaryObj, secondaryObj)
+            //console.log("selectedSlideName", selectedTab, primaryObj, secondaryObj)
 
             if (!checkExistingPrimaryObj || !existingScheme) {
                 setTopMFScheme((prev) => [
@@ -98,7 +98,7 @@ const TopMF = () => {
     const selectedTabClick = (primaryObj, secondaryObj) => {
 
         if(typeof primaryObj != 'undefined' && typeof secondaryObj != 'undefined'){
-            console.log("selectedSlideName 2", primaryObj, secondaryObj, topMFSchemes)
+            //console.log("selectedSlideName 2", primaryObj, secondaryObj, topMFSchemes)
             setSelectedTab({ primaryObj, secondaryObj });
         }
         
@@ -114,7 +114,7 @@ const TopMF = () => {
     useEffect(() => {
 
         if(typeof selectedTab.primaryObj != 'undefined' && typeof selectedTab.secondaryObj != 'undefined'){
-            console.log("selectedSlideName 3", selectedTab);
+            //console.log("selectedSlideName 3", selectedTab);
             fetchTopMfApi(selectedTab.primaryObj, selectedTab.secondaryObj);
         }
         
