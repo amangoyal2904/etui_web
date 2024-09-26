@@ -22,24 +22,26 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget }) => {
     const fetchBookmark = useCallback(async () => {
         const Authorization = getCookie("peuuid") || getCookie("ssoid") || '';
         const url = APIS_CONFIG.getSavedNewsStatus[window.APP_ENV];
-    
+      
+        // Append query parameters to the URL
+        const params = new URLSearchParams({
+          prefdataval: msid,
+          usersettingsubType: type,
+        }).toString();
+      
         try {
-          const response = await fetch(`${url}`, {
+          const response = await fetch(`${url}?${params}`, {
             method: "GET",
             headers: {
               Accept: "application/json",
               Authorization,
             },
-            body: JSON.stringify({
-              prefdataval: msid,
-              usersettingsubType: type,
-            }),
           });
-    
+      
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-
+      
           const data = await response.json();
           if (data.length && data[0]?.status === "success") {
             setIsBookmarked(1);
@@ -48,6 +50,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget }) => {
           console.error("Error fetching bookmark status:", error);
         }
       }, [msid, type]);
+      
 
     // use effect to fetch and check bookmark status
     useEffect(() => {
