@@ -43,7 +43,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget }) => {
           }
       
           const data = await response.json();
-          if (data.length && data[0]?.status === "success") {
+          if (data && data.details && data.details.length) {
             setIsBookmarked(1);
           }
         } catch (error) {
