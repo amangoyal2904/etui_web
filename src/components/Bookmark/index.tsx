@@ -21,7 +21,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
     const { isLogin } = state.login;
 
     const fetchBookmark = useCallback(async () => {
-        if(typeof window.bookmarkApiHitStatus == 'undefined' && window.bookmarkApiHitStatus == 'failed'){
+        if(typeof window.bookmarkApiHitStatus == 'undefined' || window.bookmarkApiHitStatus == 'failed'){
             window.bookmarkApiHitStatus = 'hit';
             const Authorization = getCookie("peuuid") || getCookie("ssoid") || '';
             const url = APIS_CONFIG.getSavedNewsStatus[window.APP_ENV];
