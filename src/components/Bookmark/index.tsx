@@ -12,45 +12,72 @@ interface BookmarkProps {
     hostId: string;
     type: string;
     widget: string;
+    apiType: string;
 }
 
-const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget }) => {
+const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) => {
     const { state } = useStateContext();
     const [isBookmarked, setIsBookmarked] = useState(0);
     const { isLogin } = state.login;
 
     const fetchBookmark = useCallback(async () => {
-        const Authorization = getCookie("peuuid") || getCookie("ssoid") || '';
-        const url = APIS_CONFIG.getSavedNewsStatus[window.APP_ENV];
-      
-        // Append query parameters to the URL
-        const params = new URLSearchParams({
-          prefdataval: msid,
-          usersettingsubType: type,
-        }).toString();
-      
-        try {
-          const response = await fetch(`${url}?${params}`, {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization,
-            },
-          });
-      
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-      
-          const data = await response.json();
-          if (data && data.details && data.details.length) {
-            setIsBookmarked(1);
-          }
-        } catch (error) {
-          console.error("Error fetching bookmark status:", error);
+        if(typeof window.bookmarkApiHitStatus == 'undefined' && window.bookmarkApiHitStatus == 'failed'){
+            window.bookmarkApiHitStatus = 'hit';
+            const Authorization = getCookie("peuuid") || getCookie("ssoid") || '';
+            const url = APIS_CONFIG.getSavedNewsStatus[window.APP_ENV];
+        
+            // Append query parameters to the URL
+            const params = new URLSearchParams(
+                apiType === 'single'
+                    ? { prefdataval: msid, usersettingsubType: type }
+                    : { stype: '0', pagesize: '100', pageno: '1' }
+            ).toString();
+        
+            try {
+            const response = await fetch(`${url}?${params}`, {
+                method: "GET",
+                headers: {
+                Accept: "application/json",
+                Authorization,
+                },
+            });
+        
+            if (!response.ok) {
+                window.bookmarkApiHitStatus = 'failed';
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            window.bookmarkApiHitStatus = 'success';
+        
+            const data = await response.json();
+            
+            if (apiType == 'single' && data && data.details && data.details.length) {
+                window.bookmarkApiRes = data.details;
+                setIsBookmarked(1);
+            }else if(apiType == 'all' && data && data.details && data.details.length){
+                window.bookmarkApiRes = data.details;
+                const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
+                document.dispatchEvent(bookmarkStatusForAll);
+            }
+            } catch (error) {
+                window.bookmarkApiHitStatus = 'failed';
+                console.error("Error fetching bookmark status:", error);
+            }
         }
       }, [msid, type]);
-      
+
+    const  checkBookmarkStatus = () => {
+        const apiRes = window.bookmarkApiRes;
+
+        const checkStatus = apiRes.some(item => item.msid == msid);
+
+        if(checkStatus) setIsBookmarked(1);
+    } 
+
+
+    useEffect(() => {
+        document.addEventListener("bookmarkStatusForAll", checkBookmarkStatus)
+    })  
 
     // use effect to fetch and check bookmark status
     useEffect(() => {

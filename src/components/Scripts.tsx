@@ -83,6 +83,8 @@ declare global {
     };
     _ibeat_track?:any;
     _sva: any;
+    bookmarkApiHitStatus: any;
+    bookmarkApiRes: any;
   }
 }
 declare var JssoCrosswalk: any;
