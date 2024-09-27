@@ -92,7 +92,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         </div>
                                                     </span>
                                                     {/* <span className="cSprite bookmark-icon vat" data-msid={item.msid} data-arttype="0" data-channelid="1"></span> */}
-                                                    <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} />
+                                                    <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
                                                 </div>
                                             </div>
                                         </>
