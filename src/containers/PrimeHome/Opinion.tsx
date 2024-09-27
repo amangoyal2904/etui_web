@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import GLOBAL_CONFIG from "../../network/global_config.json";
 
 const Opinion = ({OpinionData}) => {
+    const imgDomain = GLOBAL_CONFIG["ET_IMG_DOMAIN"];
   return (
     <>
         <div className="opinionWidget">
@@ -12,15 +14,20 @@ const Opinion = ({OpinionData}) => {
                     OpinionData?.map((value, index) => {
                         return (
                             <>
-                                <li className='listWrp'>
-                                    <div className="mb10">
-                                        <div className="ctgry">ET Commentary</div>
+                                <li className={`listWrp ${value.section == "Speaking Tree" ? 'sTree' : ''}`} key={`opinionWidget_key_${index}`}>
+                                    <div className="mb5 headWrp">
+                                        <div className="ctgry">{value.section}</div>
                                         <div className="etPrint">FROM ET PRINT</div>
                                     </div>
-                                    <a target="_blank" className="font_faus listTitle" href={value.url}>{value.title}</a>
+                                    <a target="_blank" className="font_faus listTitle" href={value.url}>
+                                        {
+                                            value.section == "Speaking Tree" && <img src={`${imgDomain}/thumb/msid-81702281,width-51,height-42,resizemode-8.cms`} className="flr" width="" height="" alt="Speaking Tree" />
+                                        }
+                                        {value.title}
+                                    </a>
                                     <p className="line_6 listSyn">{value.synopsis}</p>
                                     {
-                                        value.authors && <div className="auInfo">
+                                        value.authors && value.authors[0].title && <div className="auInfo">
                                             {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} />}
                                             <span className="auName">{`${!value.authors[0]?.img ? "By" : ""} ${value.authors[0].title}`}</span>
                                         </div>
@@ -36,6 +43,16 @@ const Opinion = ({OpinionData}) => {
         <style jsx>{`
             .mb10 {
                 margin-bottom: 10px;
+            }
+
+            .mb5 {
+                margin-bottom: 5px;
+            }
+
+            .headWrp{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
             .opinionWidget{
                 padding-top: 1px;
@@ -73,7 +90,7 @@ const Opinion = ({OpinionData}) => {
 
                 .listWrp{
                     list-style: none;
-                    width: 269px;
+                    width: 290px;
                     padding: 15px;
                     display: inline-block;
                     vertical-align: top;
@@ -81,21 +98,24 @@ const Opinion = ({OpinionData}) => {
                     box-shadow: 4px 4px 0 0 #efd9d3;
                     border: solid 1px #ddc2bb;
                     position: relative;
+                    box-sizing: border-box;
+
+                    &.sTree{
+                        background-color: #ffded4;
+                    }
 
                     .ctgry {
                         color: #930017;
                         text-transform: uppercase;
-                        float: left;
                     }
 
                     .etPrint {
                         color: #fff;
                         font-size: 9px;
                         font-weight: 500;
-                        padding: 1px 3px 2px 4px;
+                        padding: 1px 4px;
                         border-radius: 2px;
                         background-color: #183651;
-                        float: right;
                     }
 
                     .listTitle{
