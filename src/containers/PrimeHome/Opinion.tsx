@@ -1,11 +1,11 @@
 import React from 'react';
 import GLOBAL_CONFIG from "../../network/global_config.json";
 
-const Opinion = ({OpinionData}) => {
+const Opinion = ({OpinionData, focusArea}) => {
     const imgDomain = GLOBAL_CONFIG["ET_IMG_DOMAIN"];
   return (
     <>
-        <div className="opinionWidget">
+        <div className={`opinionWidget ${focusArea}`}>
             <h2 className="heading">
                 <a href="/opinion" target="_blank">OPINION</a>
             </h2>
@@ -61,6 +61,14 @@ const Opinion = ({OpinionData}) => {
                 box-sizing: border-box;
                 padding-bottom: 50px;
 
+                &.news{
+                    .listWrp{
+                        &:nth-child(2) {
+                            display: none;
+                        }
+                    }
+                }
+
                 .opinionWdWrp{
                     display: flex;
                     justify-content: space-between;
@@ -99,6 +107,8 @@ const Opinion = ({OpinionData}) => {
                     border: solid 1px #ddc2bb;
                     position: relative;
                     box-sizing: border-box;
+
+                    
 
                     &.sTree{
                         background-color: #ffded4;

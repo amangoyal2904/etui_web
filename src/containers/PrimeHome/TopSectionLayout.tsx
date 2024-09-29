@@ -71,10 +71,12 @@ export default function TopSectionLayout({ searchResult }) {
               }
             </div>
           </div>
-          <div className={`${focusArea === "market" ? 'hide' : ''}`}>
-            <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
-            <Opinion OpinionData={OpinionData?.data || []} />
-          </div>
+            {
+              focusArea === "news" && <>
+                <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+                <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
+              </>
+            }
         </div>
         <div className="col3">
           { focusArea === "market" && <>            
@@ -105,6 +107,12 @@ export default function TopSectionLayout({ searchResult }) {
           <LiveStream />
         </div>
       </section>
+      {
+        focusArea === "market" && <>
+          <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+          <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
+        </>
+      }
       <style jsx>{` 
         .topLayout {
           display: flex;
