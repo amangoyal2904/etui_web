@@ -4,7 +4,7 @@ import TextImageMiddile from 'components/TextImageMiddile';
 
 export default function Politics({ title, data }) {  
   const politicsNews = data.slice(0,9);
-  const politicsInbrif = data.slice(14,20);
+  const politicsInbrif = data.slice(14,19);
   return (
     <>
     <section className="politics">
