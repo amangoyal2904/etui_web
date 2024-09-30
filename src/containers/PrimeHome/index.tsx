@@ -16,6 +16,7 @@ import TopSectionLayout from "./TopSectionLayout";
 import Podcast from "./Podcast";
 import MostReadStories from './MostReadStories';
 import VideoWidget from "./VideoWidget";
+import { useEffect } from "react";
 
 function PrimeHome({ searchResult }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -38,6 +39,13 @@ function PrimeHome({ searchResult }) {
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
   const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
   // console.log("explainers", explainers);
+
+  useEffect(() => {
+    document.body.classList.add('isprimeuser');
+    return () => {
+      document.body.classList.remove('isprimeuser');
+    };
+  }, []);
 
   return (
     <>
