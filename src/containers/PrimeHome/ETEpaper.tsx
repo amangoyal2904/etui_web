@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { dateFormat } from "../../utils/utils";
 import GLOBAL_CONFIG from "../../network/global_config.json";
+import HeadingWithRightArrow from './HeadingWithRightArrow';
 
-export default function ETEpaper({ focusArea }) {
+export default function ETEpaper({ focusArea, etEpaperData }) {
   const dayName = useState(dateFormat(new Date(), '%D'))[0];
   
   const isDev = window?.isDev;
@@ -10,15 +11,16 @@ export default function ETEpaper({ focusArea }) {
   const imgDomain = GLOBAL_CONFIG["ET_IMG_DOMAIN"];
 
   const epaperUrl = `${epaperDomain}/timesepaper/publication-the-economic-times,city-delhi.cms`;
-  const wealthEditionUrl = `${epaperDomain}/september-23-29-2024/wealth_editionshow/113573950.cms`;
+  const wealthEditionUrl = `${epaperDomain}/${etEpaperData?.wealth?.seopath}/wealth_editionshow/${etEpaperData?.wealth?.msid}.cms`;
 
-  const epaperImage = `${imgDomain}/thumb/width-267,height-228,imgsize-675486,msid-113716461/.jpg`;
-  const wealthImage = `${imgDomain}/thumb/width-267,height-228,imgsize-956556,msid-113573950/.jpg`;
+  const epaperImage = `${imgDomain}/thumb/width-267,height-228,imgsize-${etEpaperData?.todayEpaper?.thumbsize},msid-${etEpaperData?.todayEpaper?.msid}/.jpg`;
+  const wealthImage = `${imgDomain}/thumb/width-267,height-228,imgsize-${etEpaperData?.wealth?.thumbsize},msid-${etEpaperData?.wealth?.msid}/.jpg`;
 
   return (
     <>
-      <div className={`etEPaper ${focusArea}`}>
-        <h2 className="title">ET ePaper</h2>
+      <div className={`etEPaper ${focusArea} ${dayName}`}>
+        <span className='title'></span>
+        <HeadingWithRightArrow title={`ET ePaper`} />
         {
           dayName !== "Mon" ? (
             focusArea === "news" ? (
@@ -91,7 +93,7 @@ export default function ETEpaper({ focusArea }) {
             &:before {
               content: "";
               left: -7px;
-              top: 19px;
+              top: 6px;
               position: absolute;
               width: 16px;
               height: 17px;

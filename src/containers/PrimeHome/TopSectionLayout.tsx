@@ -23,6 +23,7 @@ export default function TopSectionLayout({ searchResult }) {
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
+  const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   // console.log("topNews", searchResult);
   return (
     <>
@@ -49,7 +50,7 @@ export default function TopSectionLayout({ searchResult }) {
               { focusArea === "news" && <>            
                 <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
                 <InvestmentIdeas focusArea={focusArea}/>
-                <ETEpaper focusArea={focusArea}/>
+                <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData}/>
                 <LessonsFromGrandmasters focusArea={focusArea}/>
               </>
               }
@@ -83,7 +84,7 @@ export default function TopSectionLayout({ searchResult }) {
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
             <Separator />
             <InvestmentIdeas focusArea={focusArea}/>
-            <ETEpaper focusArea={focusArea}/>
+            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} />
             <LessonsFromGrandmasters focusArea={focusArea}/>
           </>
           }
