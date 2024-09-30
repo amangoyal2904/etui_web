@@ -18,6 +18,7 @@ import NewsByIndustry from "./NewsByIndustry";
 import MostReadStories from './MostReadStories';
 import VideoWidget from "./VideoWidget";
 import Opinion from "./Opinion";
+import { useEffect } from "react";
 
 function PrimeHome({ searchResult }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -42,6 +43,13 @@ function PrimeHome({ searchResult }) {
   const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
   const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
   // console.log("explainers", explainers);
+
+  useEffect(() => {
+    document.body.classList.add('isprimeuser');
+    return () => {
+      document.body.classList.remove('isprimeuser');
+    };
+  }, []);
 
   return (
     <>

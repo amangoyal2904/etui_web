@@ -55,7 +55,7 @@ export async function generateMetadata({ params }) {
 
 
   const seo = data?.searchResult?.find(item => item?.name === "seo")?.data || {};
-  console.log("seo", seo);
+  // console.log("seo", seo);
   if(seo.title === undefined || seo.title === null || seo.title === ""){
     return {
       title: "Economic Times"
