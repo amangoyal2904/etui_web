@@ -21,7 +21,7 @@ import Opinion from "./Opinion";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 
-function PrimeHome({ searchResult }) {  
+function PrimeHome({ searchResult, isDev }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
@@ -72,6 +72,12 @@ function PrimeHome({ searchResult }) {
         padding-left: 7px;
         padding-right: 7px;
       }
+      #topnav > div > a {
+        background: transparent !important;
+        color: #000 !important;
+        font-weight: 400;
+        padding: 7px 3px 8px;
+      }
       header nav:last-of-type {
         padding-left: 7px;
         padding-right: 7px;
@@ -86,7 +92,7 @@ function PrimeHome({ searchResult }) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} />
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} />
       <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} />
@@ -96,7 +102,7 @@ function PrimeHome({ searchResult }) {
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
       <Rise data={rise?.data || []} title={rise?.title || ""} />
-      <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} />
+      <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} isDev={isDev} />
       <Podcast data={podcast || []}/>
       <Politics data={politics?.data || []} title={politics?.title || ""} />
       <Slideshows data={slideshows?.data || []} title={slideshows?.title || ""} />

@@ -15,7 +15,7 @@ import BigBullPortfolio from './BigBullPortfolio';
 import MarketMood from './MarketMood';
 import LiveStream from './LiveStream';
 
-export default function TopSectionLayout({ searchResult }) {
+export default function TopSectionLayout({ searchResult, isDev }) {
   const [focusArea, setFocusArea] = React.useState("news");
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
@@ -51,7 +51,7 @@ export default function TopSectionLayout({ searchResult }) {
           {
             focusArea === "market" && <>
               <MarketsTopNews focusArea={focusArea}/>
-              <IndicesWidget />
+              <IndicesWidget isDev={isDev} />
               <MarketDashboard />
               <Separator />
               <StockRecos />
@@ -77,7 +77,7 @@ export default function TopSectionLayout({ searchResult }) {
           { focusArea === "news" && <>
             <div className="title">MARKETS</div>
             <MarketsTopNews focusArea={focusArea}/>
-            <IndicesWidget />
+            <IndicesWidget isDev={isDev} />
             <MarketDashboard />
             <Separator />
             <StockRecos />

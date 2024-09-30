@@ -30,7 +30,7 @@ const SubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => {
   return (
     <div key={keyName} data-ga-action={data.nm} className={data.sec ? styles.subLevel : ""}>
       {/* Add a unique key for the main link */}
-      <a itemProp="url" href={data.link ? data.link : 'javascript:;'} className={subsec2 == data.msid ? styles.current : ''} data-ga-onclick={data.link}>
+      <a itemProp="url" href={data.link ? data.link : '#;'} className={subsec2 == data.msid ? styles.current : ''} data-ga-onclick={data.link}>
         <meta content={data.nm} itemProp="name" />
         {data.nm}
         {/* Add a unique key for the down arrow */}
@@ -47,7 +47,7 @@ const SubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => {
 
             return (
               <div key={keyName_l2} data-ga-action={l2.nm}>
-                <a href={l2.link ? l2.link : 'javascript:;'} data-ga-onclick={l2.link} className={`${subsec3 == l2.msid ? styles.current : ''} ${styles.subsec2}`}>
+                <a href={l2.link ? l2.link : '#;'} data-ga-onclick={l2.link} className={`${subsec3 == l2.msid ? styles.current : ''} ${styles.subsec2}`}>
                   {l2.nm}
                 </a>
                 {/* Check if there are any sub-sections */}
@@ -57,7 +57,7 @@ const SubSecNavHtml: FC<SubSecNavProps> = ({ subsecnames, data, index }) => {
 
                       return (
                         <React.Fragment key={keyName_l3}>
-                          <a href={l3.link ? l3.link : 'javascript:;'} data-ga-onclick={l3.link} className={styles.subsec3}>
+                          <a href={l3.link ? l3.link : '#;'} data-ga-onclick={l3.link} className={styles.subsec3}>
                             {l3.nm}
                           </a>
                         </React.Fragment>

@@ -45,57 +45,55 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                         {subsets.map((value, index) => (
                             <div className={`embla__slide` } key={`MostReadStoriesRes_${index}`}>
                                 {value?.map((item, j) => {
-                                    return (
-                                        <>
-                                            <div className="content">
-                                                <div className='contentWrap'>
+                                    return (                                        
+                                        <div className="content" key={j}>
+                                            <div className='contentWrap'>
+                                                <a 
+                                                    target="_blank" 
+                                                    href={item.url}
+                                                    className='flr'
+                                                >
+                                                    <img 
+                                                        src={item.img} 
+                                                        width="100" 
+                                                        height="75" 
+                                                        alt={item.title} 
+                                                        title={item.title}  
+                                                        className="im lazy" />
+                                                </a>
+                                                <div className="info_box">
+                                                    <span>News</span>
                                                     <a 
+                                                        title={item.title}  
                                                         target="_blank" 
+                                                        className="line_4" 
                                                         href={item.url}
-                                                        className='flr'
-                                                    >
-                                                        <img 
-                                                            src={item.img} 
-                                                            width="100" 
-                                                            height="75" 
-                                                            alt={item.title} 
-                                                            title={item.title}  
-                                                            className="im lazy" />
-                                                    </a>
-                                                    <div className="info_box">
-                                                        <span>News</span>
-                                                        <a 
-                                                            title={item.title}  
-                                                            target="_blank" 
-                                                            className="line_4" 
-                                                            href={item.url}
-                                                        >{item.title}</a>
-                                                    </div>
-                                                </div>
-                                                <div className='icon'>
-                                                    <span className="cSprite pshare-icon socialShare vat" data-msid={item.msid} data-arttype="0" data-channelid="1">
-                                                        <div className="share_block sharingIcon">
-                                                            <span className="text">Share This Article</span>
-                                                            <div className='shareIconWrp'>
-                                                                <span 
-                                                                    className="fb cSprite" 
-                                                                    onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "fb" })}></span>
-                                                                <span 
-                                                                    className="twt cSprite" 
-                                                                    onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "twt" })}
-                                                                ></span>
-                                                                <span 
-                                                                    className="wa cSprite" 
-                                                                    onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "wa" })}
-                                                                ></span>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    {/* <span className="cSprite bookmark-icon vat" data-msid={item.msid} data-arttype="0" data-channelid="1"></span> */}
-                                                    <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
+                                                    >{item.title}</a>
                                                 </div>
                                             </div>
-                                        </>
+                                            <div className='icon'>
+                                                <span className="cSprite pshare-icon socialShare vat" data-msid={item.msid} data-arttype="0" data-channelid="1">
+                                                    <div className="share_block sharingIcon">
+                                                        <span className="text">Share This Article</span>
+                                                        <div className='shareIconWrp'>
+                                                            <span 
+                                                                className="fb cSprite" 
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "fb" })}></span>
+                                                            <span 
+                                                                className="twt cSprite" 
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "twt" })}
+                                                            ></span>
+                                                            <span 
+                                                                className="wa cSprite" 
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "wa" })}
+                                                            ></span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                                {/* <span className="cSprite bookmark-icon vat" data-msid={item.msid} data-arttype="0" data-channelid="1"></span> */}
+                                                <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
+                                            </div>
+                                        </div>                                    
                                     )
                                 })}
                             </div>

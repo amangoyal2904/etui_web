@@ -150,16 +150,20 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             display: grid;   
             
             .row {
-              display: grid;
+              display: flex;
               gap: 20px;
-              grid-template-columns: repeat(2, 1fr);
+
+              &::before, &::after {
+                  display: none;
+                }              
 
               .col {
                 display: flex;
                 flex-direction: column;
+                flex: 1;
                 padding-top: 17px;
                 border-top: 1px solid #e8d2cb;
-                margin-top: 30px;
+                margin-top: 30px;                
 
                 .innerCol {
                   display: flex;

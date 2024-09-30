@@ -10,23 +10,21 @@ const Opinion = ({OpinionData}) => {
             <ul className="opinionWdWrp">
                 {
                     OpinionData?.map((value, index) => {
-                        return (
-                            <>
-                                <li className='listWrp'>
-                                    <div className="mb10">
-                                        <div className="ctgry">ET Commentary</div>
-                                        <div className="etPrint">FROM ET PRINT</div>
+                        return (                        
+                            <li className='listWrp' key={index}>
+                                <div className="mb10">
+                                    <div className="ctgry">ET Commentary</div>
+                                    <div className="etPrint">FROM ET PRINT</div>
+                                </div>
+                                <a target="_blank" className="font_faus listTitle" href={value.url}>{value.title}</a>
+                                <p className="line_6 listSyn">{value.synopsis}</p>
+                                {
+                                    value.authors && <div className="auInfo">
+                                        {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} />}
+                                        <span className="auName">{`${!value.authors[0]?.img ? "By" : ""} ${value.authors[0].title}`}</span>
                                     </div>
-                                    <a target="_blank" className="font_faus listTitle" href={value.url}>{value.title}</a>
-                                    <p className="line_6 listSyn">{value.synopsis}</p>
-                                    {
-                                        value.authors && <div className="auInfo">
-                                            {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} />}
-                                            <span className="auName">{`${!value.authors[0]?.img ? "By" : ""} ${value.authors[0].title}`}</span>
-                                        </div>
-                                    }
-                                </li>
-                            </>
+                                }
+                            </li>                        
                         )
                     })
                 }

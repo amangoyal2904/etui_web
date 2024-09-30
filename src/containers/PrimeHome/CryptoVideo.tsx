@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const CryptoVideo = ({ data, title = "" }) => {
+const CryptoVideo = ({ data, title = "", isDev }) => {
   if (!Array.isArray(data) || data.length === 0) {
     return null;
   }
@@ -15,7 +15,7 @@ const CryptoVideo = ({ data, title = "" }) => {
           width="255"
           data-threshold="300"
           src={`https://${
-            window?.APP_ENV == "production" ? "economictimes" : "etdev8243"
+            !isDev ? "economictimes" : "etdev8243"
           }.indiatimes.com/videodash.cms?msid=${
             data[0]?.msid
           }&rlvideo=87021446&fallBackMute=true&skipad=1&widget=subscriberhome&iswebpre=true`}
