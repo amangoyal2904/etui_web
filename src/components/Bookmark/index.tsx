@@ -21,7 +21,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
     const { isLogin } = state.login;
 
     const fetchBookmark = useCallback(async () => {
-        if(typeof window.bookmarkApiHitStatus == 'undefined' || window.bookmarkApiHitStatus == 'failed'){
+        if (typeof window.bookmarkApiHitStatus === 'undefined' || window.bookmarkApiHitStatus === 'failed') {
             window.bookmarkApiHitStatus = 'hit';
             const Authorization = getCookie("peuuid") || getCookie("ssoid") || '';
             const url = APIS_CONFIG.getSavedNewsStatus[window.APP_ENV];
@@ -34,50 +34,53 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
             ).toString();
         
             try {
-            const response = await fetch(`${url}?${params}`, {
-                method: "GET",
-                headers: {
-                Accept: "application/json",
-                Authorization,
-                },
-            });
+                const response = await fetch(`${url}?${params}`, {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        Authorization,
+                    },
+                });
         
-            if (!response.ok) {
-                window.bookmarkApiHitStatus = 'failed';
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+                if (!response.ok) {
+                    window.bookmarkApiHitStatus = 'failed';
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-            window.bookmarkApiHitStatus = 'success';
+                window.bookmarkApiHitStatus = 'success';
         
-            const data = await response.json();
-            
-            if (apiType == 'single' && data && data.details && data.details.length) {
-                window.bookmarkApiRes = data.details;
-                setIsBookmarked(1);
-            }else if(apiType == 'all' && data && data.details && data.details.length){
-                window.bookmarkApiRes = data.details;
-                const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
-                document.dispatchEvent(bookmarkStatusForAll);
-            }
+                const data = await response.json();
+                
+                if (apiType === 'single' && data && data.details && data.details.length) {
+                    window.bookmarkApiRes = data.details;
+                    setIsBookmarked(1);
+                } else if (apiType === 'all' && data && data.details && data.details.length) {
+                    window.bookmarkApiRes = data.details;
+                    const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
+                    document.dispatchEvent(bookmarkStatusForAll);
+                }
             } catch (error) {
                 window.bookmarkApiHitStatus = 'failed';
                 console.error("Error fetching bookmark status:", error);
             }
         }
-      }, [msid, type]);
+    }, [msid, type, apiType, setIsBookmarked]);
 
-    const  checkBookmarkStatus = () => {
-        const apiRes = window.bookmarkApiRes;
+    const checkBookmarkStatus = useCallback(() => {
+        const apiRes = window.bookmarkApiRes || [];
+        const checkStatus = apiRes.some(item => item.msid === msid);
 
-        const checkStatus = apiRes.some(item => item.msid == msid);
-
-        if(checkStatus) setIsBookmarked(1);
-    } 
-
+        if (checkStatus) setIsBookmarked(1);
+    }, [msid, setIsBookmarked]);
 
     useEffect(() => {
-        document.addEventListener("bookmarkStatusForAll", checkBookmarkStatus)
-    })  
+        document.addEventListener("bookmarkStatusForAll", checkBookmarkStatus);
+        fetchBookmark();
+
+        return () => {
+            document.removeEventListener("bookmarkStatusForAll", checkBookmarkStatus);
+        };
+    }, [fetchBookmark, checkBookmarkStatus]); 
 
     // use effect to fetch and check bookmark status
     useEffect(() => {
