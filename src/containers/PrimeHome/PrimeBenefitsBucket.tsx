@@ -1,6 +1,21 @@
 import React from 'react'
+import useEmblaCarousel from 'embla-carousel-react';
+import {
+    PrevButton,
+    NextButton,
+    usePrevNextButtons
+  } from '../../components/CarouselArrowBtn';
 
 export default function PrimeBenefitsBucket({focusArea}) {
+  const OPTIONS = {loop: false}
+  const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
+  const {
+    prevBtnDisabled,
+    nextBtnDisabled,
+    onPrevButtonClick,
+    onNextButtonClick
+  } = usePrevNextButtons(emblaApi);
+
   const items = [
     {
       title: "Prime Exclusives",
@@ -41,23 +56,32 @@ export default function PrimeBenefitsBucket({focusArea}) {
   ];
 
   return (
-    <>
-      <div className={`primeBenefitsBucket ${focusArea}`}>
-        <div className="itemWrap">
-        {
-          items.map((item, index) => (
-            <a key={index} className="item">
-              <span className="icon" style={{backgroundPosition: item.iconPosition}}></span>
-              <span className="title">{item.title}</span>
-            </a>
-          ))
-        }
-        </div>
-      </div>
+    <>      
+      <div className={`primeBenefitsBucket embla ${focusArea}`}>                   
+        <div className="embla__viewport" ref={emblaRef}>
+          <div className="embla__container itemWrap">
+          {
+            items.map((item, index) => (
+              <a key={index} className="item embla__slide">
+                <span className="icon" style={{backgroundPosition: item.iconPosition}}></span>
+                <span className="title">{item.title}</span>
+              </a>
+            ))
+          }
+          </div>
+        </div>   
+        <span className="prev arr"></span>
+        <span className="next arr"></span>                   
+      </div>      
       <style jsx>{`
         .primeBenefitsBucket {
           overflow: hidden;
           padding: 15px 0 5px 10px;
+          position: relative;
+
+          .embla__slide {
+            flex: 0 0 85px;
+          }
 
           &.news {
             border-left: 1px dotted #9b8680;
@@ -66,6 +90,41 @@ export default function PrimeBenefitsBucket({focusArea}) {
           &.market {
             padding-left: 0;
             margin-bottom: 25px;
+          }
+
+          .arr {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            background: #DA4617CC;
+            border-radius: 50%;
+            position: absolute;            
+            cursor: pointer;
+            pointer-events: all;
+
+            &:after {
+              content: '';
+              display: inline-block;
+              width: 6px;
+              height: 6px;
+              border-top: 1px solid #fff;
+              border-left: 1px solid #fff;
+              transform: rotate(-45deg);
+              position: absolute;
+              top: 5px;
+              left: 6px;
+            }
+
+            &.prev {
+              left: 3px;
+              top: 46px;
+            }
+
+            &.next {
+              right: 3px;
+              top: 46px;
+              transform: rotate(180deg);
+            }
           }
 
           .itemWrap {
