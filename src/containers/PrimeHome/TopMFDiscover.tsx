@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import GLOBAL_CONFIG from "../../network/global_config.json";
 
 const discoverList = [
     {
@@ -50,6 +51,8 @@ const discoverList = [
 ]
 
 const TopMFDiscover = ({isDev}) => {
+    const etDomain = GLOBAL_CONFIG[isDev ? "development" : "production"]["ET_WEB_URL"];
+
   return (
     <>
         <div className="mf_screener_widget">
@@ -59,7 +62,7 @@ const TopMFDiscover = ({isDev}) => {
                     discoverList.map((value, index) => {
                         return (
                             <li className="item" key={`mf_screener_widget_${index}`}>
-                                <a target="_blank" rel="sponsored" href={`${value.link}`}>
+                                <a target="_blank" rel="sponsored" href={`${etDomain}${value.link}`}>
                                     <div className="icon">
                                         <i className={`subSprite ${value.iconClass}`}></i>
                                     </div>
