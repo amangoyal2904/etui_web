@@ -90,7 +90,7 @@ function PrimeHome({ searchResult, isDev }) {
     <>
       <TopSectionLayout searchResult={searchResult} isDev={isDev} />
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
-      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} />
+      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
