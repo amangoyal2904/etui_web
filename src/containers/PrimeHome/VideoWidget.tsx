@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { convertMilliseconds } from '../../utils';
 import Loading from "../../components/Loading";
+import GLOBAL_CONFIG from "../../network/global_config.json";
 
 const tabListJSON = [
     {
@@ -33,7 +34,7 @@ const tabListJSON = [
     }
 ]
 
-const VideoWidget = ({VideoWidgetData}) => {
+const VideoWidget = ({VideoWidgetData, isDev}) => {
     const [videoData, setVideoData] = useState<any>([{
         msid: "4413765",
         videoListData: VideoWidgetData
@@ -44,16 +45,21 @@ const VideoWidget = ({VideoWidgetData}) => {
         videoData[0]?.videoListData[0].msid,
         videoData[0]?.videoListData[0].title
     ]);
+    const [autoplay, setAutoplay] = useState(0);
+
+    const etDomain = GLOBAL_CONFIG[isDev ? "development" : "production"]["ET_WEB_URL"];
 
     const videoClick = (vdMsid, title) => {
         setSelectVideo([
             vdMsid,
             title
         ]);
+        
     }
 
     const tabClick = (tabMsid) => {
         setShowTab(tabMsid); 
+        setAutoplay(0);
 
         if(!videoData?.some(item => Number(item.msid) == Number(tabMsid))){
             const apiLink = `https://etpwaapipre.economictimes.com/request?type=plist&msid=${tabMsid}&contenttype=VIDEO&mode=hierarchy`;
@@ -88,11 +94,13 @@ const VideoWidget = ({VideoWidgetData}) => {
             const selectedObj = videoData?.find(item => Number(item.msid) == Number(showTab))?.videoListData[0];
 
             console.log("selectedObj --- ", selectedObj)
-
-            selectedObj?.msid && videoClick(
-                selectedObj?.msid, 
-                selectedObj?.title
-            )
+            if(selectedObj?.msid){
+                videoClick(
+                    selectedObj?.msid, 
+                    selectedObj?.title
+                )
+                setAutoplay(0);
+            }
         }
     }, [showTab])
 
@@ -117,7 +125,7 @@ const VideoWidget = ({VideoWidgetData}) => {
                                             <li key={`videowidget_etabsContent_key_${index}`} data-msid={value.msid} className={showTab != value.msid ? 'hide' : ''}>
                                                 <div className='vdListWrp'>
                                                     <div className='vplayer'>
-                                                        <iframe className="lazyIframe" data-threshold="300" src={`https://etdev8243.indiatimes.com/videodash.cms?autostart=0&msid=${selectVideo[0]}&rlvideo=&fallBackMute=true&skipad=1&widget=subsriberhome&prerollurl=true`}/>
+                                                        <iframe className="lazyIframe" data-threshold="300" src={`${etDomain}/videodash.cms?autostart=${autoplay}&msid=${selectVideo[0]}&rlvideo=&fallBackMute=true&skipad=1&widget=subsriberhome&iswebpre=true`}/>
                                                         <div className="vtitle">{selectVideo[1]}</div>
                                                     </div>
                                                     <div className='vdList'>
@@ -125,17 +133,17 @@ const VideoWidget = ({VideoWidgetData}) => {
                                                             value?.videoListData.map((listData, index2) => {
                                                                 return (                                                                                                                                            
                                                                     index2 < 8 && <div key={`videoListData_key_${index2}`} className='listDiv font_faus'>
-                                                                        <div className='content vid' onClick={() => {videoClick(listData?.msid, listData?.title)}} data-msid={listData?.msid}>
+                                                                        <div className='content vid' onClick={() => {videoClick(listData?.msid, listData?.title); setAutoplay(1);}} data-msid={listData?.msid}>
                                                                             <div className='imgDiv'>
                                                                                 <div className='active leayer hide'>
                                                                                     <span>NOW PLAYING</span>
                                                                                 </div>
-                                                                                <a className="imgdiv" href="">
+                                                                                <span className="imgdiv" >
                                                                                     <img width="155" height="116" alt="Trump praises Biden, Harris for calling him" loading="lazy" src={listData?.img} />
                                                                                     <span className="duratio">{convertMilliseconds(listData?.videoDuration)}</span>
-                                                                                </a>
+                                                                                </span>
                                                                             </div>
-                                                                            <a href="" className='vdTitle'>{listData?.title}</a>
+                                                                            <span className='vdTitle'>{listData?.title}</span>
                                                                         </div>
                                                                     </div>                                                                                                                                    
                                                                 )
@@ -249,6 +257,7 @@ const VideoWidget = ({VideoWidgetData}) => {
                                     font-weight: 400;
                                     width: 155px;
                                     margin-top: 15px;
+                                    cursor: pointer;
 
                                     .content{
                                         .vdTitle{
