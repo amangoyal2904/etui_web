@@ -1,8 +1,9 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TopMF from './TopMFWidget'
+import TopMFDiscover from './TopMFDiscover'
 
-export default function MutualFunds({ title, data }) {  
+export default function MutualFunds({ title, data, isDev }) {  
   return (
     <>
     <section className="politics">
@@ -11,6 +12,7 @@ export default function MutualFunds({ title, data }) {
         <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds"}} />
         <TopMF />
       </div>
+      <TopMFDiscover isDev={isDev} />
     </section>
 
     <style jsx>{`

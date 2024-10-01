@@ -552,6 +552,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                     display: flex;
                     justify-content: space-between;
                     height: 30px;
+                    align-items: center;
                 }
             }
         `}</style>

@@ -204,12 +204,20 @@ const TopMF = () => {
                             primaryIndex={tabList.length}
                         />
                     </div>
+                    
                 </div>
+                <p className='mf_tg_line'>Mutual fund investments are subject to market risks. Read all scheme related documents carefully.</p>
             </div>
             <style jsx>{`
                 .top_mf_wdgt {
                     width: 540px;
                     box-sizing: border-box;
+
+                    .mf_tg_line{
+                        font-size: 9px;
+                        margin-top: 7px;
+                        text-align: center;
+                    }
 
                     .tmf_head {
                         height: 25px;
