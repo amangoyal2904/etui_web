@@ -44,7 +44,7 @@ export default function TopSectionLayout({ searchResult, isDev }) {
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
             <InvestmentIdeas focusArea={focusArea}/>
             <ETEpaper focusArea={focusArea}/>
-            <LessonsFromGrandmasters focusArea={focusArea}/>
+            <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
           </>
           }
 
@@ -70,7 +70,7 @@ export default function TopSectionLayout({ searchResult, isDev }) {
             <Separator />
             <InvestmentIdeas focusArea={focusArea}/>
             <ETEpaper focusArea={focusArea}/>
-            <LessonsFromGrandmasters focusArea={focusArea}/>
+            <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
           </>
           }
 
@@ -78,6 +78,7 @@ export default function TopSectionLayout({ searchResult, isDev }) {
             <div className="title">MARKETS</div>
             <MarketsTopNews focusArea={focusArea}/>
             <IndicesWidget isDev={isDev} />
+            <Separator />
             <MarketDashboard />
             <Separator />
             <StockRecos />

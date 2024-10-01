@@ -13,6 +13,11 @@ export default function ViewAllCta({ title, url }: { title: string, url: string 
           width: 80%;
           margin: 0 auto;
           padding: 5px;
+          font-family: Montserrat;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 14.63px;
+          text-align: center;
         }
       `}</style>
     </>
