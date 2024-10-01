@@ -2,7 +2,7 @@ import SpotlightNavList from './SpotlightNavList';
 
 
 const SpotlightNav = ({ sec }: any) => {
-  console.log("Spotlight sec", sec);
+  
   return (
     <>
       {

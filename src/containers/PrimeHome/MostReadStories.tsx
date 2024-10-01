@@ -33,6 +33,87 @@ const MostReadStories = ({MostReadStoriesRes}) => {
     
   return (
     <>
+        <div id="trending" className="mostReadStories">
+            <div className='mostReadStoriesWrp'>
+                <div className="leftDiv font_faus">
+                    <span className="subSprite arrow"></span>
+                    <h3>Most Read<span>Stories</span></h3>
+                </div>
+                <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`mostReadStories`} />
+                <div ref={emblaRef} className={`embla mostReadStoriesSlider`}>
+                    <div className={`embla__container`}>
+                        {subsets.map((value, index) => (
+                            <div className={`embla__slide` } key={`MostReadStoriesRes_${index}`}>
+                                {value?.map((item, j) => {
+                                    return (                                        
+                                        <div className="content" key={j}>
+                                            <div className='contentWrap'>
+                                                <a 
+                                                    target="_blank" 
+                                                    href={item.url}
+                                                    className='flr'
+                                                >
+                                                    <img 
+                                                        src={item.img} 
+                                                        width="100" 
+                                                        height="75" 
+                                                        alt={item.title} 
+                                                        title={item.title}  
+                                                        className="im lazy" />
+                                                </a>
+                                                <div className="info_box">
+                                                    <span>News</span>
+                                                    <a 
+                                                        title={item.title}  
+                                                        target="_blank" 
+                                                        className="line_4" 
+                                                        href={item.url}
+                                                    >{item.title}</a>
+                                                </div>
+                                            </div>
+                                            <div className='icon'>
+                                                <span className="cSprite pshare-icon socialShare vat" data-msid={item.msid} data-arttype="0" data-channelid="1">
+                                                    <div className="share_block sharingIcon">
+                                                        <span className="text">Share This Article</span>
+                                                        <div className='shareIconWrp'>
+                                                            <span 
+                                                                className="fb cSprite" 
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "fb" })}></span>
+                                                            <span 
+                                                                className="twt cSprite" 
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "twt" })}
+                                                            ></span>
+                                                            <span 
+                                                                className="wa cSprite" 
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "wa" })}
+                                                            ></span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                                {/* <span className="cSprite bookmark-icon vat" data-msid={item.msid} data-arttype="0" data-channelid="1"></span> */}
+                                                <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
+                                            </div>
+                                        </div>                                    
+                                    )
+                                })}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`mostReadStories`} />
+            </div>
+            <div className="embla__dots mostreadDots">
+              {scrollSnaps.map((_, index) => (
+                <DotButton
+                  key={index}
+                  onClick={() => onDotButtonClick(index)}
+                  className={'embla__dot'.concat(
+                    index === selectedIndex ? ' embla__dot--selected red' : ''
+                  )}
+                />
+              ))}
+            </div>  
+        </div>
         <style jsx>{`
             .mostreadDots{
                 display: flex;
@@ -257,89 +338,6 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                 }
             }
         `}</style>
-        <div id="trending" className="mostReadStories">
-            <div className='mostReadStoriesWrp'>
-                <div className="leftDiv font_faus">
-                    <span className="subSprite arrow"></span>
-                    <h3>Most Read<span>Stories</span></h3>
-                </div>
-                <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`mostReadStories`} />
-                <div ref={emblaRef} className={`embla mostReadStoriesSlider`}>
-                    <div className={`embla__container`}>
-                        {subsets.map((value, index) => (
-                            <div className={`embla__slide` } key={`MostReadStoriesRes_${index}`}>
-                                {value?.map((item, j) => {
-                                    return (
-                                        <>
-                                            <div className="content">
-                                                <div className='contentWrap'>
-                                                    <a 
-                                                        target="_blank" 
-                                                        href={item.url}
-                                                        className='flr'
-                                                    >
-                                                        <img 
-                                                            src={item.img} 
-                                                            width="100" 
-                                                            height="75" 
-                                                            alt={item.title} 
-                                                            title={item.title}  
-                                                            className="im lazy" />
-                                                    </a>
-                                                    <div className="info_box">
-                                                        <span>News</span>
-                                                        <a 
-                                                            title={item.title}  
-                                                            target="_blank" 
-                                                            className="line_4" 
-                                                            href={item.url}
-                                                        >{item.title}</a>
-                                                    </div>
-                                                </div>
-                                                <div className='icon'>
-                                                    <span className="cSprite pshare-icon socialShare vat" data-msid={item.msid} data-arttype="0" data-channelid="1">
-                                                        <div className="share_block sharingIcon">
-                                                            <span className="text">Share This Article</span>
-                                                            <div className='shareIconWrp'>
-                                                                <span 
-                                                                    className="fb cSprite" 
-                                                                    onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "fb" })}></span>
-                                                                <span 
-                                                                    className="twt cSprite" 
-                                                                    onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "twt" })}
-                                                                ></span>
-                                                                <span 
-                                                                    className="wa cSprite" 
-                                                                    onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "wa" })}
-                                                                ></span>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    {/* <span className="cSprite bookmark-icon vat" data-msid={item.msid} data-arttype="0" data-channelid="1"></span> */}
-                                                    <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
-                                                </div>
-                                            </div>
-                                        </>
-                                    )
-                                })}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`mostReadStories`} />
-            </div>
-            <div className="embla__dots mostreadDots">
-              {scrollSnaps.map((_, index) => (
-                <DotButton
-                  key={index}
-                  onClick={() => onDotButtonClick(index)}
-                  className={'embla__dot'.concat(
-                    index === selectedIndex ? ' embla__dot--selected red' : ''
-                  )}
-                />
-              ))}
-            </div>  
-        </div>
     </>
   )
 }
