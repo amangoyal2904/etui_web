@@ -9,6 +9,7 @@ export default async function Page({ params }: {
   params: { all: string[] }
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
+  console.log('catch all')
   const headersList = headers();
   const domain = headersList.get("host") || "";
   const isDev = getDevStatus(domain);
