@@ -173,7 +173,7 @@ const TopMF = () => {
             <div ref={emblaRef} className="tmf_scheme_wrap embla">
                 <div className="embla__container">
                     {tabList.map((value, index) => (
-                        <div className="embla__slide" key={`tmf_scheme_wrap_${index}`}>
+                        <div className="embla__slide" data-cat={value.primaryObj.value} key={`tmf_scheme_wrap_${index}`}>
                             <SchemesSlide
                                 keyIndex={index}
                                 selectedTab={selectedTab}
@@ -188,7 +188,7 @@ const TopMF = () => {
                         </div>
                     ))}
 
-                    <div className="embla__slide" key={`tmf_scheme_wrap_${tabList.length}`}>
+                    <div className="embla__slide" data-cat={`promotedFeatured`} key={`tmf_scheme_wrap_${tabList.length}`}>
                         <SchemesSlide
                             keyIndex={tabList.length}
                             selectedTab={selectedTab}

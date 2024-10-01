@@ -14,10 +14,8 @@ import MutualFunds from "./MutualFunds";
 import MarketNews from "./MarketNews";
 import TopSectionLayout from "./TopSectionLayout";
 import Podcast from "./Podcast";
-import NewsByIndustry from "./NewsByIndustry";
 import MostReadStories from './MostReadStories';
 import VideoWidget from "./VideoWidget";
-import Opinion from "./Opinion";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 
@@ -39,10 +37,8 @@ function PrimeHome({ searchResult, isDev }) {
   const explainers = searchResult?.find(item => item?.name === "explainers") || {};
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
-  const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
   const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
-  const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
   // console.log("explainers", explainers);
 
   const { state, dispatch } = useStateContext();
@@ -93,10 +89,9 @@ function PrimeHome({ searchResult, isDev }) {
   return (
     <>
       <TopSectionLayout searchResult={searchResult} isDev={isDev} />
-      <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} />
-      <Opinion OpinionData={OpinionData?.data || []} />
+      
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
