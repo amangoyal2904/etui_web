@@ -151,7 +151,7 @@ const NewsByIndustry = ({data, title}) => {
                             }
                             .otherDiv{
                                 display: inline-flex;
-                                width: 350px;
+                                width: 315px;
                                 border-top: 1px solid #e8d2cb;
                                 padding: 11px 0 15px 0;
                                 vertical-align: top;
@@ -328,7 +328,7 @@ const NewsByIndustry = ({data, title}) => {
 
                 .tabs{
                     list-style: none;
-                    width: 200px;
+                    width: 215px;
                     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 19%);
                     background-color: #fff;
                     display: table-cell;
@@ -477,7 +477,7 @@ const NewsByIndustry = ({data, title}) => {
                 }
 
                 .tabsContent{
-                    width: 732px;
+                    width: 710px;
                     padding: 17px 19px 0 21px;
                     border: solid 1px #e6cdc4;
                     display: table-cell;
@@ -491,6 +491,13 @@ const NewsByIndustry = ({data, title}) => {
                 background: url('https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg') no-repeat;
                 display: inline-block;
                 background-size: 475px;
+            }
+
+            #newsInds{
+                border-top: 1px solid #9b8680;
+                padding-top: 1px;
+                margin-top: 10px;
+                padding-bottom: 50px;    
             }
         `}</style>
         <section id="newsInds">

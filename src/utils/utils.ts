@@ -182,7 +182,7 @@ export const dateFormat = (dt, format = "%Y-%M-%d") => {
       "%m": objD.getMinutes(),
       "%s": objD.getSeconds(),
       "%DD": fullDaysName[objD.getDay() + 1],
-      "%D": shortDaysName[objD.getDay() + 1],
+      "%D": shortDaysName[objD.getDay()],
       "%p": objD.getHours() > 11 ? "PM" : "AM"
     };
     newDate = format;

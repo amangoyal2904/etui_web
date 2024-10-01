@@ -14,62 +14,77 @@ import StockReportPlus from './StockReportPlus';
 import BigBullPortfolio from './BigBullPortfolio';
 import MarketMood from './MarketMood';
 import LiveStream from './LiveStream';
+import Opinion from "./Opinion";
+import NewsByIndustry from "./NewsByIndustry";
 
 export default function TopSectionLayout({ searchResult, isDev }) {
   const [focusArea, setFocusArea] = React.useState("news");
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
+  const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
+  const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
+  const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   // console.log("topNews", searchResult);
   return (
     <>
       <section className="topLayout">
-        <div className="col1">
-          <TodayNews todayNews={todayNews} />
-        </div>
-        <div className="col2">
-          <div className="titleNSwitch">
-            <span className="title">ETPRIME</span>
-            <span className="switch">
-              <span className={focusArea === "news" ? "active" : ""} onClick={() => setFocusArea("news")}>NEWS FOCUS</span>
-              <span className="switchIcon" onClick={() => {
-                focusArea === "news" ? setFocusArea("market") : setFocusArea("news")
-              }}>
-                <i className={focusArea === "news" ? "left" : "right"}></i>
-              </span>
-              <span className={focusArea === "market" ? "active" : ""} onClick={() => setFocusArea("market")}>MARKET FOCUS</span>
-            </span>
-          </div>
-          <PrimeBenefitsBucket focusArea={focusArea}/>
-          { focusArea === "news" && <>            
-            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
-            <InvestmentIdeas focusArea={focusArea}/>
-            <ETEpaper focusArea={focusArea}/>
-            <LessonsFromGrandmasters focusArea={focusArea}/>
-          </>
-          }
+        <div className="ly_first_wrp">
+          <div className='ly_second_wrp'>
+            <div className="col1">
+              <TodayNews todayNews={todayNews} />
+            </div>
+            <div className="col2">
+              <div className="titleNSwitch">
+                <span className="title">ETPRIME</span>
+                <span className="switch">
+                  <span className={focusArea === "news" ? "active" : ""} onClick={() => setFocusArea("news")}>NEWS FOCUS</span>
+                  <span className="switchIcon" onClick={() => {
+                    focusArea === "news" ? setFocusArea("market") : setFocusArea("news")
+                  }}>
+                    <i className={focusArea === "news" ? "left" : "right"}></i>
+                  </span>
+                  <span className={focusArea === "market" ? "active" : ""} onClick={() => setFocusArea("market")}>MARKET FOCUS</span>
+                </span>
+              </div>
+              <PrimeBenefitsBucket focusArea={focusArea}/>
+              { focusArea === "news" && <>            
+                <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
+                <InvestmentIdeas focusArea={focusArea}/>
+                <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData}/>
+                <LessonsFromGrandmasters focusArea={focusArea}/>
+              </>
+              }
 
-          {
-            focusArea === "market" && <>
-              <MarketsTopNews focusArea={focusArea}/>
-              <IndicesWidget isDev={isDev} />
-              <MarketDashboard />
-              <Separator />
-              <StockRecos />
-              <Separator />
-              <StockReportPlus />
-              <Separator />
-              <BigBullPortfolio />
-              <Separator />
-              <MarketMood />
-            </>
-          }
+              {
+                focusArea === "market" && <>
+                  <MarketsTopNews focusArea={focusArea}/>
+                  <IndicesWidget isDev={isDev} />
+                  <MarketDashboard />
+                  <Separator />
+                  <StockRecos />
+                  <Separator />
+                  <StockReportPlus />
+                  <Separator />
+                  <BigBullPortfolio />
+                  <Separator />
+                  <MarketMood />
+                </>
+              }
+            </div>
+          </div>
+            {
+              focusArea === "news" && <>
+                <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+                <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
+              </>
+            }
         </div>
         <div className="col3">
           { focusArea === "market" && <>            
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
             <Separator />
             <InvestmentIdeas focusArea={focusArea}/>
-            <ETEpaper focusArea={focusArea}/>
+            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} />
             <LessonsFromGrandmasters focusArea={focusArea}/>
           </>
           }
@@ -93,11 +108,34 @@ export default function TopSectionLayout({ searchResult, isDev }) {
           <LiveStream />
         </div>
       </section>
+      {
+        focusArea === "market" && <>
+          <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+          <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
+        </>
+      }
       <style jsx>{` 
         .topLayout {
           display: flex;
           justify-content: space-between;
           margin-top: 20px;
+
+          .hide{
+            display: none;
+          }
+
+          .ly_first_wrp{
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 350px);
+            flex-direction: column;
+
+            .ly_second_wrp{
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+            }
+          }
 
           .col1 {
             width: 270px;          

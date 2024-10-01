@@ -10,7 +10,7 @@ import {
 import Bookmark from 'components/Bookmark';
 
 const MostReadStories = ({MostReadStoriesRes}) => {
-    const OPTIONS = {loop: true}
+    const OPTIONS = {loop: false}
     const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi)
 

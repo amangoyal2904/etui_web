@@ -46,6 +46,11 @@
       .prevbtn{
         background-position: -359px -477px;
       }
+
+      &:disabled .prevbtn, &:disabled .nextbtn{
+        opacity: 0.5;
+        cursor: no-drop;
+      }
     }
 
     &.red{
