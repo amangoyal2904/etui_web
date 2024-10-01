@@ -2,7 +2,7 @@ import MoreFromLink from 'containers/PrimeHome/MoreFromLink'
 import styles from './styles.module.scss';
 
 const TextImageMiddile = ({data, heading}) => {
-    console.log("test", data);
+    // console.log("test", data);
   return (
     <div className={styles.riseMiddle}>
         <div className={styles.heading}>{heading}</div>

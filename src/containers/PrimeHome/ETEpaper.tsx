@@ -3,10 +3,9 @@ import { dateFormat } from "../../utils/utils";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import HeadingWithRightArrow from './HeadingWithRightArrow';
 
-export default function ETEpaper({ focusArea, etEpaperData }) {
+export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
   const dayName = useState(dateFormat(new Date(), '%D'))[0];
-  
-  const isDev = window?.isDev;
+    
   const epaperDomain = GLOBAL_CONFIG[isDev ? "development" : "production"]["Epaper_Domain"];
   const imgDomain = GLOBAL_CONFIG["ET_IMG_DOMAIN"];
 

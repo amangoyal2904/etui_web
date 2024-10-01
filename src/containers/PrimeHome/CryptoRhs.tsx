@@ -10,7 +10,7 @@ const CryptoRhs = ({ dataTv, dataExpert, titleTv, titleExpert, isDev }) => {
             <CryptoExpert data={dataExpert} title={titleExpert}/>
         </div>
         <div className="gainers_loosers">
-            <CryptoGainerLooser />
+            <CryptoGainerLooser isDev={isDev}/>
         </div>
         <style jsx>{`
             .video_expert_wrap{width:255px;display:inline-block;margin-left:20px;vertical-align:top;}

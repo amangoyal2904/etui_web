@@ -12,28 +12,26 @@ const Opinion = ({OpinionData, focusArea}) => {
             <ul className="opinionWdWrp">
                 {
                     OpinionData?.map((value, index) => {
-                        return (
-                            <>
-                                <li className={`listWrp ${value.section == "Speaking Tree" ? 'sTree' : ''}`} key={`opinionWidget_key_${index}`}>
-                                    <div className="mb5 headWrp">
-                                        <div className="ctgry">{value.section}</div>
-                                        <div className="etPrint">FROM ET PRINT</div>
-                                    </div>
-                                    <a target="_blank" className="font_faus listTitle" href={value.url}>
-                                        {
-                                            value.section == "Speaking Tree" && <img src={`${imgDomain}/thumb/msid-81702281,width-51,height-42,resizemode-8.cms`} className="flr" width="" height="" alt="Speaking Tree" />
-                                        }
-                                        {value.title}
-                                    </a>
-                                    <p className="line_6 listSyn">{value.synopsis}</p>
+                        return (                            
+                            <li className={`listWrp ${value.section == "Speaking Tree" ? 'sTree' : ''}`} key={`opinionWidget_key_${index}`}>
+                                <div className="mb5 headWrp">
+                                    <div className="ctgry">{value.section}</div>
+                                    <div className="etPrint">FROM ET PRINT</div>
+                                </div>
+                                <a target="_blank" className="font_faus listTitle" href={value.url}>
                                     {
-                                        value.authors && value.authors[0].title && <div className="auInfo">
-                                            {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} />}
-                                            <span className="auName">{`${!value.authors[0]?.img ? "By" : ""} ${value.authors[0].title}`}</span>
-                                        </div>
+                                        value.section == "Speaking Tree" && <img src={`${imgDomain}/thumb/msid-81702281,width-51,height-42,resizemode-8.cms`} className="flr" width="" height="" alt="Speaking Tree" />
                                     }
-                                </li>
-                            </>
+                                    {value.title}
+                                </a>
+                                <p className="line_6 listSyn">{value.synopsis}</p>
+                                {
+                                    value.authors && value.authors[0].title && <div className="auInfo">
+                                        {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} />}
+                                        <span className="auName">{`${!value.authors[0]?.img ? "By" : ""} ${value.authors[0].title}`}</span>
+                                    </div>
+                                }
+                            </li>
                         )
                     })
                 }

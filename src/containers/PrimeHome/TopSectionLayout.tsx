@@ -50,7 +50,7 @@ export default function TopSectionLayout({ searchResult, isDev }) {
               { focusArea === "news" && <>            
                 <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
                 <InvestmentIdeas focusArea={focusArea}/>
-                <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData}/>
+                <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>
                 <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
               </>
               }
@@ -84,7 +84,7 @@ export default function TopSectionLayout({ searchResult, isDev }) {
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
             <Separator />
             <InvestmentIdeas focusArea={focusArea}/>
-            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} />
+            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>
             <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
           </>
           }

@@ -53,6 +53,42 @@
       }
     }
 
+    &.other{
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      top: 50%;
+      transform: translate(-50%, 0);
+
+      &.prevbtn{
+        left: 0;
+      }
+
+      &.nextbtn{
+        right: -30px;
+      }
+
+      .btn{
+        width: 32px;
+        height: 32px;
+        z-index: 11;
+        cursor: pointer;
+      }
+
+      .nextbtn{
+        background-position: -429px -477px;
+      }
+  
+      .prevbtn{
+        background-position: -359px -477px;
+      }
+
+      &:disabled .prevbtn, &:disabled .nextbtn{
+        opacity: 0.5;
+        cursor: no-drop;
+      }
+    }
+
     &.topMFWd{
       width: auto;
       height: auto;

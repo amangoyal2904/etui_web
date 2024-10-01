@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import API_CONFIG from "../../network/config.json";
-const CryptoChart = () => {
+const CryptoChart = ({ isDev }) => {
   const [coin, setCoin] = useState("btc");
   const [coinsData, setCoinsData] = useState<any>([]);
+
+  const APP_ENV = isDev ? "development" : "production";
+  
   useEffect(() => {
     getData();
     let timer = setInterval(getData, 24e3);
@@ -51,8 +54,7 @@ const CryptoChart = () => {
           height="155"
           width="243"
           data-threshold="300"
-          src={`https://${
-            window?.APP_ENV != "production" ? "etdev8243" : "economictimes"
+          src={`https://${APP_ENV != "production" ? "etdev8243" : "economictimes"
           }.indiatimes.com/renderchart.cms?type=crypto&symbol=${coin}&height=155&transparentBg=1`}
         ></iframe>
       </div>
