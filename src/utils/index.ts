@@ -794,6 +794,16 @@ export const convertMilliseconds = (milliseconds) => {
   }
 }
 
+export function changeImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
+  const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
+
+  if(desiredResizeMode) {
+    return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+  }
+
+  return newUrl;
+}
+
 export const formatNumber = (
   number: number,
   uptoDecimal: number = 2,
