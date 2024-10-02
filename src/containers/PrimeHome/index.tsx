@@ -119,6 +119,21 @@ function PrimeHome({ searchResult, isDev }) {
         a[href*="articleshow"]:visited, a[href*="videoshow"]:visited, a[href*="slideshow"]:visited, a[href*="liveblog"]:visited {
             color: #636363;
         }
+        .addToWatchListIcon {
+          width: 17px;
+          height: 17px;
+          background: #0288D1;
+          border-radius: 3px;
+          display: inline-block;
+          color: #fff;
+          font-size: 20px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          right: 10px;
+          top: 10px;
+        }
       `}</style>
     </>
   )
