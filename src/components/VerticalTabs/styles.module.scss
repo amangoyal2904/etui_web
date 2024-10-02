@@ -1,0 +1,38 @@
+.vtabs {
+  display: flex;
+  flex-direction: column;
+  &.center {
+    text-align: center;
+    line-height: normal;
+  }
+  span {
+    display: block;
+  }
+  .vtab {
+    display: flex;
+    font-size: 10.57px;
+    line-height: 16px;
+    min-width: 70px;
+    min-height: 60px;
+    align-items: center;
+    justify-content: center;
+    background: rgb(255, 243, 240);
+    border-right: 1px solid rgb(255, 199, 184);
+    cursor: pointer;
+    & + .vtab {
+      border-top: 1px solid rgb(255, 199, 184);
+    }
+    &.active {
+      position: relative;
+      font-weight: bold;
+      background: #fff;
+      border-right: unset;
+      &:after {
+        content: "\276F";
+        // font-family: var(--font-eticons);
+        position: absolute;
+        right: 0px;
+      }
+    }
+  }
+}
