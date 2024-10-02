@@ -169,5 +169,17 @@
   "SPONSER_BANNER_DATA": {
     "development": "https://qc-subscriptionsbff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo",
     "production": "https://subscriptions-bff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo"
+  },
+  "BigBullGetRecentTransactions": {
+    "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/recent-deals",
+    "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/recent-deals"
+  },
+  "BigBullGetBestPicks": {
+    "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/best-picks",
+    "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/best-picks"
+  },
+  "BigBullAllInverstorOverview": {
+    "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview",
+    "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview"
   }
 }

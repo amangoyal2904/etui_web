@@ -45,7 +45,7 @@ export default function StockRecos() {
         <div className={styles.footer}>
           Brokerage <a href="#">ICICI Direct</a>
         </div>
-        <span className={styles.addToWatchListIcon}>&#43;</span>
+        <span className={`addToWatchListIcon`}>&#43;</span>
       </div>
       <div className={styles.card}>
         <div className={styles.firstRow}><span className={styles.cat}>BUY</span> | Call Date: Sep 6, 2022</div>
@@ -77,7 +77,7 @@ export default function StockRecos() {
         <div className={styles.footer}>
           Brokerage <a href="#">ICICI Direct</a>
         </div>
-        <span className={styles.addToWatchListIcon}>&#43;</span>
+        <span className="addToWatchListIcon">&#43;</span>
       </div>
 
       <ViewAllCta title="Stock Recos" url="/stock-recos" />
