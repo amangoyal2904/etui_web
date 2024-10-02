@@ -17,7 +17,7 @@ import LiveStream from './LiveStream';
 import Opinion from "./Opinion";
 import NewsByIndustry from "./NewsByIndustry";
 
-export default function TopSectionLayout({ searchResult, isDev }) {
+export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const [focusArea, setFocusArea] = React.useState("news");
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
@@ -57,9 +57,9 @@ export default function TopSectionLayout({ searchResult, isDev }) {
 
               {
                 focusArea === "market" && <>
-                  <MarketsTopNews focusArea={focusArea}/>
+                  <MarketsTopNews focusArea={focusArea} />
                   <IndicesWidget isDev={isDev} />
-                  <MarketDashboard />
+                  <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea}/>
                   <Separator />
                   <StockRecos />
                   <Separator />
@@ -94,7 +94,7 @@ export default function TopSectionLayout({ searchResult, isDev }) {
             <MarketsTopNews focusArea={focusArea}/>
             <IndicesWidget isDev={isDev} />
             <Separator />
-            <MarketDashboard />
+            <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
             <StockRecos />
             <Separator />
