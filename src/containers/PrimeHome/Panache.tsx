@@ -1,3 +1,4 @@
+import PanacheSlideshow from 'components/PanacheSlideshow';
 import React from 'react'
 
 export default function Panache({ title, data }) {
@@ -15,12 +16,13 @@ export default function Panache({ title, data }) {
   const first = data?.[0];
   const secondThird = data?.slice(1, 3);
   const rest = data?.slice(3);
+  const slideshowData = data.slice(0,2);
 
   return (
     <>
       <section className="panache secBox">
         <h2>{title}</h2>
-        <div className="flex">          
+        <div className="flex Pleft">          
           <a href={first?.title} className="firstBox">
             <figure>
               <img src={changeFirstImageWidthHeight(first?.img, 335, 507, 6)} alt={first?.title} width={335} height={507} title={first?.title} />
@@ -55,6 +57,9 @@ export default function Panache({ title, data }) {
             })
           }
           </div>
+        </div>
+        <div className="third">
+          <PanacheSlideshow data={slideshowData} heading="Videos & Slideshows"/>
         </div>
       </section>
       <style jsx>{`
@@ -125,10 +130,19 @@ export default function Panache({ title, data }) {
               color: #000;
               font-size: 18px;
               font-family: Faustina;
+              display: inline-flex;
+              border-bottom: 1px solid #ccc;
               margin-bottom: 10px;
+              padding-bottom: 15px;
             }
           }
-
+          .Pleft{float: left;
+                width: 985px;}
+          .third {
+            width: 275px;
+            display: inline-block;
+            vertical-align: top;
+          }
         }
       `}</style>
     </>

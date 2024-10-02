@@ -1,6 +1,7 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TextImageMiddile from 'components/TextImageMiddile';
+import MarketGainers from './RiseGainers';
 
 export default function Rise({ title, data }) { 
   const smallBizMiddle = data.slice(1,6);
@@ -12,7 +13,10 @@ export default function Rise({ title, data }) {
       <div className="second">
       <TextImageMiddile data={smallBizMiddle} heading="Popular in Small Biz"/>
       </div>
-      <div className="third">Third Div</div>
+      <div className="third">
+        <MarketGainers/>
+      </div>
+      
     </section>
     <style jsx>{`
       .rise {
