@@ -364,15 +364,17 @@ function MyWatchlist() {
         <span className="stockCount">1 Stocks</span>
       </div>
       <table className="stocks">
-        <tr>
-          <td>
-            <a title="Jindal Stainless Ltd." className="companyName" target="_blank" href="jindal-stainless-ltd/stocks/companyid-750.cms">Jindal Stainless</a>
-          </td>
-          <td className="valChange">
-            <strong className="val">751.45 </strong>
-            <span className="change red">(-0.66%)</span>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <a title="Jindal Stainless Ltd." className="companyName" target="_blank" href="jindal-stainless-ltd/stocks/companyid-750.cms">Jindal Stainless</a>
+            </td>
+            <td className="valChange">
+              <strong className="val">751.45 </strong>
+              <span className="change red">(-0.66%)</span>
+            </td>
+          </tr>
+        </tbody>
       </table>  
     </div>
     <style jsx>{`

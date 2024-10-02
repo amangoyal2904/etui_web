@@ -11,10 +11,11 @@ export default function MarketMood() {
         <table>
           <thead>
             <tr>
-              <th rowSpan={2}>Date</th>
-              <th colSpan={5}>No. of Stocks Trading Above</th>            
+              <th></th>
+              <th colSpan={5} className="info">No. of Stocks Trading Above</th>            
             </tr>
             <tr>
+              <th>Date</th>
               <th>SMA <br/> 20</th>
               <th>SMA <br/> 50</th>
               <th>SMA <br/> 100</th>
@@ -63,16 +64,52 @@ export default function MarketMood() {
         table {
           width: 100%;
           border-collapse: collapse;
+          margin-bottom: 10px;
+          margin-top: 10px;
+          border: 2px solid #ccc;
 
-          th {
-            background: #f4f4f4;
-            border: 1px solid #f4f4f4;
-            color: #4D4D4D;
-
+          .info {
+            font-family: Montserrat;
+            font-size: 9.37px;
+            font-weight: 700;
+            line-height: 11.42px;
+            text-align: center;
+            color: #D17D00;
           }
 
-          td {
-            border: 1px solid #f4f4f4;
+          thead {
+            tr:last-child {
+              th:not(:first-child) {
+                border: 2px solid #ccc;
+              }
+            }
+          }
+
+          tr{
+            td:first-child {
+              background: #fff;
+            }
+            th {
+              background: #f4f4f4;              
+              color: #4D4D4D;
+              vertical-align: middle;
+              padding: 10px;
+              font-family: Montserrat;
+              font-size: 11.24px;
+              font-weight: 600;
+              line-height: 14.99px;
+              text-align: center;
+            }
+
+            td {
+              border: 2px solid #ccc;
+              padding: 10px;
+              font-family: Montserrat;
+              font-size: 13px;
+              font-weight: 600;
+              line-height: 16px;
+              text-align: left;
+            }
           }
         }
       `}</style>

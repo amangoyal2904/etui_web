@@ -1,78 +1,67 @@
 //@ts-nocheck
-import React from 'react'
+import React from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import {
+    PrevButton,
+    NextButton,
+    usePrevNextButtons
+  } from '../../components/CarouselArrowBtn';
 
 export default function Explainers({ data, title }) {
+  const OPTIONS = {loop: false}
+  const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
+  const {
+    prevBtnDisabled,
+    nextBtnDisabled,
+    onPrevButtonClick,
+    onNextButtonClick
+  } = usePrevNextButtons(emblaApi);
 
-  function moveSlider(direction) {
-    const itemWrap = document.querySelector(".slider .itemWrap");
-    const slider = document.querySelector(".slider");
-    // const itemsCount = document.querySelectorAll(".slider .item").length;
-
-    const itemWrapWidth = itemWrap?.offsetWidth || 0;
-    const sliderWidth = slider?.offsetWidth || 0;
-
-    const itemWrapMarginLeft = itemWrap?.style?.marginLeft || 0;
-    itemWrap.style.transition = "margin-left 0.5s";
-    
-    if(direction === "left") {
-      itemWrap.style.marginLeft = `${parseInt(itemWrapMarginLeft) + sliderWidth}px`;
-    } else {
-      itemWrap.style.marginLeft = `${parseInt(itemWrapMarginLeft) - sliderWidth}px`;      
-    }
-    
+  const subsets = [];
+  for (let i = 0; i < data.length; i += 4) {
+    subsets.push(data.slice(i, i + 4));
   }
 
   return (
     <>
       <section className="explainers secBox">
         <h2>{title || ""}</h2>
-        <div className="slider">
-          <div className="itemWrap">
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
+        <div className="slider embla" ref={emblaRef}>
+          {/* <div className="itemWrap">
           {
             data?.map((item, index) => <a key={index} className="item" href={item?.link} target="_blank">
                 <img src={item?.img} alt={item?.title} width={256} height={192} title={item?.title} />
                 {item?.title || ""}
-              </a>
-            
+              </a>            
             )
           }
-          </div>
-          <div className="nextPrevBtn">
-            <i className="prevBtn subSprite btn disable" onClick={() => moveSlider("left")}></i>
-            <i className="nextBtn subSprite btn flr" onClick={() => moveSlider("right")}></i>
+          </div>           */}
+          <div className="embla__container">
+            {
+              subsets.map((subset, index) => {
+                return (
+                  <div key={index} className="embla__slide itemWrap">
+                    {
+                      subset.map((item, index1) => {
+                        return (
+                          <a href={item?.link} target="_blank" className="item" key={`${index}_${index1}`}>
+                            <img src={item?.img} alt={item?.title} width={256} height={192} title={item?.title} />
+                            {item?.title || ""}
+                          </a>
+                        )
+                      })
+                    }
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`other`} />
       </section>
       <style jsx>{`
-        .nextPrevBtn {
-          top: 50%;
-          position: absolute;
-          width: 100%;
-          margin-top: -17.5px;
-
-          .btn {
-            width: 32px;
-            height: 32px;
-            position: relative;
-            z-index: 11;
-            cursor: pointer;
-          }
-
-          .disable {
-            opacity: .8;
-            cursor: not-allowed;
-          }
-
-          .prevBtn {
-            background-position: -359px -477px;
-            left: -16px;
-          }
-
-          .nextBtn {
-            background-position: -429px -477px;
-            right: -16px;
-          }
-        }
+        
         .subSprite {
           background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
           display: inline-block;

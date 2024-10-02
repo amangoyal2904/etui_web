@@ -40,7 +40,7 @@ export default async function Page({ params }: {
   const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
   return  <Layout page="primehome" className="layout1260" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
-    <PrimeHome {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
+    <PrimeHome {...response} objVc={versionControl} isprimeuser={isprimeuser} isDev={isDev} />
   </Layout>;
 }
 

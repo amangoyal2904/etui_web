@@ -2,8 +2,7 @@ import LiveIcon from 'components/Icons/LiveIcon';
 import Separator from 'components/Separator';
 import React from 'react'
 
-export default function TodayNews({ todayNews }) {
-  console.log("todayNews", todayNews);
+export default function TodayNews({ todayNews }) {  
   const topNews = todayNews?.data?.find(item => item.section == "top");
   const wealthNews = todayNews?.data?.find(item => item.section == "wealth");
   const briefNews = todayNews?.data?.find(item => item.section == "brief");

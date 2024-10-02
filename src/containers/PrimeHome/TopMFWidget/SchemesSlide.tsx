@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Loading from 'components/Loading';
 import {
@@ -12,60 +12,93 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
     const OPTIONS = { loop: false, dragFree: false };
     const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
     const { onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
-    // const { onDotButtonClick } = useDotButton(emblaApi);
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
-    // const selectTopMFCat = topMFSchemes.find(item => item.primaryObj == primaryName);
 
-    const handleScroll = useCallback(() => {
-        const currentSnap: any = emblaApi?.selectedScrollSnap();
-        const previousSnap: any = emblaApi?.previousScrollSnap();
+    const isAtLastSlide = useRef(false);
+    const isAtFirstSlide = useRef(false);
+
+    const checkIfLastSlide = useCallback(() => {
+        if (!emblaApi) return false;
+        const snapList = emblaApi.scrollSnapList();
+        const currentSnap = emblaApi.selectedScrollSnap();
+        return currentSnap === snapList.length - 1;
+    }, [emblaApi]);
+
+    const checkIfFirstSlide = useCallback(() => {
+        if (!emblaApi) return false;
+        const currentSnap = emblaApi.selectedScrollSnap();
+        return currentSnap === 0;
+    }, [emblaApi]);
+
+    const handleSelect = useCallback(() => {
+        if (!emblaApi) return;
+
+        const currentSnap = emblaApi.selectedScrollSnap();
+        const selectedSlideName = emblaApi.slideNodes()[currentSnap].getAttribute("data-type");
         
-        if (currentSnap > previousSnap) {
-            console.log("selectedSlideName 34 3 Next slide");
-            return "Next slide";
-        } else if (currentSnap < previousSnap) {
-            console.log("selectedSlideName 34 3 Previous slide");
-            return "Previous slide";
-        } else {
-            console.log("selectedSlideName 34 3 No slide change");
-            return "No slide change";
-        }
-    }, [emblaApi]);
-
-    const logSlidesInViewOnce = useCallback(() => {
-        const selectedSlideName = emblaApi?.slideNodes()[emblaApi.selectedScrollSnap()].getAttribute("data-type");
-        //console.log("selectedSlideName 34", selectedTab, selectedSlideName, (selectedSlideName !== selectedTab.secondaryObj), emblaApi?.canScrollNext());
-
-        const slideDirection = handleScroll();
-
-        if(slideDirection == "Next slide" && !emblaApi?.canScrollNext()){
-            //console.log("selectedSlideName 34 1",primaryName, selectedSlideName, primaryIndex)
-            if(primaryIndex == mainEmblaApi.slideNodes().length - 1){
-                mainEmblaApi.scrollTo(0)
-            } else {
-                mainEmblaApi.scrollTo(primaryIndex + 1)    
-            }
-        }
-
-        if(slideDirection == "Previous slide" && !emblaApi?.canScrollPrev()){
-            //console.log("selectedSlideName 34 2",primaryName, selectedSlideName, primaryIndex)
-            if(primaryIndex == 0){
-                mainEmblaApi.scrollTo(5)
-            } else {
-                mainEmblaApi.scrollTo(primaryIndex -1)    
-            } 
-        }
+        isAtLastSlide.current = checkIfLastSlide();
+        isAtFirstSlide.current = checkIfFirstSlide();
+        
         selectedTabClick(primaryName, selectedSlideName);
-        //emblaApi?.off('pointerUp', logSlidesInViewOnce);
-    }, [emblaApi]);
+    }, [emblaApi, primaryName, selectedTabClick, checkIfLastSlide, checkIfFirstSlide]);
+
+    const handleNextClick = useCallback(() => {
+        if (!emblaApi) return;
+
+        const snapList = emblaApi.scrollSnapList();
+        if (snapList.length === 1 || (isAtLastSlide.current && !emblaApi.canScrollNext())) {
+            // We're at the last slide and can't scroll further in the child carousel
+            if (mainEmblaApi) {
+                const currentMainSnap = mainEmblaApi.selectedScrollSnap();
+                const totalMainSlides = mainEmblaApi.slideNodes().length;
+                const nextMainSnap = (currentMainSnap + 1) % totalMainSlides;
+                mainEmblaApi.scrollTo(nextMainSnap);
+                
+                const nextCurrentMainSnap = mainEmblaApi.selectedScrollSnap();
+                const selectedSlideName = mainEmblaApi.slideNodes()[nextCurrentMainSnap].getAttribute("data-cat");
+
+                const selectedSubSlide = document.querySelector(`.tmf_cat_wrap[data-cat="${selectedSlideName}"] .embla__slide--selected`);
+                const selectedSubSlideName = selectedSubSlide?.getAttribute('data-type')
+                selectedTabClick(selectedSlideName, selectedSubSlideName);
+            }
+        } else {
+            emblaApi.scrollNext();
+        }
+    }, [emblaApi, mainEmblaApi]);
+
+    const handlePrevClick = useCallback(() => {
+        if (!emblaApi) return;
+
+        const snapList = emblaApi.scrollSnapList();
+        if (snapList.length === 1 || (isAtFirstSlide.current && !emblaApi.canScrollPrev())) {
+            // We're at the first slide and can't scroll further in the child carousel
+            if (mainEmblaApi) {
+                const currentMainSnap = mainEmblaApi.selectedScrollSnap();
+                const totalMainSlides = mainEmblaApi.slideNodes().length;
+                const prevMainSnap = (currentMainSnap - 1 + totalMainSlides) % totalMainSlides;
+                mainEmblaApi.scrollTo(prevMainSnap);
+
+                const prevCurrentMainSnap = mainEmblaApi.selectedScrollSnap();
+                const selectedSlideName = mainEmblaApi.slideNodes()[prevCurrentMainSnap].getAttribute("data-cat");
+
+                const selectedSubSlide = document.querySelector(`.tmf_cat_wrap[data-cat="${selectedSlideName}"] .embla__slide--selected`);
+                const selectedSubSlideName = selectedSubSlide?.getAttribute('data-type')
+                selectedTabClick(selectedSlideName, selectedSubSlideName);
+            }
+        } else {
+            emblaApi.scrollPrev();
+        }
+    }, [emblaApi, mainEmblaApi]);
 
     useEffect(() => {
-        if (emblaApi){
-            //emblaApi.on('pointerUp', logSlidesInViewOnce);
-            emblaApi.on('settle', logSlidesInViewOnce);
-            // emblaApi.on('select', handleScroll);
-        } 
-    }, [emblaApi, logSlidesInViewOnce]);
+        if (emblaApi) {
+            emblaApi.on('select', handleSelect);
+            
+            return () => {
+                emblaApi.off('select', handleSelect);
+            };
+        }
+    }, [emblaApi, handleSelect]);
 
     const renderStars = (vrRating) => {
         const totalStars = 5;
@@ -444,7 +477,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                 </div>
                 <div className='topMFButtonWrp'>
                     {/* <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`topMFWd`} /> */}
-                    <PrevButton onClick={onPrevButtonClick} color={'red'} widget={`topMFWd`} />
+                    <PrevButton onClick={handlePrevClick} color={'red'} widget={`topMFWd`} />
                     <div className="embla__dots topMfDots">
                         {scrollSnaps.map((_, index) => (
                             <DotButton
@@ -458,7 +491,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                         ))}
                     </div>
                     {/* <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`topMFWd`} /> */}
-                    <NextButton onClick={onNextButtonClick} color={'red'} widget={`topMFWd`} />
+                    <NextButton onClick={() => {handleNextClick()} } color={'red'} widget={`topMFWd`} />
                 </div> 
             </div>
             <style jsx>{`
@@ -519,6 +552,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                     display: flex;
                     justify-content: space-between;
                     height: 30px;
+                    align-items: center;
                 }
             }
         `}</style>

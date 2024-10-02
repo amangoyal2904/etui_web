@@ -3,7 +3,8 @@ import API_CONFIG from "../../network/config.json"
 import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
 import { fetchAdaptiveData } from "utils/ga";
 
-export default function LessonsFromGrandmasters({ focusArea }) {
+export default function LessonsFromGrandmasters({ focusArea, isDev }) {
+  const APP_ENV = isDev ? "development" : "production";
   const [series, setSeries]: any = useState([]);
   const [leaders, setLeaders]: any = useState([]);
   const [ticketID, setTicketId] = useState("");
@@ -17,7 +18,7 @@ export default function LessonsFromGrandmasters({ focusArea }) {
 
   function fetchData(endPoint) {
     try {
-    const url = `${API_CONFIG.grandMasters[window.APP_ENV]}/${endPoint}`;
+    const url = `${API_CONFIG.grandMasters[APP_ENV]}/${endPoint}`;
 
     fetch(url, {
       headers: {
@@ -25,7 +26,7 @@ export default function LessonsFromGrandmasters({ focusArea }) {
       }
     })
       .then((response) => response.json())
-      .then((data) => {        
+      .then((data) => {                
         if (endPoint === "series") {
           setSeries(data);
         } else {
@@ -53,19 +54,19 @@ export default function LessonsFromGrandmasters({ focusArea }) {
 
   const formData = (id, url) => {
     return(
-      <form ref={(el: any) => (formRefs.current[id] = el)} action={grandMasterActionURL[window.APP_ENV]} method="POST" style={{ display: "none" }}>
+      <form ref={(el: any) => (formRefs.current[id] = el)} action={grandMasterActionURL[APP_ENV]} method="POST" style={{ display: "none" }}>
         <input type="hidden" name="token-id" value={token} />
         <input type="hidden" name="ticket-id" value={ticketID} />
         <input type="hidden" name="ru" value={url} />
         <input
           type="hidden"
           name="client-id"
-          value={X_CLIENT_ID[window.APP_ENV]}
+          value={X_CLIENT_ID[APP_ENV]}
         />
         <input
           type="hidden"
           name="site-app-code"
-          value={SITE_APP_CODE[window.APP_ENV]}
+          value={SITE_APP_CODE[APP_ENV]}
         />
       </form>
     )

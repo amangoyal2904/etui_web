@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import Loading from "../../components/Loading";
 
 const IndustryTabsJSON = [
@@ -151,7 +151,7 @@ const NewsByIndustry = ({data, title}) => {
                             }
                             .otherDiv{
                                 display: inline-flex;
-                                width: 350px;
+                                width: 315px;
                                 border-top: 1px solid #e8d2cb;
                                 padding: 11px 0 15px 0;
                                 vertical-align: top;
@@ -191,65 +191,57 @@ const NewsByIndustry = ({data, title}) => {
                 <li data-msid={apiMsid} className={`tabContentView ${showTab == apiMsid ? 'active' : ''}`}>
                     {
                         articleList?.map((value, index) => {
-                            return (
-                                <>
-                                    {
-                                        index == 0 && <div className="first ">
-                                            <a target="_blank" href={value.url}>
-                                                <img 
-                                                    width="293" 
-                                                    height="226" 
-                                                    title={value.title}
-                                                    alt={value.title} 
-                                                    src={value.img}
-                                                    loading="lazy" 
-                                                />
-                                            </a>
-                                            <div className="firstData">
-                                                <h4>
-                                                    <a 
-                                                        className="hl" 
-                                                        target="_blank" 
-                                                        href={value.url}
-                                                    >{value.title}</a>
-                                                </h4>
-                                                <p className="desc wrapLines l3">
-                                                    {value.synopsis}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    }
-                                </>
+                            return (                                                                    
+                                index == 0 && <div className="first" key={index}>
+                                    <a target="_blank" href={value.url}>
+                                        <img 
+                                            width="293" 
+                                            height="226" 
+                                            title={value.title}
+                                            alt={value.title} 
+                                            src={value.img}
+                                            loading="lazy" 
+                                        />
+                                    </a>
+                                    <div className="firstData">
+                                        <h4>
+                                            <a 
+                                                className="hl" 
+                                                target="_blank" 
+                                                href={value.url}
+                                            >{value.title}</a>
+                                        </h4>
+                                        <p className="desc wrapLines l3">
+                                            {value.synopsis}
+                                        </p>
+                                    </div>
+                                </div>                        
                             )
                         })  
                     }
                     <div className=" others mt20">
                         {
                             articleList?.map((value, index) => {
-                                return (
-                                    <>
-                                        {
-                                            index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv">
-                                                <a target="_blank" className="flt" href={value.url}>
-                                                    <img 
-                                                        width="88" 
-                                                        height="66" 
-                                                        title={value.title}
-                                                        alt={value.title} 
-                                                        src={value.img}
-                                                        loading="lazy" 
-                                                    />
+                                return (                                    
+                                    index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv" key={index}>
+                                        <a target="_blank" className="flt" href={value.url}>
+                                            <img 
+                                                width="88" 
+                                                height="66" 
+                                                title={value.title}
+                                                alt={value.title} 
+                                                src={value.img}
+                                                loading="lazy" 
+                                            />
+                                        </a>
+                                        <div className=" data">
+                                            <h4 className="otherDivH">
+                                                <a target="_blank" href={value.url} className="font_faus">
+                                                    {value.title}
                                                 </a>
-                                                <div className=" data">
-                                                    <h4 className="otherDivH">
-                                                        <a target="_blank" href={value.url} className="font_faus">
-                                                            {value.title}
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                            </div> : ""
-                                        }
-                                    </>
+                                            </h4>
+                                        </div>
+                                    </div> : ""                                
                                 )
                             })  
                         }
@@ -336,7 +328,7 @@ const NewsByIndustry = ({data, title}) => {
 
                 .tabs{
                     list-style: none;
-                    width: 200px;
+                    width: 215px;
                     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 19%);
                     background-color: #fff;
                     display: table-cell;
@@ -485,7 +477,7 @@ const NewsByIndustry = ({data, title}) => {
                 }
 
                 .tabsContent{
-                    width: 732px;
+                    width: 710px;
                     padding: 17px 19px 0 21px;
                     border: solid 1px #e6cdc4;
                     display: table-cell;
@@ -500,6 +492,13 @@ const NewsByIndustry = ({data, title}) => {
                 display: inline-block;
                 background-size: 475px;
             }
+
+            #newsInds{
+                border-top: 1px solid #9b8680;
+                padding-top: 1px;
+                margin-top: 10px;
+                padding-bottom: 50px;    
+            }
         `}</style>
         <section id="newsInds">
             <div className="heading_box">
@@ -513,14 +512,12 @@ const NewsByIndustry = ({data, title}) => {
                 <ul className="tabs">
                     {
                         IndustryTabsJSON?.map((value: any, key: any) => {
-                            return (
-                                <>
-                                    <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)}>
-                                        <span data-msid={value?.msid} className="subSprite tabIcon"></span>
-                                        <span>{value?.tabName}</span>
-                                        <span className="subSprite nav_arw"></span>
-                                    </li>
-                                </>
+                            return (                                
+                                <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)} key={key}>
+                                    <span data-msid={value?.msid} className="subSprite tabIcon"></span>
+                                    <span>{value?.tabName}</span>
+                                    <span className="subSprite nav_arw"></span>
+                                </li>                                
                             )    
                         })
                     }
@@ -530,9 +527,9 @@ const NewsByIndustry = ({data, title}) => {
                         {
                             showLoading ? <li className="loadingLiWrp"><Loading /></li> : articleData?.map((value, key) => {
                                 return (
-                                    <>
+                                    <Fragment key={key}>
                                          {articleHtml(value.articleList, value.msid)} 
-                                    </>
+                                    </Fragment>
                                 )
                             })
                         }    

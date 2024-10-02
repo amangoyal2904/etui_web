@@ -14,14 +14,12 @@ import MutualFunds from "./MutualFunds";
 import MarketNews from "./MarketNews";
 import TopSectionLayout from "./TopSectionLayout";
 import Podcast from "./Podcast";
-import NewsByIndustry from "./NewsByIndustry";
 import MostReadStories from './MostReadStories';
 import VideoWidget from "./VideoWidget";
-import Opinion from "./Opinion";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 
-function PrimeHome({ searchResult }) {  
+function PrimeHome({ searchResult, isDev }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
@@ -39,10 +37,8 @@ function PrimeHome({ searchResult }) {
   const explainers = searchResult?.find(item => item?.name === "explainers") || {};
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
-  const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
   const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
-  const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
   // console.log("explainers", explainers);
 
   const { state, dispatch } = useStateContext();
@@ -72,6 +68,12 @@ function PrimeHome({ searchResult }) {
         padding-left: 7px;
         padding-right: 7px;
       }
+      #topnav > div > a {
+        background: transparent !important;
+        color: #000 !important;
+        font-weight: 400;
+        padding: 7px 3px 8px;
+      }
       header nav:last-of-type {
         padding-left: 7px;
         padding-right: 7px;
@@ -86,17 +88,16 @@ function PrimeHome({ searchResult }) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} />
-      <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} />
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
-      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} />
-      <Opinion OpinionData={OpinionData?.data || []} />
+      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
+      
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
-      <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} />
+      <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
       <Rise data={rise?.data || []} title={rise?.title || ""} />
-      <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} />
+      <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} isDev={isDev} />
       <Podcast data={podcast || []}/>
       <Politics data={politics?.data || []} title={politics?.title || ""} />
       <Slideshows data={slideshows?.data || []} title={slideshows?.title || ""} />

@@ -4,7 +4,7 @@ import MoreFromLink from './MoreFromLink'
 export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
   const first = data[0]
   const rest = data.slice(1)
-  console.log({more})
+  
   return (
     <>
       <div className="wrap">

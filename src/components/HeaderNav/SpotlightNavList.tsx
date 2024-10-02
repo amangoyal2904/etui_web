@@ -19,8 +19,6 @@ const SpotlightNavList = ( props ) => {
         onNextButtonClick
     } = usePrevNextButtons(emblaApi)
 
-    console.log("Spotlight sec data", data);
-
     return (
         <>
             <div className={`embla ${data.nm == "Innovative Solution" ? styles.Edition_carouseltwo : styles.Edition_carouselone}`} >
@@ -29,27 +27,23 @@ const SpotlightNavList = ( props ) => {
                     <ul className={`embla__container ${styles.Edition_wrp}`}>
                         {
                         data.sec?.map((value1, index1) => {
-                            return (
-                            <>
+                            return (                            
                                 <li key={index1} className="embla__slide">
                                 {
                                     value1 && Array.isArray(value1) && value1.map((value2, index2) => {
-                                    return (
-                                        <>
+                                    return (                                        
                                         <div className={styles.spotlightContent} key={index2}>
-                                            <a href={value2.link ? value2.link : 'javascript:;'}>
+                                            <a href={value2.link ? value2.link : '#;'}>
                                             <img src={value2.im} width="120" height="70" alt={value2.nm} />
                                             </a>
-                                            <a className={styles.txt} href={value2.link ? value2.link : 'javascript:;'}>
+                                            <a className={styles.txt} href={value2.link ? value2.link : '#;'}>
                                             {value2.nm}
                                             </a>
-                                        </div>
-                                        </>
+                                        </div>                                        
                                     )
                                     })
                                 }
-                                </li>
-                            </>
+                                </li>                        
                             )
                         })
                         }

@@ -173,7 +173,7 @@ const TopMF = () => {
             <div ref={emblaRef} className="tmf_scheme_wrap embla">
                 <div className="embla__container">
                     {tabList.map((value, index) => (
-                        <div className="embla__slide" key={`tmf_scheme_wrap_${index}`}>
+                        <div className="embla__slide" data-cat={value.primaryObj.value} key={`tmf_scheme_wrap_${index}`}>
                             <SchemesSlide
                                 keyIndex={index}
                                 selectedTab={selectedTab}
@@ -188,7 +188,7 @@ const TopMF = () => {
                         </div>
                     ))}
 
-                    <div className="embla__slide" key={`tmf_scheme_wrap_${tabList.length}`}>
+                    <div className="embla__slide" data-cat={`promotedFeatured`} key={`tmf_scheme_wrap_${tabList.length}`}>
                         <SchemesSlide
                             keyIndex={tabList.length}
                             selectedTab={selectedTab}
@@ -204,12 +204,20 @@ const TopMF = () => {
                             primaryIndex={tabList.length}
                         />
                     </div>
+                    
                 </div>
+                <p className='mf_tg_line'>Mutual fund investments are subject to market risks. Read all scheme related documents carefully.</p>
             </div>
             <style jsx>{`
                 .top_mf_wdgt {
                     width: 540px;
                     box-sizing: border-box;
+
+                    .mf_tg_line{
+                        font-size: 9px;
+                        margin-top: 7px;
+                        text-align: center;
+                    }
 
                     .tmf_head {
                         height: 25px;

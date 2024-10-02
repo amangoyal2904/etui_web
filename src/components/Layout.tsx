@@ -52,7 +52,10 @@ const Layout:FC<Props> = ({ page, className = "", dynamicFooterData, menuData, o
   if (typeof window !== "undefined") {
     window.objVc = objVc;
     window.pageSeo = pageSeo; 
-    window.tpName = page;
+    window.tpName = page;      
+    const hostname = window.location.hostname;
+    window.isDev = hostname === 'economictimes.indiatimes.com' ? false : true;
+    window.APP_ENV = window.isDev ? 'development' : 'production';
   }
 
   const pathname = usePathname();

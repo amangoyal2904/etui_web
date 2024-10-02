@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from "react";
 import API_CONFIG from "../../network/config.json";
 import CryptoChart from "./CryptoChart";
-const CryptoGainerLooser = () => {
+const CryptoGainerLooser = ({ isDev }) => {
     const [gainers,setGainers] = useState("gainers");
     const [data,setData] = useState([]);
     useEffect(()=>{
@@ -26,7 +26,7 @@ const CryptoGainerLooser = () => {
     }
     return (
       <>
-        <CryptoChart />
+        <CryptoChart isDev={isDev}/>
         <div className="tabs">
           <div className={gainers == "gainers" ? "active" : ""} onClick={() => handleTab("gainers")}>
             Top gainers

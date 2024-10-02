@@ -76,8 +76,6 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
       }
     });
 
-    console.log("techNavListBlock hook", targetElementId, techNavListBlock)
-
   }, [techNavListBlock])
 
   // Define the handleMouseOver function to handle mouseover event on the links

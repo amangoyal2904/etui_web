@@ -39,7 +39,7 @@ const RotatingCube: React.FC<RotatingCubeProps> = ({ objVc }) => {
           clearInterval(checkExist);
           setIsVisible(true); // Render the cube once data is ready
         } else {
-          getMarketBandData(); // Fetch market band data if not available
+          window.isDev && getMarketBandData(); // Fetch market band data if not available
         }
       }, 6e3); // Data updating every 6 sec
     }
