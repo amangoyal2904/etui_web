@@ -496,7 +496,7 @@ const NewsByIndustry = ({data, title}) => {
             #newsInds{
                 border-top: 1px solid #9b8680;
                 padding-top: 1px;
-                margin-top: 10px;
+                margin-top: 40px;
                 padding-bottom: 50px;    
             }
         `}</style>
