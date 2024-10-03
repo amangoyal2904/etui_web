@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Fragment, useEffect, useRef, useState } from "react";
 import API_CONFIG from "../../network/config.json"
 import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
@@ -270,7 +272,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
                   border-bottom-right-radius: 12px;
                   border-bottom-left-radius: 12px;
                   position: absolute;
-                  bottom: -40px;
+                  bottom: -50px;
                   width: 100%;
                   background: linear-gradient(0deg, #191c21, rgba(25, 28, 33, .8) 70%, rgba(25, 28, 33, 0)) 90% no-repeat;
                   text-align: center;

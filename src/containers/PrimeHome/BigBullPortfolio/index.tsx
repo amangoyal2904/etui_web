@@ -7,7 +7,7 @@ import API_CONFIG from '../../../network/config.json';
 export default function BigBullPortfolio() {
   const [activeTab, setActiveTab] = useState(0);
   const tabs = ["Best Picks", "Recent Deals", "All Investors"];
-  const [data, setData] = useState([]);
+  const [data, setData]: any = useState([]);
 
   function fetchData(activeTab) {
     let apiType = "BigBullGetBestPicks";
