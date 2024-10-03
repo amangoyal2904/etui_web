@@ -254,15 +254,23 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
               & > div {
                 width: 195px;
                 position: relative;
-
+                overflow: hidden;
+                border-radius: 12px;
+                
                 &:hover {
                   .leaderContent {
                     bottom: 0;
+                  }
+
+                  img {
+                    transform: scale(1.1);
+                    transition: all 0.7s ease;
                   }
                 }
 
                 img {
                   border-radius: 12px;
+                  transition: transform 0.5s ease-in-out;
                 }
 
                 .leaderContent {                  
@@ -272,10 +280,12 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
                   border-bottom-right-radius: 12px;
                   border-bottom-left-radius: 12px;
                   position: absolute;
-                  bottom: -50px;
+                  bottom: -56px;
                   width: 100%;
                   background: linear-gradient(0deg, #191c21, rgba(25, 28, 33, .8) 70%, rgba(25, 28, 33, 0)) 90% no-repeat;
                   text-align: center;
+                  padding: 7px;
+                  box-sizing: border-box;
                 }
 
                 .leaderName {
@@ -332,7 +342,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
             position: absolute;            
             cursor: pointer;
             pointer-events: all;
-            top: calc(50% - 9px);            
+            top: calc(50% + 18px);            
 
             &.disabled {
               opacity: 0.4;
