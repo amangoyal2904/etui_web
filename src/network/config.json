@@ -181,5 +181,17 @@
   "BigBullAllInverstorOverview": {
     "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview",
     "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview"
+  },
+  "MARKETSTATS_INTRADAY": {
+    "development": "https://etapi.indiatimes.com/et-screener/intraday-stats",
+    "production": "https://etapi.indiatimes.com/et-screener/intraday-stats"
+  },
+  "INDEX_FILTERS": {
+    "development": "https://etpwaapi.economictimes.com/api/mercury/indexfilters",
+    "production": "https://etpwaapi.economictimes.com/api/mercury/indexfilters"
+  },
+  "MARKET_STATS_SHORTURLS_MAPPING": {
+    "development": "https://etapipre.indiatimes.com/api/mercury/shorturlmapping/marketstats",
+    "production": "https://etpwaapi.economictimes.com/api/mercury/shorturlmapping/marketstats"
   }
 }
