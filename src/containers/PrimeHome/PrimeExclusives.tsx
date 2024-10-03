@@ -2,6 +2,7 @@ import { Authors } from 'components/Authors';
 import ArrowRnd from 'components/Icons/ArrowRnd'
 import PrimeIcon from 'components/Icons/PrimeIcon'
 import React from 'react'
+import HeadingWithRightArrow from './HeadingWithRightArrow';
 
 export default function PrimeExclusives({ title, data, focusArea }) {
   const firstRow = data[0];
@@ -13,7 +14,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
   return (
     <>
       <div className={`primeExclusives ${focusArea}`}>
-        <h2 className="title">{ focusArea == 'market' && <PrimeIcon />}  {title}</h2>
+        { focusArea == 'market' ? <h2 className="title"><PrimeIcon /> {title}</h2> : <><HeadingWithRightArrow title={title} /> <span className="title"></span> </> }
         <div className="grid">
           <div className="col first">            
             <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
@@ -76,6 +77,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
           &.news {
             border-left: 1px dotted #9b8680;
             padding-left: 20px;    
+            padding-top: 15px;
 
             .row {
               .col {
@@ -162,7 +164,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 flex-direction: column;
                 flex: 1;
                 padding-top: 17px;
-                border-top: 1px solid #e8d2cb;
+                
                 margin-top: 30px;                
 
                 .innerCol {
@@ -186,7 +188,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
               display: flex;
               gap: 15px;
               padding-top: 12px;
-              border-top: 1px solid #e8d2cb;
+              
 
               .content {
                 display: flex;
