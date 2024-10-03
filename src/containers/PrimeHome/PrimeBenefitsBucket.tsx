@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useRef, useEffect, useState } from 'react'
 
 export default function PrimeBenefitsBucket({focusArea}) {

@@ -19,7 +19,7 @@ import VideoWidget from "./VideoWidget";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 
-function PrimeHome({ searchResult, isDev, ssoid }) {  
+function PrimeHome({ searchResult, isDev }) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
@@ -88,7 +88,7 @@ function PrimeHome({ searchResult, isDev, ssoid }) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={ssoid} />
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid}/>
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       
