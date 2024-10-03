@@ -5,6 +5,7 @@ import API_CONFIG from "../../network/config.json"
 import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
 import { fetchAdaptiveData } from "utils/ga";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
+import Separator from "components/Separator";
 
 export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   const APP_ENV = isDev ? "development" : "production";
@@ -174,8 +175,9 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   return (
     <>
       <div className={`grandmaster ${focusArea}`}>
+        { focusArea === "news" && <Separator /> }
         <span className='title'></span>
-        <HeadingWithRightArrow title="Lessons from the Grandmasters" />
+        <HeadingWithRightArrow title="Lessons from The Grandmasters" />
         <div className="slider" ref={sliderRef}>
           <div className="seriesWrapper" ref={innerRef}>
           {isFirstSlot()
@@ -215,11 +217,11 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
         .grandmaster{
           padding-left: 20px;          
           margin-top: 1px;
-          position: relative;
-          padding-top: 14px;
+          position: relative;          
 
           &.news {
             border-left: 1px dotted #9b8680;
+            margin-top: -13px;
           }
 
           .title {
@@ -233,7 +235,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
             &:before {
               content: "";
               left: -7px;
-              top: 19px;
+              top: 22px;
               position: absolute;
               width: 16px;
               height: 17px;
@@ -254,15 +256,23 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
               & > div {
                 width: 195px;
                 position: relative;
-
+                overflow: hidden;
+                border-radius: 12px;
+                
                 &:hover {
                   .leaderContent {
                     bottom: 0;
+                  }
+
+                  img {
+                    transform: scale(1.1);
+                    transition: all 0.7s ease;
                   }
                 }
 
                 img {
                   border-radius: 12px;
+                  transition: transform 0.5s ease-in-out;
                 }
 
                 .leaderContent {                  
@@ -272,10 +282,12 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
                   border-bottom-right-radius: 12px;
                   border-bottom-left-radius: 12px;
                   position: absolute;
-                  bottom: -50px;
+                  bottom: -56px;
                   width: 100%;
                   background: linear-gradient(0deg, #191c21, rgba(25, 28, 33, .8) 70%, rgba(25, 28, 33, 0)) 90% no-repeat;
                   text-align: center;
+                  padding: 7px;
+                  box-sizing: border-box;
                 }
 
                 .leaderName {
@@ -332,7 +344,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
             position: absolute;            
             cursor: pointer;
             pointer-events: all;
-            top: calc(50% - 9px);            
+            top: calc(50% + 18px);            
 
             &.disabled {
               opacity: 0.4;

@@ -2,6 +2,7 @@ import ArrowRnd from 'components/Icons/ArrowRnd'
 import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow'
 import PrimeIcon from 'components/Icons/PrimeIcon'
+import Separator from 'components/Separator'
 
 export default function InvestmentIdeas({ focusArea }) {
   return (
@@ -14,7 +15,11 @@ export default function InvestmentIdeas({ focusArea }) {
           </>
         }
         {
-          focusArea == 'news' && <h2 className="title">Investment Ideas</h2>
+          focusArea == 'news' && <>
+            <Separator />
+            <HeadingWithRightArrow title="Investment Ideas" />
+            <span className="title"></span>            
+          </> 
         }
 
         <a href="#" className="first">
@@ -51,6 +56,7 @@ export default function InvestmentIdeas({ focusArea }) {
           &.news {
             padding-left: 20px;
             border-left: 1px dotted #9b8680;
+            margin-top: -13px;
           }
 
           &.market {
@@ -78,7 +84,7 @@ export default function InvestmentIdeas({ focusArea }) {
             &:before {
               content: "";
               left: -7px;
-              top: 19px;
+              top: 22px;
               position: absolute;
               width: 16px;
               height: 17px;
