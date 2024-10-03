@@ -1,11 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./DashboardWidget.module.scss";
 import { formatNumber, getStockUrl } from "../../../utils";
+import { useStateContext } from "../../../store/StateContext";
+import { gotoPlanPage } from '../../../utils/utils';
 // import WatchlistAddition from "../../../components/WatchlistAddition";
 const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
-  const colorCls = item?.percentChange > 0 ? "up" : "down";
   const prevStockCardRef = useRef<any>([]);
   const ltpRef = useRef<HTMLDivElement>(null);
+  const { state, dispatch } = useStateContext();
+  const { isLogin, isPrime } = state.login;
+
   useEffect(() => {
     prevStockCardRef.current = item;
     const timer = setTimeout(() => {
@@ -18,6 +22,19 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
   }, [item]);
 
   const prevStockCard = prevStockCardRef.current;
+  const shortName = item?.data.find(item => item.keyId == "shortName").value;
+  //const prevLastTradedPrice = prevStockCard?.data?.find(item => item.keyId == "lastTradedPrice").value;
+  const lastTradedPrice = item?.data?.find(item => item.keyId == "lastTradedPrice").value;
+  const volumeInThousand = item?.data?.find(item => item.keyId == "volume").value;
+  const percentChange = item?.data?.find(item => item.keyId == "percentChange").value;
+  const percentChange_trend = item?.data?.find(item => item.keyId == "percentChange").trend;
+  const netChange = item?.data?.find(item => item.keyId == "netChange")?.value;
+  const sr_targetVsCurrent = item?.data?.find(item => item.keyId == "sr_targetVsCurrent").value;
+  const sr_targetVsCurrent_trend = item?.data?.find(item => item.keyId == "sr_targetVsCurrent").trend;
+  const sr_avgScore = item?.data?.find(item => item.keyId == "sr_avgScore").value;
+  const colorCls = percentChange_trend;
+
+  console.log("item -- volumeInThousand", volumeInThousand)
 
   return (
     <div className={styles.list}>
@@ -26,36 +43,37 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
           <div className={styles.compNameWrp}>
             <a
               href={getStockUrl(
-                item?.companyId,
-                item?.seoName,
-                item?.companyType,
+                item?.assetId,
+                item?.assetSeoName,
+                item?.assetType
+                ,
               )}
               target="_blank"
               className={styles.compName}
-              title={`${item?.companyShortName} Share Price`}
+              title={`${shortName} Share Price`}
             >
-              {item?.companyShortName}
+              {shortName}
             </a>
             <span
               className={`numberFonts ${styles.volume}`}
-            >{`(Vol: ${formatNumber(item?.volumeInThousand, 2)}k)`}</span>
+            >{`(Vol: ${volumeInThousand}k)`}</span>
           </div>
           {
-            focusArea == "market" ? <div className="tar">
+            focusArea == "news" ? <div className="tar">
               <p
                 ref={ltpRef}
                 className={`${styles.ltp} numberFonts ${
-                  !!highlightLtp && prevStockCard?.current
-                    ? parseFloat(item?.current) > parseFloat(prevStockCard?.current)
+                  !!highlightLtp && prevStockCardRef.current
+                    ? parseFloat(lastTradedPrice) > parseFloat(prevStockCardRef.current)
                       ? "upBg"
-                      : parseFloat(item?.current) <
-                          parseFloat(prevStockCard?.current)
+                      : parseFloat(lastTradedPrice) <
+                          parseFloat(prevStockCardRef.current)
                         ? "downBg"
                         : ""
                     : ""
                 }`}
               >
-                {formatNumber(item?.current, 2)}
+                {lastTradedPrice}
               </p>
               <p className={`numberFonts ${colorCls} ${styles.change} dflex align-items-center`}>
                 <span
@@ -67,28 +85,51 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
                         : ""
                   }`}
                 />
-                {`${item?.absoluteChange} (${item?.percentChange}%)`}
+                {`${netChange ? netChange : ""} (${percentChange})`}
               </p>
             </div>  : <p
                 ref={ltpRef}
                 className={`${styles.ltp} numberFonts ${
                   !!highlightLtp && prevStockCard?.current
-                    ? parseFloat(item?.current) > parseFloat(prevStockCard?.current)
+                    ? parseFloat(lastTradedPrice) > parseFloat(prevStockCard?.current)
                       ? "upBg"
-                      : parseFloat(item?.current) <
+                      : parseFloat(lastTradedPrice) <
                           parseFloat(prevStockCard?.current)
                         ? "downBg"
                         : ""
                     : ""
                 }`}
               >
-                {formatNumber(item?.current, 2)}
+                {lastTradedPrice}
               </p>
           }
           
         </div>
-        {focusArea == "news" && <div className="dflex align-item-center space-between">
-          <p></p>
+        {focusArea == "market" && <div className="dflex align-item-center space-between">
+          <div className="dflex align-items-center">
+            <p className="dflex align-items-center">{
+                isPrime ? <>
+                <span className="arrow_sprite pIcon"></span>
+                <span className="s_line_text">Stock Score: {sr_avgScore}</span>
+                </> :  <span className="s_line_text pointer" onClick={gotoPlanPage}>Upgrade to Prime</span>
+            }</p>
+            <div className="separator"></div>
+            <div className={`s_line_text dflex align-item-center}`}>{isPrime ? <>
+                Potential Upside: <span
+                  className={` arrow_sprite ${
+                    sr_targetVsCurrent_trend == "up"
+                      ? "eticon_up_arrow"
+                      : sr_targetVsCurrent_trend == "down"
+                        ? "eticon_down_arrow"
+                        : ""
+                  }`}
+                /><span className={`${sr_targetVsCurrent_trend == "up"
+                    ? "green"
+                    : sr_targetVsCurrent_trend == "down"
+                      ? "red"
+                      : ""}`}>{sr_targetVsCurrent}</span>
+            </> : <span className="s_line_text pointer" onClick={gotoPlanPage}>Upgrade to Prime</span>}</div>
+          </div>
           <p className={`numberFonts ${colorCls} ${styles.change} dflex align-items-center`}>
             <span
               className={`arrow_sprite ${
@@ -99,7 +140,7 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
                     : ""
               }`}
             />
-            {`${item?.absoluteChange} (${item?.percentChange}%)`}
+            {`${netChange ? netChange : ""} (${percentChange})`}
           </p>
         </div>}
       </div>
@@ -113,10 +154,39 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
         .tar{
           text-align: right;
         }
+        .separator {
+            height: 10px;
+            background-color: #c8c8c8;
+            width: 1px;
+            margin: 0 5px;
+        }
+        .s_line_text{
+            font-size: 11px;
+            color: #707070;
+            font-weight: 500;
+            line-height: 13.41px;
+        }
+        .pointer{
+            cursor:pointer;
+        }
+        .red{
+            color: red;
+        }
+
+        .green{
+            color: #147014;
+        }
         .arrow_sprite{
           background-image: url("https://img.etimg.com/photo/109967743.cms");
           background-size: 500px 429px;
           display: inline-block;
+
+          &.pIcon{
+            background-position: -426px -112px;
+            width: 9px;
+	        height: 9px;
+            margin-right: 2px;
+          }
 
           &.eticon_down_arrow{
             background-position: -317px -9px;

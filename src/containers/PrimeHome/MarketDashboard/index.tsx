@@ -16,7 +16,7 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
   const [data, setData] = useState<any>(null);
   const intFilter = 2371;
   const filter = !!intFilter ? [intFilter] : [];
-  const pagesize = 10;
+  const pagesize = 6;
   const pageno = 1;
   const sort: any = [];
   const duration = "1D";
@@ -112,7 +112,8 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
   }, []);
 
   useEffect(() => {
-    console.log(data, "data");
+    console.log(data?.tableData
+      , "niftyFilterData");
   }, [data]);
 
   if (!data) {
