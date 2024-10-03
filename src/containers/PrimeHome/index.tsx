@@ -88,7 +88,7 @@ function PrimeHome({ searchResult, isDev }) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} isDev={isDev} />
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid}/>
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       
