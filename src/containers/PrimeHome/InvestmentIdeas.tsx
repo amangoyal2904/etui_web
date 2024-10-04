@@ -4,7 +4,12 @@ import HeadingWithRightArrow from './HeadingWithRightArrow'
 import PrimeIcon from 'components/Icons/PrimeIcon'
 import Separator from 'components/Separator'
 
-export default function InvestmentIdeas({ focusArea }) {
+export default function InvestmentIdeas({ data, focusArea }) {
+  const firstRow = data[0] || {};
+  const secondRow = data.slice(1, 3) || [];
+  const thirdRow = data.slice(3, 5) || [];
+  const rest = [secondRow, thirdRow];
+  
   return (
     <>
       <div className={`investmentIdeas ${focusArea}`}>
@@ -22,11 +27,11 @@ export default function InvestmentIdeas({ focusArea }) {
           </> 
         }
 
-        <a href="#" className="first">
-          <img width="248" height="186" title="As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%" alt="As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%" src="https://img.etimg.com/thumb/msid-113351575,imgsize-39678,width-248,height-186,quality-100/as-valuations-stay-elevated-be-selective-and-choose-right-business-5-large-cap-stocks-from-different-sectors-with-upside-potential-of-up-to-34.jpg" />
-          As valuations stay elevated, be selective and choose right business: 5 large cap stocks from different sectors with upside potential of up to 34%
+        <a href={firstRow.url} target="_blank" className="first">
+          <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
+          { firstRow.title }
         </a>
-        <div className="row">
+        {/* <div className="row">
           <div className="col">
             <span className="counter">2.</span>
             <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Stock picks of the week: 6 stocks with consistent score improvement and upside potential of up to 44%</a>
@@ -35,8 +40,8 @@ export default function InvestmentIdeas({ focusArea }) {
             <span className="counter">3.</span>
             <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Stock picks of the week: 6 stocks with consistent score improvement and upside potential of up to 44%</a>
           </div>  
-        </div>
-        <div className="row">
+        </div> */}
+        {/* <div className="row">
           <div className="col">
             <span className="counter">4.</span>
             <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Daily Trading Desk: An engineering stock for 7% gain & an FMCG stock poised for 5% rise</a>
@@ -45,8 +50,28 @@ export default function InvestmentIdeas({ focusArea }) {
             <span className="counter">5.</span>
             <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Stock Radar: 100% rally in 1 year! Dixon Technologies takes support above 50-DMA and bounces back; time to buy?</a>
           </div>  
-        </div>
-        <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a>
+        </div> */}
+        {
+          rest.map((item, index) => {
+            return (
+              <div className="row" key={index}>
+                {item.map((item, index) => {
+                  return (
+                    <div className="col" key={`col-${index}`}>
+                      { focusArea === "news" && <span className="counter">{index + 2}.</span> }
+                      <a target="_blank" className="hl" href={item.url} data-conttype="100">
+                        {item.title}
+                        { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }
+                      </a>                      
+                    </div>
+                  )
+                })
+              }
+              </div>
+            )
+          })
+        }
+        { focusArea === "news" && <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
       </div>
       <style jsx>{`
         .investmentIdeas {          
@@ -57,21 +82,7 @@ export default function InvestmentIdeas({ focusArea }) {
             padding-left: 20px;
             border-left: 1px dotted #9b8680;
             margin-top: -13px;
-          }
-
-          &.market {
-            .first {
-              flex-direction: column;
-              font-size: 20px;
-              gap: 5px;
-              line-height: 24px;
-
-              img {
-                width: 100%;
-                height: auto;
-              }
-            }
-          }
+          }          
 
           .title {
             border-bottom: 1px solid#9b8680;
@@ -135,6 +146,40 @@ export default function InvestmentIdeas({ focusArea }) {
             justify-content: flex-end;
             margin-top: 1rem;
             padding-bottom: 1.5rem;
+          }
+
+          &.market {
+            .first {
+              flex-direction: column;
+              font-size: 20px;
+              gap: 5px;
+              line-height: 24px;
+
+              img {
+                width: 100%;
+                height: auto;
+              }
+            }
+
+            .row {
+              flex-direction: column;
+              gap: 0;
+
+              .col {
+
+                a {
+                  display: inline-flex;
+                  font-size: 16px;
+                  gap: 20px;
+                }
+              }
+
+              &:last-child {
+                .col:last-child {
+                  border-bottom: none;
+                }
+              }
+            }
           }
         }
       `}</style>
