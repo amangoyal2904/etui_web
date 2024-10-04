@@ -5,9 +5,9 @@ import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow';
 
 export default function PrimeExclusives({ title, data, focusArea }) {
-  const firstRow = data[0];
-  const secondRow = data.slice(1, 3);
-  const thirdRow = data.slice(3, 5);
+  const firstRow = data[0] || {};
+  const secondRow = data.slice(1, 3) || [];
+  const thirdRow = data.slice(3, 5) || [];
 
   const rest = [secondRow, thirdRow];
 
@@ -87,44 +87,6 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 }
               }
             }
-          }
-
-          &.market {
-            .first {
-              flex-direction: column;
-
-              img {
-                width: 100%;
-                height: auto;
-              }
-              .content {
-                .heading {                  
-                  font-size: 20px !important;
-                  font-weight: 600;
-                  line-height: 24px !important;                  
-                }
-              }
-            }
-
-            .title {
-              padding-top: 0;
-              border-bottom: 3px solid #9b8680;
-              &:before {
-                display: none;
-              }
-            }
-
-            .row {
-              display: block !important;
-
-              .col {
-                margin-top: 15px !important;
-
-                .heading {
-                  font-size: 16px;
-                }
-              }
-            }            
           }
 
           .title {
@@ -253,6 +215,54 @@ export default function PrimeExclusives({ title, data, focusArea }) {
           padding-bottom: 1.5rem;
         }
         
+        &.market {
+            .first {
+              flex-direction: column;
+              border-bottom: 1px solid #e8d2cb;
+              padding-bottom: 16px;
+
+              img {
+                width: 100%;
+                height: auto;
+              }
+              .content {
+                .heading {                  
+                  font-size: 20px !important;
+                  font-weight: 600;
+                  line-height: 24px !important;                  
+                }
+              }
+            }
+
+            .title {
+              padding-top: 0;
+              border-bottom: 3px solid #9b8680;
+              &:before {
+                display: none;
+              }
+            }
+
+            .row {
+              display: block !important;
+
+              .col {
+                margin-top: 15px;
+                border-bottom: 1px solid #e8d2cb;
+                padding-bottom: 15px;
+                padding-top: 0;
+
+                .heading {
+                  font-size: 16px;
+                }
+              }
+
+              &:last-child {
+                .col:last-child {
+                  border-bottom: none;
+                }
+              }
+            }            
+          }
       `}</style>
     </>
   )
