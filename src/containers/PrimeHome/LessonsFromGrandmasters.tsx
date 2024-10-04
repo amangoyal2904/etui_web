@@ -177,7 +177,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
       <div className={`grandmaster ${focusArea}`}>
         { focusArea === "news" && <Separator /> }
         <span className='title'></span>
-        <HeadingWithRightArrow title="Lessons from The Grandmasters" />
+        <HeadingWithRightArrow title={focusArea == "news" ? "Lessons from The Grandmasters" : "ET GrandMasters"} />
         <div className="slider" ref={sliderRef}>
           <div className="seriesWrapper" ref={innerRef}>
           {isFirstSlot()
@@ -372,6 +372,27 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
             &.next {
               right: -7px;              
               transform: rotate(180deg);
+            }
+          }
+
+          &.market {
+            padding-left: 0;
+            .title {
+              &:before {
+                display: none;
+              }
+            }
+
+            .arr {
+              top: 40px;
+
+              &.prev {
+                left: -8px;
+              }
+
+              &.next {
+                right: -8px;
+              }
             }
           }
         }
