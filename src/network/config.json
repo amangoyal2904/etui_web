@@ -193,5 +193,9 @@
   "MARKET_STATS_SHORTURLS_MAPPING": {
     "development": "https://etapipre.indiatimes.com/api/mercury/shorturlmapping/marketstats",
     "production": "https://etpwaapi.economictimes.com/api/mercury/shorturlmapping/marketstats"
+  },
+  "MARKET_STATUS": {
+    "development": "https://bselivefeeds.indiatimes.com/ET_Community/holidaylist",
+    "production": "https://json.bselivefeeds.indiatimes.com/ET_Community/holidaylist"
   }
 }
