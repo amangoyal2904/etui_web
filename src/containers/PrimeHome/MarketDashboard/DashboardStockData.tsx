@@ -63,11 +63,11 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
               <p
                 ref={ltpRef}
                 className={`${styles.ltp} numberFonts ${
-                  !!highlightLtp && prevStockCardRef.current
-                    ? parseFloat(lastTradedPrice) > parseFloat(prevStockCardRef.current)
+                  !!highlightLtp && prevStockCard.lastTradedPrice
+                    ? parseFloat(lastTradedPrice) > parseFloat(prevStockCard.lastTradedPrice)
                       ? "upBg"
                       : parseFloat(lastTradedPrice) <
-                          parseFloat(prevStockCardRef.current)
+                          parseFloat(prevStockCard.lastTradedPrice)
                         ? "downBg"
                         : ""
                     : ""
@@ -90,11 +90,11 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
             </div>  : <p
                 ref={ltpRef}
                 className={`${styles.ltp} numberFonts ${
-                  !!highlightLtp && prevStockCard?.current
-                    ? parseFloat(lastTradedPrice) > parseFloat(prevStockCard?.current)
+                  !!highlightLtp && prevStockCard?.lastTradedPrice
+                    ? parseFloat(lastTradedPrice) > parseFloat(prevStockCard?.lastTradedPrice)
                       ? "upBg"
                       : parseFloat(lastTradedPrice) <
-                          parseFloat(prevStockCard?.current)
+                          parseFloat(prevStockCard?.lastTradedPrice)
                         ? "downBg"
                         : ""
                     : ""

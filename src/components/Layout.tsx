@@ -14,6 +14,7 @@ import { callJsOnRouteChange } from "utils/priority";
 import TopNudge from "./TopNudge";
 import BreakingNews from "./BreakingNews";
 import { useStateContext } from "../store/StateContext";
+import { useMarketStatus } from "hooks/useMarketStatus";
 
 const RotatingCube = dynamic(() => import("./RotatingCube"), {
   ssr: false
@@ -60,6 +61,7 @@ const Layout:FC<Props> = ({ page, className = "", dynamicFooterData, menuData, o
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  useMarketStatus();
 
   useEffect(() => {
     callJsOnRouteChange();
