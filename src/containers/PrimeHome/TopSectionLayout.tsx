@@ -88,8 +88,10 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
             <Separator />
             <InvestmentIdeas focusArea={focusArea} data={investmentIdeas?.data || []}/>
-            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>
+            <Separator />
             <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
+            <Separator />
+            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>            
           </>
           }
 
@@ -111,6 +113,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           </>
           }
 
+          <Separator />
           <LiveStream />
         </div>
       </section>

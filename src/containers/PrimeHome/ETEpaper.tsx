@@ -3,6 +3,7 @@ import { dateFormat } from "../../utils/utils";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import HeadingWithRightArrow from './HeadingWithRightArrow';
 import Separator from 'components/Separator';
+import PrimeIcon from 'components/Icons/PrimeIcon';
 
 export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
   const dayName = useState(dateFormat(new Date(), '%D'))[0];
@@ -20,7 +21,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
     <>
       <div className={`etEPaper ${focusArea} ${dayName}`}>
         { focusArea === "news" && <Separator /> }
-        <span className='title'></span>
+        { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title={`ET ePaper`} />
         {
           dayName !== "Mon" ? (
@@ -259,6 +260,9 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
           }
 
           &.market{
+            border-left: 0;
+            padding-left: 0;
+
             .epaper-cards{
               display: flex;
               flex-direction: column;  
@@ -270,6 +274,12 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
 
             .empw, .read{
               display: none;
+            }
+
+            .title {
+              &:before {
+                display: none;
+              }
             }
           }
         }
