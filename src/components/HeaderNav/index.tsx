@@ -11,6 +11,7 @@ import TechNav from "./TechNav";
 import SpotlightNav from "./SpotlightNav";
 import { useStateContext } from "../../store/StateContext";
 import SponserBanner from "../SponserBanner";
+import StockTalkWidget from "../StockTalkWidget";
 import { getCookie } from "utils/utils";
 import jStorageReact from "utils/jStorage";
 
@@ -144,6 +145,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
       {showSponserBanner && <SponserBanner />}
+      <StockTalkWidget />
     </>
   );
 };
