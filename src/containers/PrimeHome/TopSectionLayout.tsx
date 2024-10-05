@@ -65,7 +65,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                   <Separator />
                   <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea}/>
                   <Separator />
-                  <StockRecos />
+                  <StockRecos focusArea={focusArea}/>
                   <Separator />
                   <StockReportPlus />
                   <Separator />
@@ -103,7 +103,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <Separator />
             <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
-            <StockRecos />
+            <StockRecos focusArea={focusArea}/>
             <Separator />
             <StockReportPlus />
             <Separator />
