@@ -11,7 +11,6 @@ import DashboardStockData from "./DashboardStockData";
 import Loading from "../../../components/Loading";
 import Blocker from "../../../components/Blocker";
 import ViewAllLink from "../../../components/ViewAllLink";
-import Separator from "../../../components/Separator";
 import useIntervalApiCall from "../../../utils/useIntervalApiCall";
 import HeadingWithRightArrow from "../HeadingWithRightArrow";
 import DayFilter from "./DayFilter";
@@ -127,8 +126,7 @@ const MarketDashBoardTable = ({
   }, []);
 
   return (
-    <>
-      <Separator />
+    <>      
       <div className={`wrapper ${styles.wrapper} ${focusArea} ${styles[focusArea]}`} ref={dashboardRef}>
         <div className="dflex space-between head_dashboard">
           <div>
