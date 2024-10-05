@@ -22,6 +22,7 @@
 
 .durations {
   display: inline-flex;
+  width: 100%;
   gap: 10px;
   padding: 10px;
   text-transform: uppercase;
@@ -42,14 +43,14 @@
   .indiceTab {
     padding: 7px 5px;
     cursor: pointer;
-    border-bottom: 1px solid #ccc;
+    // border-bottom: 1px solid #ccc;
     display: flex;
     flex-direction: column;
     gap: 5px;
 
-    &:not(.active) {
-      border-bottom: 1px solid #ccc;
-    }
+    // &:not(.active) {
+    //   border-bottom: 1px solid #ccc;
+    // }
   }
   .active {
     border-radius: 8px 8px 0 0;
@@ -58,6 +59,7 @@
     border-bottom: none;
     position: relative;
     font-weight: 600;
+    margin-bottom: -1px;
   }
 }
 
@@ -97,7 +99,7 @@
 .chartContainer {
   background-color: #fffbfa;
   border: 1px solid #ccc;
-  border-top: 0;
+  // border-top: 0;
   border-radius: 0 0 8px 8px;
 
   .chart {
@@ -113,6 +115,7 @@
     margin-top: 5px;
 
     a {
+      font-weight: 600;
       &::after {
         content: '';
         display: inline-block;
