@@ -30,35 +30,15 @@ export default function InvestmentIdeas({ data, focusArea }) {
         <a href={firstRow.url} target="_blank" className="first">
           <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
           { firstRow.title }
-        </a>
-        {/* <div className="row">
-          <div className="col">
-            <span className="counter">2.</span>
-            <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Stock picks of the week: 6 stocks with consistent score improvement and upside potential of up to 44%</a>
-          </div> 
-          <div className="col">
-            <span className="counter">3.</span>
-            <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Stock picks of the week: 6 stocks with consistent score improvement and upside potential of up to 44%</a>
-          </div>  
-        </div> */}
-        {/* <div className="row">
-          <div className="col">
-            <span className="counter">4.</span>
-            <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Daily Trading Desk: An engineering stock for 7% gain & an FMCG stock poised for 5% rise</a>
-          </div> 
-          <div className="col">
-            <span className="counter">5.</span>
-            <a target="_blank" className="hl" href="https://economictimes.indiatimes.com/markets/stocks/news/stock-picks-of-the-week-6-stocks-with-consistent-score-improvement-and-upside-potential-of-up-to-44/articleshow/113346694.cms" data-conttype="100">Stock Radar: 100% rally in 1 year! Dixon Technologies takes support above 50-DMA and bounces back; time to buy?</a>
-          </div>  
-        </div> */}
+        </a>        
         {
           rest.map((item, index) => {
             return (
               <div className="row" key={index}>
-                {item.map((item, index) => {
+                {item.map((item, index1) => {
                   return (
-                    <div className="col" key={`col-${index}`}>
-                      { focusArea === "news" && <span className="counter">{index + 2}.</span> }
+                    <div className="col" key={`col-${index1}`}>
+                      { focusArea === "news" && <span className="counter">{(index + 1) * 2 + index1}</span> }
                       <a target="_blank" className="hl" href={item.url} data-conttype="100">
                         {item.title}
                         { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }

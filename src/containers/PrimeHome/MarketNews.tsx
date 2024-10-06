@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import LiveIcon from 'components/Icons/LiveIcon'
 import MoreFromLink from './MoreFromLink'
+import { ET_WEB_URL } from 'utils/common'
+import { dateFormat } from 'utils/utils'
 
-export default function MarketNews({ title, data }) {  
+export default function MarketNews({ title, data, podcastData }) {  
   return (
     <>
     <section className="marketNews">
@@ -15,7 +17,7 @@ export default function MarketNews({ title, data }) {
         <MarketMoguls />
       </div>
       <div className="third">
-        <Podcast />
+        <Podcast podcastData={podcastData}/>
         <StockScreeners />
         <MyWatchlist />
       </div>
@@ -69,15 +71,19 @@ export default function MarketNews({ title, data }) {
   )
 }
 
-function Podcast() {
+function Podcast({ podcastData }) {
+
+  console.log({podcastData})
+  const data = podcastData[0] || {};
+  const titles = data?.title?.split(':') || [];
 
   return <>
     <div className="podcast">
       <div className="title">Podcast</div>
-      <div className="button">ET Market Watch <i className="crownIcon"></i></div>
-      <div className="datetime">15 Hours ago  | Sep 17, 2024</div>
-      <a className="description" target="_blank" href="/markets/stocks/etmarkets-podcast/et-market-watch-nifty-sensex-at-new-peaks-ahead-of-fed-rate-cuts/podcast/113431436.cms">Nifty, Sensex at new peaks ahead of Fed rate cuts</a>
-      <a className="cta" title="ET Market Watch: Nifty, Sensex at new peaks ahead of Fed rate cuts" target="_blank" href="/markets/stocks/etmarkets-podcast/et-market-watch-nifty-sensex-at-new-peaks-ahead-of-fed-rate-cuts/podcast/113431436.cms"><i className="iconListen"></i>Listen <span className="dot"></span><span className="duration">02:15</span></a>
+      <div className="button">{titles?.[0] || ""} <i className="crownIcon"></i></div>
+      <div className="datetime">{data?.timeAgo} ago  | {dateFormat(data?.date, "%MMM %d, %Y")}</div>
+      <a className="description" target="_blank" href={data?.url}>{titles?.[1]?.trim() || ""}</a>
+      <a className="cta" target="_blank" href={data?.url}><i className="iconListen"></i>Listen <span className="dot"></span><span className="duration">{data?.duration || ""}</span></a>
     </div>
     <style jsx>{`
       .podcast {
@@ -162,85 +168,69 @@ function Podcast() {
             margin: 2px 3px;
           }
         }
+
+        a{
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
     `}</style>
   </>
 }
 
 function StockScreeners() {
+  const [data, setData]: any = useState([])
+  
+  useEffect(() => {
+    const apiUrl = "https://etmarketsapis.indiatimes.com/ET_TechnicalScreeners/screenerstats?device=web";
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {        
+        setData(data)
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return <>
     <div className="stockScreeners">
       <h3>
-        <a href="/markets/stocks/stock-screener" target="_blank">Stock Screeners</a>
+        <a href={`${ET_WEB_URL}markets/stocks/stock-screener`} target="_blank">Stock Screeners</a>
         <i className="iconScreener"></i>
       </h3>
       <ul className="screener">
+        {
+          data?.stockScreeners?.map((stockScreener, index) => {
+            return <li>
+            <a
+              target="_blank"
+              data-ga-onclick="Top Score Companies - href"
+              href={`${ET_WEB_URL}stock_screener/predefKey-${stockScreener?.id}.cms`}
+            >
+              <div className="figure">
+                <img
+                  src={stockScreener?.screenerHighlightImageUrl}
+                  width={20}
+                  alt={stockScreener?.screenerName}
+                />
+              </div>
+              <div className="content">
+                <span className="name wrapLines l2">{stockScreener?.screenerName || ""}</span>
+                <span className="count">{stockScreener?.nseCount} Stocks</span>
+              </div>
+            </a>
+          </li>
+          })
+        }        
         <li>
           <a
-            target="_blank"
-            data-ga-onclick="Top Score Companies - href"
-            href="/stock_screener/predefKey-top_score_companies.cms"
-          >
-            <div className="figure">
-              <img
-                src="https://img.etimg.com/photo/msid-87480690,quality-100/top-score-companies.jpg"
-                width={20}
-                alt="Top Score Companies"
-              />
-            </div>
-            <div className="content">
-              <span className="name wrapLines l2">Top Score Companies</span>
-              <span className="count">596 Stocks</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            data-ga-onclick="Growth at Reasonable Price - href"
-            href="/stock_screener/predefKey-GARP.cms"
-          >
-            <div className="figure">
-              <img
-                src="https://img.etimg.com/photo/msid-75423733,quality-100/top-growth-stocks.jpg"
-                width={20}
-                alt="Growth at Reasonable Price"
-              />
-            </div>
-            <div className="content">
-              <span className="name wrapLines l2">Growth at Reasonable Price</span>
-              <span className="count">79 Stocks</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            data-ga-onclick="Mid-cap Growth Stocks - href"
-            href="/stock_screener/predefKey-MID_CAP_GROWTH_STOCKS.cms"
-          >
-            <div className="figure">
-              <img
-                src="https://img.etimg.com/photo/msid-75423730,quality-100/midcap-growth-stocks.jpg"
-                width={20}
-                alt="Mid-cap Growth Stocks"
-              />
-            </div>
-            <div className="content">
-              <span className="name wrapLines l2">Mid-cap Growth Stocks</span>
-              <span className="count">25 Stocks</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/markets/stocks/stock-screener"
+            href={`${ET_WEB_URL}markets/stocks/stock-screener`}
             target="_blank"
             data-ga-onclick="Stock Screener Count - href"
           >
             <div className="midcontent">
-              <span className="count">+10</span>
+              <span className="count">+{data?.stockScreenersCount || ""}</span>
               <span className="name">Stock Screener</span>
             </div>
           </a>
