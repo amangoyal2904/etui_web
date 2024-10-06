@@ -979,3 +979,37 @@ export const getAllShortUrls = async () => {
   const response = await fetch(url);
   return await response?.json();
 };
+
+export const getCurrentMarketStatus = async () => {
+  try {
+    const url = (APIS_CONFIG as any)?.MARKET_STATUS[window.APP_ENV];
+    const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (res?.status === 200) {
+      return await res.json();
+    } else {
+      saveLogs({
+        res: "error",
+        msg: "Unexpected response status",
+        status: res?.status,
+      });
+      return null;
+    }
+  } catch (e) {
+    let errorMessage = "Unknown error";
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
+    console.error("Error in fetching market status", errorMessage);
+    saveLogs({
+      type: "Mercury",
+      res: "error",
+      msg: "Error in fetching market status",
+      error: errorMessage,
+    });
+    return null;
+  }
+};
