@@ -6,6 +6,7 @@ import Tabs from '../Tabs';
 import ViewAllCta from '../ViewAllCta';
 import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
+import { ET_WEB_URL } from 'utils/common';
 
 export default function StockRecos({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
@@ -15,7 +16,9 @@ export default function StockRecos({ focusArea }) {
   useEffect(() => {
     const api = API_CONFIG["GET_RECOS_DETAILS"][window.APP_ENV];
 
-    const type = "newRecos";
+    let type = "newRecos";
+    type = activeTab === 1 ? "mostBuy" : type;
+    type = activeTab === 2 ? "mostSell" : type;
 
     const payload = {
       apiType: type,
@@ -55,7 +58,7 @@ export default function StockRecos({ focusArea }) {
             data?.slice(0, howMany)?.map((item, index) => (
               <div className={styles.card} key={index}>
                 <div className={styles.firstRow}><span className={styles.cat}>{item?.recoType}</span> | Call Date: Sep 6, 2022</div>
-                <div className={styles.title}><a href={`/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`}>{item?.companyName}</a></div>
+                <div className={styles.title}><a href={`${ET_WEB_URL}${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank">{item?.companyName}</a></div>
                 <div className={styles.row}>
                   <div className={`${styles.col} ${styles.up}`}>
                     {item?.potentialText}
@@ -81,7 +84,7 @@ export default function StockRecos({ focusArea }) {
                   </div>  
                 </div>
                 <div className={styles.footer}>
-                  Brokerage <a href="#">{item?.organisation}</a>
+                  Brokerage <a href={`${ET_WEB_URL}markets/stock-recos/brokerages/${item?.seoName}/all`} target="_blank">{item?.organisation}</a>
                 </div>
                 <span className={`addToWatchListIcon`}>&#43;</span>
               </div>
