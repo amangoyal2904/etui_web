@@ -5,8 +5,9 @@ import Tabs from '../Tabs'
 import ViewAllCta from '../ViewAllCta';
 import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
+import { ET_WEB_URL } from 'utils/common';
 
-export default function StockReportPlus() {
+export default function StockReportPlus({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
   const tabs = ["High Upside", "Top Score Companies", "Score Upgrade"];
@@ -14,12 +15,17 @@ export default function StockReportPlus() {
   useEffect(() => {
     const api = API_CONFIG["SCREENER_BY_SCREENERID"][window.APP_ENV];    
 
-    const screenerId = 2554;
+    let screenerId = 2554; // High Upside
+    if (activeTab === 1) {
+      screenerId = 4205; // Top Score Companies
+    } else if (activeTab === 2) {
+      screenerId = 2518; // Score Upgrade
+    }
 
     const payload = {
       deviceId: "web",
       pageno: 1,
-      pagesize: 20,
+      pagesize: focusArea === "news" ? 2 : 5,
       screenerId: screenerId,
       viewId: 5246,
       filterType: "index",
@@ -34,8 +40,9 @@ export default function StockReportPlus() {
       body: JSON.stringify(payload),
     })
       .then((response) => response.json())
-      .then((data) => {        
-        // setData(data?.recoData?.[0]?.data || []);
+      .then((data) => {    
+        // debugger;    
+        setData(data || []);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -47,13 +54,13 @@ export default function StockReportPlus() {
       <div>
         <HeadingWithRightArrow title="Stock Report Plus" />
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />      
-        {data.map((item, index) => (
+        {data?.dataList?.map((item, index) => (
           <div className="card">
             <div className="left">
-              <a href="#" className="name">Fusion Micro Finance</a>
+              <a href={`${ET_WEB_URL}${item?.seoName}/stocks/companyid-${item?.companyID}.cms`} className="name" target="_blank">{item?.name || ""}</a>
               <div className="title">Hold</div>
               <div className="description">Mean Recos by 9 Analysts</div>
-              <ViewReportCta />
+              <ViewReportCta url={"/"} />
             </div>
             <div className="right up">
               <div>
@@ -66,7 +73,7 @@ export default function StockReportPlus() {
               </div>
               <div>
                 Current Price
-                <span>765.45</span>
+                <span>₹ 765.45</span>
               </div>
             </div>
           </div> 
