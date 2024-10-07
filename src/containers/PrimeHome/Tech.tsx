@@ -249,7 +249,7 @@ function NewsLetters({newsLetterData}) {
 function MarketChange({niftyITData}){
   // console.log("@@@ niftyITData -->", niftyITData)
   const compnData = niftyITData && niftyITData.searchresult.length && niftyITData.searchresult[0];
-  console.log("@@@ niftyITData -->", compnData)
+  //console.log("@@@ niftyITData -->", compnData)
   return <>
     <div className="marketChangeMain">
       <h3 className="marketChangeTitle">{compnData.indexName}</h3>
