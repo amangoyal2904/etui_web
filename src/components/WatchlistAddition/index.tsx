@@ -34,6 +34,9 @@ const WatchlistAddition = ({
           const watchListApiStatusForAll = new Event("watchListApiStatusForAll");
           document.dispatchEvent(watchListApiStatusForAll);
         }
+      }else if(window.watchListApiRes === 'success'){
+        const watchListApiStatusForAll = new Event("watchListApiStatusForAll");
+        document.dispatchEvent(watchListApiStatusForAll);
       }
     } catch (error) {
       console.error("Error fetching watchlist stocks:", error);
@@ -171,6 +174,7 @@ const WatchlistAddition = ({
   }, [companyId, companyType]);
 
   useEffect(() => {
+    console.log("test watchlist -----")
     document.addEventListener("watchListApiStatusForAll", checkWatchListStatus);
     fetchWatchListStocks();
 
