@@ -202,7 +202,7 @@ function StockScreeners() {
       <ul className="screener">
         {
           data?.stockScreeners?.map((stockScreener, index) => {
-            return <li>
+            return <li key={`screener_stockScreener_key_${index}`}>
             <a
               target="_blank"
               data-ga-onclick="Top Score Companies - href"
