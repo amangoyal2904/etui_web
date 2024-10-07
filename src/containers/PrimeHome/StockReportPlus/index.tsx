@@ -202,22 +202,15 @@ export default function StockReportPlus({ focusArea }) {
           })}    
           </div>            
         </div>
-        <ViewAllCta title="High Upside Stocks" url="/stock-report-plus" />
+        <ViewAllCta title="High Upside Stocks" url="/stock-report-plus" isNoBorderRightArrow={focusArea === "market"} />
       </div>
-      <style jsx>{`
-        .market {
-          position: relative;
-
-          .card {
-            min-width: 320px;
-          }
-        }
+      <style jsx>{`        
         .slider {
           overflow: hidden;
         }
         .cardsWrapper {
           display: inline-flex;
-          gap: 20px;            
+          flex-direction: column;                
         }
         .card {          
           position: relative;          
@@ -342,44 +335,55 @@ export default function StockReportPlus({ focusArea }) {
           }
         }
         .arr {
-            width: 18px;
-            height: 18px;
+          width: 18px;
+          height: 18px;
+          display: inline-block;
+          background: #DA4617CC;
+          border-radius: 50%;
+          position: absolute;            
+          cursor: pointer;
+          pointer-events: all;
+          top: 32px;
+
+          &.disabled {
+            opacity: 0.4;              
+            cursor: no-drop;
+          }
+
+          &:after {
+            content: '';
             display: inline-block;
-            background: #DA4617CC;
-            border-radius: 50%;
-            position: absolute;            
-            cursor: pointer;
-            pointer-events: all;
-            top: 32px;
+            width: 6px;
+            height: 6px;
+            border-top: 1px solid #fff;
+            border-left: 1px solid #fff;
+            transform: rotate(-45deg);
+            position: absolute;
+            top: 5px;
+            left: 6px;
+          }
 
-            &.disabled {
-              opacity: 0.4;              
-              cursor: no-drop;
-            }
+          &.prev {
+            right: 25px;              
+          }
 
-            &:after {
-              content: '';
-              display: inline-block;
-              width: 6px;
-              height: 6px;
-              border-top: 1px solid #fff;
-              border-left: 1px solid #fff;
-              transform: rotate(-45deg);
-              position: absolute;
-              top: 5px;
-              left: 6px;
-            }
-
-            &.prev {
-              right: 25px;              
-            }
-
-            &.next {
-              right: 0;              
-              transform: rotate(180deg);
-            }
+          &.next {
+            right: 0;              
+            transform: rotate(180deg);
           }
         }
+
+        .market {
+          position: relative;
+
+          .cardsWrapper {
+            flex-direction: row;
+            gap: 20px;
+            .card {
+              min-width: 320px;
+            }
+          }          
+        }      
       `}</style>
     </>
   )
