@@ -20,7 +20,7 @@ const WatchlistAddition = ({
 
   const fetchWatchListStocks = useCallback(async () => {
     try {
-      if (typeof window.watchListApiHitStatus === 'undefined' || window.watchListApiRes === 'failed') {
+      if (typeof window.watchListApiHitStatus === 'undefined' || window.watchListApiHitStatus === 'failed') {
         window.watchListApiHitStatus = 'hit';
         const data = await fetchAllWatchListData(2, 11);
         window.watchListApiHitStatus = 'success';
@@ -34,7 +34,7 @@ const WatchlistAddition = ({
           const watchListApiStatusForAll = new Event("watchListApiStatusForAll");
           document.dispatchEvent(watchListApiStatusForAll);
         }
-      }else if(window.watchListApiRes === 'success'){
+      }else if(window.watchListApiHitStatus === 'success' && window.watchListApiRes.length > 0){
         const watchListApiStatusForAll = new Event("watchListApiStatusForAll");
         document.dispatchEvent(watchListApiStatusForAll);
       }
