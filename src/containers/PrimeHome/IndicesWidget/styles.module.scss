@@ -2,6 +2,9 @@
   display: flex;
   justify-content: space-between;
   font-family: Montserrat;
+  gap: 20px;
+  font-size: 10px;
+
   h2 {
     font-size: 16px;
     font-weight: 600;    
@@ -10,6 +13,7 @@
     font-weight: 400;
     font-size: 10px;
     color: #EA2227;
+    font-weight: bold;
   }
   .date {
     margin-left: 5px;
@@ -18,6 +22,7 @@
 
 .durations {
   display: inline-flex;
+  width: 100%;
   gap: 10px;
   padding: 10px;
   text-transform: uppercase;
@@ -36,16 +41,16 @@
   display: inline-flex;   
 
   .indiceTab {
-    padding: 7px 8px;
+    padding: 7px 5px;
     cursor: pointer;
-    border-bottom: 1px solid #ccc;
+    // border-bottom: 1px solid #ccc;
     display: flex;
     flex-direction: column;
     gap: 5px;
 
-    &:not(.active) {
-      border-bottom: 1px solid #ccc;
-    }
+    // &:not(.active) {
+    //   border-bottom: 1px solid #ccc;
+    // }
   }
   .active {
     border-radius: 8px 8px 0 0;
@@ -53,6 +58,8 @@
     border: 1px solid #ccc;
     border-bottom: none;
     position: relative;
+    font-weight: 600;
+    margin-bottom: -1px;
   }
 }
 
@@ -92,7 +99,7 @@
 .chartContainer {
   background-color: #fffbfa;
   border: 1px solid #ccc;
-  border-top: 0;
+  // border-top: 0;
   border-radius: 0 0 8px 8px;
 
   .chart {
@@ -106,5 +113,22 @@
     margin-bottom: 5px;
     margin-right: 10px;
     margin-top: 5px;
+
+    a {
+      font-weight: 600;
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        top: 0;
+        left: 2px;
+        border-top: 1px solid #000;
+        border-left: 1px solid #000;
+        position: relative;
+        cursor: pointer;
+        transform: rotate(135deg);
+      }
+    }
   }
 }

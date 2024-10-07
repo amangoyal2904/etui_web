@@ -61,15 +61,15 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                 focusArea === "market" && <>
                   <MarketsTopNews focusArea={focusArea} data={marketsTopNews?.data || []}/>
                   <Separator />
-                  <IndicesWidget isDev={isDev} />
+                  <IndicesWidget isDev={isDev} focusArea={focusArea}/>
                   <Separator />
                   <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea}/>
                   <Separator />
-                  <StockRecos />
+                  <StockRecos focusArea={focusArea}/>
                   <Separator />
-                  <StockReportPlus />
+                  <StockReportPlus focusArea={focusArea}/>
                   <Separator />
-                  <BigBullPortfolio />
+                  <BigBullPortfolio focusArea={focusArea}/>
                   <Separator />
                   <MarketMood />
                 </>
@@ -99,15 +99,15 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <div className="title">MARKETS</div>
             <MarketsTopNews focusArea={focusArea} data={marketsTopNews?.data || []}/>
             <Separator />
-            <IndicesWidget isDev={isDev} />
+            <IndicesWidget isDev={isDev} focusArea={focusArea}/>
             <Separator />
             <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
-            <StockRecos />
+            <StockRecos focusArea={focusArea}/>
             <Separator />
-            <StockReportPlus />
+            <StockReportPlus focusArea={focusArea}/>
             <Separator />
-            <BigBullPortfolio />
+            <BigBullPortfolio focusArea={focusArea}/>
             <Separator />
             <MarketMood />
           </>

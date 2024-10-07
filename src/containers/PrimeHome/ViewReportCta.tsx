@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function ViewReportCta() {
+export default function ViewReportCta({ url }) {
   return (
     <>
-      <a href="https://img.etimg.com/photo/113322366.cms" title="Kolte-Patil Dev. View Report" target="_blank" className="viewReport"><span className="pdfIcon"></span> View Report</a>
+      <a href={url} target="_blank" className="viewReport"><span className="pdfIcon"></span> View Report</a>
       <style jsx>{`
         .viewReport {
           position: relative;

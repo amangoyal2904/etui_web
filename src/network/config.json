@@ -182,6 +182,14 @@
     "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview",
     "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview"
   },
+  "GET_RECOS_DETAILS": {
+    "development": "https://etmarketsapis.indiatimes.com/ET_Stats/getRecosDetail",
+    "production": "https://etmarketsapis.indiatimes.com/ET_Stats/getRecosDetail"
+  },
+  "SCREENER_BY_SCREENERID": {
+    "development": "https://screener.indiatimes.com/screener/getScreenerByScreenerId",
+    "production": "https://screener.indiatimes.com/screener/getScreenerByScreenerId"
+  },
   "MARKETSTATS_INTRADAY": {
     "development": "https://etapi.indiatimes.com/et-screener/intraday-stats",
     "production": "https://etapi.indiatimes.com/et-screener/intraday-stats"
