@@ -793,3 +793,289 @@ export const convertMilliseconds = (milliseconds) => {
       return `00:${remainingSeconds}`;
   }
 }
+
+export function changeImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
+  const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
+
+  if(desiredResizeMode) {
+    return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+  }
+
+  return newUrl;
+}
+
+export const formatNumber = (
+  number: number,
+  uptoDecimal: number = 2,
+  noData?: string,
+): string => {
+  if ((!!number && isNaN(number)) || number == null)
+    return !!noData ? noData : "-";
+  const isInteger = Number.isInteger(Number(number));
+  if (isInteger) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else {
+    const formatter = new Intl.NumberFormat("en-IN", {
+      style: "decimal",
+      minimumFractionDigits: uptoDecimal, // Ensure at least 2 decimal places
+      maximumFractionDigits: uptoDecimal, // Allow maximum of 2 decimal places
+    });
+
+    const formattedNumber = formatter.format(number);
+    return formattedNumber.replace(/(\d)(?=(\d{3})+\.)/g, "$1,"); // Add commas for thousands separators
+  }
+};
+
+export const getStockUrl = (
+  id: string,
+  seoName: string,
+  stockType: string,
+  subType: string = "company",
+) => {
+  if (stockType == "index") {
+    return "/markets/indices/" + seoName;
+  } else if (stockType === "sector") {
+    return "/stocks/sectors/" + seoName;
+  } else {
+    if (seoName?.indexOf(" ") >= 0) {
+      seoName = seoName
+        .replaceAll(" ", "-")
+        .replaceAll("&", "")
+        .replaceAll(".", "")
+        .toLowerCase();
+    }
+    if ((stockType == "dvr" || stockType == "pp") && id.includes("1111")) {
+      id = id.substring(0, id.length - 4);
+    }
+    let stockUrl =
+      (APIS_CONFIG as any)?.DOMAIN[window.APP_ENV] +
+      "/" +
+      seoName +
+      "/stocks/companyid-" +
+      id +
+      ".cms";
+    if (
+      stockType != "equity" &&
+      stockType !== "" &&
+      stockType !== "company" &&
+      stockType.toLowerCase() !== "etf"
+    )
+      stockUrl = stockUrl + "?companytype=" + stockType?.toLowerCase();
+
+    if (subType == "NonList") {
+      stockUrl =
+        (APIS_CONFIG as any)?.DOMAIN[window.APP_ENV] +
+        "/company/" +
+        seoName +
+        "/" +
+        id;
+    }
+    if (stockType == "ETF") {
+      stockUrl =
+        (APIS_CONFIG as any)?.DOMAIN[window.APP_ENV] +
+        "/" +
+        seoName +
+        "/mffactsheet/schemeid-" +
+        id +
+        ".cms";
+    }
+    return stockUrl;
+  }
+};
+
+export const fetchSelectedFilter = async (
+  seoNameOrIndexId?: string | number,
+) => {
+  try {
+    const data = await fetchFilters({ marketcap: true });
+    if (
+      !data ||
+      !data.keyIndices ||
+      !data.sectoralIndices ||
+      !data.otherIndices ||
+      !data.marketcap
+    ) {
+      return { name: "All Stocks", indexId: 0, seoname: "", exchange: "nse" };
+    }
+
+    const allIndices = [
+      ...(data.keyIndices.nse || []),
+      ...(data.keyIndices.bse || []),
+      ...(data.sectoralIndices.nse || []),
+      ...(data.sectoralIndices.bse || []),
+      ...(data.otherIndices.nse || []),
+      ...(data.otherIndices.bse || []),
+      ...(data.marketcap.nse || []),
+      ...(data.marketcap.bse || []),
+    ];
+
+    let foundIndex;
+    if (
+      !isNaN(seoNameOrIndexId as number) ||
+      typeof seoNameOrIndexId === "string"
+    ) {
+      foundIndex = allIndices.find(
+        (index) =>
+          index.indexId === String(seoNameOrIndexId) ||
+          index.seoname === seoNameOrIndexId,
+      );
+    }
+
+    if (foundIndex) {
+      let exchange = "";
+      if (
+        (data.keyIndices.nse || []).includes(foundIndex) ||
+        (data.sectoralIndices.nse || []).includes(foundIndex) ||
+        (data.otherIndices.nse || []).includes(foundIndex) ||
+        (data.marketcap.nse || []).includes(foundIndex)
+      ) {
+        exchange = "nse";
+      } else if (
+        (data.keyIndices.bse || []).includes(foundIndex) ||
+        (data.sectoralIndices.bse || []).includes(foundIndex) ||
+        (data.otherIndices.bse || []).includes(foundIndex) ||
+        (data.marketcap.bse || []).includes(foundIndex)
+      ) {
+        exchange = "bse";
+      }
+
+      return {
+        name: foundIndex.name,
+        indexId: foundIndex.indexId,
+        seoname: foundIndex.seoname,
+        exchange: exchange,
+      };
+    } else {
+      return { name: "All Stocks", indexId: 0, seoname: "", exchange: "nse" };
+    }
+  } catch (error) {
+    console.error("Error fetching filters:", error);
+    return { name: "All Stocks", indexId: 0, seoname: "", exchange: "nse" };
+  }
+};
+
+export const fetchFilters = async ({
+  all = false,
+  watchlist = false,
+  mostrecent = false,
+  marketcap = false,
+}) => {
+  let apiUrl = (APIS_CONFIG as any)?.["INDEX_FILTERS"][window.APP_ENV];
+  let queryParams = [];
+  if (all) queryParams.push("all=true");
+  if (watchlist) queryParams.push("watchlist=true");
+  if (mostrecent) queryParams.push("mostrecent=true");
+  if (marketcap) queryParams.push("marketcap=true");
+  const queryString = queryParams.join("&");
+  if (!!queryString) {
+    apiUrl = apiUrl + "?" + queryString;
+  }
+  const response = await fetch(apiUrl);
+  return response?.json();
+};
+
+export const getAllShortUrls = async () => {
+  const url = (APIS_CONFIG as any)["MARKET_STATS_SHORTURLS_MAPPING"][window.APP_ENV];
+  const response = await fetch(url);
+  return await response?.json();
+};
+
+export const getCurrentMarketStatus = async () => {
+  try {
+    const url = (APIS_CONFIG as any)?.MARKET_STATUS[window.APP_ENV];
+    const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (res?.status === 200) {
+      return await res.json();
+    } else {
+      saveLogs({
+        res: "error",
+        msg: "Unexpected response status",
+        status: res?.status,
+      });
+      return null;
+    }
+  } catch (e) {
+    let errorMessage = "Unknown error";
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
+    console.error("Error in fetching market status", errorMessage);
+    saveLogs({
+      type: "Mercury",
+      res: "error",
+      msg: "Error in fetching market status",
+      error: errorMessage,
+    });
+    return null;
+  }
+};
+
+export const saveStockInWatchList = async (followData: any) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  let postBodyData = {};
+  if (isLocalhost) {
+    postBodyData = {
+      _authorization: authorization,
+      followData,
+    };
+  } else {
+    postBodyData = followData;
+  }
+  const apiUrl = `${(APIS_CONFIG as any)?.WATCHLISTAPI.addWatchList[window.APP_ENV]}`;
+  const headers = new Headers({
+    Authorization: authorization,
+    "Content-Type": "application/json",
+  });
+  const options: any = {
+    method: "POST",
+    cache: "no-store",
+    headers: headers,
+    body: JSON.stringify(postBodyData),
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error saving stock in watchlist:", error);
+    throw error;
+  }
+};
+
+export const fetchAllWatchListData = async (
+  type: any,
+  usersettingsubType: any,
+) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  if (authorization === "") {
+    console.log("peuuid is not getting please check cookie__", authorization);
+  }
+  const apiUrl = `${APIS_CONFIG?.WATCHLISTAPI.getAllWatchlist[window.APP_ENV]}?stype=${type}&usersettingsubType=${usersettingsubType}`;
+  const headers = new Headers({ Authorization: authorization });
+  const options: any = {
+    cache: "no-store",
+    headers: headers,
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      window.watchListApiHitStatus = 'failed';
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    window.watchListApiHitStatus = 'failed';
+    console.error("Error fetching watchlist data:", error);
+    throw error;
+  }
+};

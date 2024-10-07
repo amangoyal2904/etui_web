@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useRef, useEffect, useState } from 'react'
 
 export default function PrimeBenefitsBucket({focusArea}) {
@@ -155,12 +157,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
 
           &.news {
             border-left: 1px dotted #9b8680;
-          }
-
-          &.market {
-            padding-left: 0;
-            margin-bottom: 25px;
-          }
+          }         
 
           .arr {
             width: 18px;
@@ -173,9 +170,8 @@ export default function PrimeBenefitsBucket({focusArea}) {
             pointer-events: all;
 
             &.disabled {
-              opacity: 0.4;
-              pointer-events: none;
-              cursor: not-drop;
+              opacity: 0.4;              
+              cursor: no-drop;
             }
 
             &:after {
@@ -255,6 +251,15 @@ export default function PrimeBenefitsBucket({focusArea}) {
             height: 13px;
             right: 0;
             background-position: -47px -104px;
+          }
+
+          &.market {
+            padding-left: 0;
+            margin-bottom: 25px;
+
+            .prev {
+              left: -7px;
+            }
           }
         }
       `}</style>

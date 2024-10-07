@@ -133,4 +133,31 @@ a {
   box-shadow: inset 0 0 0 0.2rem red;
 }
 
+.prel{
+  position: relative;
+}
+
+.errorToast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.errorToast button {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  background: #000;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border-radius: 50%;
+}
+
+.errorToast.withRed  button{
+  background: rgb(237, 25, 59);
+}
+
 

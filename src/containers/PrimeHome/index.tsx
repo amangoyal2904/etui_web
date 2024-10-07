@@ -19,8 +19,9 @@ import VideoWidget from "./VideoWidget";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 
-function PrimeHome({ searchResult, isDev }) {  
+function PrimeHome({ searchResult, isDev, ssoid}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
+  const marketPodcastData = searchResult?.find(item => item?.name === "market_podcast") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
   const tech = searchResult?.find(item => item?.name === "tech") || {};
@@ -88,11 +89,11 @@ function PrimeHome({ searchResult, isDev }) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} isDev={isDev} />
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid || ssoid}/>
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       
-      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
+      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
@@ -118,6 +119,21 @@ function PrimeHome({ searchResult, isDev }) {
         }
         a[href*="articleshow"]:visited, a[href*="videoshow"]:visited, a[href*="slideshow"]:visited, a[href*="liveblog"]:visited {
             color: #636363;
+        }
+        .addToWatchListIcon {
+          width: 17px;
+          height: 17px;
+          background: #0288D1;
+          border-radius: 3px;
+          display: inline-block;
+          color: #fff;
+          font-size: 20px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          right: 10px;
+          top: 10px;
         }
       `}</style>
     </>

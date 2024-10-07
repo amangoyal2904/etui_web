@@ -85,6 +85,8 @@ declare global {
     _sva: any;
     bookmarkApiHitStatus: any;
     bookmarkApiRes: any;
+    watchListApiHitStatus: any;
+    watchListApiRes: any;
   }
 }
 declare var JssoCrosswalk: any;

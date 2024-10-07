@@ -169,5 +169,73 @@
   "SPONSER_BANNER_DATA": {
     "development": "https://qc-subscriptionsbff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo",
     "production": "https://subscriptions-bff.indiatimes.com/co-branding/ET/ETPR/web/IN/partnerInfo"
+  },
+  "BigBullGetRecentTransactions": {
+    "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/recent-deals",
+    "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/recent-deals"
+  },
+  "BigBullGetBestPicks": {
+    "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/best-picks",
+    "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/best-picks"
+  },
+  "BigBullAllInverstorOverview": {
+    "development": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview",
+    "production": "https://etmarketsapis.indiatimes.com/etservicestockapps/all-investor-overview"
+  },
+  "GET_RECOS_DETAILS": {
+    "development": "https://etmarketsapis.indiatimes.com/ET_Stats/getRecosDetail",
+    "production": "https://etmarketsapis.indiatimes.com/ET_Stats/getRecosDetail"
+  },
+  "SCREENER_BY_SCREENERID": {
+    "development": "https://screener.indiatimes.com/screener/getScreenerByScreenerId",
+    "production": "https://screener.indiatimes.com/screener/getScreenerByScreenerId"
+  },
+  "MARKETSTATS_INTRADAY": {
+    "development": "https://etapi.indiatimes.com/et-screener/intraday-stats",
+    "production": "https://etapi.indiatimes.com/et-screener/intraday-stats"
+  },
+  "INDEX_FILTERS": {
+    "development": "https://etpwaapi.economictimes.com/api/mercury/indexfilters",
+    "production": "https://etpwaapi.economictimes.com/api/mercury/indexfilters"
+  },
+  "MARKET_STATS_SHORTURLS_MAPPING": {
+    "development": "https://etapipre.indiatimes.com/api/mercury/shorturlmapping/marketstats",
+    "production": "https://etpwaapi.economictimes.com/api/mercury/shorturlmapping/marketstats"
+  },
+  "MARKET_STATUS": {
+    "development": "https://json.bselivefeeds.indiatimes.com/ET_Community/holidaylist",
+    "production": "https://json.bselivefeeds.indiatimes.com/ET_Community/holidaylist"
+  },
+  "GETCompanyShortData": {
+    "development": [
+      "https://marketservices.indiatimes.com/marketservices/companyshortdata"
+    ],
+    "production": [
+      "https://marketservices.indiatimes.com/marketservices/companyshortdata"
+    ]
+  },
+  "WATCHLISTAPI": {
+    "getAllWatchlist": {
+      "development": [
+        "https://etusersqc2.economictimes.indiatimes.com/et/getpref"
+      ],
+      "production": ["https://etup.economictimes.indiatimes.com/et/getpref"]
+    },
+    "addWatchList": {
+      "development": [
+        "https://etusersqc2.economictimes.indiatimes.com/et/savesettings/json"
+      ],
+      "production": [
+        "https://etup.economictimes.indiatimes.com/et/savesettings/json"
+      ]
+    },
+    "multipleWatchList": {
+      "development": [
+        "https://etusersqc2.economictimes.indiatimes.com/et/v3/savesettings/json"
+      ],
+      "production": [
+        "https://etup.economictimes.indiatimes.com/et/v3/savesettings/json"
+      ]
+    }
   }
 }
