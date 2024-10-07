@@ -14,7 +14,7 @@ const TextImageMiddile = ({data, heading}) => {
                             <img width="100" height="75" alt={item.title} loading="lazy" src={item.img} />
                             {item.type === "slideshow" && <span className={`${styles.subSprite} ${styles.slideIcon}`}></span> }
                         </a>
-                        <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href={item.url}>{item.title}</a>
+                        <a target="_blank" href={item.url}>{item.title}</a>
                     </li>
                 ))}
             </ul>

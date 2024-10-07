@@ -4,7 +4,7 @@ import PrimeIcon from 'components/Icons/PrimeIcon'
 import React from 'react'
 
 export default function PrimeExclusives({ title, data, focusArea }) {
-  const firstRow = data[0];
+  const firstRow = data[1];
   const secondRow = data.slice(1, 3);
   const thirdRow = data.slice(3, 5);
 
