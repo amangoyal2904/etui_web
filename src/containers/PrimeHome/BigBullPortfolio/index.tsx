@@ -163,7 +163,7 @@ export default function BigBullPortfolio({ focusArea }) {
             ))}
           </div>
         </div>
-        <ViewAllCta title="Portfolio" url="/bigbull-portfolio" />
+        <ViewAllCta title="Portfolio" url="/bigbull-portfolio" isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`        
         .slider {
