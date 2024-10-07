@@ -196,7 +196,7 @@ const WatchlistAddition = ({
       const watchlistStatus =
         typeof companyId != "undefined" &&
         window.watchListApiRes.length > 0 &&
-        window.watchListApiRes.length.some(
+        window.watchListApiRes.some(
           (item: any) =>
             item.companyId === companyId?.toString() &&
             item.companyType === companyType,
@@ -255,9 +255,9 @@ const WatchlistAddition = ({
               <div className={styles.loader}></div>
             </div>
           ) : isWatchListAdded ? (
-            <span className="tickIcon"></span>
+            <span className={styles.tickIcon}></span>
           ) : (
-            <span className="plusIcon"></span>
+            <span className={styles.plusIcon}></span>
           )}
         </span>
       )}

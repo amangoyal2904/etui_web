@@ -17,23 +17,23 @@
     margin-left: 3px;
     margin-top: 4px;
     width: 14px;
-    height: 8px;
-    border-bottom: solid 2px #000;
-    border-left: solid 2px #000;
+    height: 6px;
+    border-bottom: solid 2px rgb(43, 116, 227);;
+    border-left: solid 2px rgb(43, 116, 227);;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
   }
 
   .plusIcon{
-    height: 32px;
-    width: 32px;
+    height: 18px;
+    width: 18px;
     position: relative;
 
     &:before, &:after{
       content: " ";
-      width: 32px;
-      height: 6px;
-      background-color: #000;
+      width: 12px;
+      height: 2px;
+      background-color: rgb(43, 116, 227);;
       display: block;
       position: absolute;
       top: 50%;
