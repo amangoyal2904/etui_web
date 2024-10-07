@@ -67,9 +67,9 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                   <Separator />
                   <StockRecos focusArea={focusArea}/>
                   <Separator />
-                  <StockReportPlus />
+                  <StockReportPlus focusArea={focusArea}/>
                   <Separator />
-                  <BigBullPortfolio />
+                  <BigBullPortfolio focusArea={focusArea}/>
                   <Separator />
                   <MarketMood />
                 </>
@@ -105,9 +105,9 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <Separator />
             <StockRecos focusArea={focusArea}/>
             <Separator />
-            <StockReportPlus />
+            <StockReportPlus focusArea={focusArea}/>
             <Separator />
-            <BigBullPortfolio />
+            <BigBullPortfolio focusArea={focusArea}/>
             <Separator />
             <MarketMood />
           </>
