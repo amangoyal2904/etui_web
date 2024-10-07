@@ -72,8 +72,6 @@ export default function MarketNews({ title, data, podcastData }) {
 }
 
 function Podcast({ podcastData }) {
-
-  console.log({podcastData})
   const data = podcastData[0] || {};
   const titles = data?.title?.split(':') || [];
 
