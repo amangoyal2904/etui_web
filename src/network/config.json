@@ -203,7 +203,39 @@
     "production": "https://etpwaapi.economictimes.com/api/mercury/shorturlmapping/marketstats"
   },
   "MARKET_STATUS": {
-    "development": "https://bselivefeeds.indiatimes.com/ET_Community/holidaylist",
+    "development": "https://json.bselivefeeds.indiatimes.com/ET_Community/holidaylist",
     "production": "https://json.bselivefeeds.indiatimes.com/ET_Community/holidaylist"
+  },
+  "GETCompanyShortData": {
+    "development": [
+      "https://marketservices.indiatimes.com/marketservices/companyshortdata"
+    ],
+    "production": [
+      "https://marketservices.indiatimes.com/marketservices/companyshortdata"
+    ]
+  },
+  "WATCHLISTAPI": {
+    "getAllWatchlist": {
+      "development": [
+        "https://etusersqc2.economictimes.indiatimes.com/et/getpref"
+      ],
+      "production": ["https://etup.economictimes.indiatimes.com/et/getpref"]
+    },
+    "addWatchList": {
+      "development": [
+        "https://etusersqc2.economictimes.indiatimes.com/et/savesettings/json"
+      ],
+      "production": [
+        "https://etup.economictimes.indiatimes.com/et/savesettings/json"
+      ]
+    },
+    "multipleWatchList": {
+      "development": [
+        "https://etusersqc2.economictimes.indiatimes.com/et/v3/savesettings/json"
+      ],
+      "production": [
+        "https://etup.economictimes.indiatimes.com/et/v3/savesettings/json"
+      ]
+    }
   }
 }

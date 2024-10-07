@@ -3,6 +3,7 @@ import styles from "./DashboardWidget.module.scss";
 import { formatNumber, getStockUrl } from "../../../utils";
 import { useStateContext } from "../../../store/StateContext";
 import { gotoPlanPage } from '../../../utils/utils';
+import WatchlistAddition from "components/WatchlistAddition";
 // import WatchlistAddition from "../../../components/WatchlistAddition";
 const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
   const prevStockCardRef = useRef<any>([]);
@@ -149,6 +150,16 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
         companyId={item?.companyId}
         companyType={item?.companyType}
       /> */}
+
+      <WatchlistAddition
+        companyName={item.assetName}
+        companyId={item.assetId}
+        companyType={item.assetType}
+        customStyle={{
+          width: "18px",
+          height: "18px",
+        }}
+      />
 
       <style jsx>{`
         .tar{

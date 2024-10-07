@@ -1013,3 +1013,69 @@ export const getCurrentMarketStatus = async () => {
     return null;
   }
 };
+
+export const saveStockInWatchList = async (followData: any) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  let postBodyData = {};
+  if (isLocalhost) {
+    postBodyData = {
+      _authorization: authorization,
+      followData,
+    };
+  } else {
+    postBodyData = followData;
+  }
+  const apiUrl = `${(APIS_CONFIG as any)?.WATCHLISTAPI.addWatchList[window.APP_ENV]}`;
+  const headers = new Headers({
+    Authorization: authorization,
+    "Content-Type": "application/json",
+  });
+  const options: any = {
+    method: "POST",
+    cache: "no-store",
+    headers: headers,
+    body: JSON.stringify(postBodyData),
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error saving stock in watchlist:", error);
+    throw error;
+  }
+};
+
+export const fetchAllWatchListData = async (
+  type: any,
+  usersettingsubType: any,
+) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  if (authorization === "") {
+    console.log("peuuid is not getting please check cookie__", authorization);
+  }
+  const apiUrl = `${APIS_CONFIG?.WATCHLISTAPI.getAllWatchlist[window.APP_ENV]}?stype=${type}&usersettingsubType=${usersettingsubType}`;
+  const headers = new Headers({ Authorization: authorization });
+  const options: any = {
+    cache: "no-store",
+    headers: headers,
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      window.watchListApiHitStatus = 'failed';
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    window.watchListApiHitStatus = 'failed';
+    console.error("Error fetching watchlist data:", error);
+    throw error;
+  }
+};
