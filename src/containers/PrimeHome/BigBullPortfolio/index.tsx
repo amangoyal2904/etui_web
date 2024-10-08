@@ -121,7 +121,7 @@ export default function BigBullPortfolio({ focusArea }) {
 
   return (
     <>
-      <div className={`${focusArea}`}>
+      <div className={`bigbull ${focusArea}`}>
         <HeadingWithRightArrow title="BigBull Portfolio" />
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -165,7 +165,12 @@ export default function BigBullPortfolio({ focusArea }) {
         </div>
         <ViewAllCta title="Portfolio" url="/bigbull-portfolio" isNoBorderRightArrow={focusArea === "market"} />
       </div>
-      <style jsx>{`        
+      <style jsx>{`  
+        .news {
+          .arr {
+            display: none;
+          }
+        }      
         .slider {
           overflow: hidden;
         }

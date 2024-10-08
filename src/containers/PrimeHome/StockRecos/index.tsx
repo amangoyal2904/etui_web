@@ -197,6 +197,11 @@ export default function StockRecos({ focusArea }) {
         <ViewAllCta title="Stock Recos" url="/markets/stock-recos/overview" isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`
+        .news {
+          .arr {
+            display: none;
+          }
+        }
         .market {
           position: relative;
           .cardsWrapper {

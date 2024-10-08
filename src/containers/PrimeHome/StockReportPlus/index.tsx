@@ -204,7 +204,12 @@ export default function StockReportPlus({ focusArea }) {
         </div>
         <ViewAllCta title="High Upside Stocks" url="/stock-report-plus" isNoBorderRightArrow={focusArea === "market"} />
       </div>
-      <style jsx>{`        
+      <style jsx>{` 
+        .news {
+          .arr {
+            display: none;
+          }
+        }       
         .slider {
           overflow: hidden;
         }
