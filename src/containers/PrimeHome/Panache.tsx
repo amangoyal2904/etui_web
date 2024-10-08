@@ -57,9 +57,9 @@ export default function Panache({ title, data }) {
             })
           }
           </div>
-        </div>
-        <div className="third">
-          <PanacheSlideshow data={slideshowData} heading="Videos & Slideshows"/>
+          <div className="third">
+            <PanacheSlideshow data={slideshowData} heading="Videos & Slideshows"/>
+          </div>
         </div>
       </section>
       <style jsx>{`
@@ -90,7 +90,7 @@ export default function Panache({ title, data }) {
             }
             .overlay {
               display: block;
-              background-image: url(https://img.etimg.com/photo/92345640.cms);
+              background-image: url("https://img.etimg.com/photo/92345640.cms");
               position: absolute;
               bottom: -7px;
               left: 0;
@@ -136,8 +136,8 @@ export default function Panache({ title, data }) {
               padding-bottom: 15px;
             }
           }
-          .Pleft{float: left;
-                width: 985px;}
+          // .Pleft{float: left;
+          //       width: 985px;}
           .third {
             width: 275px;
             display: inline-block;
