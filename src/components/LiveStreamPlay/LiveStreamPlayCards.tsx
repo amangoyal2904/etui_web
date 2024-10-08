@@ -1,13 +1,10 @@
 import styles from "./LiveStreamPlay.module.scss";
-// import SlickSlider from "../SlickSlider";
-// import Share from "../Share";
 import useEmblaCarousel from "embla-carousel-react";
 import { PrevButton, NextButton, usePrevNextButtons } from "../../components/CarouselArrowBtn";
 import { DotButton, useDotButton } from "../../components/CarouselDotBtn";
 import APIS_CONFIG from "network/config.json";
 import Service from "../../network/service";
 import { getCookie } from "utils/utils";
-import { APP_ENV, initSSOWidget } from "./ServerComponent";
 import { useStateContext } from "store/StateContext";
 import { useEffect, useRef, useState } from "react";
 
@@ -19,6 +16,7 @@ const LiveStreamCards = ({
   iframeRef,
   onLoadIframe,
   expertFollowers,
+  APP_ENV,
   followingData,
   fetchFollowingExperts
 }: any) => {
@@ -27,18 +25,18 @@ const LiveStreamCards = ({
   const liveStreamRef = useRef(null);
   const { isLogin } = state.login;
   const utmSource = "?utm_source=MarketHome&utm_medium=Self-Referrals";
-  const isLive = slide.eventStatus == 3;
-  const expertName = (slide.expertName && slide.expertName.replace(/ /g, "")) || "";
-  const expertId = slide.expertId;
+  const isLive = slide?.eventStatus == 3;
+  const expertName = slide?.expertName.replace(/ /g, "") || "";
+  const expertId = slide?.expertId;
   const expertURL = `${
     (APIS_CONFIG as any)?.DOMAIN[APP_ENV]
   }/markets/etmarkets-live/expert-bio/expertname-${expertName},expertid-${expertId}.cms${utmSource}`;
-  const userObj = (slide.meta && slide.meta.userData) || {};
+  const userObj = slide?.meta?.userData || {};
   const imageMSID = userObj?.imageMSID;
   const expertImg = imageMSID
     ? `https://img.etimg.com/thumb/msid-${imageMSID},width-58,height-54,imgsize-${imageMSID},resizemode-4/expert-image.jpg`
     : "https://img.etimg.com/photo/42031747.cms";
-  const streamid = slide.eventId || "";
+  const streamid = slide?.eventId || "";
   const streamURL =
     streamid &&
     `${(APIS_CONFIG as any)?.DOMAIN[APP_ENV]}/markets/etmarkets-live/streams${
@@ -75,7 +73,7 @@ const LiveStreamCards = ({
           }
         }
       } else {
-        initSSOWidget();
+        ("");
       }
     } catch (e) {
       console.log("error in follow api ", e);
@@ -147,6 +145,7 @@ const LiveStreamPlayCards = ({
   currentSIndex,
   iframeURL,
   iframeRef,
+  APP_ENV,
   onSwitching,
   onLoadIframe,
   expertFollowers,
@@ -209,6 +208,7 @@ const LiveStreamPlayCards = ({
                   expertFollowers={expertFollowers}
                   followingData={followingData}
                   fetchFollowingExperts={fetchFollowingExperts}
+                  APP_ENV={APP_ENV}
                 />
               </div>
             ))}

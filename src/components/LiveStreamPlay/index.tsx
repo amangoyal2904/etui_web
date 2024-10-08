@@ -2,11 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./LiveStreamPlay.module.scss";
 import APIS_CONFIG from "network/config.json";
-import Service from "../../network/service";
 import { getCookie } from "utils/utils";
-import { APP_ENV } from "./ServerComponent";
 import LiveStreamPlayCards from "./LiveStreamPlayCards";
 import { useStateContext } from "store/StateContext";
+
 declare global {
   interface objUser {
     info: {
@@ -27,6 +26,7 @@ const LiveStreamPlay = (props: any) => {
   const IFRAME_BASE = "https://cpl.sli.ke";
   const { state } = useStateContext();
   const { isLogin } = state.login;
+  const APP_ENV = typeof window !== "undefined" ? window.APP_ENV : "";
 
   const fetchList = async () => {
     const currentDate = new Date();
@@ -212,7 +212,7 @@ const LiveStreamPlay = (props: any) => {
     if (eventId && eventToken) {
       fetchToken()
         .then((response: any) => {
-          const tokenValue = (response && response && response.token) || "";
+          const tokenValue = response?.token || "";
           if (!tokenValue) throw response;
           const url = `${
             (APIS_CONFIG as any)?.["SLIKE_CLEO_URL"][APP_ENV]
@@ -234,7 +234,6 @@ const LiveStreamPlay = (props: any) => {
     const item = newsData[index];
     item && prepareData(item);
   };
-  console.log("@@@ newsData", newsData);
   return newsData && liveStatus ? (
     <div className={styles.livestreamBox}>
       <div className={styles.streamIconBox}>
@@ -252,6 +251,7 @@ const LiveStreamPlay = (props: any) => {
             expertFollowers={expertFollowers}
             followingData={followingData}
             fetchFollowingExperts={fetchFollowingExperts}
+            APP_ENV={APP_ENV}
           />
         ) : (
           ""
