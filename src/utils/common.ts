@@ -5,6 +5,10 @@ export const ePaper_URL = {
   'development': 'https://etdev8243.indiatimes.com',
   'production': 'https://epaper.indiatimes.com'
 }
+export const mercury_URL = {
+  'development': 'https://etmarketswebpre.indiatimes.com',
+  'production': 'https://economictimes.indiatimes.com'
+}
 export const TEST_ID_CTN_HOME = "358376"; // 335965
 export const TEST_COLOMBIA_DFP_HOME = "/7176/ET_MWeb/ET_Mweb_Bid_Experiment/ET_Mweb_HP_Bid_Experiment_300";
 export const TEST_COLOMBIA_DFP_ARTICLESHOW = "/7176/ET_MWeb/ET_Mweb_Bid_Experiment/ET_Mweb_ROS_Bid_Experiment_300";
