@@ -46,17 +46,17 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
   }
 
   // Loop through the first level of sections
-  sec.forEach((l1, index) => {
+  sec?.forEach((l1, index) => {
     // Add sub-section 1 element to sub-section array
     subSecArr.push({
       secType: "subsec1",
       elm: (
         <div key={`subsec1_${l1.msid}_${index}`}>
-          <a href={l1.link ? l1.link : '#;'} className={styles.subsec1}>
+          <a href={l1.link ? l1.link : "#;"} className={styles.subsec1}>
             {l1.nm}
           </a>
         </div>
-      ),
+      )
     });
 
     // Loop through the second level of sections
@@ -68,7 +68,7 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
           l2.sec.forEach((l3, index) => {
             subSecArr_3.push(
               <div key={`subsec3_${l3.msid}_${index}`}>
-                <a href={l3.link ? l3.link : '#;'} className={styles.subsec3}>
+                <a href={l3.link ? l3.link : "#;"} className={styles.subsec3}>
                   {l3.nm}
                 </a>
               </div>
@@ -81,13 +81,16 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
           elm: (
             <div key={`subsec2_${l2.msid}_${index}`}>
               <div>
-                <a href={l2.link ? l2.link : '#;'} className={`${styles.subsec2} ${l2.msid == "50943206" ? styles.cart : ''}`}>
+                <a
+                  href={l2.link ? l2.link : "#;"}
+                  className={`${styles.subsec2} ${l2.msid == "50943206" ? styles.cart : ""}`}
+                >
                   {l2.nm}
                 </a>
               </div>
               {subSecArr_3}
             </div>
-          ),
+          )
         });
       });
     }
@@ -100,10 +103,9 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
 
   // Loop through the sub-section array and populate the lists based on their types
   subSecArr.forEach((sec, index) => {
-
     if (index < perCol) {
       L1.push(sec.elm);
-    } else if ((index >= perCol) && index < (perCol * 2)) {
+    } else if (index >= perCol && index < perCol * 2) {
       if (sec.secType == "subsec1") {
         isL1 = 1;
       }
@@ -112,7 +114,7 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
       } else {
         L2.push(sec.elm);
       }
-    } else if ((index >= (perCol * 2)) && index < (perCol * 3)) {
+    } else if (index >= perCol * 2 && index < perCol * 3) {
       if (sec.secType == "subsec1") {
         isL2 = 1;
       }
@@ -137,12 +139,17 @@ const HandleHoverSecHtml = ({ sec, count, msid }: Props): ReactElement => {
     <>
       <div className={styles.flt}>{L1}</div>
       <div className={styles.flt}>{L2}</div>
-      {((msid == "359241701") || (msid == "13352306") || (msid == "2147477890") || (msid == "837555174") || (msid == "1715249553")) && <div className={styles.flt}>{L3}</div>}
-      {((msid == "13352306") || (msid == "2147477890") || (msid == "837555174") || (msid == "1715249553")) && <div className={styles.flt}>{L4}</div>}
+      {(msid == "359241701" ||
+        msid == "13352306" ||
+        msid == "2147477890" ||
+        msid == "837555174" ||
+        msid == "1715249553") && <div className={styles.flt}>{L3}</div>}
+      {(msid == "13352306" || msid == "2147477890" || msid == "837555174" || msid == "1715249553") && (
+        <div className={styles.flt}>{L4}</div>
+      )}
       <div className="clr"></div>
     </>
-  )
-
-} 
+  );
+};
 
 export default HandleHoverSecHtml;
