@@ -68,7 +68,6 @@ const VideoWidget = ({VideoWidgetData, isDev}) => {
             fetch(apiLink)
             .then(response => response.json())
             .then(res => {
-                console.log("res ---asdasd", res);
                 const resData = res?.searchResult[0]?.data;
                 setVideoData(prev => [...prev, { msid:res?.parameters?.msid , videoListData: resData }]);
                 setShowLoading(false);

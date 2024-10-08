@@ -97,7 +97,7 @@ export default function MarketMood({ focusArea }) {
             ))}
           </tbody>
         </table>
-        <ViewAllCta title="View All Stocks" url="/market-mood" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title="View All Stocks" url="https://economictimes.indiatimes.com/market-mood" isNoBorderRightArrow={focusArea === "market"} />
         {showFilter && (
           <StockFilterNifty
             data={data.allFilters}

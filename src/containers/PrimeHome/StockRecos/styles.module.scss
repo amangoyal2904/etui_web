@@ -20,10 +20,18 @@
     font-size: 12px;
     font-weight: 600;
     padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    &:not(.thisTop){
+      .watchlistIcWrp{
+        margin-top:-10px
+      }
+    }
   }
 
   .firstRow {
     padding-bottom: 5px;
+    
   }
 
   .row {

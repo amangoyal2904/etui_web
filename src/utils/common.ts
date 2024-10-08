@@ -1,4 +1,4 @@
-export const ET_WEB_URL = "https://economictimes.indiatimes.com/";
+export const ET_WEB_URL = "https://economictimes.indiatimes.com";
 export const ET_WAP_URL = "https://m.economictimes.com/";
 export const ET_IMG_DOMAIN = "https://img.etimg.com/";
 export const ePaper_URL = {

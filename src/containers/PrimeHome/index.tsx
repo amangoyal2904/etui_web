@@ -80,7 +80,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
         padding-right: 7px;
       }
     `;
-    document.head.appendChild(style);
+    //document.head.appendChild(style);
 
     return () => {
       document.body.classList.remove('isprimeuser');

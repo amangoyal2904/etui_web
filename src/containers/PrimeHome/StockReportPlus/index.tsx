@@ -149,7 +149,7 @@ export default function StockReportPlus({ focusArea }) {
             return (
               <div className="card" key={index}>
                 <div className="left">
-                  <a href={`${ET_WEB_URL}${item?.seoName}/stocks/companyid-${item?.companyID}.cms`} className="name" target="_blank">{item?.name || ""}</a>
+                  <a href={`${ET_WEB_URL}/${item?.seoName}/stocks/companyid-${item?.companyID}.cms`} className="name" target="_blank">{item?.name || ""}</a>
                   <div className="title">{recText?.value}</div>
                   <div className="description">Mean Recos by {parseInt(recCnt?.value || 0)} Analysts</div>
                   <div className="graph">
@@ -181,7 +181,7 @@ export default function StockReportPlus({ focusArea }) {
                       Strong Buy
                     </span>
                   </div>
-                  <ViewReportCta url={`${ET_WEB_URL}${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} />
+                  <ViewReportCta url={`${ET_WEB_URL}/${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} />
                 </div>
                 <div className="right up">
                   <div>
@@ -202,7 +202,7 @@ export default function StockReportPlus({ focusArea }) {
           })}    
           </div>            
         </div>
-        <ViewAllCta title="High Upside Stocks" url="/stock-report-plus" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title="High Upside Stocks" url="https://economictimes.indiatimes.com/stock-report-plus" isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{` 
         .news {
