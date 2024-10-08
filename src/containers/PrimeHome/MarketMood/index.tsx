@@ -56,9 +56,13 @@ export default function MarketMood({ focusArea }) {
     <>
       <div className={`${styles.marketMoodContainer} ${styles[focusArea]}`}>
         <div className={styles.mmHeadWrap}>
-          <HeadingWithRightArrow title="Market Mood" />
+          <div className={styles.dflex}>
+            <img src="https://img.etimg.com/photo/114042208.cms" alt='Market Mood' className={styles.logo_mm} />
+            <HeadingWithRightArrow title="Market Mood" />
+          </div>
           <div>
             <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)}>
+              <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
               <span>{niftyFilterData?.name || 'Select Filter'}</span>
             </span>
           </div>
