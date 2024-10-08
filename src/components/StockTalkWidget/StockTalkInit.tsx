@@ -173,6 +173,11 @@ const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleo
   return (
     <div id="liveStrmStockTalk">
       <div className="jsPlayStream_st"></div>
+      <div data-id="{eventId}" data-eventStatus="{eventStatus}" data-eventToken="{eventToken}" data-primeevent="{primeEvent}" data-paidevent="{paidEvent}" data-expertid="{expertId}" class="jsPlayStream_st">
+	        <div class="athena__video prel">
+                <div class="athena_stream" style="background-image: url({eventImageUrl})"></div>
+            </div>
+      </div>
     </div>
   );
 };

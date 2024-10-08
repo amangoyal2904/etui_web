@@ -8,9 +8,10 @@ import { grxEvent } from "utils/ga";
 import Timer from "./Timer";
 
 export default function StockTalkWidget(props) {
+    const [streamingData, setStreamingData] = useState('');
     const [startingSoon, setStartingSoon] = useState(false);
     const [allMetaData, setAllMeta] = useState<any>({});
-    const [showWidget, setShowWidget] = useState(true);
+    const [showWidget, setShowWidget] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState('');
     const [counterTime, setCounterTime] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
@@ -19,12 +20,18 @@ export default function StockTalkWidget(props) {
         isSponserdAS = props?.subsec1_common === 9174539;
 
     useEffect(() => {
+        // streamData();
         if(!isWeekend && !isSponserdAS) {
+            fetchMetaInfo();
+        }
+    }, [])
+
+    useEffect(() => {
+        const widgetEnabled = typeof allMetaData?.PrimaryTag != undefined && allMetaData?.PrimaryTag?.toLowerCase() === "on";
+        if(widgetEnabled) {
             widgetCondition();
         }
-        // streamData();
-        fetchMetaInfo();
-    }, [])
+    }, [allMetaData])
 
     const fetchMetaInfo = async() => {
         const allMetaData = await fetchAllMetaInfo(109489257) || {};
@@ -32,51 +39,47 @@ export default function StockTalkWidget(props) {
     }
 
     const widgetCondition = () => {
-        const widgetEnabled = typeof allMetaData?.PrimaryTag != undefined && allMetaData?.PrimaryTag?.toLowerCase() === "on";
-                    
-        if(widgetEnabled) {
-            const skipInfo = jStorageReact.get('skip_ls') && JSON.parse(jStorageReact.get('skip_ls')),
-                session_type = new Date().getHours() >= 12 ? 'evening' : 'morning';
-            if(skipInfo && !skipInfo[session_type]) {
-                jStorageReact.deleteKey('skip_ls');
-            }
+        const skipInfo = jStorageReact.get('skip_ls') && JSON.parse(jStorageReact.get('skip_ls')),
+            session_type = new Date().getHours() >= 12 ? 'evening' : 'morning';
+        if(skipInfo && !skipInfo[session_type]) {
+            jStorageReact.deleteKey('skip_ls');
+        }
 
-            const morningTS = getTimeStamp(allMetaData?.Sluglinebeforeheadline),
-                eveningTS = getTimeStamp(allMetaData?.Sluglineafterheadline),
-                morningTimerTime = timerTS(morningTS, allMetaData?.overridetemplate, "subtract"),
-                eveningTimerTime = timerTS(eveningTS, allMetaData?.canonicalURL, "subtract"),
-                now = +new Date();
+        const morningTS = getTimeStamp(allMetaData?.Sluglinebeforeheadline),
+            eveningTS = getTimeStamp(allMetaData?.Sluglineafterheadline),
+            morningTimerTime = timerTS(morningTS, allMetaData?.overridetemplate, "subtract"),
+            eveningTimerTime = timerTS(eveningTS, allMetaData?.canonicalURL, "subtract"),
+            now = +new Date();
+        
+        var morningTimerCondition = morningTS > now && morningTimerTime < now;
+        var eveningTimerCondition = eveningTS > now && eveningTimerTime < now;
+        
+        var morningLSTime = timerTS(morningTS, 60);
+        var eveningLSTime = timerTS(eveningTS, 60);
+        
+        var morningLSCondition = morningTS < now && morningLSTime > now;
+        var eveningLSCondition = eveningTS < now && eveningLSTime > now;
+        
+        if(skipInfo && skipInfo[session_type]['timer'] && skipInfo[session_type]['full']) {
+            setShowWidget(false);
+        } else {
+            var timerConditionCheck = (morningTimerCondition || eveningTimerCondition) && !skipInfo;
+            var lsWidgetConditionCheck = (skipInfo ? skipInfo[session_type] && !skipInfo[session_type]['full'] : true) && !morningTimerCondition && !eveningTimerCondition && (morningLSCondition || eveningLSCondition);
             
-            var morningTimerCondition = morningTS > now && morningTimerTime < now;
-            var eveningTimerCondition = eveningTS > now && eveningTimerTime < now;
+            let gaElegible = false;
+            if(timerConditionCheck) {
+                const counterTS = session_type === "evening" ? eveningTS : morningTS;
+                setCounterTime(counterTS);
+                setShowWidget(true);
+                gaElegible = true;
+            } else if(lsWidgetConditionCheck) {
+                streamData();
+                setShowWidget(true);
+                gaElegible = true;
+            }
             
-            var morningLSTime = timerTS(morningTS, 60);
-            var eveningLSTime = timerTS(eveningTS, 60);
-            
-            var morningLSCondition = morningTS < now && morningLSTime > now;
-            var eveningLSCondition = eveningTS < now && eveningLSTime > now;
-            
-            if(skipInfo && skipInfo[session_type]['timer'] && skipInfo[session_type]['full']) {
-                $('.ls_container').remove();
-            } else {
-                var timerConditionCheck = (morningTimerCondition || eveningTimerCondition) && !skipInfo;
-                var lsWidgetConditionCheck = (skipInfo ? skipInfo[session_type] && !skipInfo[session_type]['full'] : true) && !morningTimerCondition && !eveningTimerCondition && (morningLSCondition || eveningLSCondition);
-                
-                let gaElegible = false;
-                if(timerConditionCheck) {
-                    var counterTS = session_type === "evening" ? eveningTS : morningTS;
-                    setCounterTime(counterTS);
-                    $('.ls_container').removeClass('hidden');
-                    gaElegible = true;
-                } else if(lsWidgetConditionCheck) {
-                    streamData();
-                    $('.ls_container').removeClass('hidden');
-                    gaElegible = true;
-                }
-                
-                if(gaElegible) {
-                    grxEvent('event', {'event_category': 'stocktalk', 'event_action': 'impression', 'event_label': "stocktalk homepage"}, 1);
-                }
+            if(gaElegible) {
+                grxEvent('event', {'event_category': 'stocktalk', 'event_action': 'impression', 'event_label': "stocktalk homepage"}, 1);
             }
         }
     }
@@ -130,15 +133,13 @@ export default function StockTalkWidget(props) {
         console.log('stream data', data);
         if(data) {
             setStartingSoon(false);
-            $('#liveWidget').remove();
-            var lsEle = $($.parseHTML(data)) && $($.parseHTML(data)).filter("#liveStrmStockTalk");
-            if(lsEle) {
-                setRedirectUrl(lsEle.attr('redirecturl'));
+            if(redirectUrl) {
+                setRedirectUrl(redirectUrl);
             }
 
-            $('.ls_container').removeClass('hidden').addClass('session_started_hp');
-            $('.ls_video').html(data);
-            objStcokTalk.init();
+            setShowWidget(true);
+            setStreamingData(data);
+            streamData();
         } else {
             setTimeout(function() {
                 streamData();
@@ -168,7 +169,7 @@ export default function StockTalkWidget(props) {
 
   return (
     <>
-        {showWidget && <div className={styles.ls_container}>
+        {showWidget && <div className={streamingData ? `${styles.ls_container} ${styles.session_started_hp}` : styles.ls_container}>
             <div className={styles.inner_container}>
                 <div>
                     <p className={styles.st_heading}>
@@ -185,7 +186,7 @@ export default function StockTalkWidget(props) {
                     <div className={styles.starting_soon}>Starting Soon</div> : 
                     <Timer time={counterTime} streamData={streamData} />
                 }
-                <div className={styles.ls_video}></div>
+                {/* <div className={styles.ls_video}>{streamingData}</div> */}
                 <img onClick={closeWidget} width="85" alt="Close" className={styles.close_ls} src="https://img.etimg.com/photo/msid-109535409,quality-100/close.jpg" />
             </div>
         </div>}
