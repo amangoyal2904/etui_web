@@ -109,7 +109,7 @@ function Podcast({ podcastData }) {
           padding: 5px;
 
           .crownIcon {
-            background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+            background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
             display: inline-block;
             background-size: 475px;
             width: 14px;
@@ -248,7 +248,7 @@ function StockScreeners() {
           padding-bottom: 10px;
 
           .iconScreener {
-            background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+            background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
             width: 42px;
             height: 14px;
             background-position: -219px -7px;

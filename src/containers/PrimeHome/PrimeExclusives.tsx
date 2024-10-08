@@ -196,7 +196,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                 }
                 
                 .bookmarkIcon {
-                  background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+                  background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
                   display: inline-block;
                   background-size: 475px;
                   width: 9px;
