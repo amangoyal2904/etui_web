@@ -4,6 +4,7 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
+import {dateFormat} from "./utils"
 
 declare global {
   interface Window {
@@ -1078,4 +1079,35 @@ export const fetchAllWatchListData = async (
     console.error("Error fetching watchlist data:", error);
     throw error;
   }
+};
+
+export const getOverviewData = async (indexid: number, pageno: number) => {
+  const response = await fetch(`${(APIS_CONFIG as any)?.MARKETMOODS_OVERVIEW[APP_ENV]}?indexid=${indexid}&pageno=${pageno}&pagesize=100`, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers you might need here
+      }
+  });
+  const originalJson = await response?.json();
+  return {
+    labels: originalJson.labels,
+    dataList: originalJson.dataList.map((item: any) => ({
+      date: dateFormat(item.date, "%d %MMM"),
+      indexPrice: formatNumber(item.indexPrice),
+      percentChange: item.percentChange.toFixed(2),
+      trend:
+        item.percentChange > 0
+          ? "up"
+          : item.percentChange < 0
+            ? "down"
+            : "neutral",
+      others: item.count.map((count: number, index: number) => ({
+        count: count,
+        percent: item.percent[index],
+        color: item.color[index],
+      })),
+    })),
+    pageSummary: originalJson.pageSummary,
+  };
 };

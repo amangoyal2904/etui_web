@@ -35,8 +35,6 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
   const sr_avgScore = item?.data?.find(item => item.keyId == "sr_avgScore").value;
   const colorCls = percentChange_trend;
 
-  console.log("item -- volumeInThousand", volumeInThousand)
-
   return (
     <div className={styles.list}>
       <div className={styles.max}>

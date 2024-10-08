@@ -252,136 +252,117 @@ function NewsLetters({ newsLetterData }) {
 function MarketChange({ niftyITData }) {
   // console.log("@@@ niftyITData -->", niftyITData)
   const compnData = niftyITData && niftyITData.searchresult.length && niftyITData.searchresult[0];
-  // console.log("@@@ niftyITData -->", compnData)
-  return (
-    <>
-      <div className="marketChangeMain">
-        <h3 className="marketChangeTitle">{compnData.indexName}</h3>
-        <h4 className="currDateTime">{dateFormat(compnData.dateTime, true, "left", "long")}</h4>
-        <h5 className="currDataBox">
-          <span className="currVal">{compnData.currentIndexValue}</span>
-          <span className={`changeVal ${compnData.perChange > 0 ? "up" : "down"}`}>
-            <span className={`subSprite icon_arrow ${compnData.perChange > 0 ? "up" : "down"}`}></span>
-            <span>
-              {compnData.netChange} ({compnData.perChange}%)
-            </span>
-          </span>
-        </h5>
-        <iframe
-          className="lazyIframe"
-          style={{ border: "none" }}
-          width="246"
-          height="139"
-          src="https://etdev8243.indiatimes.com/renderchart.cms?type=index&symbol=CNXIT&exchange=50&height=139&reverseaxis=0&transparentBg=1"
-        ></iframe>
-        <div className="dataTable">
-          {compnData?.companies?.map((data, index) => (
-            <div className="dataTableBox" key={`niftyITCompany_${index}`}>
-              <a
-                className="compName"
-                target="_blank"
-                data-ga-onclick={`Nifty IT - ${data.companyShortName} - href`}
-                title={`Nifty IT - ${data.companyShortName}`}
-                href={`/${data.seoName}/stocks/companyid-${data.companyId}.cms`}
-              >
-                {data.companyShortName}
-              </a>
-              <span className="curntVal">{data.current}</span>
-              <span className={`chngVal ${data.percentChange > 0 ? "up" : "down"}`}>({data.percentChange}%)</span>
-            </div>
-          ))}
-        </div>
+  //console.log("@@@ niftyITData -->", compnData)
+  return <>
+    <div className="marketChangeMain">
+      <h3 className="marketChangeTitle">{compnData.indexName}</h3>
+      <h4 className="currDateTime">{dateFormat(compnData.dateTime, true, 'left', 'long')}</h4>
+      <h5 className="currDataBox">
+        <span className="currVal">{compnData.currentIndexValue}</span>
+        <span className={`changeVal ${compnData.perChange > 0 ? 'up' : 'down'}`}>
+        <span className={`subSprite icon_arrow ${compnData.perChange > 0 ? 'up' : 'down'}`}></span>
+        <span>{compnData.netChange} ({compnData.perChange}%)</span>
+        </span>
+      </h5>
+      <iframe className="lazyIframe" style={{border: 'none'}} width="246" height="139" src="https://etdev8243.indiatimes.com/renderchart.cms?type=index&symbol=CNXIT&exchange=50&height=139&reverseaxis=0&transparentBg=1"></iframe>
+      <div className="dataTable">
+        {compnData?.companies?.map((data, index) => (
+          <div className="dataTableBox" key={`niftyITCompany_${index}`}>
+            <a className="compName" target="_blank" data-ga-onclick={`Nifty IT - ${data.companyShortName} - href`} title={`Nifty IT - ${data.companyShortName}`}href={`/${data.seoName}/stocks/companyid-${data.companyId}.cms`}>{data.companyShortName}</a>
+            <span className="curntVal">{data.current}</span>
+            <span className={`chngVal ${data.percentChange > 0 ? "up" : "down"}`}>({data.percentChange}%)</span>
+          </div>
+        ))}
       </div>
-      <style jsx>
-        {`
-          .marketChangeMain {
-            margin: 0 0 0 10px;
-            padding: 17px 11px 10px 12px;
-            background-color: #ffded4;
-            box-sizing: border-box;
-            .marketChangeTitle {
-              display: inline-block;
-              font-size: 16px;
-              font-weight: 600;
-              width: 160px;
-              margin-bottom: 15px;
+    </div>
+    <style jsx>{`
+      .marketChangeMain{
+        margin: 0 0 0 10px;
+        padding: 17px 11px 10px 12px;
+        background-color: #ffded4;
+        box-sizing: border-box;
+        .marketChangeTitle{
+          display: inline-block;
+          font-size: 16px;
+          font-weight: 600;
+          width: 160px;
+          margin-bottom: 15px;
+        }
+        .currDateTime{
+          font-size: 12px;
+          font-weight: normal;
+          color: #4a4a4a;
+          margin-bottom: 6px;
+        }
+        .currDataBox{
+          font-size: 20px;
+          margin-bottom: 10px;
+          .currVal{
+            font-weight: 600;
+          }
+          .changeVal{
+            font-size: 14px;
+            font-weight: normal;
+            margin-left: 12px;
+            &.up{
+              color:#009060;
             }
-            .currDateTime {
-              font-size: 12px;
-              font-weight: normal;
-              color: #4a4a4a;
-              margin-bottom: 6px;
+            &.down{
+              color: #da2337;
             }
-            .currDataBox {
-              font-size: 20px;
-              margin-bottom: 10px;
-              .currVal {
-                font-weight: 600;
+            
+            .subSprite{
+              background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
+              background-size: 475px;
+            
+              &.icon_arrow{
+                display: inline-block;
+                width: 9px;
+                height: 17px;
+                margin:4px 5px 0 0;
+                vertical-align: top;
               }
-              .changeVal {
-                font-size: 14px;
-                font-weight: normal;
-                margin-left: 12px;
-                &.up {
-                  color: #009060;
-                }
-                &.down {
-                  color: #da2337;
-                }
-
-                .subSprite {
-                  background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg")
-                    no-repeat;
-                  background-size: 475px;
-
-                  &.icon_arrow {
-                    display: inline-block;
-                    width: 9px;
-                    height: 17px;
-                    margin: 4px 5px 0 0;
-                    vertical-align: top;
-                  }
-                  &.up {
-                    background-position: -303px -39px;
-                  }
-                  &.down {
-                    background-position: -285px -39px;
-                  }
-                }
+              &.up{
+                background-position: -303px -39px;
               }
-            }
-            .dataTable {
-              font-size: 11px;
-              margin-top: 15px;
-              .dataTableBox {
-                display: flex;
-                align-items: center;
-                border-top: 1px solid #ddc2bb;
-                padding: 6px 0;
-                .compName {
-                  display: flex;
-                  width: 60%;
-                }
-                .curntVal {
-                  width: 20%;
-                  text-align: right;
-                  font-weight: 600;
-                }
-                .chngVal {
-                  width: 20%;
-                  text-align: right;
-                  &.up {
-                    color: #009060;
-                  }
-                  &.down {
-                    color: #da2337;
-                  }
-                }
+              &.down{
+                background-position: -285px -39px;
               }
             }
           }
-        `}
-      </style>
-    </>
-  );
+        }
+        .dataTable{
+          font-size: 11px;
+          margin-top: 15px;
+          .dataTableBox{
+            display:flex;
+            align-items: center;
+            border-top: 1px solid #ddc2bb;
+            padding: 6px 0;
+            .compName{
+              display:flex;
+              width: 60%;
+            }
+            .curntVal{
+              width: 20%;
+              text-align: right;
+              font-weight: 600;
+            }
+            .chngVal{
+              width: 20%;
+              text-align: right;
+              &.up{
+                color: #009060;
+              }
+              &.down{
+                color: #da2337;
+              }
+            }
+            
+          }
+        }
+      }
+    `}  
+    </style>
+  </>
 }

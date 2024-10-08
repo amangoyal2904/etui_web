@@ -1,7 +1,7 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TextImageMiddile from 'components/TextImageMiddile';
-import MarketGainers from './RiseGainers';
+import MarketGainers from 'components/RiseGainers';
 
 export default function Rise({ title, data }) { 
   const smallBizMiddle = data.slice(1,6);

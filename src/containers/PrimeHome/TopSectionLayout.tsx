@@ -71,7 +71,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                   <Separator />
                   <BigBullPortfolio focusArea={focusArea}/>
                   <Separator />
-                  <MarketMood />
+                  <MarketMood focusArea={focusArea} />
                 </>
               }
             </div>
@@ -109,7 +109,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <Separator />
             <BigBullPortfolio focusArea={focusArea}/>
             <Separator />
-            <MarketMood />
+            <MarketMood focusArea={focusArea} />
           </>
           }
 

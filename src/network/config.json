@@ -197,5 +197,9 @@
       "development": ["https://etusersqc2.economictimes.indiatimes.com/et/v3/savesettings/json"],
       "production": ["https://etup.economictimes.indiatimes.com/et/v3/savesettings/json"]
     }
+  },
+  "MARKETMOODS_OVERVIEW": {
+    "development": "https://screener.indiatimes.com/screener/marketbreadth/overview",
+    "production": "https://screener.indiatimes.com/screener/marketbreadth/overview"
   }
 }
