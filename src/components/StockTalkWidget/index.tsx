@@ -1,35 +1,33 @@
 import { useEffect, useState } from "react";
 
 import { fetchAllMetaInfo } from 'utils/articleUtility';
-import API_CONFIG from "../../network/config.json"
 import jStorageReact from "utils/jStorage";
 import styles from "./styles.module.scss";
 import { grxEvent } from "utils/ga";
 import Timer from "./Timer";
+import StockTalk from "./StockTalkInit";
 
-export default function StockTalkWidget(props) {
-    const [streamingData, setStreamingData] = useState('');
+export default function StockTalkWidget() {
+    const [liveStreamStarted, setLiveStreamStarted] = useState(false);
     const [startingSoon, setStartingSoon] = useState(false);
+    const [streamingData, setStreamingData] = useState('');
     const [allMetaData, setAllMeta] = useState<any>({});
     const [showWidget, setShowWidget] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState('');
     const [counterTime, setCounterTime] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
 
-    const isWeekend = new Date().getDay() == 0 || new Date().getDay() == 6,
-        isSponserdAS = props?.subsec1_common === 9174539;
-
     useEffect(() => {
-        // streamData();
-        if(!isWeekend && !isSponserdAS) {
-            fetchMetaInfo();
-        }
+        fetchMetaInfo();
     }, [])
 
     useEffect(() => {
         const widgetEnabled = typeof allMetaData?.PrimaryTag != undefined && allMetaData?.PrimaryTag?.toLowerCase() === "on";
         if(widgetEnabled) {
             widgetCondition();
+            setTimeout(() => {
+                streamData();
+            }, 2000);
         }
     }, [allMetaData])
 
@@ -104,8 +102,9 @@ export default function StockTalkWidget(props) {
     const streamData = async() => {
         setShowTimer(false);
         setStartingSoon(true);
+        const isLive = window.location.host.includes('economictimes.indiatimes.com');
 
-        const baseEP = true ? "https://json.bselivefeeds.indiatimes.com" : "https://etwebcast.indiatimes.com",
+        const baseEP = isLive ? "https://etwebcast.indiatimes.com" : "https://json.bselivefeeds.indiatimes.com",
             endPoint = `${baseEP}/ET_WebCast/getEventData`,
             bodyData = {
                 "conditions":[
@@ -133,13 +132,14 @@ export default function StockTalkWidget(props) {
         console.log('stream data', data);
         if(data) {
             setStartingSoon(false);
+            setLiveStreamStarted(true);
             if(redirectUrl) {
                 setRedirectUrl(redirectUrl);
             }
 
             setShowWidget(true);
             setStreamingData(data);
-            streamData();
+            // streamData();
         } else {
             setTimeout(function() {
                 streamData();
@@ -181,12 +181,13 @@ export default function StockTalkWidget(props) {
                     <button onClick={navigateToLiveStream} className={styles.ask_cta}>Ask Now</button>
                     <p className={styles.ls_note}>Assured reply during the session or via email.</p>
                 </div>
-                <button className={styles.join_cta}>Join Today’s Session</button>
-                {startingSoon ? 
-                    <div className={styles.starting_soon}>Starting Soon</div> : 
-                    <Timer time={counterTime} streamData={streamData} />
+                <button onClick={navigateToLiveStream} className={styles.join_cta}>Join Today’s Session</button>
+                {liveStreamStarted ? <div className={styles.ls_video}><StockTalk data={streamData} /></div> : 
+                    <>
+                        {startingSoon ? <div className={styles.starting_soon}>Starting Soon</div> : 
+                        <Timer time={counterTime} streamData={streamData} />}
+                    </>
                 }
-                {/* <div className={styles.ls_video}>{streamingData}</div> */}
                 <img onClick={closeWidget} width="85" alt="Close" className={styles.close_ls} src="https://img.etimg.com/photo/msid-109535409,quality-100/close.jpg" />
             </div>
         </div>}

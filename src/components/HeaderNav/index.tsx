@@ -23,6 +23,7 @@ interface HeaderNavProps {
 }
 
 const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
+  const isWeekend = new Date().getDay() == 0 || new Date().getDay() == 6;
   const [showSponserBanner, setShowSponserBanner] = useState(false);
   const [searchBar, setSearchBar] = useState<boolean>(false);
   const [hoverSubSec, setHoverSubSec] = useState<any[]>([]); // setHoverSubSec to array of any type
@@ -145,7 +146,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
       {showSponserBanner && <SponserBanner />}
-      <StockTalkWidget />
+      {!isWeekend && <StockTalkWidget />}
     </>
   );
 };

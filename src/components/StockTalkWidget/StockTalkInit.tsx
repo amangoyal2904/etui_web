@@ -1,48 +1,37 @@
-import React, { useEffect, useState, useCallback } from 'react';
-
-interface StockTalkProps {
-  slikeAPIToken: string;
-  mktAPIURL: string;
-  sdkCleoSlike: string;
-  tpName: string;
-  _tp_data: any;
-}
+import React, { useEffect, useCallback } from 'react';
 
 let CleoClient: any;
 
-const isLive = window.location.host.includes('economictimes.indiatimes.com');
-let sdkCleoSlike = 'https://cpl-dev.sli.ke/cca.dev.js' // for dev
-// customDimension.dimension20 = 'Web';
-let mktAPIURL = '', slikeAPIToken = '', mktTicketAPI = '', cleoPlayURL= '', lastActiveSlide = 0;
-if(isLive) {
-    mktAPIURL = 'https://etwebcast.indiatimes.com/ET_WebCast'; // for Production
-    mktTicketAPI = 'https://etmarketsapis.indiatimes.com/ET_Screeners/fetchSsoData'; // for Prroduction 
-    slikeAPIToken = '18huogo9zl6gollkog9kzkoz6l69ggl9'; // for Production
-    cleoPlayURL = 'https://play.sli.ke';
-    sdkCleoSlike = 'https://cpl.sli.ke/cca.js';
-} else {
-    mktAPIURL = 'https://json.bselivefeeds.indiatimes.com/ET_WebCast'; // for dev 
-    mktTicketAPI = 'https://qcbselivefeeds.indiatimes.com/ET_Screeners/fetchSsoData'; // dev
-    slikeAPIToken = '18tgggz9ko6z999z9ko6zzg9gz9ko9kg'; // for dev 
-    cleoPlayURL = 'https://play-dev.sli.ke';
-    sdkCleoSlike = 'https://cpl-dev.sli.ke/cca.dev.js'; 
-}
 
-const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleoSlike, tpName, _tp_data }) => {
-  const [grxData, setGrxData] = useState<any>({});
-  const [userInteracted, setUserInteracted] = useState(false);
+const StockTalk = (props) => {
+    const isLive = window.location.host.includes('economictimes.indiatimes.com');
+    let sdkCleoSlike = 'https://cpl-dev.sli.ke/cca.dev.js' // for dev
+    // customDimension.dimension20 = 'Web';
+    let mktAPIURL = '', slikeAPIToken = '', mktTicketAPI = '', cleoPlayURL= '', lastActiveSlide = 0;
+    if(isLive) {
+        mktAPIURL = 'https://etwebcast.indiatimes.com/ET_WebCast'; // for Production
+        mktTicketAPI = 'https://etmarketsapis.indiatimes.com/ET_Screeners/fetchSsoData'; // for Prroduction 
+        slikeAPIToken = '18huogo9zl6gollkog9kzkoz6l69ggl9'; // for Production
+        cleoPlayURL = 'https://play.sli.ke';
+        sdkCleoSlike = 'https://cpl.sli.ke/cca.js';
+    } else {
+        mktAPIURL = 'https://json.bselivefeeds.indiatimes.com/ET_WebCast'; // for dev 
+        mktTicketAPI = 'https://qcbselivefeeds.indiatimes.com/ET_Screeners/fetchSsoData'; // dev
+        slikeAPIToken = '18tgggz9ko6z999z9ko6zzg9gz9ko9kg'; // for dev 
+        cleoPlayURL = 'https://play-dev.sli.ke';
+        sdkCleoSlike = 'https://cpl-dev.sli.ke/cca.dev.js'; 
+    }
+  const apiUrlMkt = mktAPIURL;
   const headerData  = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     token: slikeAPIToken
   };
 
-  const apiUrlMkt = mktAPIURL;
-
   const createEventJWTTockenAPI = useCallback(async () => {
     const _id = document.querySelector('.jsPlayStream_st')?.getAttribute('data-id') || '';
-    const userEmail = _tp_data?.email || (document.cookie.includes('_grx') ? document.cookie : Math.random().toString(36).slice(2));
-    const userName = _tp_data?.fullName || 'Guest User';
+    const userEmail = window?.objUser?.info?.primaryEmail || (document.cookie.includes('_grx') ? document.cookie : Math.random().toString(36).slice(2));
+    const userName = window?.objUser?.info?.firstName || 'Guest User';
     const _eventToken = document.querySelector('.jsPlayStream_st')?.getAttribute('data-eventToken') || '';
     
     const _data = {
@@ -52,8 +41,8 @@ const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleo
       role: 0,
       eventToken: _eventToken,
       meta: {
-        isloggedin: _tp_data?.isLogged,
-        section: tpName === 'default_prime' ? 'ETMain_HP_Web' : 'ETMkt_HP_Web'
+        isloggedin: !!window.objUser.ssoid,
+        section: 'ETMain_HP_Web'
       }
     };
 
@@ -72,7 +61,7 @@ const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleo
     } catch (error) {
       console.error('createEventJWTTockenAPI error', error);
     }
-  }, [apiUrlMkt, _tp_data, headerData, tpName]);
+  }, [apiUrlMkt, headerData]);
 
   const setStreamIframUrl = (jwtKey: string, _id: string) => {
     const isIFrameExist = document.getElementById('sdkStreamWrapDistribution_st')?.children.length;
@@ -132,7 +121,7 @@ const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleo
       ALLOW: 2,
     };
 
-    const clientSdk = new CleoClient(cleoConfig, function (err: any) {
+    new CleoClient(cleoConfig, function (err: any) {
       if (err) {
         console.error('Cleo client error', err);
         return;
@@ -142,7 +131,7 @@ const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleo
   };
 
   const generateTokenGaEventFire = (eventToken: string) => {
-    const _action = `GenerateToken - ${tpName}`;
+    const _action = `GenerateToken - default_prime`;
     const interval = setInterval(() => {
       const puuid = document.cookie.includes('peuuid') ? 'peuuid' : 'pfuuid';
       const label = `Title=pfuuid=${puuid}-eventToken=${eventToken}`;
@@ -173,9 +162,10 @@ const StockTalk: React.FC<StockTalkProps> = ({ slikeAPIToken, mktAPIURL, sdkCleo
   return (
     <div id="liveStrmStockTalk">
       <div className="jsPlayStream_st"></div>
-      <div data-id="{eventId}" data-eventStatus="{eventStatus}" data-eventToken="{eventToken}" data-primeevent="{primeEvent}" data-paidevent="{paidEvent}" data-expertid="{expertId}" class="jsPlayStream_st">
-	        <div class="athena__video prel">
-                <div class="athena_stream" style="background-image: url({eventImageUrl})"></div>
+      <div data-id="{eventId}" data-eventStatus="{eventStatus}" data-eventToken="{eventToken}" data-primeevent="{primeEvent}" data-paidevent="{paidEvent}" data-expertid="{expertId}" className="jsPlayStream_st">
+	        <div className="athena__video prel">
+                <div className="athena_stream"></div>
+                {/* style="background-image: url({eventImageUrl})" */}
             </div>
       </div>
     </div>
