@@ -45,7 +45,7 @@ export default function Explainers({ data, title }) {
                     {
                       subset.map((item, index1) => {
                         return (
-                          <a href={item?.link} target="_blank" className="item" key={`${index}_${index1}`}>
+                          <a href={`${item?.url}`} target="_blank" className="item" key={`${index}_${index1}`}>
                             <img src={item?.img} alt={item?.title} width={256} height={192} title={item?.title} />
                             {item?.title || ""}
                           </a>

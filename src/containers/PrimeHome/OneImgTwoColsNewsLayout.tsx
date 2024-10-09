@@ -9,8 +9,10 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
     <>
       <div className="wrap">
         <div className="first">
-          <img src={first?.img} alt={first?.title} width={335} height={291} />
-          <h3>{first?.title}</h3>
+          <a href={first?.url}>
+            <img src={first?.img} alt={first?.title} width={335} height={291} />
+            <h3>{first?.title}</h3>
+          </a>
           <p>{first?.synopsis}</p>
         </div>
         <div className="rest">

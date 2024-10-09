@@ -47,7 +47,7 @@ export default function WebStories({ title, data }) {
                   {
                     subset.map((item, index1) => {
                       return (
-                        <a href={item?.link} target="_blank" className="item" key={`${index}_${index1}`}>
+                        <a href={item?.url} target="_blank" className="item" key={`${index}_${index1}`}>
                           <img src={changeImageWidthHeight(item?.img, 240, 427, 6)} alt={item?.title} width={240} height={427} title={item?.title} />
                           <span className="title">
                             <span className="subSprite webStIcon"></span>
