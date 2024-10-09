@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { ET_WEB_URL } from "../../utils/common";
 
 export default function MoreFromEconomicTimes({data}) {
   return (
@@ -10,13 +11,13 @@ export default function MoreFromEconomicTimes({data}) {
             data?.children?.map((item, index) => {
               return (
                 <div key={index} className="whiteBox">
-                  <a href={item?.link} target="_blank" className="category">{item?.category || ""}</a>
+                  <a href={`${ET_WEB_URL}${item?.link}`} target="_blank" className="category">{item?.category || ""}</a>
                   <ul>
                   {
                     item?.children?.map((child, index) => {
                       return (
                         <li key={index}>
-                          <a href={child?.link} target="_blank">
+                          <a href={`${ET_WEB_URL}${child?.link}`} target="_blank">
                             {index === 0 && <img src={child?.img} alt={child?.title} width={256} height={192} title={child?.title} />}
                             {child?.title || ""}
                           </a>

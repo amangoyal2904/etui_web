@@ -181,7 +181,7 @@ const WatchlistAddition = ({
     return () => {
       document.removeEventListener("watchListApiStatusForAll", checkWatchListStatus);
     };
-  }, [fetchWatchListStocks, checkWatchListStatus]);
+  }, [fetchWatchListStocks, checkWatchListStatus, isLogin]);
 
   return (
     <>

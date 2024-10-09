@@ -24,7 +24,7 @@ export default function Panache({ title, data }) {
       <section className="panache secBox">
         <h2>{title}</h2>
         <div className="flex Pleft">
-          <a href={first?.title} className="firstBox">
+          <a href={first?.url} className="firstBox">
             <figure>
               <img
                 src={changeFirstImageWidthHeight(first?.img, 335, 507, 6)}
@@ -41,7 +41,7 @@ export default function Panache({ title, data }) {
           <div className="secondThird">
             {secondThird?.map((item, index) => {
               return (
-                <a key={index} href={item?.title}>
+                <a key={index} href={item?.url}>
                   {item?.title}
                   <img
                     src={changeFirstImageWidthHeight(item?.img, 255, 162, 4)}
@@ -58,7 +58,7 @@ export default function Panache({ title, data }) {
           <div className="rest">
             {rest?.map((item, index) => {
               return (
-                <a key={index} href={item?.title}>
+                <a key={index} href={item?.url}>
                   <span>{item?.title}</span>
                   <img
                     src={changeFirstImageWidthHeight(item?.img, 70, 54, 4)}
