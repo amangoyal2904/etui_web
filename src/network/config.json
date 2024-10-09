@@ -129,8 +129,8 @@
     "production": "https://etwebcast.indiatimes.com/ET_WebCast"
   },
   "SLIKE_CLEO_URL": {
-    "production": "https://cpl.sli.ke",
-    "development": "https://cpl.sli.ke"
+    "development": "https://cpl-dev.sli.ke",
+    "production": "https://cpl.sli.ke"
   },
   "grandMasters": {
     "development": "https://api.economictimes.indiatimes.com/v1/grandmaster",

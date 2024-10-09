@@ -1,13 +1,14 @@
-import PanacheSlideshow from 'components/PanacheSlideshow';
-import React from 'react'
+import PanacheSlideshow from "components/PanacheSlideshow";
+import React from "react";
 
 export default function Panache({ title, data }) {
-
   function changeFirstImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
-    const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
+    const newUrl = imageUrl
+      ?.replace(/width-\d+/g, `width-${desiredWidth}`)
+      .replace(/height-\d+/g, `height-${desiredHeight}`);
 
-    if(desiredResizeMode) {
-      return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+    if (desiredResizeMode) {
+      return newUrl?.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
     }
 
     return newUrl;
@@ -16,54 +17,67 @@ export default function Panache({ title, data }) {
   const first = data?.[0];
   const secondThird = data?.slice(1, 3);
   const rest = data?.slice(3);
-  const slideshowData = data.slice(0,2);
+  const slideshowData = data.slice(0, 2);
 
   return (
     <>
       <section className="panache secBox">
         <h2>{title}</h2>
-        <div className="flex Pleft">          
+        <div className="flex Pleft">
           <a href={first?.title} className="firstBox">
             <figure>
-              <img src={changeFirstImageWidthHeight(first?.img, 335, 507, 6)} alt={first?.title} width={335} height={507} title={first?.title} />
+              <img
+                src={changeFirstImageWidthHeight(first?.img, 335, 507, 6)}
+                alt={first?.title}
+                width={335}
+                height={507}
+                title={first?.title}
+              />
               <figcaption>{first?.title}</figcaption>
             </figure>
             <span className="overlay"></span>
           </a>
 
           <div className="secondThird">
-          {
-            secondThird?.map((item, index) => {
+            {secondThird?.map((item, index) => {
               return (
                 <a key={index} href={item?.title}>
                   {item?.title}
-                  <img src={changeFirstImageWidthHeight(item?.img, 255, 162, 4)} alt={item?.title} width={255} height={162} title={item?.title} />                  
+                  <img
+                    src={changeFirstImageWidthHeight(item?.img, 255, 162, 4)}
+                    alt={item?.title}
+                    width={255}
+                    height={162}
+                    title={item?.title}
+                  />
                 </a>
-              )
-            })
-          }
+              );
+            })}
           </div>
 
           <div className="rest">
-          {
-            rest?.map((item, index) => {
+            {rest?.map((item, index) => {
               return (
                 <a key={index} href={item?.title}>
                   <span>{item?.title}</span>
-                  <img src={changeFirstImageWidthHeight(item?.img, 70, 54, 4)} alt={item?.title} width={70} height={54} title={item?.title} />
+                  <img
+                    src={changeFirstImageWidthHeight(item?.img, 70, 54, 4)}
+                    alt={item?.title}
+                    width={70}
+                    height={54}
+                    title={item?.title}
+                  />
                 </a>
-              )
-              
-            })
-          }
+              );
+            })}
           </div>
         </div>
         <div className="third">
-          <PanacheSlideshow data={slideshowData} heading="Videos & Slideshows"/>
+          <PanacheSlideshow data={slideshowData} heading="Videos & Slideshows" />
         </div>
       </section>
       <style jsx>{`
-        .panache {          
+        .panache {
           h2 {
             font-size: 36px;
             padding-top: 35px;
@@ -101,7 +115,7 @@ export default function Panache({ title, data }) {
               height: 274px;
             }
           }
-          
+
           .secondThird {
             width: 225px;
             display: inline-block;
@@ -136,8 +150,10 @@ export default function Panache({ title, data }) {
               padding-bottom: 15px;
             }
           }
-          .Pleft{float: left;
-                width: 985px;}
+          .Pleft {
+            float: left;
+            width: 985px;
+          }
           .third {
             width: 275px;
             display: inline-block;
@@ -146,5 +162,5 @@ export default function Panache({ title, data }) {
         }
       `}</style>
     </>
-  )
+  );
 }
