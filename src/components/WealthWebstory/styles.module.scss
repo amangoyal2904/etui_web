@@ -33,19 +33,10 @@
         overflow: hidden;
     }
     .sliderWidget{
-        white-space: nowrap;
-        list-style: none;
+        // white-space: nowrap;
+        // list-style: none;
         .slider_ul{
-            display: inline-block;
-            vertical-align: top;
-            white-space: normal;
-            width: 1250px;
-            .listItem{
-                display: inline-block;
-                vertical-align: top;
-                white-space: normal;
-                height: 472px;
-            }
+            
             
             .ancher {
                 position: relative;

@@ -46,7 +46,7 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         permissions: [], 
         email: "",
         isAdfree: action.payload.ssoReady,
-        isPink: false,
+        isPink: action.payload.isPink,
         error: null
       };
     default:
