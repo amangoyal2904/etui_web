@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OneImgTwoColsNewsLayout from "./OneImgTwoColsNewsLayout";
 import MoreFromLink from "./MoreFromLink";
+import SectionHeaderWithNewsletter from "./SectionHeaderWithNewsletter";
 
 export default function Tech({ title, data, newsLetterData }) {
   const [niftyITData, setNiftyITData] = useState(null);
@@ -28,9 +29,7 @@ export default function Tech({ title, data, newsLetterData }) {
   return (
     <>
       <section className="techMain">
-        <h2>
-          <a href="">{title}</a>
-        </h2>
+        <SectionHeaderWithNewsletter url="/tech" title="Tech" />
         <OneImgTwoColsNewsLayout data={data} more={{ text: "Tech" }} />
         <div className="second">
           <NewsLetters newsLetterData={newsLetterData} />
@@ -42,31 +41,7 @@ export default function Tech({ title, data, newsLetterData }) {
           padding-bottom: 50px;
           border-top: 1px solid #9b8680;
           margin-bottom: 1px;
-          border-bottom: 1px solid #9b8680;
-
-          h2 {
-            font-size: 36px;
-            padding-top: 35px;
-            border-top: 3px solid #9b8680;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-
-            a {
-              &::after {
-                content: "";
-                display: inline-block;
-                width: 15px;
-                height: 15px;
-                top: -4px;
-                left: 3px;
-                border-top: 2px solid #000;
-                border-left: 2px solid #000;
-                position: relative;
-                cursor: pointer;
-                transform: rotate(135deg);
-              }
-            }
-          }
+          border-bottom: 1px solid #9b8680;          
 
           .first {
             width: 335px;
