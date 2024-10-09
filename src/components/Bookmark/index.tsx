@@ -11,8 +11,8 @@ interface BookmarkProps {
     msid: string;
     hostId: string;
     type: string;
-    widget: string;
-    apiType: string;
+    widget?: string;
+    apiType?: string;
 }
 
 const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) => {
