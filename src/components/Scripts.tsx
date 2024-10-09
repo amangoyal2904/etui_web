@@ -27,6 +27,7 @@ declare global {
     MSStream?: string;
     geoinfo: any;
     pageSeo: any;
+    CleoClient: any;
     e$: {
       jStorage: {
         set(arg1: string, arg2: any, arg3: Object): any;

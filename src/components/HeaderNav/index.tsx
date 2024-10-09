@@ -147,7 +147,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
       {showSponserBanner && <SponserBanner />}
-      {!isWeekend && <StockTalkWidget />}
+      {page == "primehome" && !isWeekend && <StockTalkWidget />}
     </>
   );
 };

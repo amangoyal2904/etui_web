@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-
 import { fetchAllMetaInfo } from 'utils/articleUtility';
 import jStorageReact from "utils/jStorage";
+import APIS_CONFIG from "network/config.json";
 import styles from "./styles.module.scss";
 import { grxEvent } from "utils/ga";
 import Timer from "./Timer";
 import StockTalk from "./StockTalkInit";
+
 
 export default function StockTalkWidget() {
     const [liveStreamStarted, setLiveStreamStarted] = useState(false);
     const [startingSoon, setStartingSoon] = useState(false);
     const [streamingData, setStreamingData] = useState('');
     const [allMetaData, setAllMeta] = useState<any>({});
-    const [showWidget, setShowWidget] = useState(false);
+    const [showWidget, setShowWidget] = useState(true);
     const [redirectUrl, setRedirectUrl] = useState('');
     const [counterTime, setCounterTime] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
@@ -30,6 +31,18 @@ export default function StockTalkWidget() {
             }, 2000);
         }
     }, [allMetaData])
+
+    /* const scriptInit = () => {
+        const __script = document.createElement('script');
+        __script.onload = () => {
+            const CleoClientCBB = new Event("CleoClientCBB");
+            document.dispatchEvent(CleoClientCBB);
+            console.log('you can run your distribution __script.......', window.CleoClient);
+        };
+        __script.src = 'https://cpl-dev.sli.ke/cca.dev.js';
+        document.head.appendChild(__script);
+        console.log('Module Loaded: ');
+    } */
 
     const fetchMetaInfo = async() => {
         const allMetaData = await fetchAllMetaInfo(109489257) || {};
@@ -99,38 +112,43 @@ export default function StockTalkWidget() {
         return +date;
     }
 
+    const fetchList = async () => {
+        const data = {
+            "conditions":[
+                {"fieldName":"eventStatus","value":[3,5],"operation":"in"},
+                {"fieldName":"streamFlag","value":[1,2],"operation":"in"},
+                {"fieldName":"dayCount","value":0,"operation":"equal"}
+            ],
+            "multiSort":[
+                {"field":"eventStatus","type":"asc"},
+                {"field":"startTime","type":"desc"}
+            ],
+            "pageNumber":1,
+            "pageSize":5
+        };
+        
+        // const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
+        const apiUrl = "http://localhost:3002/api/livestream";
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data),
+          cache: "no-store"
+        });
+        const newData = await response.json();
+        return newData;
+      };
+
     const streamData = async() => {
         setShowTimer(false);
         setStartingSoon(true);
-        const isLive = window.location.host.includes('economictimes.indiatimes.com');
+        const data = await fetchList();
+        const streamDataFromAPI = data?.livestreamdata?.result?.[0];
 
-        const baseEP = isLive ? "https://etwebcast.indiatimes.com" : "https://json.bselivefeeds.indiatimes.com",
-            endPoint = `${baseEP}/ET_WebCast/getEventData`,
-            bodyData = {
-                "conditions":[
-                    {"fieldName":"eventStatus","value":[3,5],"operation":"in"},
-                    {"fieldName":"streamFlag","value":[1,2],"operation":"in"},
-                    {"fieldName":"dayCount","value":0,"operation":"equal"}
-                ],
-                "multiSort":[
-                    {"field":"eventStatus","type":"asc"},
-                    {"field":"startTime","type":"desc"}
-                ],
-                "pageNumber":1,
-                "pageSize":5
-            };
-
-        const response = await fetch(endPoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bodyData)
-        });
-    
-        const data = await response.json();
-        console.log('stream data', data);
-        if(data) {
+        console.log('stream data', streamDataFromAPI);
+        if(streamDataFromAPI) {
             setStartingSoon(false);
             setLiveStreamStarted(true);
             if(redirectUrl) {
@@ -138,7 +156,7 @@ export default function StockTalkWidget() {
             }
 
             setShowWidget(true);
-            setStreamingData(data);
+            setStreamingData(streamDataFromAPI);
             // streamData();
         } else {
             setTimeout(function() {
@@ -182,7 +200,7 @@ export default function StockTalkWidget() {
                     <p className={styles.ls_note}>Assured reply during the session or via email.</p>
                 </div>
                 <button onClick={navigateToLiveStream} className={styles.join_cta}>Join Today’s Session</button>
-                {liveStreamStarted ? <div className={styles.ls_video}><StockTalk data={streamData} /></div> : 
+                {liveStreamStarted ? <div className={styles.ls_video}><StockTalk data={streamingData} /></div> : 
                     <>
                         {startingSoon ? <div className={styles.starting_soon}>Starting Soon</div> : 
                         <Timer time={counterTime} streamData={streamData} />}
