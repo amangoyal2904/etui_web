@@ -12,7 +12,7 @@ import SpotlightNav from "./SpotlightNav";
 import { useStateContext } from "../../store/StateContext";
 import SponserBanner from "../SponserBanner";
 import StockTalkWidget from "../StockTalkWidget";
-import { getCookie } from "utils/utils";
+import { getCookie, isWeekend } from "utils/utils";
 import jStorageReact from "utils/jStorage";
 
 interface HeaderNavProps {
@@ -24,7 +24,6 @@ interface HeaderNavProps {
 }
 
 const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) => {
-  const isWeekend = new Date().getDay() == 0 || new Date().getDay() == 6;
   const [showSponserBanner, setShowSponserBanner] = useState(false);
   const [searchBar, setSearchBar] = useState<boolean>(false);
   const [hoverSubSec, setHoverSubSec] = useState<any[]>([]); // setHoverSubSec to array of any type

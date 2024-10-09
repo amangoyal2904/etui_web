@@ -62,20 +62,20 @@ export default function StockTalkWidget() {
             eveningTimerTime = timerTS(eveningTS, allMetaData?.canonicalURL, "subtract"),
             now = +new Date();
         
-        var morningTimerCondition = morningTS > now && morningTimerTime < now;
-        var eveningTimerCondition = eveningTS > now && eveningTimerTime < now;
+        const morningTimerCondition = morningTS > now && morningTimerTime < now;
+        const eveningTimerCondition = eveningTS > now && eveningTimerTime < now;
         
-        var morningLSTime = timerTS(morningTS, 60);
-        var eveningLSTime = timerTS(eveningTS, 60);
+        const morningLSTime = timerTS(morningTS, 60);
+        const eveningLSTime = timerTS(eveningTS, 60);
         
-        var morningLSCondition = morningTS < now && morningLSTime > now;
-        var eveningLSCondition = eveningTS < now && eveningLSTime > now;
+        const morningLSCondition = morningTS < now && morningLSTime > now;
+        const eveningLSCondition = eveningTS < now && eveningLSTime > now;
         
         if(skipInfo && skipInfo[session_type]['timer'] && skipInfo[session_type]['full']) {
             setShowWidget(false);
         } else {
-            var timerConditionCheck = (morningTimerCondition || eveningTimerCondition) && !skipInfo;
-            var lsWidgetConditionCheck = (skipInfo ? skipInfo[session_type] && !skipInfo[session_type]['full'] : true) && !morningTimerCondition && !eveningTimerCondition && (morningLSCondition || eveningLSCondition);
+            const timerConditionCheck = (morningTimerCondition || eveningTimerCondition) && !skipInfo;
+            const lsWidgetConditionCheck = (skipInfo ? skipInfo[session_type] && !skipInfo[session_type]['full'] : true) && !morningTimerCondition && !eveningTimerCondition && (morningLSCondition || eveningLSCondition);
             
             let gaElegible = false;
             if(timerConditionCheck) {
@@ -102,8 +102,8 @@ export default function StockTalkWidget() {
     }
 
     const getTimeStamp = (time) => {
-        var timeUpdate = time.toString().length === 3 ? '0'+time : time;
-        var date = new Date();
+        const timeUpdate = time.toString().length === 3 ? '0'+time : time;
+        const date = new Date();
         if(time) {
             date.setHours(timeUpdate.toString().substr(0,2));
             date.setMinutes(timeUpdate.toString().substr(2,4));
