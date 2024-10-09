@@ -14,7 +14,7 @@ const {headerText = " "} = commonMeta || {};
   return (
     <header>
       {headerText && <HeaderLogo page={page} headertext={headerText} subsecnames={subsecnames} sectiondetail={sectiondetail} APP_ENV={props.APP_ENV} />}
-      <HeaderNav menuData={menuData} subsecnames={subsecnames} />
+      <HeaderNav menuData={menuData} subsecnames={subsecnames} page={page} />
       {/* <pre>{JSON.stringify(props.menuData, null, 2)}</pre> */}
     </header>
   )

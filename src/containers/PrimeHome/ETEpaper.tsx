@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { dateFormat } from "../../utils/utils";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import HeadingWithRightArrow from './HeadingWithRightArrow';
+import Separator from 'components/Separator';
+import PrimeIcon from 'components/Icons/PrimeIcon';
 
 export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
   const dayName = useState(dateFormat(new Date(), '%D'))[0];
@@ -18,7 +20,8 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
   return (
     <>
       <div className={`etEPaper ${focusArea} ${dayName}`}>
-        <span className='title'></span>
+        { focusArea === "news" && <Separator /> }
+        { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title={`ET ePaper`} />
         {
           dayName !== "Mon" ? (
@@ -81,6 +84,11 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
           margin-top: 1px;
           position: relative;
 
+          &.news {
+            margin-top: -13px;
+            padding-bottom: 25px;
+          }
+
           .title {
             border-bottom: 1px solid#9b8680;
             font-size: 20px;
@@ -92,7 +100,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
             &:before {
               content: "";
               left: -7px;
-              top: 6px;
+              top: 22px;
               position: absolute;
               width: 16px;
               height: 17px;
@@ -213,7 +221,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
             text-align: left;
             border: 10px solid #FFF2EECC;
             padding: 14px 4px 10px 0;
-            margin-top: 20px;
+            margin-top: 10px;            
 
             .read {
               font-size: 15px;
@@ -252,6 +260,9 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
           }
 
           &.market{
+            border-left: 0;
+            padding-left: 0;
+
             .epaper-cards{
               display: flex;
               flex-direction: column;  
@@ -263,6 +274,12 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
 
             .empw, .read{
               display: none;
+            }
+
+            .title {
+              &:before {
+                display: none;
+              }
             }
           }
         }

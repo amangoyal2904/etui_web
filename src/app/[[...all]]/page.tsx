@@ -117,7 +117,7 @@ export async function generateMetadata({ params }) {
       admins: '556964827',
     },
     icons: {
-      icon: "/img/etfavicon.ico",
+      icon: "https://economictimes.indiatimes.com/icons/etfavicon.ico",
       other: [
         {
           rel: "amphtml",

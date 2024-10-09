@@ -1,0 +1,128 @@
+
+  
+  .mmHeadWrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .dflex{
+    display: flex;
+  }
+
+  .logo_mm{
+    margin-right: 5px;;
+  }
+  
+  .filterNseBse {
+    display: flex;
+    max-width: 100px;
+    cursor: pointer;
+    border-radius: 100px;
+    border: 1px solid #000;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    max-height: 30px;
+    white-space: nowrap;
+    align-items: center;
+    background-color: #fff;
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  
+  .marketMoodTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+  
+    .info {
+      font-family: Montserrat;
+      font-size: 9.37px;
+      font-weight: 700;
+      line-height: 11.42px;
+      text-align: center;
+      color: #D17D00;
+      border-left: 2px solid #ccc;
+    }
+  
+    thead {
+      tr:last-child {
+        th:not(:first-child) {
+          border: 2px solid #ccc;
+        }
+      }
+    }
+  
+    tr {
+      td:first-child {
+        background: #fff;
+        font-weight: bold;
+        text-align: center;
+      }
+      th {
+        background: #f4f4f4;              
+        color: #4D4D4D;
+        vertical-align: middle;
+        padding: 10px;
+        font-family: Montserrat;
+        font-size: 11.24px;
+        font-weight: 600;
+        line-height: 14.99px;
+        text-align: center;
+      }
+  
+      td {
+        border: 2px solid #ccc;
+        padding: 8px;
+        font-family: Montserrat;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 16px;
+        text-align: center;
+      }
+    }
+  }
+  
+  .tiles {
+    display: block;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 2px;
+    max-width: 104px;
+    min-width: 54px;
+    height: 12px;
+  }
+
+  .news{
+    .tiles{
+        max-width: 55px;
+        min-width: 27px;
+    }
+  }
+  
+  .ORANGE {
+    background: rgb(255, 233, 199);
+  }
+  
+  .LIGHT_GREEN {
+    background: rgb(164, 239, 164);
+  }
+  
+  .DARK_GREEN {
+    background: rgb(95, 226, 95);
+  }
+  
+  .DARK_RED {
+    background: rgb(248, 165, 179);
+  }
+  
+  .LIGHT_RED {
+    background: rgb(251, 203, 211);
+  }

@@ -40,7 +40,7 @@ const fetchViewTable = async (
     );
     let unixDateTime = "";
     let pageSummary = null;
-    let tableData = [];
+    let tableData:any = [];
     let tableHeaderData = [];
     //console.log('____resresponseDataponse', {bodyParams})
   
@@ -53,12 +53,12 @@ const fetchViewTable = async (
     }
   
     if (responseData?.dataList) {
-      const tableData = responseData.dataList;
+      tableData = responseData.dataList;
       if (tableData.length > 0 && tableData[0]?.data) {
         tableHeaderData = tableData[0].data;
       }
     } else {
-      const tableData = responseData;
+      tableData = responseData;
       if (tableData?.length > 0 && tableData[0]?.data) {
         tableHeaderData = tableData[0].data;
       }

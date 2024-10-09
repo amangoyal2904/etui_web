@@ -21,9 +21,11 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const [focusArea, setFocusArea] = React.useState("news");
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
+  const investmentIdeas = searchResult?.find(item => item?.name === "investment_ideas") || {};
   const OpinionData = searchResult?.find(item => item?.name === "opinion") || {};
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
+  const marketsTopNews  = searchResult?.find(item => item?.name === "markets_top_news") || {};
   // console.log("topNews", searchResult);
   return (
     <>
@@ -49,7 +51,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
               <PrimeBenefitsBucket focusArea={focusArea}/>
               { focusArea === "news" && <>            
                 <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
-                <InvestmentIdeas focusArea={focusArea}/>
+                <InvestmentIdeas focusArea={focusArea} data={investmentIdeas?.data || []}/>
                 <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>
                 <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
               </>
@@ -57,17 +59,19 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
 
               {
                 focusArea === "market" && <>
-                  <MarketsTopNews focusArea={focusArea} />
-                  <IndicesWidget isDev={isDev} />
+                  <MarketsTopNews focusArea={focusArea} data={marketsTopNews?.data || []}/>
+                  <Separator />
+                  <IndicesWidget isDev={isDev} focusArea={focusArea}/>
+                  <Separator />
                   <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea}/>
                   <Separator />
-                  <StockRecos />
+                  <StockRecos focusArea={focusArea}/>
                   <Separator />
-                  <StockReportPlus />
+                  <StockReportPlus focusArea={focusArea}/>
                   <Separator />
-                  <BigBullPortfolio />
+                  <BigBullPortfolio focusArea={focusArea}/>
                   <Separator />
-                  <MarketMood />
+                  <MarketMood focusArea={focusArea} />
                 </>
               }
             </div>
@@ -83,29 +87,33 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           { focusArea === "market" && <>            
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
             <Separator />
-            <InvestmentIdeas focusArea={focusArea}/>
-            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>
+            <InvestmentIdeas focusArea={focusArea} data={investmentIdeas?.data || []}/>
+            <Separator />
             <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
+            <Separator />
+            <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>            
           </>
           }
 
           { focusArea === "news" && <>
             <div className="title">MARKETS</div>
-            <MarketsTopNews focusArea={focusArea}/>
-            <IndicesWidget isDev={isDev} />
+            <MarketsTopNews focusArea={focusArea} data={marketsTopNews?.data || []}/>
+            <Separator />
+            <IndicesWidget isDev={isDev} focusArea={focusArea}/>
             <Separator />
             <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
-            <StockRecos />
+            <StockRecos focusArea={focusArea}/>
             <Separator />
-            <StockReportPlus />
+            <StockReportPlus focusArea={focusArea}/>
             <Separator />
-            <BigBullPortfolio />
+            <BigBullPortfolio focusArea={focusArea}/>
             <Separator />
-            <MarketMood />
+            <MarketMood focusArea={focusArea} />
           </>
           }
 
+          <Separator />
           <LiveStream />
         </div>
       </section>

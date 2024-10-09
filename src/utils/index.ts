@@ -4,6 +4,7 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
+import {dateFormat} from "./utils"
 
 declare global {
   interface Window {
@@ -581,10 +582,6 @@ export const initSSOWidget = () => {
             ? "936221589938.apps.googleusercontent.com"
             : "891351984915-kodsh6b9vik3h6ue008fh8jgfstageh6.apps.googleusercontent.com",
       },
-      /* {
-        type: "Facebook",
-        clientId: "424450167700259",
-      }, */
       {
         type: "Apple",
         clientId: "com.economictimes.login",
@@ -743,6 +740,26 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
 export const getPageSpecificDimensions = (seo) => {
   const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
   const dateArray = updated.split(",");
+  function formatDate(inputDate) {
+    // Parse the input date string
+      const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+      const parsedDate = new Date(inputDate);
+
+      // Extract and format the date parts
+      const year = parsedDate.getFullYear();
+      const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-11
+      const day = String(parsedDate.getDate()).padStart(2, '0');
+      const hours = String(parsedDate.getHours()).padStart(2, '0');
+      const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+      const seconds = String(parsedDate.getSeconds()).padStart(2, '0');
+
+      // Format as "YYYY-MM-DD HH:mm:ss"
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+  const dateValue = dateArray;
+  const formattedDate = formatDate(dateValue);
+  //console.log("Date Value:-" + formattedDate);
+
   const dateString = dateArray[0] || "";
   const timeString = dateArray[1] || "";
   const { subsec1, subsecname1, subsecname2, subsecname3 } = subsecnames;
@@ -757,7 +774,7 @@ export const getPageSpecificDimensions = (seo) => {
 
   const payload = {
     dimension4: agency,
-    dimension8: dateString,
+    dimension8: formattedDate,
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,
@@ -767,6 +784,7 @@ export const getPageSpecificDimensions = (seo) => {
     dimension29: subsec1,
     dimension48: msid
   };
+  console.log("test for date:--" + dateString);
   return payload;
 };
 
@@ -978,4 +996,135 @@ export const getAllShortUrls = async () => {
   const url = (APIS_CONFIG as any)["MARKET_STATS_SHORTURLS_MAPPING"][window.APP_ENV];
   const response = await fetch(url);
   return await response?.json();
+};
+
+export const getCurrentMarketStatus = async () => {
+  try {
+    const url = (APIS_CONFIG as any)?.MARKET_STATUS[window.APP_ENV];
+    const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (res?.status === 200) {
+      return await res.json();
+    } else {
+      saveLogs({
+        res: "error",
+        msg: "Unexpected response status",
+        status: res?.status,
+      });
+      return null;
+    }
+  } catch (e) {
+    let errorMessage = "Unknown error";
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
+    console.error("Error in fetching market status", errorMessage);
+    saveLogs({
+      type: "Mercury",
+      res: "error",
+      msg: "Error in fetching market status",
+      error: errorMessage,
+    });
+    return null;
+  }
+};
+
+export const saveStockInWatchList = async (followData: any) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  let postBodyData = {};
+  if (isLocalhost) {
+    postBodyData = {
+      _authorization: authorization,
+      followData,
+    };
+  } else {
+    postBodyData = followData;
+  }
+  const apiUrl = `${(APIS_CONFIG as any)?.WATCHLISTAPI.addWatchList[window.APP_ENV]}`;
+  const headers = new Headers({
+    Authorization: authorization,
+    "Content-Type": "application/json",
+  });
+  const options: any = {
+    method: "POST",
+    cache: "no-store",
+    headers: headers,
+    body: JSON.stringify(postBodyData),
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error saving stock in watchlist:", error);
+    throw error;
+  }
+};
+
+export const fetchAllWatchListData = async (
+  type: any,
+  usersettingsubType: any,
+) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  if (authorization === "") {
+    console.log("peuuid is not getting please check cookie__", authorization);
+  }
+  const apiUrl = `${APIS_CONFIG?.WATCHLISTAPI.getAllWatchlist[window.APP_ENV]}?stype=${type}&usersettingsubType=${usersettingsubType}`;
+  const headers = new Headers({ Authorization: authorization });
+  const options: any = {
+    cache: "no-store",
+    headers: headers,
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      window.watchListApiHitStatus = 'failed';
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    window.watchListApiHitStatus = 'failed';
+    console.error("Error fetching watchlist data:", error);
+    throw error;
+  }
+};
+
+export const getOverviewData = async (indexid: number, pageno: number) => {
+  const response = await fetch(`${(APIS_CONFIG as any)?.MARKETMOODS_OVERVIEW[APP_ENV]}?indexid=${indexid}&pageno=${pageno}&pagesize=100`, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers you might need here
+      }
+  });
+  const originalJson = await response?.json();
+  return {
+    labels: originalJson.labels,
+    dataList: originalJson.dataList.map((item: any) => ({
+      date: dateFormat(item.date, "%d %MMM"),
+      indexPrice: formatNumber(item.indexPrice),
+      percentChange: item.percentChange.toFixed(2),
+      trend:
+        item.percentChange > 0
+          ? "up"
+          : item.percentChange < 0
+            ? "down"
+            : "neutral",
+      others: item.count.map((count: number, index: number) => ({
+        count: count,
+        percent: item.percent[index],
+        color: item.color[index],
+      })),
+    })),
+    pageSummary: originalJson.pageSummary,
+  };
 };

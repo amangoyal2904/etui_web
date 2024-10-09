@@ -86,7 +86,7 @@ export default function Slideshows({ title, data }) {
     </section>
     <style jsx>{`
       .subSprite {
-        background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+        background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
         display: inline-block;
         background-size: 475px;
       }

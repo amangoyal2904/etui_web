@@ -19,8 +19,9 @@ import VideoWidget from "./VideoWidget";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 
-function PrimeHome({ searchResult, isDev }) {  
+function PrimeHome({ searchResult, isDev, ssoid}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
+  const marketPodcastData = searchResult?.find(item => item?.name === "market_podcast") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
   const tech = searchResult?.find(item => item?.name === "tech") || {};
@@ -79,7 +80,7 @@ function PrimeHome({ searchResult, isDev }) {
         padding-right: 7px;
       }
     `;
-    document.head.appendChild(style);
+    //document.head.appendChild(style);
 
     return () => {
       document.body.classList.remove('isprimeuser');
@@ -88,11 +89,11 @@ function PrimeHome({ searchResult, isDev }) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} isDev={isDev} />
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid || ssoid}/>
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       
-      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} />
+      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>

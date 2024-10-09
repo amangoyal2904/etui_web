@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Share} from "../Share";
 import styles from './styles.module.scss';
+import stylesShare  from '../Share/Share.module.scss'
 import EmailStory from 'components/EmailStory';
 
 interface SocialShareProps {
@@ -46,9 +47,9 @@ const SocialShare: FC<SocialShareProps> = (props) => {
   return (  
     <Share>
         <div className={styles.codeMailVideo}>
-          <span onClick={openMailHandler} className={styles.email} title="Email this video"></span>
+          <span onClick={openMailHandler} className={`${styles.email} ${stylesShare.socialSprite}`} title="Email this video"></span>
         </div>
-        <div className={styles.codeVideo}>
+        {/* <div className={styles.codeVideo}>
           <span onClick={()=>{showHandlerModule('url')}}>Copy URL</span>
           {
             showUrl === 'yes' ?  <span className={styles.copyUrlSec}>
@@ -56,17 +57,23 @@ const SocialShare: FC<SocialShareProps> = (props) => {
             <i  className={styles.close} onClick={closeHandler}></i>
           </span> : ''
           }
-        </div>
+        </div> */}
         <div className={styles.codeVideo}>
-          <span onClick={()=>{showHandlerModule('embed')}}>Embed</span>
+          <span onClick={()=>{showHandlerModule('url')}} className={`${styles.copy} ${stylesShare.socialSprite}`}></span>
           {
+            showUrl === 'yes' ?  <span className={styles.copyUrlSec}>
+            <input readOnly type="text" value={url} className={styles.readUrl} />
+            <i  className={styles.close} onClick={closeHandler}></i>
+          </span> : ''
+          }
+          {/* {
             showEmbed === 'yes' ? <span className={styles.copyUrlSec}>
             <textarea readOnly defaultValue={`<iframe mozallowfullscreen="true" webkitallowfullscreen="true" allowfullscreen="true" width="560" height="420" frameborder="0" defaultValue=${url} src=${url}></iframe>`}>{
               
             }</textarea>
             <i  className={styles.close} onClick={closeHandler}></i>
           </span> : ''
-          }
+          } */}
           
         </div>
        {showMail ? <EmailStory mailData={props.mailData} articleData={props.articleData} closeMailHandler={closeMailHandler}/> :""}

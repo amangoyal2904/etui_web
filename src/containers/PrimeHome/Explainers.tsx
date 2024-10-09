@@ -63,7 +63,7 @@ export default function Explainers({ data, title }) {
       <style jsx>{`
         
         .subSprite {
-          background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+          background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
           display: inline-block;
           background-size: 475px;
         }

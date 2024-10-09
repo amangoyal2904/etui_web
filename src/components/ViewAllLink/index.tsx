@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 import styles from "./ViewAll.module.scss";
+import RightArrow from 'components/Icons/RightArrow'
 
 const ViewAllLink = (props: any) => {
   const { text, link } = props || {};
@@ -12,7 +12,7 @@ const ViewAllLink = (props: any) => {
         target="_blank"
       >
         {text}
-        <span className={`eticon_caret_right ${styles.arr}`}></span>
+        <RightArrow />
       </a>
     </div>
   );
