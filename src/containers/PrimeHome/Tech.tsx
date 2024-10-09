@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import OneImgTwoColsNewsLayout from "./OneImgTwoColsNewsLayout";
 import MoreFromLink from "./MoreFromLink";
 import SectionHeaderWithNewsletter from "./SectionHeaderWithNewsletter";
+import { ET_WEB_URL } from "../../utils/common";
 
 export default function Tech({ title, data, newsLetterData }) {
   const [niftyITData, setNiftyITData] = useState(null);
@@ -30,7 +31,7 @@ export default function Tech({ title, data, newsLetterData }) {
     <>
       <section className="techMain">
         <SectionHeaderWithNewsletter url="/tech" title="Tech" />
-        <OneImgTwoColsNewsLayout data={data} more={{ text: "Tech" }} />
+        <OneImgTwoColsNewsLayout data={data} more={{ text: "Tech", link: "/tech" }} />
         <div className="second">
           <NewsLetters newsLetterData={newsLetterData} />
         </div>
@@ -144,7 +145,7 @@ function NewsLetters({ newsLetterData }) {
     <>
       <div className="newslettersMain">
         <div className="heading">
-          <a target="_blank" href="/tech/newsletters/tech-top-5">
+          <a target="_blank" href={`${ET_WEB_URL}/tech/newsletters/tech-top-5`}>
             <span className="techLogo subSprite"></span>
             <span className="secname">Newsletters</span>
           </a>
@@ -243,7 +244,7 @@ function MarketChange({ niftyITData }) {
       <div className="dataTable">
         {compnData?.companies?.map((data, index) => (
           <div className="dataTableBox" key={`niftyITCompany_${index}`}>
-            <a className="compName" target="_blank" data-ga-onclick={`Nifty IT - ${data.companyShortName} - href`} title={`Nifty IT - ${data.companyShortName}`}href={`/${data.seoName}/stocks/companyid-${data.companyId}.cms`}>{data.companyShortName}</a>
+            <a className="compName" target="_blank" data-ga-onclick={`Nifty IT - ${data.companyShortName} - href`} title={`Nifty IT - ${data.companyShortName}`}href={`${ET_WEB_URL}/${data.seoName}/stocks/companyid-${data.companyId}.cms`}>{data.companyShortName}</a>
             <span className="curntVal">{data.current}</span>
             <span className={`chngVal ${data.percentChange > 0 ? "up" : "down"}`}>({data.percentChange}%)</span>
           </div>

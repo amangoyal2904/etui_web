@@ -1,15 +1,16 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TopMF from './TopMFWidget'
-import TopMFDiscover from './TopMFDiscover'
+import TopMFDiscover from './TopMFDiscover';
+import { ET_WEB_URL } from "../../utils/common";
 
 export default function MutualFunds({ title, data, isDev }) {  
   return (
     <>
     <section className="politics">
-      <h2><a href="">{title}</a></h2>
+      <h2><a href={`${ET_WEB_URL}/mutual-funds`}>{title}</a></h2>
       <div className='mfWrap'>
-        <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds"}} />
+        <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} />
         <TopMF />
       </div>
       <TopMFDiscover isDev={isDev} />

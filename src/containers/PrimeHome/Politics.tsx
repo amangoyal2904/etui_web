@@ -9,8 +9,8 @@ export default function Politics({ title, data }) {
   return (
     <>
     <section className="politics">
-      <SectionHeaderWithNewsletter url="news/politics-nation" title="Politics"/>
-      <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics"}}/>
+      <SectionHeaderWithNewsletter url="/news/politics-nation" title="Politics"/>
+      <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics", link: "/news/politics"}}/>
       <div className="second">
         <TextImageMiddile data={politicsInbrif} heading="IN Brief"/>
       </div>

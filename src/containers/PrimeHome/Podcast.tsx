@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import APIS_CONFIG from "../../network/config.json";
 import { dateFormat } from "utils/utils";
+import { ET_WEB_URL } from "../../utils/common";
 
 const Podcast = ({ data }) => {
     const [selectedAudio, setSelectedAudio] = useState<any>("");
@@ -17,7 +18,7 @@ const Podcast = ({ data }) => {
                     <p className="subSprite pcIcon"></p>
                     <p className="title">ET PODCASTS</p>
                     <p className="desc">Money, Markets, Business, &amp; Mutual Funds</p>
-                    <a href="/markets/stocks/etmarkets-podcasts" target="_blank" data-ga-onclick="Subscriber Homepage#ET Podcasts widget click#see-more" className="subSprite seeMore"></a>
+                    <a href={`${ET_WEB_URL}/markets/stocks/etmarkets-podcasts`} target="_blank" data-ga-onclick="Subscriber Homepage#ET Podcasts widget click#see-more" className="subSprite seeMore"></a>
                 </div>
                 <div className="podcastStories">
                     <ul>

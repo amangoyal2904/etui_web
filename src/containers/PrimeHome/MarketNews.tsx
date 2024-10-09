@@ -9,8 +9,8 @@ export default function MarketNews({ title, data, podcastData }) {
   return (
     <>
     <section className="marketNews">
-      <h2><a href="">{title}</a></h2>
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Market News"}}/>
+      <h2><a href={`${ET_WEB_URL}/markets`}>{title}</a></h2>
+      <OneImgTwoColsNewsLayout data={data} more={{text: "Market News", link:"/markets"}}/>
       <div className="second">
         <LiveBlog />
         <ExpertViews />
@@ -416,7 +416,7 @@ function LiveBlog() {
         <span className="text">LIVE </span>
         <LiveIcon />
       </div>
-      <div className="lhead"><a target="_blank" href="/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-23-august-2024/liveblog/112724849.cms">Sensex Today | Stock Market LIVE Updates | Sensex flat, Nifty tests 24,800; banks &amp; financials under pressure</a></div>
+      <div className="lhead"><a target="_blank" href={`${ET_WEB_URL}/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-23-august-2024/liveblog/112724849.cms`}>Sensex Today | Stock Market LIVE Updates | Sensex flat, Nifty tests 24,800; banks &amp; financials under pressure</a></div>
       <div className="content"><span>08:21 PM</span>Powell has set the stage for rate cuts: David Doyle of Macquarie Group</div>
       <div className="content"><span>08:19 PM</span>Inflation, labor data opens the door to 50s (rate cut) at some point: ...</div>
       <div className="content"><span>08:17 PM</span>Powell validates market expectations for a September rate cut: Uto Shi...</div>
@@ -484,13 +484,13 @@ function ExpertViews() {
   return <>
     <div className="expertViews">
       <div className="title">
-        <a className="title" href="/markets/expert-views/articlelist/50649960.cms" data-ga-onclick="Title - Expert Views - href" target="_blank">Expert Views</a>
+        <a className="title" href={`${ET_WEB_URL}/markets/expert-views/articlelist/50649960.cms`} data-ga-onclick="Title - Expert Views - href" target="_blank">Expert Views</a>
       </div>
       <div className="content">
         <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg"  />
         
         <span className="right">
-          <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href="/markets/expert-view/will-nbfcs-and-banks-lead-indian-markets-next-rally-hemang-jani-answers/articleshow/113479290.cms">Will NBFCs &amp; banks lead the next rally?</a>
+          <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href={`${ET_WEB_URL}/markets/expert-view/will-nbfcs-and-banks-lead-indian-markets-next-rally-hemang-jani-answers/articleshow/113479290.cms`}>Will NBFCs &amp; banks lead the next rally?</a>
           <span className="author">Hemang Jani</span>
         </span>
       </div>
