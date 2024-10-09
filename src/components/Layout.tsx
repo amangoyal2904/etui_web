@@ -17,7 +17,7 @@ import { useStateContext } from "../store/StateContext";
 import { useMarketStatus } from "hooks/useMarketStatus";
 
 const RotatingCube = dynamic(() => import("./RotatingCube"), {
-  ssr: false
+  ssr: true
 });
 
 interface Props {
