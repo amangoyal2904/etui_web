@@ -51,6 +51,12 @@ const Login = ({headertext}) => {
         document.body.classList.add("isprimeuser");
         window.objUser.isPink = true;
         window.objUser.isPink && document.body.classList.add("isprimeuser");
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            isPink: window.objUser.isPink
+          },
+        });
       }
 
       const primeRes = await loadPrimeApi();
@@ -189,7 +195,18 @@ const Login = ({headertext}) => {
   };
 
   const authFailCallback = () => {
-    //console.log("authFailCallback");
+    if (typeof window !== "undefined" && window.location.href.includes("dev=1")) {
+      document.body.classList.add("isprimeuser");
+      window.objUser.isPink = true;
+      window.objUser.isPink && document.body.classList.add("isprimeuser");
+      dispatch({
+        type: "LOGOUT",
+        payload: {
+          isPink: window.objUser.isPink
+        },
+      });
+    }
+    console.log("authFailCallback");
     dispatch({
       type: "LOGOUT",
       payload: {
@@ -203,7 +220,7 @@ const Login = ({headertext}) => {
         accessibleFeatures: [],
         permissions: [],
         isAdfree: false,
-        isPink: false
+        isPink: window.objUser.isPink || false
       },
     });
   };

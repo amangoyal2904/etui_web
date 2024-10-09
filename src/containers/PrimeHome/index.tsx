@@ -44,48 +44,6 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
 
   const { state, dispatch } = useStateContext();
 
-  useEffect(() => {
-    document.body.classList.add('isprimeuser');
-    // document.querySelector('#topnav')?.classList.add('layout1260');
-    // document.querySelector('nav')?.classList.add('layout1260');
-    document.querySelectorAll('header nav, header > div:first-child').forEach((el) => {
-      el?.classList?.add('layout1260');
-      // el?.style?.backgroundColor = 'transparent';
-    });
-
-    // append css rules in head
-    const style = document.createElement('style');
-    style.innerHTML = `
-      #topnavBlk {
-        border-top: 1px solid #debdb4;
-        border-bottom: 2px solid #debdb4;
-        background-color: #ffded4;
-        width: 100%;
-      }
-      header nav {
-        background: transparent !important;
-      }
-      #topnav > div{
-        padding-left: 7px;
-        padding-right: 7px;
-      }
-      #topnav > div > a {
-        background: transparent !important;
-        color: #000 !important;
-        font-weight: 400;
-        padding: 7px 3px 8px;
-      }
-      header nav:last-of-type {
-        padding-left: 7px;
-        padding-right: 7px;
-      }
-    `;
-    //document.head.appendChild(style);
-
-    return () => {
-      document.body.classList.remove('isprimeuser');
-    };
-  }, []);
 
   return (
     <>

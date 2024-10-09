@@ -108,12 +108,12 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
       {searchBar && <SearchBar searchBar={searchBar} setSearchBarOff={() => setSearchBar(!searchBar)}/>}
       {/* Empty div as a placeholder to maintain the layout when the element becomes sticky */}
       {isSticky && !isScrolledToTop && <div style={{ height: '35px' }}></div>}
-      <div id="topnavBlk" ref={headerRef} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPink ? styles.pink_theme : ""}`} >
+      <div id="topnavBlk" ref={headerRef} data-pink={isPink} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPink ? styles.pink_theme : ""}`} >
         <nav id="topnav" className={`level1 ${styles.topnav}`} >
           <SideNav />
           {sectionList?.map((data, index) => {
             return (
-              <div key={`nav-l1-${index}`} className={`${styles.sec_1} ${data.hovernav ? styles.hasSubSecnav : ""}`} data-l1={data.nm} data-id={data.msid}>
+              <div key={`nav-l1-${index}`} className={`sec_1 hasSubSecnav ${styles.sec_1} ${data.hovernav ? styles.hasSubSecnav : ""}`} data-l1={data.nm} data-id={data.msid}>
                 <a className={`${((typeof data.msid != "undefined" && subsec1 == data.msid)  || (typeof data.msid == "undefined" && page == "primehome" && data.nm == "Home")) ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''} ${data.msid === '110737294' ? `${styles.marketData_i}` : ''}`} href={data.link ? data.link  : ''} data-ga-onclick={data.link}>
                 {/* {data.nm != 'More' && <meta content={data.nm} itemProp="name" />} */}
                 {data.nm != 'More' && data.nm}
