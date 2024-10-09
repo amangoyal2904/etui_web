@@ -157,6 +157,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    margin-top: 10px;
                 }
 
                 .mostread_bookmark{

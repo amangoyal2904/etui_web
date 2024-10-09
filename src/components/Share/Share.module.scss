@@ -1,33 +1,38 @@
 //@import "ASSETS/Css/_variables.scss";
 
 .wContainer{
-	//font-family:$Montserrat-font-family;
-	background: #f5f5f5;
     float: left;
-    min-height: 420px;
-    width: 75px;
+    width: 345px;
     z-index: 10;
     position: relative;
+	height: 35px;
 	
 	.iconContainer{
 		span{
 			display:block;
 			width: 41px;
-			height: 41px;
+			height: 36px;
 			margin: 0 auto 18px auto;
 			cursor: pointer;
+			float: left;
 		}
 		.fb{
-			margin-top:10px
+			background-position: -40px 4px;
 		}
 		.twt {
-			background-position: 0 -44px;
+			background-position: -40px -32px;
 		}
 		.in {
-			background-position: 0 -179px;
+			background-position: -40px -143px;
 		}
 		.wa {
-			background-position: -1px -625px;
+			background-position: -42px -625px;
+		}
+		.email{
+			background-position: 10px -675px;
+		}
+		.copy{
+			background-position: -1px -852px;
 		}
 	}
 	
@@ -35,5 +40,5 @@
 }
 
 .socialSprite{
-	background: url(https://img.etimg.com/photo/105807325.cms) no-repeat 0 0;
+	background: url(https://img.etimg.com/photo/113329778.cms) no-repeat 0 0;
 }

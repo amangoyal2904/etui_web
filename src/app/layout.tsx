@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: 'Home',
   description: '',
   icons: {
-    icon: "/img/etfavicon.ico",
+    icon: "/icons/etfavicon.ico",
   },
 };
 

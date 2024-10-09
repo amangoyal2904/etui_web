@@ -983,7 +983,7 @@ export const getPageSpecificDimensions = (seo) => {
   const payload = {
     dimension4: agency,
     dimension5: authors,
-    dimension8: dateString,
+    dimension8: formattedDate,
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,
@@ -993,5 +993,6 @@ export const getPageSpecificDimensions = (seo) => {
     dimension29: subsec1,
     dimension48: msid
   };
+  //console.log("Date Value:-" + dimension8)
   return payload;
 };
