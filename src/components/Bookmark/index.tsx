@@ -11,8 +11,8 @@ interface BookmarkProps {
     msid: string;
     hostId: string;
     type: string;
-    widget: string;
-    apiType: string;
+    widget?: string;
+    apiType?: string;
 }
 
 const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) => {
@@ -157,6 +157,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    margin-top: 10px;
                 }
 
                 .mostread_bookmark{
