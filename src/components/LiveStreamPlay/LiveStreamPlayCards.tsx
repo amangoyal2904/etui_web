@@ -3,6 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { PrevButton, NextButton, usePrevNextButtons } from "../../components/CarouselArrowBtn";
 import { DotButton, useDotButton } from "../../components/CarouselDotBtn";
 import APIS_CONFIG from "network/config.json";
+import { initSSOWidget } from "../../utils";
 import Service from "../../network/service";
 import { getCookie } from "utils/utils";
 import { useStateContext } from "store/StateContext";
@@ -73,7 +74,7 @@ const LiveStreamCards = ({
           }
         }
       } else {
-        ("");
+        initSSOWidget();
       }
     } catch (e) {
       console.log("error in follow api ", e);
