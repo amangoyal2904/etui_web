@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react' ;
-import { ePaper_URL,mercury_URL } from '../../utils/common';
+import { ePaper_URL } from '../../utils/common';
 import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
 import Login from "../Login";
@@ -32,8 +32,6 @@ const EditionTimeStamp = ({ APP_ENV }) => {
         <div>
           <a rel="nofollow" data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" className={`dib ${styles.epaper}`} href={`${ePaper_URL[APP_ENV]}/timesepaper/publication-the-economic-times,city-delhi.cms`} target="_blank">Today's Paper</a>
         </div>
-        <span> | </span>
-        <a data-ga-onclick="Web Top Nav Watchlist#Click on Watchlist link#url" className={`dib ${styles.myWatchlist} cSprite_b`} href={`${mercury_URL[APP_ENV]}/watchlist`}>My Watchlist</a>
       </div>
     </>
   )
