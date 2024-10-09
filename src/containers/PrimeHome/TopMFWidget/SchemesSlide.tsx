@@ -7,6 +7,7 @@ import {
     usePrevNextButtons
 } from '../../../components/CarouselArrowBtn';
 import { DotButton, useDotButton } from '../../../components/CarouselDotBtn';
+import GLOBAL_CONFIG from "../../../network/global_config.json";
 
 const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, selectedTab, topMFSchemes, selectedYear, mainEmblaApi, primaryIndex }) => {
     const OPTIONS = { loop: false, dragFree: false };
@@ -308,7 +309,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
 
         // {console.log("selectedSlideName 45", value5)}
 
-        return promotedURL ? promotedURL : `/${value5?.seoName}/mffactsheet/schemeid-${value5?.schemeId}.cms`;
+        return promotedURL ? promotedURL : `${GLOBAL_CONFIG[window.APP_ENV]['ET_WEB_URL']}/${value5?.seoName}/mffactsheet/schemeid-${value5?.schemeId}.cms`;
     }
 
     const topMfSchemList = (value5, index5, s_type) => {

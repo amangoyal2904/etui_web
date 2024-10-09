@@ -46,9 +46,13 @@ const Login = ({headertext}) => {
 
   const verifyLoginSuccessCallback = async () => {
     try {
-      //document.body.classList.add("isprimeuser");
-      // window.objUser.isPink = true; 
-      // window.objUser.isPink && document.body.classList.add("isprimeuser");
+
+      if (typeof window !== "undefined" && window.location.href.includes("dev=1")) {
+        document.body.classList.add("isprimeuser");
+        window.objUser.isPink = true;
+        window.objUser.isPink && document.body.classList.add("isprimeuser");
+      }
+
       const primeRes = await loadPrimeApi();
       if (primeRes?.status === "SUCCESS") {
         const isPrime =
@@ -122,7 +126,7 @@ const Login = ({headertext}) => {
           ticketId: window.objUser?.ticketId,
           isPink: window.objUser?.isPink,
           accessibleFeatures: window.objUser.accessibleFeatures,
-          //[
+          // [
           //   "ETSCREE",
           //   "TOIARTCL",
           //   "ETADF",
@@ -148,7 +152,7 @@ const Login = ({headertext}) => {
           //   "ETSRP",
           //   "TOISPCL",
           //   "ETSTKAN"
-          // ],
+          // ], // 
           permissions: window.objUser.permissions,
           // [
           //   "loggedin",
@@ -157,7 +161,7 @@ const Login = ({headertext}) => {
           //   "active_subscription",
           //   "etadfree_can_buy_subscription",
           //   "etredcarpet_can_buy_subscription"
-          // ], //
+          // ], // 
         },
       });
     } catch (e) {

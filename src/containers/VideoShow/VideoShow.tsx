@@ -131,7 +131,7 @@ const VideoShow = (props) => {
           <div className={styles.shareBar}>
             <SocialShare
               mailData={{
-                shareUrl: ET_WEB_URL + result.url,
+                shareUrl: ET_WEB_URL +"/"+ result.url,
                 title: result.title,
                 msid: result.msid,
                 hostId: result.hostid,

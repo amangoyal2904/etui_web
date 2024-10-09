@@ -4,6 +4,7 @@ import HeadingWithRightArrow from '../HeadingWithRightArrow'
 import Tabs from '../Tabs'
 import ViewAllCta from '../ViewAllCta';
 import API_CONFIG from '../../../network/config.json';
+import WatchlistAddition from "components/WatchlistAddition";
 
 export default function BigBullPortfolio({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
@@ -132,9 +133,27 @@ export default function BigBullPortfolio({ focusArea }) {
           <div className="cards" ref={innerRef}>
             {data?.datainfo?.bestPicksDataInfo?.bestPicksListInfo?.map((item, index) => (
               <div key={index} className="card">
-                <div>                
+                <div className='comWrp'>                
                   <span className="companyName">{item?.companyName}</span>
-                  <span className={`addToWatchListIcon`}>&#43;</span>
+                  <WatchlistAddition
+                    companyName={
+                      item?.companyData?.text ||
+                      item?.bestPickStockData?.companyData?.text
+                    }
+                    companyId={
+                      item?.companyData?.companyId ||
+                      item?.bestPickStockData?.companyData?.companyId
+                    }
+                    companyType={
+                      item?.companyData?.companyType ||
+                      item?.bestPickStockData?.companyData?.companyType
+                    }
+                    customStyle={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
+                  {/* <span className={`addToWatchListIcon`}>&#43;</span> */}
                 </div>
                 <div className="row2">
                   <div>
@@ -163,7 +182,7 @@ export default function BigBullPortfolio({ focusArea }) {
             ))}
           </div>
         </div>
-        <ViewAllCta title="Portfolio" url="/bigbull-portfolio" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title="Portfolio" url="https://economictimes.indiatimes.com/bigbull-portfolio" isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`  
         .news {
@@ -173,6 +192,11 @@ export default function BigBullPortfolio({ focusArea }) {
         }      
         .slider {
           overflow: hidden;
+        }
+
+        .comWrp{
+          display: flex;
+          justify-content: space-between;  
         }
         .cards {
           display: flex;

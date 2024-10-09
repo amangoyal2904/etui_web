@@ -194,7 +194,7 @@ function StockScreeners() {
   return <>
     <div className="stockScreeners">
       <h3>
-        <a href={`${ET_WEB_URL}markets/stocks/stock-screener`} target="_blank">Stock Screeners</a>
+        <a href={`${ET_WEB_URL}/markets/stocks/stock-screener`} target="_blank">Stock Screeners</a>
         <i className="iconScreener"></i>
       </h3>
       <ul className="screener">
@@ -204,7 +204,7 @@ function StockScreeners() {
             <a
               target="_blank"
               data-ga-onclick="Top Score Companies - href"
-              href={`${ET_WEB_URL}stock_screener/predefKey-${stockScreener?.id}.cms`}
+              href={`${ET_WEB_URL}/stock_screener/predefKey-${stockScreener?.id}.cms`}
             >
               <div className="figure">
                 <img
@@ -223,7 +223,7 @@ function StockScreeners() {
         }        
         <li>
           <a
-            href={`${ET_WEB_URL}markets/stocks/stock-screener`}
+            href={`${ET_WEB_URL}/markets/stocks/stock-screener`}
             target="_blank"
             data-ga-onclick="Stock Screener Count - href"
           >
