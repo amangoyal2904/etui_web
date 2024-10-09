@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
+import { ET_WEB_URL } from "../../utils/common";
 
 interface gainersDataResponse {
     searchresult: Array<{
@@ -62,7 +63,7 @@ const MarketGainers = () => {
         
         <div className={styles.currDataBox}>
             <div className={styles.topcomp}>
-                <a title={`/${compnData[0]?.companyShortName}`} target="_blank" href={`/${compnData[0]?.seoName}/stocks/companyid-${compnData[0]?.companyId}.cms`}><span className={styles.c_name}>{compnData[0]?.companyShortName}</span></a>
+                <a title={`${compnData[0]?.companyShortName}`} target="_blank" href={`${ET_WEB_URL}/${compnData[0]?.seoName}/stocks/companyid-${compnData[0]?.companyId}.cms`}><span className={styles.c_name}>{compnData[0]?.companyShortName}</span></a>
             </div>
             <span className={styles.currVal}>{compnData[0]?.current}</span>
             <span className={`${styles.changeval} ${compnData[0]?.percentChange > 0 ? styles.up : styles.down}`}>
@@ -80,7 +81,7 @@ const MarketGainers = () => {
         <div className={styles.dataTable}>
           {compnData?.slice(1,4)?.map((data, index) => (
             <div className={styles.dataTableBox} key={`gainersCompany_${index}`}>
-              <a className={styles.compName} target="_blank" data-ga-onclick={`gainer - ${data?.companyShortName} - href`} title={`Gainers - ${data?.companyShortName}`}href={`/${data?.seoName}/stocks/companyid-${data?.companyId}.cms`}>{data?.companyShortName}</a>
+              <a className={styles.compName} target="_blank" data-ga-onclick={`gainer - ${data?.companyShortName} - href`} title={`Gainers - ${data?.companyShortName}`}href={`${ET_WEB_URL}/${data?.seoName}/stocks/companyid-${data?.companyId}.cms`}>{data?.companyShortName}</a>
               <span className={styles.curntVal}>{data?.current}</span>
               <span className={`${styles.chngVal}, ${data?.percentChange > 0 ? styles.up : styles.down}`}>({data?.percentChange}%)</span>
             </div>

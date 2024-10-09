@@ -10,7 +10,7 @@ export default function Rise({ title, data }) {
     <>
     <section className="rise">
       <SectionHeaderWithNewsletter url="/rise" title="Rise"/>
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Rise"}} />
+      <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} />
       <div className="second">
       <TextImageMiddile data={smallBizMiddle} heading="Popular in Small Biz"/>
       </div>

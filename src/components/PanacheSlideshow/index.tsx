@@ -1,5 +1,6 @@
 import MoreFromLink from 'containers/PrimeHome/MoreFromLink'
 import styles from './styles.module.scss';
+import { ET_WEB_URL } from "../../utils/common";
 
 const PanacheSlideshow = ({data, heading}) => {
   return (
@@ -18,8 +19,8 @@ const PanacheSlideshow = ({data, heading}) => {
                         </li>
                     ))}
                 </ul>
-                <div className="moreNews tar">
-                    <span>More <a target="_blank" href="/et-now">Videos</a> and <a target="_blank" href="/multimedia">Slideshows</a></span>»</div>
+                <div className={`${styles.moreNews}`}>
+                    <span>More <a target="_blank" href={`${ET_WEB_URL}/et-now`}>Videos</a> and <a target="_blank" href={`${ET_WEB_URL}/multimedia`}>Slideshows</a></span>»</div>
         </div>
   )
 }

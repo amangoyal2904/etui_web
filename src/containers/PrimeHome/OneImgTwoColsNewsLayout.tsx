@@ -1,7 +1,7 @@
 import React from 'react'
 import MoreFromLink from './MoreFromLink'
 
-export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
+export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: ""} }) {
   const first = data[0]
   const rest = data.slice(1)
   
@@ -20,7 +20,7 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: ""} }) {
             <a href={item?.url} key={index}>{item?.title}</a>
           ))}
           
-          <MoreFromLink href="/news/politics-nation" appendText={more.text} />
+          <MoreFromLink href={more.link} appendText={more.text} />
         </div>
       </div>
       <style jsx>{`

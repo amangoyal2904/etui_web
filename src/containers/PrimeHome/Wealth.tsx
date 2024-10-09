@@ -2,6 +2,7 @@ import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TextImageMiddile from 'components/TextImageMiddile'
 import WealthWebstory from 'components/WealthWebstory';
+import { ET_WEB_URL } from "../../utils/common";
 
 export default function Wealth({ title, data, wealthslideshow}) {  
   
@@ -10,10 +11,10 @@ export default function Wealth({ title, data, wealthslideshow}) {
     <>
     <section className="wealth">
 
-      <h2><a href="">{title}</a></h2>
+      <h2><a href={`${ET_WEB_URL}/personal-finance`}>{title}</a></h2>
       <div className="mainWealt">
         <div className="WealtF">
-          <OneImgTwoColsNewsLayout data={data} more={{text: "Wealth"}}/>
+          <OneImgTwoColsNewsLayout data={data} more={{text: "Wealth", link: "/personal-finance"}}/>
         </div>
         <div className="WealtS">
           <div className="second">
@@ -26,7 +27,7 @@ export default function Wealth({ title, data, wealthslideshow}) {
             <h2 className="cals_heading">Tools & Calculators</h2>
             <ul className="">
               <li className="tc_list">
-                <a target="_blank" href="/wealth/calculators/income-tax-calculator">
+                <a target="_blank" href={`${ET_WEB_URL}/wealth/calculators/income-tax-calculator`}>
                   <span className="subSprite tax_icon"></span>
                   <div className="dib tc_detail">
                     <span className="tc_name">Income Tax Calculator</span><span className="tc_btn">FIND OUT NOW</span>
@@ -34,7 +35,7 @@ export default function Wealth({ title, data, wealthslideshow}) {
                 </a>
               </li>
               <li className="tc_list">
-                <a target="_blank" href="/wealth/ifsc-bank-code">
+                <a target="_blank" href={`${ET_WEB_URL}/wealth/ifsc-bank-code`}>
                   <span className="subSprite ifsc_icon"></span>
                   <div className="dib tc_detail">
                     <span className="tc_name">IFSC Code Finder</span><span className="tc_btn">FIND OUT NOW</span>
@@ -42,7 +43,7 @@ export default function Wealth({ title, data, wealthslideshow}) {
                 </a>
               </li>
               <li className="tc_list">
-                <a target="_blank" href="/wealth/calculators/employees-provident-fund">
+                <a target="_blank" href={`${ET_WEB_URL}/wealth/calculators/employees-provident-fund`}>
                   <span className="subSprite epf_icon"></span>
                   <div className="dib tc_detail">
                     <span className="tc_name">EPF Calculator</span><span className="tc_btn">FIND OUT NOW</span>
