@@ -1,26 +1,4 @@
-const isLive = window.location.host.includes('economictimes.indiatimes.com');
-let sdkCleoSlike = 'https://cpl-dev.sli.ke/cca.dev.js' // for dev
-// customDimension.dimension20 = 'Web';
-let mktAPIURL = '', slikeAPIToken = '', mktTicketAPI = '', cleoPlayURL= '', lastActiveSlide = 0;
-if(isLive) {
-    mktAPIURL = 'https://etwebcast.indiatimes.com/ET_WebCast'; // for Production
-    mktTicketAPI = 'https://etmarketsapis.indiatimes.com/ET_Screeners/fetchSsoData'; // for Prroduction 
-    slikeAPIToken = '18huogo9zl6gollkog9kzkoz6l69ggl9'; // for Production
-    cleoPlayURL = 'https://play.sli.ke';
-    sdkCleoSlike = 'https://cpl.sli.ke/cca.js';
-} else {
-    mktAPIURL = 'https://json.bselivefeeds.indiatimes.com/ET_WebCast'; // for dev 
-    mktTicketAPI = 'https://qcbselivefeeds.indiatimes.com/ET_Screeners/fetchSsoData'; // dev
-    slikeAPIToken = '18tgggz9ko6z999z9ko6zzg9gz9ko9kg'; // for dev 
-    cleoPlayURL = 'https://play-dev.sli.ke';
-    sdkCleoSlike = 'https://cpl-dev.sli.ke/cca.dev.js'; 
-}
-const apiUrlMkt = mktAPIURL;
-const headerData  = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    token: slikeAPIToken
-};
+import GLOBAL_CONFIG from "network/global_config.json";
 
 export const scriptInit = (config) => {
     const script = document.createElement('script');
@@ -28,9 +6,9 @@ export const scriptInit = (config) => {
         console.log('you can run your distribution script.......', config);
         createEventJWTTockenAPI(config);
     };
-    script.src = sdkCleoSlike;
+    script.src = GLOBAL_CONFIG[window.APP_ENV]['sdkCleoSlike'];
     document.head.appendChild(script);
-    console.log('Module Loaded: ', sdkCleoSlike);
+    console.log('Module Loaded: ', GLOBAL_CONFIG[window.APP_ENV]['sdkCleoSlike']);
 }
 
 const createEventJWTTockenAPI = async(config) => {
@@ -50,10 +28,14 @@ const createEventJWTTockenAPI = async(config) => {
     };
 
     try {
-        const endPoint = isLive ? `${apiUrlMkt}/generateToken` : "http://localhost:3002/api/livestreamtocken";
+        const endPoint = window.isDev ? "http://localhost:3002/api/livestreamtocken" : `${GLOBAL_CONFIG[window.APP_ENV]['mktAPIURL']}/generateToken`;
         const response = await fetch(endPoint, {
             method: 'POST',
-            headers: headerData,
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              token: GLOBAL_CONFIG[window.APP_ENV]["slikeAPIToken"]
+            },
             body: JSON.stringify(_data)
         });
 
