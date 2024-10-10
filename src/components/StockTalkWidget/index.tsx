@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
+
 import { fetchAllMetaInfo } from 'utils/articleUtility';
-import jStorageReact from "utils/jStorage";
 import APIS_CONFIG from "network/config.json";
+import jStorageReact from "utils/jStorage";
 import styles from "./styles.module.scss";
+import StockTalk from "./StockTalkInit";
 import { grxEvent } from "utils/ga";
 import Timer from "./Timer";
-import StockTalk from "./StockTalkInit";
-
 
 export default function StockTalkWidget() {
     const [liveStreamStarted, setLiveStreamStarted] = useState(false);
     const [startingSoon, setStartingSoon] = useState(false);
     const [streamingData, setStreamingData] = useState('');
     const [allMetaData, setAllMeta] = useState<any>({});
-    const [showWidget, setShowWidget] = useState(true);
+    const [showWidget, setShowWidget] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState('');
     const [counterTime, setCounterTime] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
@@ -31,18 +31,6 @@ export default function StockTalkWidget() {
             }, 2000);
         }
     }, [allMetaData])
-
-    /* const scriptInit = () => {
-        const __script = document.createElement('script');
-        __script.onload = () => {
-            const CleoClientCBB = new Event("CleoClientCBB");
-            document.dispatchEvent(CleoClientCBB);
-            console.log('you can run your distribution __script.......', window.CleoClient);
-        };
-        __script.src = 'https://cpl-dev.sli.ke/cca.dev.js';
-        document.head.appendChild(__script);
-        console.log('Module Loaded: ');
-    } */
 
     const fetchMetaInfo = async() => {
         const allMetaData = await fetchAllMetaInfo(109489257) || {};
@@ -127,8 +115,7 @@ export default function StockTalkWidget() {
             "pageSize":5
         };
         
-        // const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
-        const apiUrl = "http://localhost:3002/api/livestream";
+        const apiUrl = window.isDev ? "http://localhost:3002/api/livestream" : (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
@@ -157,7 +144,6 @@ export default function StockTalkWidget() {
 
             setShowWidget(true);
             setStreamingData(streamDataFromAPI);
-            // streamData();
         } else {
             setTimeout(function() {
                 streamData();
