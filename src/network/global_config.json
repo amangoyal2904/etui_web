@@ -10,7 +10,12 @@
     "Epaper_Domain": "https://etdev8243.indiatimes.com",
     "X_CLIENT_ID": "w2a8e883ec676f417520f422068a4741",
     "X_SITE_CODE": "d8bf11298a038d8f20be2c4486c3c728",
-    "grxId": "g68011d62"
+    "grxId": "g68011d62",
+    "mktTicketAPI": "https://qcbselivefeeds.indiatimes.com/ET_Screeners/fetchSsoData",
+    "mktAPIURL": "https://json.bselivefeeds.indiatimes.com/ET_WebCast",
+    "slikeAPIToken": "18tgggz9ko6z999z9ko6zzg9gz9ko9kg",
+    "sdkCleoSlike": "https://cpl-dev.sli.ke/cca.dev.js",
+    "cleoPlayURL": "https://play-dev.sli.ke"
   },
   "production": {
     "ssoWidget": "https://jssocdn.indiatimes.com/crosswalk/45/widget/main.bundle.min.js",
@@ -23,7 +28,12 @@
     "Epaper_Domain": "https://epaper.indiatimes.com",
     "X_CLIENT_ID": "b2a8e883ec676f417520f422068a4742",
     "X_SITE_CODE": "c21b937c35b0d7cc7c6659d3b57e3d4a",
-    "grxId": "gf999c70d"
+    "grxId": "gf999c70d",
+    "mktTicketAPI": "https://etmarketsapis.indiatimes.com/ET_Screeners/fetchSsoData",
+    "mktAPIURL": "https://etwebcast.indiatimes.com/ET_WebCast", 
+    "slikeAPIToken": "18huogo9zl6gollkog9kzkoz6l69ggl9",
+    "sdkCleoSlike": "https://cpl.sli.ke/cca.js",
+    "cleoPlayURL": "https://play.sli.ke"
   },
   "gaId": "UA-198011-5",
   "gtmId": "GTM-566NCXC",
