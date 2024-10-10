@@ -1,4 +1,5 @@
 import LiveIcon from 'components/Icons/LiveIcon';
+import RenderText from 'components/RenderText';
 import Separator from 'components/Separator';
 import React from 'react'
 
@@ -29,7 +30,7 @@ export default function TodayNews({ todayNews }) {
             wealthNews?.data?.map((item, index) => (
               <li key={index}>
                 <a href={item?.url} target="_blank">                
-                  {`${item?.title}`}
+                  <RenderText text={item?.title} />                  
                 </a>
               </li>
             ))

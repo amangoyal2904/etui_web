@@ -231,7 +231,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
 
               .icon {
                 margin-bottom: 7px;
-                background: url(https://img.etimg.com/photo/msid-112277608,quality-100/benefits-icon-sprite.jpg) no-repeat;
+                background: url("https://img.etimg.com/photo/msid-112277608,quality-100/benefits-icon-sprite.jpg") no-repeat;
                 display: inline-block;
                 background-size: 210px;
                 width: 24px;
@@ -242,7 +242,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
 
           .newIcon {
             margin-bottom: 7px;
-            background: url(https://img.etimg.com/photo/msid-112277608,quality-100/benefits-icon-sprite.jpg) no-repeat;
+            background: url("https://img.etimg.com/photo/msid-112277608,quality-100/benefits-icon-sprite.jpg") no-repeat;
             display: inline-block;
             background-size: 210px;            
             position: absolute;

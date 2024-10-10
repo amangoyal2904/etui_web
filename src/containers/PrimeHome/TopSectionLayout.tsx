@@ -18,7 +18,7 @@ import Opinion from "./Opinion";
 import NewsByIndustry from "./NewsByIndustry";
 
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
-  const [focusArea, setFocusArea] = React.useState("news");
+  const [focusArea, setFocusArea] = React.useState("market");
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   const investmentIdeas = searchResult?.find(item => item?.name === "investment_ideas") || {};
