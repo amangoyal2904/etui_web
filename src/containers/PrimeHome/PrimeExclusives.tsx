@@ -3,6 +3,7 @@ import ArrowRnd from 'components/Icons/ArrowRnd'
 import PrimeIcon from 'components/Icons/PrimeIcon'
 import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow';
+import Bookmark from 'components/Bookmark';
 
 export default function PrimeExclusives({ title, data, focusArea }) {
   const firstRow = data[0] || {};
@@ -56,7 +57,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                             <span className="duration">{item.readtime} mins read</span>
                             <span className="author">By <Authors authors={item.authors} /> </span>
                           </span>
-                          <span className="bookmarkIcon"></span>
+                          <Bookmark msid={item.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
                         </div>
                         }
                       </div> 
