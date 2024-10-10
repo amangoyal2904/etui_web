@@ -62,8 +62,8 @@ const LiveStreamPlay = (props: any) => {
       pageNumber: 1,
       pageSize: 5
     };
-    //const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
-    const apiUrl = "http://localhost:3002/api/livestream";
+    const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
+    //const apiUrl = "http://localhost:3002/api/livestream";
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -77,8 +77,8 @@ const LiveStreamPlay = (props: any) => {
     //return newData.livestreamdata;
   };
   const fetchToken = async () => {
-    //const requestUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/generateToken";
-    const requestUrl = "http://localhost:3002/api/livestreamtocken";
+    const requestUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/generateToken";
+    //const requestUrl = "http://localhost:3002/api/livestreamtocken";
     const name = window.objUser && isLogin ? window.objUser?.info?.firstName : "Guest User";
     const userID = isLogin
       ? window.objUser?.info && window.objUser?.info.primaryEmail
