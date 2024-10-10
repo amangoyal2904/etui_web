@@ -120,6 +120,12 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                 justify-content: center;
                 padding: 30px 0 50px;
             }
+            .mostReadStories{
+                padding-top: 1px;
+                position: relative;
+                border-top: 1px solid #9b8680;
+                box-sizing: border-box;
+            }
             .mostReadStoriesWrp{
                 padding-top: 50px;
                 border-top: 3px solid #9b8680;

@@ -28,6 +28,7 @@ export default function MarketNews({ title, data, podcastData }) {
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
         border-bottom: 1px solid #9b8680;
+        padding-top: 1px;
 
         h2 {
           font-size: 36px;
