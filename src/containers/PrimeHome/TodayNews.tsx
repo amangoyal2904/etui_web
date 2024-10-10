@@ -4,9 +4,10 @@ import Separator from 'components/Separator';
 import React from 'react'
 
 export default function TodayNews({ todayNews }) {  
-  const topNews = todayNews?.data?.find(item => item.section == "top");
-  const wealthNews = todayNews?.data?.find(item => item.section == "wealth");
-  const briefNews = todayNews?.data?.find(item => item.section == "brief");
+  const topNews = todayNews?.data?.find(item => item.section == "top") || {};
+  const wealthNews = todayNews?.data?.find(item => item.section == "wealth") || {};
+  const techNews = todayNews?.data?.find(item => item.section == "tech") || {};
+  const briefNews = todayNews?.data?.find(item => item.section == "brief") || {};
   return (
     <>
       <div className="title">{todayNews?.title}</div>
@@ -37,6 +38,27 @@ export default function TodayNews({ todayNews }) {
           }
         </ul>
       </>
+      }
+
+      {techNews?.data?.length > 0 && <>
+        <Separator height={2}/>
+        <div className="wealthTitle">{techNews?.title}</div>
+        <ul>
+          {
+            techNews?.data?.map((item, index) => (
+              <li key={index}>
+                <a href={item?.url} target="_blank">
+                  <RenderText text={item?.title} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </>
+      }
+
+      {
+        briefNews?.section == "brief" && briefNews?.data?.length > 0 && <MorningEveningBrief briefNews={briefNews} />
       }
 
       <style jsx>{`
@@ -77,4 +99,78 @@ export default function TodayNews({ todayNews }) {
       `}</style>
     </>
   )
+}
+
+function MorningEveningBrief({ briefNews }) {
+
+  const data = briefNews?.data?.[0] || {};
+
+  return (
+    <>
+      <div id="briefWidget">        
+        <div className={`subSprite briefIcon ${briefNews?.type == "morning" ? "mb" : "eb"}`}></div>        
+        <div className="stry font_faus">
+          <a target="_blank" href={data?.url}>
+            <RenderText text={data?.title} />
+            <img title={data?.title} alt={data?.title} height={48} width={64} src={data?.img}/>            
+          </a>
+          </div>
+        <div className="tac">
+          <a href={briefNews?.catchUpUrl} target="_blank" className="briefLink">{briefNews?.catchUpTitle}</a>
+        </div>
+      </div>
+      <style jsx>{`
+        #briefWidget {
+          border-top: 2px solid #9b8680;
+          margin-top: 8px;
+          padding-top: 15px;
+        }
+
+        .subSprite {
+          background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
+          display: inline-block;
+          background-size: 475px;          
+          width: 143px;
+          height: 16px;
+
+          &.mb {            
+            background-position: -260px -580px;
+          }
+
+          &.eb {
+            background-position: -260px -602px;
+          }
+        }
+
+        .stry {
+          padding: 3px 0 15px 0;
+          font-size: 18px;
+          font-weight: 600;
+
+          a {
+            display: inline-flex;
+            gap: 10px;
+
+            img {
+              padding: 0;
+            }
+          }
+        }  
+
+        .tac {
+          text-align: center;
+
+          a {
+            border-radius: 3px;
+            border: solid 1px #ed193b;
+            width: 240px;
+            font-weight: 500;
+            color: #ed193b;
+            line-height: 23px;
+            display: inline-block;
+          }
+        }
+      `}</style>
+    </>
+  );   
 }
