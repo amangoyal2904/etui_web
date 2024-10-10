@@ -8,7 +8,7 @@ export default function NewsLetter({ section }) {
   const { initSubscription, unsubsNews } = useNewsletterSubscription();
   
   function handleSubscription(e, sid) {
-    debugger
+    // debugger
     e.preventDefault();
     initSubscription({ sid: sid, email: email }, function (res) {
       console.log(res);

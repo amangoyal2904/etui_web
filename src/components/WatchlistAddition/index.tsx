@@ -40,7 +40,17 @@ const WatchlistAddition = ({
       }
     } catch (error) {
       console.error("Error fetching watchlist stocks:", error);
-      window.watchListApiRes = 'failed';
+      window.watchListApiHitStatus = 'failed';
+      toast((t) => (
+        <span className="errorToast">
+          <span>
+            Oops! There is some error. Please retry.
+          </span>
+          <button onClick={() => toast.dismiss(t.id)}>
+            <span>&#10005;</span>
+          </button>
+        </span>
+      ));
     }
   }, []);
 

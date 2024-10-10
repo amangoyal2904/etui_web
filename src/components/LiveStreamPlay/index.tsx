@@ -140,7 +140,7 @@ const LiveStreamPlay = (props: any) => {
     fetchList()
       .then((response: any) => {
         if (response) {
-          const { result = [] } = response;
+          const { result = [] } = typeof response.livestreamdata !== "undefined" ? response.livestreamdata : response;
           if (result?.length) {
             const filteredEvents = result?.filter(
               (event: { eventStatus: number }) => event.eventStatus === 3 || event.eventStatus === 5
