@@ -4,6 +4,7 @@ export const scriptInit = (config) => {
     const script = document.createElement('script');
     script.onload = () => {
         console.log('you can run your distribution script.......', config);
+       
         createEventJWTTockenAPI(config);
     };
     script.src = GLOBAL_CONFIG[window.APP_ENV]['sdkCleoSlike'];
@@ -40,6 +41,7 @@ const createEventJWTTockenAPI = async(config) => {
         });
 
         const data = await response.json();
+        
         if (data?.livestreamdata?.token) {
           setStreamIframUrl(data?.livestreamdata?.token, config);
           generateTokenGaEventFire(config);
@@ -62,7 +64,9 @@ const createEventJWTTockenAPI = async(config) => {
       const liveStreamElement = document.createElement('div');
       liveStreamElement.id = 'sdkStreamWrapDistribution_st';
       liveStreamElement.classList.add('jsPlaySreamIframe');
+      
       document.querySelector('#liveStrmStockTalk .jsPlayStream_st .athena_stream')?.appendChild(liveStreamElement);
+      // debugger;
       cleoSDKConfig('sdkStreamWrapDistribution_st', jwtKey, autoplay, recording, config);
       chatFunctionUserRole();
     }

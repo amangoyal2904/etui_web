@@ -8,6 +8,7 @@ import Service from "../../network/service";
 import { getCookie } from "utils/utils";
 import { useStateContext } from "store/StateContext";
 import { useEffect, useRef, useState } from "react";
+import StockTalk from "components/StockTalkWidget/StockTalkInit";
 
 const LiveStreamCards = ({
   slide,
@@ -19,7 +20,8 @@ const LiveStreamCards = ({
   expertFollowers,
   APP_ENV,
   followingData,
-  fetchFollowingExperts
+  fetchFollowingExperts,
+  streamData
 }: any) => {
   const { state } = useStateContext();
   const [isVisible, setIsVisible] = useState(false);
@@ -109,14 +111,16 @@ const LiveStreamCards = ({
       }
     };
   }, []);
-  const loadVideo = (url: string | undefined) => {
-    return <iframe src={url} ref={iframeRef} onLoad={onLoadIframe} allowFullScreen={true} allow="autoplay" />;
+  const loadVideo = (url: string | undefined) => {debugger;
+    // return <iframe src={url} ref={iframeRef} onLoad={onLoadIframe} allowFullScreen={true} allow="autoplay" />;
+    return <StockTalk data={streamData} />
   };
   return (
     <div className={styles.cardContainer} key={slide.eventId} ref={liveStreamRef}>
       <div style={{ backgroundImage: `url(${slide.eventImageUrl})` }} className={styles.frameWrapper}>
         <div className={styles.iframeContent}>
-          {isVisible && iframeURL && index === currentSIndex && loadVideo(iframeURL)}
+          {/* {isVisible && iframeURL && index === currentSIndex && loadVideo(iframeURL)} */}
+          {index === currentSIndex && <StockTalk data={streamData} />}
         </div>
       </div>
       <div className={styles.cardDescBox}>
@@ -210,6 +214,7 @@ const LiveStreamPlayCards = ({
                   followingData={followingData}
                   fetchFollowingExperts={fetchFollowingExperts}
                   APP_ENV={APP_ENV}
+                  streamData={newsData[index]}
                 />
               </div>
             ))}
