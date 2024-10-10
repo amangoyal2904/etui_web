@@ -44,8 +44,8 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                         <div className="innerCol">
                           <div className="content">
                             <div className="text">
-                              <span className="category">{item.categoryName}</span>
-                              <a href={item.url} className="heading">{item.title}</a>
+                              <a className="category" href={item?.categoryLink} target="_blank">{item.categoryName}</a>
+                              <a href={item.url} className="heading" target="_blank">{item.title}</a>
                             </div>                
                           </div>
                           <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />
