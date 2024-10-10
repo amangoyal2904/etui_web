@@ -5,6 +5,7 @@ import { StateProvider } from "../store/StateContext";
 import dynamic from "next/dynamic";
 import React from 'react';
 import StyledJsxRegistry from "./registry";
+import { Toaster } from "react-hot-toast";
 
 const DynamicPopupManager = dynamic(() => import('../components/PopupManager'), {
   ssr: true,
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div id="ssoLogin" className="ssoLoginElm" />
           </div>
           <DynamicPopupManager />
+          <Toaster position="bottom-right" reverseOrder={false} />
         </StateProvider>
       </body>
     </html>

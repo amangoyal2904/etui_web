@@ -100,7 +100,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
             console.log('saveBookmark isLogin');
             const Authorization = getCookie("peuuid") || '';
             const url = APIS_CONFIG.saveNews[window.APP_ENV];
-            const channelId = hostId === "364" ? 4 : 0;
+            const channelId = hostId === "364" ? 4 : hostId === "318" ? 1 : 0
 
             try{
                 const response = await fetch(`${url}`, {
