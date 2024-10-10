@@ -111,7 +111,7 @@ const LiveStreamCards = ({
       }
     };
   }, []);
-  const loadVideo = (url: string | undefined) => {debugger;
+  const loadVideo = (url: string | undefined) => {
     // return <iframe src={url} ref={iframeRef} onLoad={onLoadIframe} allowFullScreen={true} allow="autoplay" />;
     return <StockTalk data={streamData} />
   };
