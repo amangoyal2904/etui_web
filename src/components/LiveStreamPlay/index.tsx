@@ -26,7 +26,6 @@ const LiveStreamPlay = (props: any) => {
   const IFRAME_BASE = "https://cpl.sli.ke";
   const { state } = useStateContext();
   const { isLogin } = state.login;
-  const APP_ENV = typeof window !== "undefined" ? window.APP_ENV : "";
 
   const fetchList = async () => {
     const currentDate = new Date();
@@ -63,7 +62,7 @@ const LiveStreamPlay = (props: any) => {
       pageNumber: 1,
       pageSize: 5
     };
-    const apiUrl = (APIS_CONFIG as any)?.liveStream[APP_ENV] + "/getEventData";
+    const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
     //const apiUrl = "http://localhost:3002/api/livestream";
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -78,7 +77,7 @@ const LiveStreamPlay = (props: any) => {
     //return newData.livestreamdata;
   };
   const fetchToken = async () => {
-    const requestUrl = (APIS_CONFIG as any)?.liveStream[APP_ENV] + "/generateToken";
+    const requestUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/generateToken";
     //const requestUrl = "http://localhost:3002/api/livestreamtocken";
     const name = window.objUser && isLogin ? window.objUser?.info?.firstName : "Guest User";
     const userID = isLogin
@@ -159,7 +158,7 @@ const LiveStreamPlay = (props: any) => {
     try {
       const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
       if (!!authorization) {
-        const requestUrl = (APIS_CONFIG as any)?.["getFollowedExperts"][APP_ENV];
+        const requestUrl = (APIS_CONFIG as any)?.["getFollowedExperts"][window.APP_ENV];
         // Replace Service.get with fetch
         const response = await fetch(requestUrl, {
           method: "GET",
@@ -191,7 +190,7 @@ const LiveStreamPlay = (props: any) => {
   const fetchFollowingData = async (item: any) => {
     try {
       const data = [{ prefDataVal: item.expertId, userSettingSubType: "Expert" }];
-      const apiUrl = (APIS_CONFIG as any)?.["expertFollower"][APP_ENV];
+      const apiUrl = (APIS_CONFIG as any)?.["expertFollower"][window.APP_ENV];
       // Replace Service.post with fetch
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -215,7 +214,7 @@ const LiveStreamPlay = (props: any) => {
           const tokenValue = response?.token || "";
           if (!tokenValue) throw response;
           const url = `${
-            (APIS_CONFIG as any)?.["SLIKE_CLEO_URL"][APP_ENV]
+            (APIS_CONFIG as any)?.["SLIKE_CLEO_URL"][window.APP_ENV]
           }/#id=${eventId}&jwt=${tokenValue}&apikey=et-n9GgmFF518E5Bknb&qna=false&comments=false&screenshot=false&controls=true&headless=false&autoplay=2&ffsmobile=false&bgpause=false&log=0${
             !liveStatus ? "&dvr=true" : "&dvr=true"
           }`;
@@ -251,7 +250,7 @@ const LiveStreamPlay = (props: any) => {
             expertFollowers={expertFollowers}
             followingData={followingData}
             fetchFollowingExperts={fetchFollowingExperts}
-            APP_ENV={APP_ENV}
+            APP_ENV={window.APP_ENV}
           />
         ) : (
           ""

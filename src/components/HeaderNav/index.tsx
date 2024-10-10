@@ -11,7 +11,8 @@ import TechNav from "./TechNav";
 import SpotlightNav from "./SpotlightNav";
 import { useStateContext } from "../../store/StateContext";
 import SponserBanner from "../SponserBanner";
-import { getCookie } from "utils/utils";
+import StockTalkWidget from "../StockTalkWidget";
+import { getCookie, isWeekend } from "utils/utils";
 import jStorageReact from "utils/jStorage";
 
 interface HeaderNavProps {
@@ -145,6 +146,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
       {showSponserBanner && <SponserBanner />}
+      {page == "primehome" && !isWeekend && <StockTalkWidget />}
     </>
   );
 };
