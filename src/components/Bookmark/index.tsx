@@ -69,6 +69,9 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                 window.bookmarkApiHitStatus = 'failed';
                 console.error("Error fetching bookmark status:", error);
             }
+        }else if(window.bookmarkApiHitStatus === 'success' && window.bookmarkApiRes.length > 0){
+            const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
+            document.dispatchEvent(bookmarkStatusForAll);    
         }
     }, [msid, type, apiType, setIsBookmarked]);
 
@@ -143,7 +146,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                             ? [
                                 ...window.bookmarkApiRes,
                                 {
-                                msid: data?.companyId?.toString()
+                                msid: msid
                             },
                             ]
                             : window.bookmarkApiRes.filter(
