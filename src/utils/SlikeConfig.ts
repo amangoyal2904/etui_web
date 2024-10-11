@@ -42,9 +42,10 @@ const createEventJWTTockenAPI = async(config) => {
         });
 
         const data = await response.json();
+        const streamDataTokenObj = data.livestreamdata || data
         
-        if (data?.livestreamdata?.token) {
-          setStreamIframUrl(data?.livestreamdata?.token, config);
+        if (streamDataTokenObj.token) {
+          setStreamIframUrl(streamDataTokenObj.token, config);
           generateTokenGaEventFire(config);
         }
     } catch (error) {
