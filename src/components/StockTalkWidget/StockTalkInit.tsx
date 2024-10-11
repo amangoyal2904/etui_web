@@ -8,7 +8,7 @@ const StockTalk = (props) => {
       scriptInit({
         eventStatus: props?.data?.eventStatus,
         eventToken: props?.data?.eventToken,
-        eventId: props?.data?.eventId,
+        eventId: props?.data?.eventId
       });
     }
   }, [props]);

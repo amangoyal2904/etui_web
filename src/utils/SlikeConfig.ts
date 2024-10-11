@@ -54,20 +54,29 @@ const createEventJWTTockenAPI = async(config) => {
   };
 
   const setStreamIframUrl = (jwtKey: string, config) => {
-    const isIFrameExist = document.getElementById('sdkStreamWrapDistribution_st')?.children.length;
+    const streamWrapper = document.getElementById('sdkStreamWrapDistribution_st');
+    const isIFrameExist = streamWrapper ? streamWrapper.children.length > 0 : false;
+
     if (!isIFrameExist) {
       const checkVideoLiveOrNot = config?.eventStatus;
       const autoplay = checkVideoLiveOrNot === '3' ? 2 : 1;
       const recording = checkVideoLiveOrNot !== '3';
 
-      const streamWrapper = document.getElementById('sdkStreamWrapDistribution_st');
       if (streamWrapper) streamWrapper.remove();
       
       const liveStreamElement = document.createElement('div');
       liveStreamElement.id = 'sdkStreamWrapDistribution_st';
       liveStreamElement.classList.add('jsPlaySreamIframe');
+
+      // Append the new live stream element to the appropriate parent
+      const liveStreamRef = document.getElementById(`#liveStreamRef_${config?.eventId}`);
+      const targetElement = liveStreamRef
+        ? liveStreamRef.querySelector('.jsPlayStream_st .athena_stream') 
+        : document.querySelector('#liveStrmStockTalk .jsPlayStream_st .athena_stream');
+
+      targetElement?.appendChild(liveStreamElement);
       
-      document.querySelector('#liveStrmStockTalk .jsPlayStream_st .athena_stream')?.appendChild(liveStreamElement);
+      
       // debugger;
       cleoSDKConfig('sdkStreamWrapDistribution_st', jwtKey, autoplay, recording, config);
       chatFunctionUserRole();

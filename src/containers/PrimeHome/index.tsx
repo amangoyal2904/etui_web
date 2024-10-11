@@ -40,10 +40,37 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
   const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
+
+  if (typeof document !== 'undefined') {
+    document.body.classList.add('isprimeuser');
+    document.querySelectorAll('header nav, header > div:first-child').forEach((el) => {
+        el?.classList?.add('layout1260');
+    });
+  }
   // console.log("explainers", explainers);
 
   const { state, dispatch } = useStateContext();
+  const { isLogin } = state.login;
 
+  useEffect(() => {
+    dispatch({
+      type: "SETPINKTHEME",
+      payload: {
+        isPink: true
+      },
+    });
+
+  }, []);
+
+  useEffect(() => {
+    console.log("primehome isLogin---", isLogin);
+    const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");
+    console.log("primehome isLogin---", isLogin, devCheck);
+    if(isLogin != null && !isLogin && !devCheck){
+      location.href = "https://etdev8243.indiatimes.com/"
+    }
+    
+  }, [isLogin]);
 
   return (
     <>

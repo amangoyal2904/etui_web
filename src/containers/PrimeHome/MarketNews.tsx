@@ -356,7 +356,7 @@ function MyWatchlist() {
         <tbody>
           <tr>
             <td>
-              <a title="Jindal Stainless Ltd." className="companyName" target="_blank" href="jindal-stainless-ltd/stocks/companyid-750.cms">Jindal Stainless</a>
+              <a title="Jindal Stainless Ltd." className="companyName" target="_blank" href={`${ET_WEB_URL}/jindal-stainless-ltd/stocks/companyid-750.cms`}>Jindal Stainless</a>
             </td>
             <td className="valChange">
               <strong className="val">751.45 </strong>
@@ -552,7 +552,7 @@ function MarketMoguls() {
     return <>
       <div className="marketMoguls">
         <div className="title">
-          <a className="title" href="/markets/market-moguls/articlelist/50649959.cms" data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
+          <a className="title" href={`${ET_WEB_URL}/markets/market-moguls/articlelist/50649959.cms`} data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
         </div>
         <div className="content">
           <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" />
@@ -560,7 +560,7 @@ function MarketMoguls() {
           <span className="right">
             <span className="author">Ajit Menon</span>
             <span className="dib">CEO, PGIM India Asset Management</span>
-            <a data-ga-onclick="Market Moguls - 1 - href" target="_blank" title="The gravity of equity markets: Rationality, boom, and defiance" href="/markets/stocks/news/the-gravity-of-equity-markets-rationality-boom-and-defiance/articleshow/113390420.cms">The gravity of equity markets: Rationality, boom, and defiance</a>
+            <a data-ga-onclick="Market Moguls - 1 - href" target="_blank" title="The gravity of equity markets: Rationality, boom, and defiance" href={`${ET_WEB_URL}/markets/stocks/news/the-gravity-of-equity-markets-rationality-boom-and-defiance/articleshow/113390420.cms`}>The gravity of equity markets: Rationality, boom, and defiance</a>
           </span>
         </div>
         <MoreFromLink href="/markets/market-moguls/articlelist/50649959.cms" appendText="Market Moguls" moreText="More" />

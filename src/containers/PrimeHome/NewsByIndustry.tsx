@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Loading from "../../components/Loading";
+import { ET_WEB_URL } from "../../utils/common";
 
 const IndustryTabsJSON = [
     {
@@ -502,11 +503,11 @@ const NewsByIndustry = ({data, title}) => {
         `}</style>
         <section id="newsInds">
             <div className="heading_box">
-                <a href="/industry" target="_blank" className="secname">
+                <a href={`${ET_WEB_URL}/industry`} target="_blank" className="secname">
                     News by <span className="sec_heading">Industry</span>
                 </a>
                 <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href={selectedObj?.link}>{selectedObj?.tabName}</a>
+                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`}>{selectedObj?.tabName}</a>
             </div>
             <div className="news_menu tabsView tabVertical">
                 <ul className="tabs">
