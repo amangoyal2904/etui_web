@@ -47,7 +47,7 @@ const Login = ({headertext}) => {
   const verifyLoginSuccessCallback = async () => {
     try {
 
-      if (typeof window !== "undefined" && window.location.href.includes("dev=1")) {
+      if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
         document.body.classList.add("isprimeuser");
         window.objUser.isPink = true;
         window.objUser.isPink && document.body.classList.add("isprimeuser");
@@ -195,7 +195,7 @@ const Login = ({headertext}) => {
   };
 
   const authFailCallback = () => {
-    if (typeof window !== "undefined" && window.location.href.includes("dev=1")) {
+    if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
       document.body.classList.add("isprimeuser");
       window.objUser.isPink = true;
       window.objUser.isPink && document.body.classList.add("isprimeuser");

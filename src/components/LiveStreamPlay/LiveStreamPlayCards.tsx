@@ -65,7 +65,7 @@ const LiveStreamCards = ({
   }, []);
 
   return (
-    <div className={styles.cardContainer} key={slide.eventId} ref={liveStreamRef}>
+    <div id={`liveStreamRef_${streamData.eventId}`} className={styles.cardContainer} key={slide.eventId} ref={liveStreamRef}>
       <div style={{ backgroundImage: `url(${slide.eventImageUrl})` }} className={styles.frameWrapper}>
         <div className={styles.iframeContent}>
           {isVisible && index === currentSIndex && <StockTalk data={streamData} />}

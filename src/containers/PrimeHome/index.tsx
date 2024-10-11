@@ -44,7 +44,27 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   // console.log("explainers", explainers);
 
   const { state, dispatch } = useStateContext();
+  const { isLogin } = state.login;
 
+  useEffect(() => {
+    dispatch({
+      type: "SETPINKTHEME",
+      payload: {
+        isPink: true
+      },
+    });
+
+  }, []);
+
+  useEffect(() => {
+    console.log("primehome isLogin---", isLogin);
+    const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");
+    console.log("primehome isLogin---", isLogin, devCheck);
+    if(isLogin != null && !isLogin && !devCheck){
+      location.href = "https://etdev8243.indiatimes.com/"
+    }
+    
+  }, [isLogin]);
 
   return (
     <>

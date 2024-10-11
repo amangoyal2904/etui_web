@@ -14,6 +14,7 @@ import ViewAllLink from "../../../components/ViewAllLink";
 import useIntervalApiCall from "../../../utils/useIntervalApiCall";
 import HeadingWithRightArrow from "../HeadingWithRightArrow";
 import DayFilter from "./DayFilter";
+import { ET_WEB_URL } from "../../../utils/common";
 
 const MarketDashBoardTable = ({
   selectedFilter = {},
@@ -171,7 +172,7 @@ const MarketDashBoardTable = ({
             ) : (
               <Blocker type={"noDataMinimal"} />
             )}
-            <ViewAllLink text={selectedTab.cta} link={linkHref} />
+            <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />
           </div>
         </div>
       </div>
