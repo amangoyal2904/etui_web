@@ -4,7 +4,7 @@ import TextImageMiddile from 'components/TextImageMiddile';
 import MarketGainers from 'components/RiseGainers';
 import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
-export default function Rise({ title, data }) { 
+export default function Rise({ title, data, isDev }) { 
   const smallBizMiddle = data.slice(1,6);
   return (
     <>
@@ -15,9 +15,8 @@ export default function Rise({ title, data }) {
       <TextImageMiddile data={smallBizMiddle} heading="Popular in Small Biz"/>
       </div>
       <div className="third">
-        <MarketGainers/>
-      </div>
-      
+        <MarketGainers isDev={isDev} />
+      </div>      
     </section>
     <style jsx>{`
       .rise {
