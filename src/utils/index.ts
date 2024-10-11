@@ -812,11 +812,34 @@ export const convertMilliseconds = (milliseconds) => {
   }
 }
 
-export function changeImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
-  const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
+export function changeImageWidthHeight({imageUrl, desiredWidth, desiredHeight, desiredResizeMode = 0, quality = 0}) {
+  let newUrl = imageUrl?.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
 
   if(desiredResizeMode) {
-    return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+    // replace if resizemode is already present, else add it
+    if(newUrl?.includes('resizemode-')) {
+      newUrl = newUrl?.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+    } else {
+      // add after width
+      newUrl = newUrl?.replace(/(width-\d+)/g, `$1,-resizemode-${desiredResizeMode}`); 
+    }
+  } else {
+    // just remove the resizemode-<mode> part
+    newUrl = newUrl?.replace(/resizemode-\w+/g, '');
+  }
+
+  if(quality) {
+    // replace if quality is already present, else add it
+    if(newUrl.includes('quality-')) {
+      newUrl = newUrl?.replace(/quality-\d+/g, `quality-${quality}`);
+    } else {
+      // add after width
+      newUrl = newUrl?.replace(/(width-\d+)/g, `$1,-quality-${quality}`);
+    }
+    
+  } else {
+    // just remove the quality-<quality> part
+    newUrl = newUrl?.replace(/quality-\d+/g, '');
   }
 
   return newUrl;

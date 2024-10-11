@@ -29,6 +29,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   const rise = searchResult?.find(item => item?.name === "rise") || {};
   const cryptocurrencyNews = searchResult?.find(item => item?.name === "cryptocurrency_news") || {};
   const wealthslideshow = searchResult?.find(item => item?.name === "et_wealth_slideshow") || {};
+  const wealthWebStories = searchResult?.find(item => item?.name === "wealth_web_stories") || {};
   const cryptoTv = searchResult?.find(item => item?.name === "crypto_tv") || {};
   const cryptoExpert = searchResult?.find(item => item?.name === "crypto_expert_speak") || {};
   const politics = searchResult?.find(item => item?.name === "politics") || {};
@@ -54,7 +55,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
-      <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
+      <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow} wealthWebStories={wealthWebStories} />
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
       <Rise data={rise?.data || []} title={rise?.title || ""} />
       <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} isDev={isDev} />

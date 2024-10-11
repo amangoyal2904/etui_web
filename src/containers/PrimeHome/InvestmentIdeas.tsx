@@ -52,7 +52,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
             )
           })
         }
-        { focusArea === "news" && <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
+        { focusArea === "news" && <a className="seeAllLink" href="/prime/investment-ideas" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
       </div>
       <style jsx>{`
         .investmentIdeas {          
