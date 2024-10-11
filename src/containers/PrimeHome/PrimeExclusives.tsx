@@ -30,7 +30,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                   <span className="duration">{firstRow.readtime} mins read</span>
                   <span className="author">By <a href="#">Shishir Prasad</a></span>
                 </span>
-                <span className="bookmarkIcon"></span>
+                <Bookmark msid={firstRow.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
               </div>
               }
             </div>

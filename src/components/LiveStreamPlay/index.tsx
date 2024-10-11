@@ -14,151 +14,102 @@ declare global {
   }
 }
 const LiveStreamPlay = (props: any) => {
+  const {APP_ENV} = props;
   const [newsData, setNewsData] = useState([]);
   const [currentSIndex, setCurrentSIndex] = useState(0);
   const [liveStatus, setLiveStatus] = useState(false);
   const [eventId, setEventId] = useState("");
   const [eventToken, setEventToken] = useState("");
-  const [iframeURL, setIframeURL] = useState("");
   const [followingData, setFollowingData] = useState<any>([]);
   const [expertFollowers, setExpertFollowers] = useState("");
   const iframeRef = useRef();
-  const IFRAME_BASE = "https://cpl.sli.ke";
   const { state } = useStateContext();
-  const { isLogin } = state.login;
+  const { isLogin, userInfo } = state.login;
+
+  const fetchData = async (url: string, method: string, body?: any) => {
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body),
+        cache: "no-store"
+      });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error("Fetch error:", error);
+      throw error; // Rethrow to handle it in the calling function
+    }
+  };
 
   const fetchList = async () => {
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0);
-    const sevenDaysEarlierDate = currentDate.getTime();
     const data = {
       conditions: [
-        {
-          fieldName: "eventStatus",
-          value: [3, 5],
-          operation: "in"
-        },
-        {
-          fieldName: "streamFlag",
-          value: [1, 2],
-          operation: "in"
-        },
-        {
-          fieldName: "paidEvent",
-          value: true,
-          operation: "notEqual"
-        }
+        { fieldName: "eventStatus", value: [3, 5], operation: "in" },
+        { fieldName: "streamFlag", value: [1, 2], operation: "in" },
+        { fieldName: "paidEvent", value: true, operation: "notEqual" }
       ],
       multiSort: [
-        {
-          field: "eventStatus",
-          type: "asc"
-        },
-        {
-          field: "startTime",
-          type: "desc"
-        }
+        { field: "eventStatus", type: "asc" },
+        { field: "startTime", type: "desc" }
       ],
       pageNumber: 1,
       pageSize: 5
     };
-    const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
+    const apiUrl = (APIS_CONFIG as any)?.liveStream[APP_ENV] + "/getEventData";
     //const apiUrl = "http://localhost:3002/api/livestream";
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data),
-      cache: "no-store"
-    });
-    const newData = await response.json();
-    return newData; // Return the parsed JSON data
-    //return newData.livestreamdata;
+    return await fetchData(apiUrl, "POST", data);
   };
+
   const fetchToken = async () => {
-    const requestUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/generateToken";
+    const requestUrl = (APIS_CONFIG as any)?.liveStream[APP_ENV] + "/generateToken";
     //const requestUrl = "http://localhost:3002/api/livestreamtocken";
-    const name = window.objUser && isLogin ? window.objUser?.info?.firstName : "Guest User";
+    const name = isLogin ? userInfo?.firstName || "Guest User" : "Guest User";
     const userID = isLogin
-      ? window.objUser?.info && window.objUser?.info.primaryEmail
-      : getCookie("_grx")
-      ? getCookie("_grx")
-      : getCookie("pfuuid")
-      ? getCookie("pfuuid")
-      : Math.random().toString(36).slice(2);
+      ? userInfo?.primaryEmail || getCookie("_grx") || getCookie("pfuuid") || Math.random().toString(36).slice(2)
+      : getCookie("_grx") || getCookie("pfuuid") || Math.random().toString(36).slice(2);
+
     const payload = {
       eventID: eventId,
       eventToken,
-      meta: {
-        isloggedin: isLogin || false,
-        section: "ETMain_HP_MWeb"
-      },
+      meta: { isloggedin: isLogin, section: "ETMain_HP_MWeb" },
       name,
       role: 0,
       userID
     };
-    // Replace Service.post with fetch
-    const tokenRes = await fetch(requestUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload),
-      cache: "no-store"
-    });
-    const tokenData = await tokenRes.json(); // Parse the JSON response
-    return tokenData;
+
+    return await fetchData(requestUrl, "POST", payload);
 
     //return tokenData.livestreamdata;
   };
 
-  const onLoadIframe = () => {
+  useEffect(() => {
+    if (eventId && eventToken) {
+      fetchToken()
+    }
+  }, [eventId, eventToken, liveStatus]);
+
+  const startFetching = async () => {
     try {
-      window.addEventListener("message", (event) => {
-        if (event.origin !== IFRAME_BASE) return;
-        const { action, data } = event.data;
-        if (action && action === "READY_TO_USE") {
-          iframeTrigger();
-        }
-      });
-    } catch (err) {
-      console.error("bind iframe event", err);
+      const response = await fetchList();
+      const { result = [] } = response.livestreamdata || response;
+      const filteredEvents = result.filter((event: { eventStatus: number }) => event.eventStatus === 3 || event.eventStatus === 5);
+      if (filteredEvents.length) {
+        setNewsData(filteredEvents);
+        prepareData(filteredEvents[0]);
+      }
+    } catch (error) {
+      console.log("No LiveStream is LIVE at this time", error);
     }
   };
-  const iframeTrigger = () => {
-    const payload = {
-      action: "CREATE_SESSION",
-      data: {}
-    };
-    const iframe: any = iframeRef.current;
-    if (iframe && iframe?.contentWindow) {
-      iframe.contentWindow.postMessage(payload, IFRAME_BASE);
-    }
-  };
-  const startFetching = () => {
-    fetchList()
-      .then((response: any) => {
-        if (response) {
-          const { result = [] } = typeof response.livestreamdata !== "undefined" ? response.livestreamdata : response;
-          if (result?.length) {
-            const filteredEvents = result?.filter(
-              (event: { eventStatus: number }) => event.eventStatus === 3 || event.eventStatus === 5
-            );
-            if (filteredEvents?.length) {
-              setNewsData(filteredEvents);
-              prepareData(filteredEvents[0]);
-            }
-          }
-        }
-      })
-      .catch((e: any) => console.log("No LiveStream is LIVE at this time", e));
-  };
+
   const fetchFollowingExperts = async () => {
     try {
       const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
       if (!!authorization) {
-        const requestUrl = (APIS_CONFIG as any)?.["getFollowedExperts"][window.APP_ENV];
+        const requestUrl = (APIS_CONFIG as any)?.["getFollowedExperts"][APP_ENV];
         // Replace Service.get with fetch
         const response = await fetch(requestUrl, {
           method: "GET",
@@ -175,6 +126,7 @@ const LiveStreamPlay = (props: any) => {
       console.log("Error in fetching following experts", e);
     }
   };
+
   const prepareData = (item: any) => {
     setEventId(item?.eventId);
     setEventToken(item?.eventToken);
@@ -187,10 +139,11 @@ const LiveStreamPlay = (props: any) => {
       sessionStorage.removeItem("doNotRefreshPage");
     }
   };
+
   const fetchFollowingData = async (item: any) => {
     try {
       const data = [{ prefDataVal: item.expertId, userSettingSubType: "Expert" }];
-      const apiUrl = (APIS_CONFIG as any)?.["expertFollower"][window.APP_ENV];
+      const apiUrl = (APIS_CONFIG as any)?.["expertFollower"][APP_ENV];
       // Replace Service.post with fetch
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -206,23 +159,6 @@ const LiveStreamPlay = (props: any) => {
       console.log("Error in fetching following data", e);
     }
   };
-  useEffect(() => {
-    setIframeURL("");
-    if (eventId && eventToken) {
-      fetchToken()
-        .then((response: any) => {
-          const tokenValue = response?.token || "";
-          if (!tokenValue) throw response;
-          const url = `${
-            (APIS_CONFIG as any)?.["SLIKE_CLEO_URL"][window.APP_ENV]
-          }/#id=${eventId}&jwt=${tokenValue}&apikey=et-n9GgmFF518E5Bknb&qna=false&comments=false&screenshot=false&controls=true&headless=false&autoplay=2&ffsmobile=false&bgpause=false&log=0${
-            !liveStatus ? "&dvr=true" : "&dvr=true"
-          }`;
-          setIframeURL(url);
-        })
-        .catch((e: any) => console.log("error in fetchToken", e));
-    }
-  }, [eventId, eventToken, liveStatus]);
 
   useEffect(() => {
     startFetching();
@@ -243,14 +179,12 @@ const LiveStreamPlay = (props: any) => {
           <LiveStreamPlayCards
             iframeRef={iframeRef}
             newsData={newsData}
-            iframeURL={iframeURL}
             onSwitching={onSwitching}
             currentSIndex={currentSIndex}
-            onLoadIframe={onLoadIframe}
             expertFollowers={expertFollowers}
             followingData={followingData}
             fetchFollowingExperts={fetchFollowingExperts}
-            APP_ENV={window.APP_ENV}
+            APP_ENV={props.APP_ENV}
           />
         ) : (
           ""

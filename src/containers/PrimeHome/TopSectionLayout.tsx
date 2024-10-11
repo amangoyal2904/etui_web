@@ -114,7 +114,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           }
 
           <Separator />
-          <LiveStream />
+          <LiveStream isDev={isDev} />
         </div>
       </section>
       {
