@@ -160,4 +160,28 @@ a {
   background: rgb(237, 25, 59);
 }
 
+.isprimeuser #topnavBlk {
+  background-color: #ffded4;
+  border-top: 1px solid #debdb4;
+  border-bottom: 2px solid #debdb4;
+  width: 100%;
+}
+
+.isprimeuser #topnav{
+  max-width: 1260px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.isprimeuser #sbnv_wrapper{
+  background-color: #ffe9e2;
+  border-bottom: 1px solid #debdb4;
+}
+
+.isprimeuser #sbnv_wrapper > nav {
+  width: 1260px;
+  margin: 0 auto;
+  background-color: #ffe9e2;
+}
+
 

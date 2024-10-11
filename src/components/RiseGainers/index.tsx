@@ -20,7 +20,7 @@ interface gainersDataResponse {
     }>;
   }
 
-const MarketGainers = () => {
+const MarketGainers = ({ isDev }) => {
     const [activeSlide, setActiveSlide] = useState('gainer');
 
     const [compnData, setCompnData]:any = useState([]);
@@ -76,7 +76,7 @@ const MarketGainers = () => {
             style={{border: 'none'}} 
             width="246" 
             height="139" 
-            src={`https://etdev8243.indiatimes.com/chart.cms?companyId=${compnData[0]?.companyId}&candlestick_insights_show=false&save_layout=false&ga_hit=true&multiple_btn=true&et_logo=false&symbol=${encodeURIComponent(compnData[0]?.ticker || '')}&currencypairname=&exchange=${compnData[0]?.segment}&entity=company&periodicity=&expirydate=&right_align=true&hide_fullscreen=false&chart_type=mountain&tagId=&dsg=&currencypairnameparent=&createdby=&local=&sbl_domain=&layoutchangescheck=true&symbol_search=false&ver=1656060840000&no_menu=1&zoom=false&ohlc_hide=true&background_color=transparent&custom_theme=1&grid_color=false&xaxis_color=%23666`}
+            src={`https://${isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/chart.cms?companyId=${compnData[0]?.companyId}&candlestick_insights_show=false&save_layout=false&ga_hit=true&multiple_btn=true&et_logo=false&symbol=${encodeURIComponent(compnData[0]?.ticker || '')}&currencypairname=&exchange=${compnData[0]?.segment}&entity=company&periodicity=&expirydate=&right_align=true&hide_fullscreen=false&chart_type=mountain&tagId=&dsg=&currencypairnameparent=&createdby=&local=&sbl_domain=&layoutchangescheck=true&symbol_search=false&ver=1656060840000&no_menu=1&zoom=false&ohlc_hide=true&background_color=transparent&custom_theme=1&grid_color=false&xaxis_color=%23666`}
             />
         <div className={styles.dataTable}>
           {compnData?.slice(1,4)?.map((data, index) => (

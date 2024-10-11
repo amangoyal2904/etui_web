@@ -6,6 +6,7 @@ import {
     NextButton,
     usePrevNextButtons
   } from '../../components/CarouselArrowBtn';
+import { changeImageWidthHeight } from 'utils';
 
 export default function WebStories({ title, data }) {
   const OPTIONS = {loop: false}
@@ -16,16 +17,6 @@ export default function WebStories({ title, data }) {
     onPrevButtonClick,
     onNextButtonClick
   } = usePrevNextButtons(emblaApi);
-
-  function changeImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
-    const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
-
-    if(desiredResizeMode) {
-      return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
-    }
-
-    return newUrl;
-  }
 
   // make a chunk of 5 items from data
   const subsets = [];
@@ -48,7 +39,7 @@ export default function WebStories({ title, data }) {
                     subset.map((item, index1) => {
                       return (
                         <a href={item?.url} target="_blank" className="item" key={`${index}_${index1}`}>
-                          <img src={changeImageWidthHeight(item?.img, 240, 427, 6)} alt={item?.title} width={240} height={427} title={item?.title} />
+                          <img alt={item?.title} width={240} height={427} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 240, desiredHeight: 427})} />
                           <span className="title">
                             <span className="subSprite webStIcon"></span>
                             {item?.title || ""}

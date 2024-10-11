@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import React from 'react';
 import StyledJsxRegistry from "./registry";
 import { Toaster } from "react-hot-toast";
+import { headers, cookies } from "next/headers";
 
 const DynamicPopupManager = dynamic(() => import('../components/PopupManager'), {
   ssr: true,
@@ -24,9 +25,14 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const headersList = headers();
+  const pageUrl = headersList.get("x-url") || "";
+  const isDefaultPrime = pageUrl?.includes("/default_prime.cms");
+
+  console.log("Current URL:", pageUrl); // Log the current URL (for debugging)
   return (
     <html lang="en">
-      <body>
+      <body className={`${isDefaultPrime ? 'isprimeuser' : ''}`}>
         <StateProvider>
           <StyledJsxRegistry>{children}</StyledJsxRegistry>
           <div className={`ssoLoginWrap hide`} id="ssoLoginWrap">

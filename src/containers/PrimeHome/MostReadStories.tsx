@@ -8,6 +8,7 @@ import {
   import { DotButton, useDotButton } from '../../components/CarouselDotBtn';
   import SocialShare from "../../utils/socialShare";
 import Bookmark from 'components/Bookmark';
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 
 const MostReadStories = ({MostReadStoriesRes}) => {
     const OPTIONS = {loop: false}
@@ -50,7 +51,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                             <div className='contentWrap'>
                                                 <a 
                                                     target="_blank" 
-                                                    href={item.url}
+                                                    href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                                                     className='flr'
                                                 >
                                                     <img 
@@ -67,7 +68,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         title={item.title}  
                                                         target="_blank" 
                                                         className="line_4" 
-                                                        href={item.url}
+                                                        href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                                                     >{item.title}</a>
                                                 </div>
                                             </div>
@@ -78,14 +79,15 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         <div className='shareIconWrp'>
                                                             <span 
                                                                 className="fb cSprite" 
-                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "fb" })}></span>
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}, type: "fb" })}
+                                                            ></span>
                                                             <span 
                                                                 className="twt cSprite" 
-                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "twt" })}
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}, type: "twt" })}
                                                             ></span>
                                                             <span 
                                                                 className="wa cSprite" 
-                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "wa" })}
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}, type: "wa" })}
                                                             ></span>
                                                         </div>
                                                     </div>

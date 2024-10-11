@@ -8,7 +8,7 @@ export default function MutualFunds({ title, data, isDev }) {
   return (
     <>
     <section className="politics">
-      <h2><a href={`${ET_WEB_URL}/mutual-funds`}>{title}</a></h2>
+      <h2><a href={`${ET_WEB_URL}/mutual-funds`} target="_blank">{title}</a></h2>
       <div className='mfWrap'>
         <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} />
         <TopMF />
