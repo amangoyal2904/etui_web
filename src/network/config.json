@@ -201,5 +201,9 @@
   "MARKETMOODS_OVERVIEW": {
     "development": "https://screener.indiatimes.com/screener/marketbreadth/overview",
     "production": "https://screener.indiatimes.com/screener/marketbreadth/overview"
+  },
+  "getFollowedExperts": {
+    "development": "https://etusersqc2.economictimes.indiatimes.com/et/getpref?type=Follow&usersettingsubType=23",
+    "production": "https://etup.economictimes.indiatimes.com/et/getpref?type=Follow&usersettingsubType=23"
   }
 }

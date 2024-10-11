@@ -109,7 +109,7 @@ const LiveStreamPlay = (props: any) => {
     try {
       const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
       if (!!authorization) {
-        const requestUrl = (APIS_CONFIG as any)?.["getFollowedExperts"][APP_ENV];
+        const requestUrl = APIS_CONFIG["getFollowedExperts"][APP_ENV];
         // Replace Service.get with fetch
         const response = await fetch(requestUrl, {
           method: "GET",
