@@ -15,9 +15,6 @@ const LiveStreamCards = ({
   index,
   currentSIndex,
   iframeRef,
-  expertFollowers,
-  followingData,
-  fetchFollowingExperts,
   streamData,
   APP_ENV
 }: any) => {
@@ -44,52 +41,7 @@ const LiveStreamCards = ({
       !isLive ? "recorded" : ""
     }/streamid-${streamid},expertid-${expertId}.cms${utmSource}`;
   const viewsText = isLive ? slide.concurrentViewsText : slide.totalViewsText;
-  
-  const followExpert = async () => {
-    try {
-      if (isLogin) {
-        const data = {
-          action: checkIfAlreadyFollowed(expertId) ? 0 : 1,
-          userSettingSubType: 23,
-          position: 0,
-          source: 1,
-          stype: 2,
-          msid: expertId
-        };
-        const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
-        if (!!authorization) {
-          const apiUrl = (APIS_CONFIG as any)?.["followExpert"][APP_ENV];
-          const response: any = await Service.post({
-            url: apiUrl,
-            headers: {
-              Authorization: authorization,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ ...data }),
-            params: {},
-            cache: "no-store"
-          });
-          const followStatus = await response?.json();
-          if (followStatus && followStatus.status == "success") {
-            fetchFollowingExperts();
-          }
-        }
-      } else {
-        initSSOWidget();
-      }
-    } catch (e) {
-      console.log("error in follow api ", e);
-    }
-  };
-
-  const checkIfAlreadyFollowed = (id: any) => {
-    for (let i = 0; i < followingData?.length; i++) {
-      if (followingData[i].prefDataVal == id) {
-        return true;
-      }
-    }
-    return false;
-  };
+ 
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -146,9 +98,6 @@ const LiveStreamPlayCards = ({
   currentSIndex,
   iframeRef,
   onSwitching,
-  expertFollowers,
-  followingData = [],
-  fetchFollowingExperts,
   APP_ENV
 }: any) => {
   const OPTIONS = { loop: false };
@@ -202,9 +151,6 @@ const LiveStreamPlayCards = ({
                   iframeRef={iframeRef}
                   index={index}
                   currentSIndex={currentSIndex}
-                  expertFollowers={expertFollowers}
-                  followingData={followingData}
-                  fetchFollowingExperts={fetchFollowingExperts}
                   streamData={newsData[index]}
                   APP_ENV={APP_ENV}
                 />
