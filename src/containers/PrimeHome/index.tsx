@@ -57,7 +57,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow} wealthWebStories={wealthWebStories} />
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
-      <Rise data={rise?.data || []} title={rise?.title || ""} />
+      <Rise data={rise?.data || []} title={rise?.title || ""} isDev={isDev} />
       <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} isDev={isDev} />
       <Podcast data={podcast || []}/>
       <Politics data={politics?.data || []} title={politics?.title || ""} />
