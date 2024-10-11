@@ -105,58 +105,14 @@ const LiveStreamPlay = (props: any) => {
     }
   };
 
-  const fetchFollowingExperts = async () => {
-    try {
-      const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
-      if (!!authorization) {
-        const requestUrl = APIS_CONFIG["getFollowedExperts"][APP_ENV];
-        // Replace Service.get with fetch
-        const response = await fetch(requestUrl, {
-          method: "GET",
-          headers: {
-            Authorization: authorization,
-            "Content-Type": "application/json"
-          },
-          cache: "no-store"
-        });
-        const followingsData = await response.json(); // Parse the JSON response
-        setFollowingData(followingsData);
-      }
-    } catch (e) {
-      console.log("Error in fetching following experts", e);
-    }
-  };
-
   const prepareData = (item: any) => {
     setEventId(item?.eventId);
     setEventToken(item?.eventToken);
     setLiveStatus(item?.eventStatus == 3 || item?.eventStatus === 5 ? true : false);
     if (item.eventStatus == 3 || item?.eventStatus === 5) {
       sessionStorage.setItem("doNotRefreshPage", "1");
-      fetchFollowingExperts();
-      fetchFollowingData(item);
     } else {
       sessionStorage.removeItem("doNotRefreshPage");
-    }
-  };
-
-  const fetchFollowingData = async (item: any) => {
-    try {
-      const data = [{ prefDataVal: item.expertId, userSettingSubType: "Expert" }];
-      const apiUrl = (APIS_CONFIG as any)?.["expertFollower"][APP_ENV];
-      // Replace Service.post with fetch
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
-        cache: "no-store"
-      });
-      const followingData = await response.json(); // Parse the JSON response
-      setExpertFollowers(followingData?.prefDataValCountList[0]?.count);
-    } catch (e) {
-      console.log("Error in fetching following data", e);
     }
   };
 
@@ -183,7 +139,6 @@ const LiveStreamPlay = (props: any) => {
             currentSIndex={currentSIndex}
             expertFollowers={expertFollowers}
             followingData={followingData}
-            fetchFollowingExperts={fetchFollowingExperts}
             APP_ENV={props.APP_ENV}
           />
         ) : (
