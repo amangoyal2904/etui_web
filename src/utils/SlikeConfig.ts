@@ -29,7 +29,8 @@ const createEventJWTTockenAPI = async(config) => {
     };
 
     try {
-        const endPoint = window.isDev ? "http://localhost:3002/api/livestreamtocken" : `${GLOBAL_CONFIG[window.APP_ENV]['mktAPIURL']}/generateToken`;
+        const endPoint = `${GLOBAL_CONFIG[window.APP_ENV]['mktAPIURL']}/generateToken`;
+        //const endPoint = "http://localhost:3002/api/livestreamtocken";
         const response = await fetch(endPoint, {
             method: 'POST',
             headers: {

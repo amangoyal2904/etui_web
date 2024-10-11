@@ -14,14 +14,12 @@ const LiveStreamCards = ({
   slide,
   index,
   currentSIndex,
-  iframeURL,
   iframeRef,
-  onLoadIframe,
   expertFollowers,
-  APP_ENV,
   followingData,
   fetchFollowingExperts,
-  streamData
+  streamData,
+  APP_ENV
 }: any) => {
   const { state } = useStateContext();
   const [isVisible, setIsVisible] = useState(false);
@@ -46,6 +44,7 @@ const LiveStreamCards = ({
       !isLive ? "recorded" : ""
     }/streamid-${streamid},expertid-${expertId}.cms${utmSource}`;
   const viewsText = isLive ? slide.concurrentViewsText : slide.totalViewsText;
+  
   const followExpert = async () => {
     try {
       if (isLogin) {
@@ -91,6 +90,7 @@ const LiveStreamCards = ({
     }
     return false;
   };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -111,16 +111,12 @@ const LiveStreamCards = ({
       }
     };
   }, []);
-  const loadVideo = (url: string | undefined) => {
-    // return <iframe src={url} ref={iframeRef} onLoad={onLoadIframe} allowFullScreen={true} allow="autoplay" />;
-    return <StockTalk data={streamData} />
-  };
+
   return (
     <div className={styles.cardContainer} key={slide.eventId} ref={liveStreamRef}>
       <div style={{ backgroundImage: `url(${slide.eventImageUrl})` }} className={styles.frameWrapper}>
         <div className={styles.iframeContent}>
-          {/* {isVisible && iframeURL && index === currentSIndex && loadVideo(iframeURL)} */}
-          {index === currentSIndex && <StockTalk data={streamData} />}
+          {isVisible && index === currentSIndex && <StockTalk data={streamData} />}
         </div>
       </div>
       <div className={styles.cardDescBox}>
@@ -148,14 +144,12 @@ const LiveStreamCards = ({
 const LiveStreamPlayCards = ({
   newsData = [],
   currentSIndex,
-  iframeURL,
   iframeRef,
-  APP_ENV,
   onSwitching,
-  onLoadIframe,
   expertFollowers,
   followingData = [],
-  fetchFollowingExperts
+  fetchFollowingExperts,
+  APP_ENV
 }: any) => {
   const OPTIONS = { loop: false };
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
@@ -206,15 +200,13 @@ const LiveStreamPlayCards = ({
                 <LiveStreamCards
                   slide={value}
                   iframeRef={iframeRef}
-                  onLoadIframe={onLoadIframe}
-                  iframeURL={iframeURL}
                   index={index}
                   currentSIndex={currentSIndex}
                   expertFollowers={expertFollowers}
                   followingData={followingData}
                   fetchFollowingExperts={fetchFollowingExperts}
-                  APP_ENV={APP_ENV}
                   streamData={newsData[index]}
+                  APP_ENV={APP_ENV}
                 />
               </div>
             ))}
