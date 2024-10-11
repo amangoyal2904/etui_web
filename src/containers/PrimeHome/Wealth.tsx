@@ -8,7 +8,7 @@ export default function Wealth({ title, data, wealthslideshow}) {
   const slideData = data.slice(0,5);
   return (
     <>
-    <section className="wealth">
+    <section className="wealth" data-ga-impression={`Subscriber Homepage#Wealth widget impression#`}>
 
       <h2><a href="">{title}</a></h2>
       <div className="mainWealt">

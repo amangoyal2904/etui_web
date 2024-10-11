@@ -28,7 +28,7 @@ export default function Tech({ title, data, newsLetterData }) {
 
   return (
     <>
-    <section className="techMain">
+    <section className="techMain" data-ga-impression={`Subscriber Homepage#Tech widget impression#`}>
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Tech"}}/>
       <div className="second">

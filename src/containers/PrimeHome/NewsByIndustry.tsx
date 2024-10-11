@@ -500,7 +500,7 @@ const NewsByIndustry = ({data, title}) => {
                 padding-bottom: 50px;    
             }
         `}</style>
-        <section id="newsInds">
+        <section id="newsInds" data-ga-impression={`Subscriber Homepage#Industry widget impression#`} >
             <div className="heading_box">
                 <a href="/industry" target="_blank" className="secname">
                     News by <span className="sec_heading">Industry</span>

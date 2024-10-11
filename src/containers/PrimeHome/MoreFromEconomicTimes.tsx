@@ -3,7 +3,7 @@ import React from 'react'
 export default function MoreFromEconomicTimes({data}) {
   return (
     <>
-      <section className="moreFromEconomicTimes secBox">
+      <section className="moreFromEconomicTimes secBox" data-ga-impression={`Subscriber Homepage#More from ET impression#`}>
         <h2>{data?.title || ""}</h2>
         <div className="flex">
           {

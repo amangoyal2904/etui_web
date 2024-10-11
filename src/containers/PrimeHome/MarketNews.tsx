@@ -8,7 +8,7 @@ import { dateFormat } from 'utils/utils'
 export default function MarketNews({ title, data, podcastData }) {  
   return (
     <>
-    <section className="marketNews">
+    <section className="marketNews" data-ga-impression={`Subscriber Homepage#Market News widget impression#`}>
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News"}}/>
       <div className="second">

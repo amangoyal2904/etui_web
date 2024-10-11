@@ -1,13 +1,14 @@
 import LiveIcon from 'components/Icons/LiveIcon';
 import Separator from 'components/Separator';
-import React from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 export default function TodayNews({ todayNews }) {  
   const topNews = todayNews?.data?.find(item => item.section == "top");
   const wealthNews = todayNews?.data?.find(item => item.section == "wealth");
   const briefNews = todayNews?.data?.find(item => item.section == "brief");
+
   return (
-    <>
+    <div data-ga-impression={`Subscriber Homepage#Today news widget impression#`}>
       <div className="title">{todayNews?.title}</div>
       <ul>
         {
@@ -74,6 +75,6 @@ export default function TodayNews({ todayNews }) {
           text-transform: uppercase;
         }
       `}</style>
-    </>
+    </div>
   )
 }

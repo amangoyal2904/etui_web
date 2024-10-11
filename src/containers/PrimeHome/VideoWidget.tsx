@@ -105,7 +105,7 @@ const VideoWidget = ({VideoWidgetData, isDev}) => {
     }, [showTab])
 
     return (
-        <section className='videoBoxWidget'>
+        <section className='videoBoxWidget' data-ga-impression={`Subscriber Homepage#Videos widget impression#`}>
             <div className='primvideo'>
                 <div className='etabsView newsTab'>
                     <div className='etabsBtn font_mon'>

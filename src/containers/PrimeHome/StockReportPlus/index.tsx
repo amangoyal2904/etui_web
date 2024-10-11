@@ -117,7 +117,7 @@ export default function StockReportPlus({ focusArea }) {
 
   return (
     <>
-      <div className={`${focusArea}`}>
+      <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Stock reports plus widget impression#`}>
         <HeadingWithRightArrow title="Stock Report Plus" />
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />      
 

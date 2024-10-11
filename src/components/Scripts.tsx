@@ -9,6 +9,7 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 import { getUserType, trackingEvent } from "utils/ga";
 import {loadAndBeyondScript, loadTaboolaScript} from "./Ad/AdScript";
 import { useStateContext } from "../store/StateContext";
+import { callJsOnAppLoad } from "utils/priority";
 
 
 interface Props {
@@ -87,6 +88,7 @@ declare global {
     bookmarkApiRes: any;
     watchListApiHitStatus: any;
     watchListApiRes: any;
+    updateGAObserver:any;
   }
 }
 declare var JssoCrosswalk: any;
@@ -131,11 +133,13 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   };
   useEffect(() => {
     try {
-      prevPath !== null &&
+      document.addEventListener("gtmLoaded",()=>{
+        prevPath !== null &&
         trackingEvent("et_push_pageload", {
           url: window.location.href,
           prevPath: prevPath,
         });
+      })
       setPrevPath(pathName || document.referrer);
       if (typeof window.objUser == "undefined") window.objUser = {};
       window.objUser && (window.objUser.prevPath = prevPath);
@@ -172,6 +176,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
       "ct" : (window.tpName == 'videoshow' ? 2 : 20)
     }
     sendMouseFlowEvent();
+    callJsOnAppLoad();
   }, []);
 
   return (
@@ -284,6 +289,8 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GLOBAL_CONFIG.gtmId}');
+            const gtmLoaded = new Event('gtmLoaded');
+            document.dispatchEvent(gtmLoaded);         
           `,
         }}
       />

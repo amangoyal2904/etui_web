@@ -20,7 +20,7 @@ export default function Panache({ title, data }) {
 
   return (
     <>
-      <section className="panache secBox">
+      <section className="panache secBox" data-ga-impression={`Subscriber Homepage#Panache widget impression#`}>
         <h2>{title}</h2>
         <div className="flex Pleft">          
           <a href={first?.title} className="firstBox">

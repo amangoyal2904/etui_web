@@ -7,7 +7,7 @@ export default function Rise({ title, data }) {
   const smallBizMiddle = data.slice(1,6);
   return (
     <>
-    <section className="rise">
+    <section className="rise" data-ga-impression={`Subscriber Homepage#Rise widget impression#`}>
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Rise"}} />
       <div className="second">

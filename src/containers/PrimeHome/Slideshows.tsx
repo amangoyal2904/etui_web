@@ -35,7 +35,7 @@ export default function Slideshows({ title, data }) {
 
   return (
     <>
-    <section className="slideshow">
+    <section className="slideshow" data-ga-impression={`Subscriber Homepage#Slideshows widget impression#`}>
       <div className="left">
         <div className="title">Economictimes</div>
         <h2>Slideshows</h2>

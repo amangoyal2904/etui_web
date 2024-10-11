@@ -24,7 +24,7 @@ export default function Explainers({ data, title }) {
 
   return (
     <>
-      <section className="explainers secBox">
+      <section className="explainers secBox" data-ga-impression={`Subscriber Homepage#Editor Pick widget impression widget impression#`}>
         <h2>{title || ""}</h2>
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
         <div className="slider embla" ref={emblaRef}>

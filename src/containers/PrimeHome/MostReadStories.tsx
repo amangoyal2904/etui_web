@@ -33,7 +33,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
     
   return (
     <>
-        <div id="trending" className="mostReadStories">
+        <div id="trending" className="mostReadStories" data-ga-impression={`Subscriber Homepage#Trending stories widget impression#`}>
             <div className='mostReadStoriesWrp'>
                 <div className="leftDiv font_faus">
                     <span className="subSprite arrow"></span>

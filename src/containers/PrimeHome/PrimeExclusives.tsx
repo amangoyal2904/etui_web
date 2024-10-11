@@ -13,7 +13,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
 
   return (
     <>
-      <div className={`primeExclusives ${focusArea}`}>
+      <div className={`primeExclusives ${focusArea}`} data-ga-impression={`Subscriber Homepage#ET prime widget impression#`}>
         { focusArea == 'market' ? <h2 className="title"><PrimeIcon /> {title}</h2> : <><HeadingWithRightArrow title={title} /> <span className="title"></span> </> }
         <div className="grid">
           <div className="col first">            

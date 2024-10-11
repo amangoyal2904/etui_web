@@ -12,7 +12,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
   
   return (
     <>
-      <div className={`investmentIdeas ${focusArea}`}>
+      <div className={`investmentIdeas ${focusArea}`} data-ga-impression={`Subscriber Homepage#ET investmentIdeas widget impression#`}>
         {
           focusArea == 'market' && <>
             <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/>

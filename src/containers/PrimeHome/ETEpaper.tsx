@@ -19,7 +19,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
 
   return (
     <>
-      <div className={`etEPaper ${focusArea} ${dayName}`}>
+      <div className={`etEPaper ${focusArea} ${dayName}`} data-ga-impression={`Subscriber Homepage#ET prime widget impression#`} >
         { focusArea === "news" && <Separator /> }
         { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title={`ET ePaper`} />

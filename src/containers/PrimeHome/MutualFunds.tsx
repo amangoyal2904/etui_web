@@ -6,7 +6,7 @@ import TopMFDiscover from './TopMFDiscover'
 export default function MutualFunds({ title, data, isDev }) {  
   return (
     <>
-    <section className="politics">
+    <section className="politics" data-ga-impression={`Subscriber Homepage#Mutual Funds widget impression#`}>
       <h2><a href="">{title}</a></h2>
       <div className='mfWrap'>
         <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds"}} />

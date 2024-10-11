@@ -5,7 +5,7 @@ import CryptoRhs from './CryptoRhs';
 export default function CryptocurrencyNews({ title, data, dataTv, dataExpert, titleTv, titleExpert, isDev }) {  
   return (
     <>
-    <section className="politics">
+    <section className="politics" data-ga-impression={`Subscriber Homepage#Cryptocurrency News widget impression#`}>
       <h2><a href="">{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Cryptocurrency News"}} />
       <CryptoRhs dataTv={dataTv} dataExpert={dataExpert} titleTv={titleTv} titleExpert = {titleExpert} isDev={isDev} />
