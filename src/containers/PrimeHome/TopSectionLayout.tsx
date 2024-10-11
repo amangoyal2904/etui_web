@@ -26,7 +26,6 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   const marketsTopNews  = searchResult?.find(item => item?.name === "markets_top_news") || {};
-  alert("hh")
   // console.log("topNews", searchResult);
   return (
     <>
