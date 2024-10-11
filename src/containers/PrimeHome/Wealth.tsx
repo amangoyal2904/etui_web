@@ -4,9 +4,7 @@ import TextImageMiddile from 'components/TextImageMiddile'
 import WealthWebstory from 'components/WealthWebstory';
 import { ET_WEB_URL } from "../../utils/common";
 
-export default function Wealth({ title, data, wealthslideshow}) {  
-  
-  const slideData = data.slice(0,5);
+export default function Wealth({ title, data, wealthslideshow, wealthWebStories }) {    
   return (
     <>
     <section className="wealth">
@@ -21,7 +19,7 @@ export default function Wealth({ title, data, wealthslideshow}) {
             <TextImageMiddile data={wealthslideshow.data || []} heading={wealthslideshow.title || ""} />
           </div>
           <div className="third">
-            <WealthWebstory data={slideData} heading="Web Stories"/>
+            <WealthWebstory data={wealthWebStories.data || []} heading={wealthWebStories.title || ""} />
           </div>
           <div className="cals_wrap">
             <h2 className="cals_heading">Tools & Calculators</h2>
@@ -182,7 +180,7 @@ export default function Wealth({ title, data, wealthslideshow}) {
             } 
             .tc_list+.tc_list {margin-left: 18px;}
             .subSprite {
-              background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+              background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
               display: inline-block;
               background-size: 475px;
             }

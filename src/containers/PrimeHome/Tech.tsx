@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import OneImgTwoColsNewsLayout from "./OneImgTwoColsNewsLayout";
 import MoreFromLink from "./MoreFromLink";
 import SectionHeaderWithNewsletter from "./SectionHeaderWithNewsletter";
-import { ET_WEB_URL } from "../../utils/common";
+import { ET_WAP_URL, ET_WEB_URL } from "../../utils/common";
+import { changeImageWidthHeight } from "utils";
+import { dateFormat } from "utils/utils";
 
 export default function Tech({ title, data, newsLetterData }) {
   const [niftyITData, setNiftyITData] = useState(null);
@@ -109,36 +111,6 @@ export default function Tech({ title, data, newsLetterData }) {
     </>
   );
 }
-function dateFormat(
-  date: string,
-  includeTime: boolean = false,
-  timePosition: "left" | "right" = "right",
-  monthFormat: "short" | "long" = "short"
-): string {
-  const parsedDate = new Date(date);
-  const day = parsedDate.getDate();
-  const month = parsedDate.toLocaleString("en-US", { month: monthFormat });
-  const year = parsedDate.getFullYear();
-  let formattedDate = `${day} ${month}, ${year}`;
-
-  // Calling dateFormat with time on the right (default) ---> {dateFormat(timestamp, true)}
-  // Calling dateFormat with time on the left ---> {dateFormat(timestamp, true, 'left')}
-  // Calling dateFormat with full month name ---> {dateFormat(timestamp, false, 'right', 'long')}
-
-  if (includeTime) {
-    const hours = parsedDate.getHours();
-    const minutes = parsedDate.getMinutes();
-    const formattedTime = `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
-
-    if (timePosition === "left") {
-      formattedDate = `${formattedTime} | ${formattedDate}`;
-    } else {
-      formattedDate = `  ${formattedDate} | ${formattedTime}`;
-    }
-  }
-
-  return formattedDate;
-}
 
 function NewsLetters({ newsLetterData }) {
   return (
@@ -153,12 +125,12 @@ function NewsLetters({ newsLetterData }) {
         <div className="newsletterList">
           {newsLetterData?.map((item, index) => (
             <div className="newsletterBox" key={`newsLetter_${index}`}>
-              <h4 className="publishDate">Published on {dateFormat(item.insertdate)}</h4>
-              <a className="nListTitle" href={item?.url} target="_blank" title={item.title}>
+              <h4 className="publishDate">Published on {dateFormat(item.date, "%d %MMM, %Y")}</h4>
+              <a className="nListTitle" target="_blank" title={item.title} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
                 {item.title}
               </a>
-              <a className="nListImgBox" href={item.url} target="_blank" title={item.title}>
-                <img height="191" width="255" src={item.img} className="lazy" alt={item.title} />
+              <a className="nListImgBox" target="_blank" title={item.title} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+                <img height="191" width="255" className="lazy" alt={item.title} src={changeImageWidthHeight({ imageUrl: item.img, desiredWidth: 255, desiredHeight: 191 })} />
               </a>
             </div>
           ))}
@@ -232,7 +204,7 @@ function MarketChange({ niftyITData }) {
   return <>
     <div className="marketChangeMain">
       <h3 className="marketChangeTitle">{compnData.indexName}</h3>
-      <h4 className="currDateTime">{dateFormat(compnData.dateTime, true, 'left', 'long')}</h4>
+      <h4 className="currDateTime">{dateFormat(compnData.dateTime, "%h:%m | %d %MM %Y")}</h4>
       <h5 className="currDataBox">
         <span className="currVal">{compnData.currentIndexValue}</span>
         <span className={`changeVal ${compnData.perChange > 0 ? 'up' : 'down'}`}>

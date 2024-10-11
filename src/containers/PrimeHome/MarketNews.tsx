@@ -147,7 +147,7 @@ function Podcast({ podcastData }) {
           cursor: pointer;
 
           .iconListen {
-            background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+            background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
             width: 13px;
             height: 12px;
             margin-right: 5px;

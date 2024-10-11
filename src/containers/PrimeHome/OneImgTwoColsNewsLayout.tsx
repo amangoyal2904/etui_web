@@ -1,6 +1,8 @@
 import React from 'react'
 import MoreFromLink from './MoreFromLink'
 import RenderText from 'components/RenderText'
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common'
+import { changeImageWidthHeight } from 'utils'
 
 export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: ""} }) {
   const first = data[0]
@@ -10,15 +12,15 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: 
     <>
       <div className="wrap">
         <div className="first">
-          <a href={first?.url}>
-            <img src={first?.img} alt={first?.title} width={335} height={291} />
+          <a href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
+            <img alt={first?.title} width={335} height={291} src={changeImageWidthHeight({imageUrl: first?.img, desiredWidth: 335, desiredHeight: 291, quality: 100})} />
             <h3><RenderText text={first?.title} /> </h3>
           </a>
           <p>{first?.synopsis}</p>
         </div>
         <div className="rest">
           {rest.map((item, index) => (
-            <a href={item?.url} key={index}>
+            <a href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" key={index}>
               <RenderText text={item?.title} />
             </a>
           ))}
