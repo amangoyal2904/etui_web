@@ -11,7 +11,7 @@ export default function MoreFromLink({ target = "_blank", href, moreText = "More
         .more {
           text-align: right;
           a {            
-            color: #ed193b;
+            color: #ed193b !important;
             font-family: 'Montserrat', sans-serif !important;
             border: 0;            
             margin-top: 10px;

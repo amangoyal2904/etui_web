@@ -1,33 +1,23 @@
 import PanacheSlideshow from "components/PanacheSlideshow";
 import React from "react";
+import { changeImageWidthHeight } from "utils";
+import { ET_WAP_URL, ET_WEB_URL } from "utils/common";
+import MoreFromLink from "./MoreFromLink";
 
-export default function Panache({ title, data }) {
-  function changeFirstImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
-    const newUrl = imageUrl
-      ?.replace(/width-\d+/g, `width-${desiredWidth}`)
-      .replace(/height-\d+/g, `height-${desiredHeight}`);
-
-    if (desiredResizeMode) {
-      return newUrl?.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
-    }
-
-    return newUrl;
-  }
-
+export default function Panache({ title, data, panacheVideosSlideshows }) {
   const first = data?.[0];
   const secondThird = data?.slice(1, 3);
   const rest = data?.slice(3);
-  const slideshowData = data.slice(0, 2);
 
   return (
     <>
       <section className="panache secBox">
         <h2>{title}</h2>
         <div className="flex Pleft">
-          <a href={first?.url} className="firstBox">
+          <a className="firstBox" href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
             <figure>
               <img
-                src={changeFirstImageWidthHeight(first?.img, 335, 507, 6)}
+                src={changeImageWidthHeight({imageUrl: first?.img, desiredWidth: 335, desiredHeight: 507, desiredResizeMode: 6, quality: 100})}
                 alt={first?.title}
                 width={335}
                 height={507}
@@ -41,10 +31,10 @@ export default function Panache({ title, data }) {
           <div className="secondThird">
             {secondThird?.map((item, index) => {
               return (
-                <a key={index} href={item?.url}>
+                <a key={index} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
                   {item?.title}
                   <img
-                    src={changeFirstImageWidthHeight(item?.img, 255, 162, 4)}
+                    src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 255, desiredHeight: 162})}
                     alt={item?.title}
                     width={255}
                     height={162}
@@ -52,16 +42,16 @@ export default function Panache({ title, data }) {
                   />
                 </a>
               );
-            })}
+            })}                        
           </div>
 
           <div className="rest">
             {rest?.map((item, index) => {
               return (
-                <a key={index} href={item?.url}>
+                <a key={index} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
                   <span>{item?.title}</span>
                   <img
-                    src={changeFirstImageWidthHeight(item?.img, 70, 54, 4)}
+                    src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 70, desiredHeight: 54})}
                     alt={item?.title}
                     width={70}
                     height={54}
@@ -70,10 +60,11 @@ export default function Panache({ title, data }) {
                 </a>
               );
             })}
+            <MoreFromLink href="/panache" appendText="Pananche" />
           </div>
         </div>
         <div className="third">
-          <PanacheSlideshow data={slideshowData} heading="Videos & Slideshows" />
+          <PanacheSlideshow data={panacheVideosSlideshows} heading="Videos & Slideshows" />
         </div>
       </section>
       <style jsx>{`
@@ -158,6 +149,11 @@ export default function Panache({ title, data }) {
             width: 275px;
             display: inline-block;
             vertical-align: top;
+          }
+          a {
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       `}</style>

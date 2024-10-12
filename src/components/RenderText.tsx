@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-export default function RenderText({ text }) {
+export default function RenderText({ text = "" }) {
   
   function renderText(text) {
     
