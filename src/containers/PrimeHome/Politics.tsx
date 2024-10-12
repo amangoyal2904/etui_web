@@ -4,8 +4,8 @@ import TextImageMiddile from 'components/TextImageMiddile';
 import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
 export default function Politics({ title, data }) {  
-  const politicsNews = data.slice(0,9);
-  const politicsInbrif = data.slice(14,19);
+  const politicsNews = data.slice(0, 9);
+  const politicsInbrif = data.slice(15, 20);
   return (
     <>
     <section className="politics">

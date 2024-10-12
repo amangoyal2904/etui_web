@@ -4,15 +4,15 @@ import TextImageMiddile from 'components/TextImageMiddile';
 import MarketGainers from 'components/RiseGainers';
 import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
-export default function Rise({ title, data, isDev }) { 
-  const smallBizMiddle = data.slice(1,6);
+export default function Rise({ title, data, isDev, popularInSmallBiz }) { 
+  
   return (
     <>
     <section className="rise">
       <SectionHeaderWithNewsletter url="/rise" title="Rise"/>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} />
       <div className="second">
-      <TextImageMiddile data={smallBizMiddle} heading="Popular in Small Biz"/>
+      <TextImageMiddile data={popularInSmallBiz?.data || []} heading="Popular in Small Biz"/>
       </div>
       <div className="third">
         <MarketGainers isDev={isDev} />

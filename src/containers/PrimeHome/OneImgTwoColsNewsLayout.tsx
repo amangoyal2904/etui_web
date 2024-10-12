@@ -42,6 +42,7 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: 
             font-weight: 600;
             line-height: 1.18;
             margin-top: 6px;
+            font-family: 'Faustina', serif;
           }
           p {            
             font-size: 14px;
