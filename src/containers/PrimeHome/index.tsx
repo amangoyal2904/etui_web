@@ -36,6 +36,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   const slideshows = searchResult?.find(item => item?.name === "slideshows") || {};
   const webStories = searchResult?.find(item => item?.name === "web_stories") || {};
   const panache = searchResult?.find(item => item?.name === "panache") || {};
+  const panacheVideosSlideshows = searchResult?.find(item => item?.name === "panache_videos_slideshow") || {};
   const explainers = searchResult?.find(item => item?.name === "explainers") || {};
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
@@ -83,7 +84,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
       <Politics data={politics?.data || []} title={politics?.title || ""} />
       <Slideshows data={slideshows?.data || []} title={slideshows?.title || ""} />
       <WebStories data={webStories?.data || []} title={webStories?.title || ""} />
-      <Panache data={panache?.data || []} title={panache?.title || ""} />
+      <Panache data={panache?.data || []} title={panache?.title || ""} panacheVideosSlideshows={panacheVideosSlideshows} />
       <Explainers data={explainers?.data || []} title={explainers?.title || ""} />
       <MoreFromEconomicTimes data={moreFromeEconomicTimes} />
       <style jsx global>{`
