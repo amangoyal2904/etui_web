@@ -4,17 +4,24 @@ import LiveIcon from 'components/Icons/LiveIcon'
 import MoreFromLink from './MoreFromLink'
 import { ET_WEB_URL } from 'utils/common'
 import { dateFormat } from 'utils/utils'
+import { changeImageWidthHeight } from 'utils'
+import RenderText from 'components/RenderText'
 
-export default function MarketNews({ title, data, podcastData }) {  
+export default function MarketNews({ title, data, podcastData, marketExpertViews, marketMoguls, marketLiveblog }) { 
+
+  const liveblogData = [];
+  const expertViewsData = liveblogData.length > 0 ? marketExpertViews.slice(0, 1) : marketExpertViews;
+  const marketMogulsData = liveblogData.length > 0 ? marketMoguls.slice(0, 1) : marketMoguls;
+
   return (
     <>
     <section className="marketNews">
       <h2><a href={`${ET_WEB_URL}/markets`}>{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News", link:"/markets"}}/>
       <div className="second">
-        <LiveBlog />
-        <ExpertViews />
-        <MarketMoguls />
+        { liveblogData.length > 0 && <LiveBlog data={marketLiveblog} /> }
+        <ExpertViews data={expertViewsData} />
+        <MarketMoguls data={marketMogulsData} />
       </div>
       <div className="third">
         <Podcast podcastData={podcastData}/>
@@ -409,7 +416,7 @@ function MyWatchlist() {
   </>;
 }
 
-function LiveBlog() {
+function LiveBlog({ data }) {
 
   return <>
     <div className="liveblog">
@@ -480,28 +487,30 @@ function LiveBlog() {
   </>;
 }
 
-function ExpertViews() {
+function ExpertViews({ data }) {  
 
   return <>
     <div className="expertViews">
       <div className="title">
         <a className="title" href={`${ET_WEB_URL}/markets/expert-views/articlelist/50649960.cms`} data-ga-onclick="Title - Expert Views - href" target="_blank">Expert Views</a>
       </div>
-      <div className="content">
-        <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg"  />
+      {data.map((item, index) => (
+      <div className="content" key={`expertViews_content_key_${index}`}>
+        <a href={item?.url} target="_blank">
+          <img width="56" height="56" alt={item?.title || ""} src={changeImageWidthHeight({imageUrl: item?.img, desiredHeight: 56, desiredWidth: 56})} />
+        </a>
         
         <span className="right">
-          <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href={`${ET_WEB_URL}/markets/expert-view/will-nbfcs-and-banks-lead-indian-markets-next-rally-hemang-jani-answers/articleshow/113479290.cms`}>Will NBFCs &amp; banks lead the next rally?</a>
-          <span className="author">Hemang Jani</span>
+          <a href={item?.url} target="_blank"><RenderText text={item?.title} /></a>
+          <span className="author">{item?.who}</span>
         </span>
-      </div>
+      </div>))}
       <MoreFromLink href="/markets/expert-views/articlelist/50649960.cms" appendText="Expert Views" moreText="More" />
     </div>
     <style jsx>{`
       .expertViews {
         border-top: 2px solid #000;
-        padding-top: 10px;
-        margin-top: 16px;
+        padding-top: 10px;        
 
         .content {
           display: inline-flex;
@@ -509,13 +518,22 @@ function ExpertViews() {
           border-bottom: 1px solid #ddc2bb;
           padding-bottom: 10px;
           margin-bottom: 10px;
+
+          a {
+            flex-shrink: 0;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
           
           .author {
             font-family: Montserrat;
             font-size: 12px;
             font-weight: 700;
             line-height: 1.67;
-            display: block;            
+            display: block;   
+            margin-top: 5px;         
           }
         }
       }
@@ -527,6 +545,10 @@ function ExpertViews() {
           font-size: 18px;
           font-weight: 700;          
           margin-bottom: 5px;
+
+          &:hover {
+            text-decoration: underline;
+          }
 
           &:after {
             content: '';
@@ -547,29 +569,35 @@ function ExpertViews() {
   </>;
 }
 
-function MarketMoguls() {
+function MarketMoguls({ data }) {
   
     return <>
       <div className="marketMoguls">
         <div className="title">
           <a className="title" href={`${ET_WEB_URL}/markets/market-moguls/articlelist/50649959.cms`} data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
         </div>
-        <div className="content">
-          <img width="56" height="56" alt="Will NBFCs &amp; banks lead the next rally?" className="" src="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" data-original="https://img.etimg.com/thumb/msid-113479290,width-155,height-116,imglength-119804,quality-100/will-nbfcs-amp-banks-lead-the-next-rally.jpg" />
-          
-          <span className="right">
-            <span className="author">Ajit Menon</span>
-            <span className="dib">CEO, PGIM India Asset Management</span>
-            <a data-ga-onclick="Market Moguls - 1 - href" target="_blank" title="The gravity of equity markets: Rationality, boom, and defiance" href={`${ET_WEB_URL}/markets/stocks/news/the-gravity-of-equity-markets-rationality-boom-and-defiance/articleshow/113390420.cms`}>The gravity of equity markets: Rationality, boom, and defiance</a>
-          </span>
-        </div>
+        {data.map((item, index) => {
+          const author = item?.authors?.[0] || {};
+          return (
+            <div className="content" key={`marketMoguls_content_key_${index}`}>
+              <a href={item?.url} target="_blank">
+                <img width="56" height="56" alt={author?.title}  src={changeImageWidthHeight({imageUrl: author?.img, desiredHeight: 56, desiredWidth: 56})} />              
+              </a>
+              <span className="right">
+                <a href={author.url || ""} className="author" target="_blank">{author?.title || ""}</a>
+                <span className="dib">{""}</span>
+                <a target="_blank" href={item?.url}><RenderText text={item?.title} /></a>
+              </span>
+            </div>
+          )
+        })}
         <MoreFromLink href="/markets/market-moguls/articlelist/50649959.cms" appendText="Market Moguls" moreText="More" />
       </div>
       <style jsx>{`
         .marketMoguls {
           border-top: 2px solid #000;
           padding-top: 10px;
-          margin-top: 16px;
+          margin-top: 20px;
   
           .content {
             display: inline-flex;
@@ -577,6 +605,16 @@ function MarketMoguls() {
             border-bottom: 1px solid #ddc2bb;
             padding-bottom: 10px;
             margin-bottom: 10px;
+
+            > a {
+              flex-shrink: 0;
+            }
+
+            a {
+              &:hover {
+                text-decoration: underline;
+              }
+            }
             
             .author {
               font-family: Montserrat;
@@ -604,6 +642,10 @@ function MarketMoguls() {
             font-size: 18px;
             font-weight: 700;          
             margin-bottom: 5px;
+
+            &:hover {
+              text-decoration: underline;
+            }
   
             &:after {
               content: '';
