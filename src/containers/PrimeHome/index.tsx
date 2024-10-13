@@ -21,6 +21,9 @@ import { useStateContext } from "store/StateContext";
 
 function PrimeHome({ searchResult, isDev, ssoid}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
+  const marketExpertViews = searchResult?.find(item => item?.name === "market_expert_views") || {};
+  const marketLiveblog = searchResult?.find(item => item?.name === "market_liveblog") || {};
+  const marketMoguls = searchResult?.find(item => item?.name === "market_moguls") || {};
   const marketPodcastData = searchResult?.find(item => item?.name === "market_podcast") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
@@ -42,8 +45,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
-  const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
-  // console.log("explainers", explainers);
+  const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};  
 
   const { state, dispatch } = useStateContext();
   const { isLogin } = state.login;
@@ -55,26 +57,20 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
         isPink: true
       },
     });
-
   }, []);
 
-  useEffect(() => {
-    console.log("primehome isLogin---", isLogin);
-    const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");
-    console.log("primehome isLogin---", isLogin, devCheck);
+  useEffect(() => {    
+    const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");    
     if(isLogin != null && !isLogin && !devCheck){
       location.href = "https://etdev8243.indiatimes.com/"
-    }
-    
+    }    
   }, [isLogin]);
 
   return (
     <>
       <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid || ssoid}/>
-      <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
-      
-      
-      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} />
+      <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />          
+      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} marketExpertViews={marketExpertViews?.data || []} marketMoguls={marketMoguls?.data || []} marketLiveblog={marketLiveblog?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
       <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
       <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow} wealthWebStories={wealthWebStories} />
