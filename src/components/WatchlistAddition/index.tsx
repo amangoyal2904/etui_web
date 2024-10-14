@@ -13,14 +13,15 @@ const WatchlistAddition = ({
   customStyle,
   customeFun,
 }: any) => {
-  const { state } = useStateContext();
+  const { state, dispatch } = useStateContext();
   const { isLogin, ssoReady } = state.login;
+  const { watchlist } = state.watchlistStatus;
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [isWatchListAdded, setIsWatchListAdded] = useState(false);
 
   const fetchWatchListStocks = useCallback(async () => {
     try {
-      if (typeof window.watchListApiHitStatus === 'undefined' || window.watchListApiHitStatus === 'failed') {
+      if ((typeof window.watchListApiHitStatus === 'undefined' || window.watchListApiHitStatus === 'failed') && isLogin) {
         window.watchListApiHitStatus = 'hit';
         const data = await fetchAllWatchListData(2, 11);
         window.watchListApiHitStatus = 'success';
@@ -30,13 +31,13 @@ const WatchlistAddition = ({
         })).filter(Boolean);
 
         if (watchlistArr.length > 0) {
-          window.watchListApiRes = watchlistArr;
-          const watchListApiStatusForAll = new Event("watchListApiStatusForAll");
-          document.dispatchEvent(watchListApiStatusForAll);
+          dispatch({
+            type: "UPDATE_MSID",
+            payload: {
+              watchlist: watchlistArr,
+            },
+          });
         }
-      }else if(window.watchListApiHitStatus === 'success' && window.watchListApiRes.length > 0){
-        const watchListApiStatusForAll = new Event("watchListApiStatusForAll");
-        document.dispatchEvent(watchListApiStatusForAll);
       }
     } catch (error) {
       console.error("Error fetching watchlist stocks:", error);
@@ -103,7 +104,7 @@ const WatchlistAddition = ({
 
       const addWatchlistResAPI = await saveStockInWatchList(followData);
       if (addWatchlistResAPI?.status === "success") {
-        window.watchListApiRes =
+        const newWatchList =
           action === 1
             ? [
                 ...window.watchListApiRes,
@@ -128,7 +129,12 @@ const WatchlistAddition = ({
             </button>
           </span>
         ));
-        setIsWatchListAdded(action === 1);
+        dispatch({
+          type: "UPDATE_MSID",
+          payload: {
+            watchlist: newWatchList,
+          },
+        });
       } else {
         throw new Error("Failed to update watchlist");
       }
@@ -153,9 +159,9 @@ const WatchlistAddition = ({
   const handleWatchListClick = useCallback(() => {
     if (isLogin) {
       const watchlistStatus =
-        typeof companyId !== "undefined" &&
-        window.watchListApiRes.length > 0 &&
-        window.watchListApiRes?.some(
+        typeof companyId != "undefined" &&
+        !!watchlist &&
+        watchlist.some(
           (item: any) =>
             item.companyId === companyId?.toString() &&
             item.companyType === companyType,
@@ -169,29 +175,20 @@ const WatchlistAddition = ({
     }
   }, [addStockInWatchlistHandler, companyId, companyType, isLogin]);
 
-  const checkWatchListStatus = useCallback(() => {
-    const apiRes = window.watchListApiRes || [];
-    const checkWatchList =
-      typeof companyId !== "undefined" &&
-      apiRes.length > 0 &&
-      apiRes.some(
-        (item: any) =>
-          item?.companyId === companyId?.toString() &&
-          item?.companyType === companyType,
-      );
-
-    if (checkWatchList) setIsWatchListAdded(true);
-  }, [companyId, companyType]);
+  
 
   useEffect(() => {
-    console.log("test watchlist -----")
-    document.addEventListener("watchListApiStatusForAll", checkWatchListStatus);
     fetchWatchListStocks();
+  }, [isLogin]);
 
-    return () => {
-      document.removeEventListener("watchListApiStatusForAll", checkWatchListStatus);
-    };
-  }, [fetchWatchListStocks, checkWatchListStatus, isLogin]);
+  const watchlistCheck =
+  typeof companyId != "undefined" &&
+  !!watchlist &&
+  watchlist.some(
+    (item: any) =>
+      item?.companyId === companyId?.toString() &&
+      item?.companyType === companyType,
+  );
 
   return (
     <>
@@ -203,7 +200,7 @@ const WatchlistAddition = ({
           title={
             loadingStatus
               ? ""
-              : isWatchListAdded
+              : watchlistCheck
               ? "Added to watchlist"
               : "Add to watchlist"
           }
@@ -212,7 +209,7 @@ const WatchlistAddition = ({
             <div className={styles.loading}>
               <div className={styles.loader}></div>
             </div>
-          ) : isWatchListAdded ? (
+          ) : watchlistCheck ? (
             <span className={styles.tickIcon}></span>
           ) : (
             <span className={styles.plusIcon}></span>

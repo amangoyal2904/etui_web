@@ -16,6 +16,7 @@ import MarketMood from './MarketMood';
 import LiveStream from './LiveStream';
 import Opinion from "./Opinion";
 import NewsByIndustry from "./NewsByIndustry";
+import MyWatchListDashboard from './MyWatchListDashboard';
 
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const [focusArea, setFocusArea] = React.useState("market");
@@ -63,6 +64,8 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                   <Separator />
                   <IndicesWidget isDev={isDev} focusArea={focusArea}/>
                   <Separator />
+                  <MyWatchListDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
+                  <Separator />
                   <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea}/>
                   <Separator />
                   <StockRecos focusArea={focusArea}/>
@@ -100,6 +103,8 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <MarketsTopNews focusArea={focusArea} data={marketsTopNews?.data || []}/>
             <Separator />
             <IndicesWidget isDev={isDev} focusArea={focusArea}/>
+            <Separator />
+            <MyWatchListDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
             <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
