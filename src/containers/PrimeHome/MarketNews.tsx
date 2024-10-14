@@ -585,7 +585,7 @@ function MarketMoguls({ data }) {
               </a>
               <span className="right">
                 <a href={author.url || ""} className="author" target="_blank">{author?.title || ""}</a>
-                <span className="dib">{""}</span>
+                <span className="dib">{author?.designation}, {author?.organization}</span>
                 <a target="_blank" href={item?.url}><RenderText text={item?.title} /></a>
               </span>
             </div>

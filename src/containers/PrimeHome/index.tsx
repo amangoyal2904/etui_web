@@ -113,6 +113,16 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
           right: 10px;
           top: 10px;
         }
+
+        @media (max-width: 1260px) {
+          .layout1260 {
+            padding: 0 20px;
+          }
+
+          .isprimeuser .pageHolder {
+            width: 1260px;
+          }
+        }
       `}</style>
     </>
   )

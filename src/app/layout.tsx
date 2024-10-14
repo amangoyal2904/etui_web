@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import "../styles/common.scss";
 import { Metadata } from 'next';
+// import type { Viewport } from 'next'
 import { StateProvider } from "../store/StateContext";
 import dynamic from "next/dynamic";
 import React from 'react';
@@ -44,4 +45,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </body>
     </html>
   );
+}
+
+//viewport to not make responsive
+export const viewport = {
+  width: "device-width",
+  initialScale: 1
 }
