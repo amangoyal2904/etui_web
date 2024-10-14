@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import HeadingWithRightArrow from '../HeadingWithRightArrow';
-import { getCustomViewTable } from "./MarketDashboadFetch";
-import styles from './styles.module.scss';
+import { getCustomViewTable } from "../DashboardTable/DashboadFetch";
 import {
   fetchFilters,
   fetchSelectedFilter,
   getAllShortUrls
 } from "../../../utils";
 
-import MarketDashBoardTable from "./MarketDashboardTable";
+import DashBoardTable from "../DashboardTable/DashboardTable";
 
 
 
@@ -28,42 +26,42 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
       key: "gainers",
       api: "https://etmarketsapis.indiatimes.com/ET_Stats/gainers",
       cta: "View All Top Gainers",
-      viewId: 6925
+      viewId: isDev ? 239 : 6925
     },
     {
       label: "Top<br />Losers",
       key: "losers",
       api: "https://etmarketsapis.indiatimes.com/ET_Stats/losers",
       cta: "View All Top Losers",
-      viewId: 6926,
+      viewId: isDev ? 239 : 6925 //6926,
     },
     {
       label: "Active by<br />Volume",
       key: "most-active-volume",
       api: "https://etmarketsapis.indiatimes.com/ET_Stats/moversvolume",
       cta: "View All Active by Volume",
-      viewId: 6927,
+      viewId: isDev ? 239 : 6925 //6927,
     },
     {
       label: "Active by<br />Value",
       key: "most-active-value",
       api: "https://etmarketsapis.indiatimes.com/ET_Stats/moversvalue",
       cta: "View All Active by Value",
-      viewId: 6928,
+      viewId: isDev ? 239 : 6925 //6928,
     },
     {
       label: "52 Week<br />High",
       key: "new-52-week-high",
       api: "https://etmarketsapis.indiatimes.com/ET_Stats/new52weekshigh",
       cta: "View All 52 Week High",
-      viewId: 6931,
+      viewId: isDev ? 239 : 6925 //6931,
     },
     {
       label: "52 Week<br />Low",
       key: "new-52-week-low",
       api: "https://etmarketsapis.indiatimes.com/ET_Stats/new52weekslow",
       cta: "View All 52 Week Low",
-      viewId: 6932,
+      viewId: isDev ? 239 : 6925 //6932,
       
     },
   ];
@@ -122,7 +120,7 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
 
   return (
     <>
-      <MarketDashBoardTable
+      <DashBoardTable
         selectedFilter={data.selectedFilter}
         allFilters={data.allFilters}
         bodyParams={bodyParams}
@@ -133,6 +131,7 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
         focusArea={focusArea}
         ssoid={ssoid}
         APP_ENV={APP_ENV}
+        wdName={"Markets Dashboard"}
       />
     </>
   )

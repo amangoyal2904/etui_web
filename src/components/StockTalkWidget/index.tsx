@@ -115,7 +115,8 @@ export default function StockTalkWidget() {
             "pageSize":5
         };
         
-        const apiUrl = window.isDev ? "http://localhost:3002/api/livestream" : (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
+        const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
+        //const apiUrl = "http://localhost:3002/api/livestream";
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
