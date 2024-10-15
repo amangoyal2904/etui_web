@@ -165,8 +165,8 @@ const WatchlistAddition = ({
         !!watchlist &&
         watchlist.some(
           (item: any) =>
-            item.companyId === companyId?.toString() &&
-            item.companyType === companyType,
+            item.companyId == companyId?.toString() &&
+            item.companyType == companyType,
         )
           ? 0
           : 1;
@@ -180,7 +180,7 @@ const WatchlistAddition = ({
   
 
   useEffect(() => {
-    fetchWatchListStocks();
+    if(isLogin) fetchWatchListStocks();
   }, [isLogin]);
 
   const watchlistCheck =
@@ -188,8 +188,8 @@ const WatchlistAddition = ({
   !!watchlist &&
   watchlist.some(
     (item: any) =>
-      item?.companyId === companyId?.toString() &&
-      item?.companyType === companyType,
+      item?.companyId == companyId?.toString() &&
+      item?.companyType == companyType,
   );
 
   return (
