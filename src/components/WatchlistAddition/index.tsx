@@ -30,6 +30,8 @@ const WatchlistAddition = ({
           companyType: entry.companyType || entry.id,
         })).filter(Boolean);
 
+        console.log("watchlistArr ---- ", watchlistArr);
+
         if (watchlistArr.length > 0) {
           dispatch({
             type: "UPDATE_MSID",
@@ -53,7 +55,7 @@ const WatchlistAddition = ({
       //   </span>
       // ));
     }
-  }, []);
+  }, [isLogin]);
 
   const addStockInWatchlistHandler = useCallback((action: any) => {
     const stockDetails = { companyName, companyType, companyId };
