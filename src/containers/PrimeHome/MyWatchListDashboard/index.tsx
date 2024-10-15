@@ -74,7 +74,7 @@ const MyWatchListDashboard = (props) => {
         viewId: tabsData[0].viewId,
         apiType: "gainers",
         ...(duration ? { duration } : {}),
-        filterValue: filter,
+        filterValue: [],
         filterType: 'watchlist',
         sort,
         pagesize,

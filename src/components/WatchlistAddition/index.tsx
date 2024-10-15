@@ -30,6 +30,8 @@ const WatchlistAddition = ({
           companyType: entry.companyType || entry.id,
         })).filter(Boolean);
 
+        console.log("watchlistArr ---- ", watchlistArr);
+
         if (watchlistArr.length > 0) {
           dispatch({
             type: "UPDATE_MSID",
@@ -53,7 +55,7 @@ const WatchlistAddition = ({
       //   </span>
       // ));
     }
-  }, []);
+  }, [isLogin]);
 
   const addStockInWatchlistHandler = useCallback((action: any) => {
     const stockDetails = { companyName, companyType, companyId };
@@ -105,18 +107,18 @@ const WatchlistAddition = ({
       const addWatchlistResAPI = await saveStockInWatchList(followData);
       if (addWatchlistResAPI?.status === "success") {
         const newWatchList =
-          action === 1
+          action == 1
             ? [
-                ...window.watchListApiRes,
+                ...watchlist,
                 {
                   companyId: data?.companyId?.toString(),
                   companyType: data?.companyType,
                 },
               ]
-            : window.watchListApiRes.filter(
+            : watchlist.filter(
                 (item: any) =>
-                  item.companyId !== data?.companyId?.toString() ||
-                  item.companyType !== data?.companyType,
+                  item.companyId != data?.companyId?.toString() ||
+                  item.companyType != data?.companyType,
               );
 
         toast((t) => (
