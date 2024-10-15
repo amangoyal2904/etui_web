@@ -1,14 +1,20 @@
 // @ts-nocheck
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, act } from 'react'
 import HeadingWithRightArrow from '../HeadingWithRightArrow'
 import Tabs from '../Tabs'
 import ViewAllCta from '../ViewAllCta';
 import API_CONFIG from '../../../network/config.json';
 import WatchlistAddition from "components/WatchlistAddition";
+import { ET_WEB_URL } from 'utils/common';
 
 export default function BigBullPortfolio({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const tabs = ["Best Picks", "Recent Deals", "All Investors"];
+  const tabLinks = [
+    "/markets/top-india-investors-portfolio/individual/best-picks",
+    "/markets/top-india-investors-portfolio/individual/recent-transactions",
+    "/markets/top-india-investors-portfolio/individual/all-investors"
+  ]
   const [data, setData]: any = useState([]);
 
   const sliderRef = useRef(null);
@@ -95,7 +101,7 @@ export default function BigBullPortfolio({ focusArea }) {
       sortBy: "3MReturns",
       orderBy: "DESC",
       pageNo: 1,
-      pageSize: 3,
+      pageSize: 5,
     };
 
     fetch(api, {
@@ -120,18 +126,28 @@ export default function BigBullPortfolio({ focusArea }) {
     fetchData(activeTab);
   }, [activeTab]);
 
+  const howMany = focusArea === "news" ? 2 : 5;
+  let portfolios = [];
+  if(activeTab === 0) {
+    portfolios = data?.datainfo?.bestPicksDataInfo?.bestPicksListInfo?.slice(0, howMany);
+  } else if(activeTab === 1) {
+    portfolios = data?.datainfo?.recentDealsInfo?.listRecentDeals?.slice(0, howMany);
+  } else if(activeTab === 2) {
+    portfolios = data?.datainfo?.investorlist?.investorData?.slice(0, howMany);
+  }
+
   return (
     <>
       <div className={`bigbull ${focusArea}`}>
         <HeadingWithRightArrow title="BigBull Portfolio" />
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
         <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
 
         <div className="slider" ref={sliderRef}>
           <div className="cards" ref={innerRef}>
-            {data?.datainfo?.bestPicksDataInfo?.bestPicksListInfo?.map((item, index) => (
+            {portfolios?.map((item, index) => (
               <div key={index} className="card">
                 <div className='comWrp'>                
                   <span className="companyName">{item?.companyName}</span>
@@ -156,9 +172,9 @@ export default function BigBullPortfolio({ focusArea }) {
                   {/* <span className={`addToWatchListIcon`}>&#43;</span> */}
                 </div>
                 <div className="row2">
-                  <div>
+                  <div className={`return3M ${item?.return3M > 0 ? 'up' : 'down'}`}>
                     <span className="title">3M Return</span>
-                    <span className="value">{item?.return3M}</span>
+                    <span className="value">{item?.return3M}%</span>
                   </div>
                   <div>
                     <span className="title">Bull Holdings%</span>
@@ -182,7 +198,7 @@ export default function BigBullPortfolio({ focusArea }) {
             ))}
           </div>
         </div>
-        <ViewAllCta title="Portfolio" url="https://economictimes.indiatimes.com/bigbull-portfolio" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`  
         .news {
@@ -204,6 +220,7 @@ export default function BigBullPortfolio({ focusArea }) {
           flex-direction: column;
           margin-top: 10px;
           margin-bottom: 10px;
+          min-height: 135px;
         }
         .card {
           font-family: Montserrat;
@@ -212,14 +229,25 @@ export default function BigBullPortfolio({ focusArea }) {
           padding: 12px 10px 12px 10px;          
           border-radius: 7px; 
           position: relative;
-          background: #fff;
+          background: #fff;          
 
           .row2 {
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
-            margin-bottom: 10px;
-          }
+            margin-bottom: 10px; 
+
+            > div {
+              padding: 7px;
+            }  
+
+            .value {
+              font-size: 14px;
+              font-weight: 400;
+              display: inline-block;
+              margin-top: 6px;              
+            }        
+          }          
 
           .companyName {            
             font-size: 14px;
@@ -235,6 +263,8 @@ export default function BigBullPortfolio({ focusArea }) {
           .investorRow {
             display: flex;
             gap: 12px;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
 
             img {
               border-radius: 50%;
@@ -253,7 +283,22 @@ export default function BigBullPortfolio({ focusArea }) {
               font-size: 12px;
               font-weight: 600;              
             }
-          }       
+          } 
+
+          .return3M {
+            &.up {
+              background: #EDFFF9;
+              color: #147014;
+
+            }
+            &.down {
+              background: #fef1f3;
+            }
+
+            .value {              
+              font-weight: 700;
+            }
+          }      
         }
 
         .arr {

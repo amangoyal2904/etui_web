@@ -9,7 +9,7 @@ export default function Rise({ title, data, isDev, popularInSmallBiz }) {
   return (
     <>
     <section className="rise">
-      <SectionHeaderWithNewsletter url="/rise" title="Rise"/>
+      <SectionHeaderWithNewsletter url="/rise" title="Rise" sid="5f5a31db80f79664e95679d5" />
       <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} />
       <div className="second">
       <TextImageMiddile data={popularInSmallBiz?.data || []} heading="Popular in Small Biz"/>

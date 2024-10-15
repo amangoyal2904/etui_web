@@ -6,7 +6,7 @@ export default function ViewAllCta({ title, url, isNoBorderRightArrow = false }:
     <>
       {isNoBorderRightArrow ? <>
         <div className="viewAllCta">
-          <a href={url}>View All {title} <RightArrow /></a>
+          <a href={url} target="_blank">View All {title} <RightArrow /></a>
         </div>
         <style jsx>{`
           .viewAllCta {

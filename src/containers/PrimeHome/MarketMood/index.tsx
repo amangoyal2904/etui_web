@@ -4,6 +4,7 @@ import ViewAllCta from '../ViewAllCta';
 import styles from './styles.module.scss';
 import StockFilterNifty from 'components/StockFilterNifty';
 import { fetchFilters, fetchSelectedFilter, getOverviewData } from 'utils';
+import { ET_WEB_URL } from 'utils/common';
 
 export default function MarketMood({ focusArea }) {
   const intFilter = 2371;
@@ -97,7 +98,7 @@ export default function MarketMood({ focusArea }) {
             ))}
           </tbody>
         </table>
-        <ViewAllCta title="View All Stocks" url="https://economictimes.indiatimes.com/market-mood" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title="Stocks" url={`${ET_WEB_URL}${"/markets/stock-market-mood"}`} isNoBorderRightArrow={focusArea === "market"} />
         {showFilter && (
           <StockFilterNifty
             data={data.allFilters}

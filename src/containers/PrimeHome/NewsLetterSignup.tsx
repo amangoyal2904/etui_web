@@ -1,7 +1,7 @@
 import useNewsletterSubscription from "components/useNewsletterSubscription";
 import { useState } from "react";
 
-export default function NewsLetter({ section }) {
+export default function NewsLetterSignup({ section, sid }) {
   const [email, setEmail] = useState('');
   const [subs, setSubs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ export default function NewsLetter({ section }) {
         <p className="sub_text">Subscribe to our { section } Newsletter</p>
         <div className="email_box">
           <input type="email" placeholder="Enter your email address" maxLength={70} value={email} onChange={(e) => setEmail(e.target.value)} />
-          <button onClick={(e) => handleSubscription(e, '5f5a31db80f79664e95679e4')} disabled={isLoading}>{subs ? 'Subscribed' : isLoading ? 'Subscribing...' : 'Subscribe'}</button>
+          <button onClick={(e) => handleSubscription(e, sid)} disabled={isLoading}>{subs ? 'Subscribed' : isLoading ? 'Subscribing...' : 'Subscribe'}</button>
         </div>
       </div>
       <style jsx>{`

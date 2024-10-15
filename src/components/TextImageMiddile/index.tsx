@@ -1,5 +1,6 @@
 import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 import styles from './styles.module.scss';
+import RenderText from 'components/RenderText';
 
 const TextImageMiddile = ({data, heading}) => {    
   return (
@@ -13,7 +14,9 @@ const TextImageMiddile = ({data, heading}) => {
                             <img width="100" height="75" alt={item.title} loading="lazy" src={item.img} />
                             {item.type === "slideshow" && <span className={`${styles.subSprite} ${styles.slideIcon}`}></span> }
                         </a>
-                        <a target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>{item.title}</a>
+                        <a target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+                            <RenderText text={item.title} />
+                        </a>
                     </li>
                 ))}
             </ul>
