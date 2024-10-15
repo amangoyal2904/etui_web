@@ -64,7 +64,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         className="im lazy" />
                                                 </a>
                                                 <div className="info_box">
-                                                    <span>News</span>
+                                                    <span>{item?.parenttitle}</span>
                                                     <a 
                                                         title={item.title}  
                                                         target="_blank" 
