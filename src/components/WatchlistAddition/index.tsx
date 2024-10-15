@@ -19,18 +19,24 @@ const WatchlistAddition = ({
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [isWatchListAdded, setIsWatchListAdded] = useState(false);
 
+   // Debugging: Log the initial state
+   useEffect(() => {
+    console.log("Watchlist state on mount:", watchlist);
+  }, [watchlist]);
+
   const fetchWatchListStocks = useCallback(async () => {
     try {
       if ((typeof window.watchListApiHitStatus === 'undefined' || window.watchListApiHitStatus === 'failed') && isLogin) {
         window.watchListApiHitStatus = 'hit';
         const data = await fetchAllWatchListData(2, 11);
         window.watchListApiHitStatus = 'success';
-        const watchlistArr = (data?.resData || data || []).map((entry: any) => ({
+        let watchlistArr = [];
+        watchlistArr = (data?.resData || data || []).map((entry: any) => ({
           companyId: entry.prefDataVal,
           companyType: entry.companyType || entry.id,
         })).filter(Boolean);
 
-        console.log("watchlistArr ---- ", watchlistArr);
+        console.log("Fetched Watchlist:", watchlistArr);
 
         if (watchlistArr.length > 0) {
           dispatch({
@@ -40,6 +46,8 @@ const WatchlistAddition = ({
             },
           });
         }
+
+        console.log("Fetched Watchlist 2:", watchlist, watchlistArr);
       }
     } catch (error) {
       console.error("Error fetching watchlist stocks:", error);
@@ -77,7 +85,7 @@ const WatchlistAddition = ({
     } catch (error) {
       console.error("Error fetching stock details:", error);
     }
-  }, []);
+  }, [isLogin, dispatch]);
 
   const saveStockInWatchListHandler = useCallback(async (action: any, data: any, type: any) => {
     try {
@@ -106,6 +114,7 @@ const WatchlistAddition = ({
 
       const addWatchlistResAPI = await saveStockInWatchList(followData);
       if (addWatchlistResAPI?.status === "success") {
+        console.log("Fetched Watchlist 3:", watchlist);
         const newWatchList =
           action == 1
             ? [
@@ -137,6 +146,8 @@ const WatchlistAddition = ({
             watchlist: newWatchList,
           },
         });
+
+        console.log("Fetched Watchlist 3:", watchlist, newWatchList);
       } else {
         throw new Error("Failed to update watchlist");
       }
@@ -170,18 +181,20 @@ const WatchlistAddition = ({
         )
           ? 0
           : 1;
+
+      console.log("Fetched Watchlist 4:", watchlist, watchlistStatus);    
       setLoadingStatus(true);
       addStockInWatchlistHandler(watchlistStatus);
     } else {
       initSSOWidget();
     }
-  }, [addStockInWatchlistHandler, companyId, companyType, isLogin]);
+  }, [addStockInWatchlistHandler, companyId, companyType, isLogin, watchlist]);
 
   
 
   useEffect(() => {
     if(isLogin) fetchWatchListStocks();
-  }, [isLogin]);
+  }, [isLogin, fetchWatchListStocks]);
 
   const watchlistCheck =
   typeof companyId != "undefined" &&
