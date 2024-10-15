@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, act } from 'react'
 import HeadingWithRightArrow from '../HeadingWithRightArrow'
 import Tabs from '../Tabs'
 import ViewAllCta from '../ViewAllCta';
@@ -101,7 +101,7 @@ export default function BigBullPortfolio({ focusArea }) {
       sortBy: "3MReturns",
       orderBy: "DESC",
       pageNo: 1,
-      pageSize: 3,
+      pageSize: 5,
     };
 
     fetch(api, {
@@ -126,6 +126,16 @@ export default function BigBullPortfolio({ focusArea }) {
     fetchData(activeTab);
   }, [activeTab]);
 
+  const howMany = focusArea === "news" ? 2 : 5;
+  let portfolios = [];
+  if(activeTab === 0) {
+    portfolios = data?.datainfo?.bestPicksDataInfo?.bestPicksListInfo?.slice(0, howMany);
+  } else if(activeTab === 1) {
+    portfolios = data?.datainfo?.recentDealsInfo?.listRecentDeals?.slice(0, howMany);
+  } else if(activeTab === 2) {
+    portfolios = data?.datainfo?.investorlist?.investorData?.slice(0, howMany);
+  }
+
   return (
     <>
       <div className={`bigbull ${focusArea}`}>
@@ -137,7 +147,7 @@ export default function BigBullPortfolio({ focusArea }) {
 
         <div className="slider" ref={sliderRef}>
           <div className="cards" ref={innerRef}>
-            {data?.datainfo?.bestPicksDataInfo?.bestPicksListInfo?.map((item, index) => (
+            {portfolios?.map((item, index) => (
               <div key={index} className="card">
                 <div className='comWrp'>                
                   <span className="companyName">{item?.companyName}</span>
@@ -162,9 +172,9 @@ export default function BigBullPortfolio({ focusArea }) {
                   {/* <span className={`addToWatchListIcon`}>&#43;</span> */}
                 </div>
                 <div className="row2">
-                  <div>
+                  <div className={`return3M ${item?.return3M > 0 ? 'up' : 'down'}`}>
                     <span className="title">3M Return</span>
-                    <span className="value">{item?.return3M}</span>
+                    <span className="value">{item?.return3M}%</span>
                   </div>
                   <div>
                     <span className="title">Bull Holdings%</span>
@@ -225,8 +235,19 @@ export default function BigBullPortfolio({ focusArea }) {
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
-            margin-bottom: 10px;
-          }
+            margin-bottom: 10px; 
+
+            > div {
+              padding: 7px;
+            }  
+
+            .value {
+              font-size: 14px;
+              font-weight: 400;
+              display: inline-block;
+              margin-top: 6px;              
+            }        
+          }          
 
           .companyName {            
             font-size: 14px;
@@ -242,6 +263,8 @@ export default function BigBullPortfolio({ focusArea }) {
           .investorRow {
             display: flex;
             gap: 12px;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
 
             img {
               border-radius: 50%;
@@ -260,7 +283,22 @@ export default function BigBullPortfolio({ focusArea }) {
               font-size: 12px;
               font-weight: 600;              
             }
-          }       
+          } 
+
+          .return3M {
+            &.up {
+              background: #EDFFF9;
+              color: #147014;
+
+            }
+            &.down {
+              background: #fef1f3;
+            }
+
+            .value {              
+              font-weight: 700;
+            }
+          }      
         }
 
         .arr {
