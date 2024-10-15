@@ -66,6 +66,7 @@ const WatchlistAddition = ({
   }, [isLogin]);
 
   const addStockInWatchlistHandler = useCallback((action: any) => {
+    console.log("Fetched Watchlist 5:", watchlist, action); 
     const stockDetails = { companyName, companyType, companyId };
     const type = 11;
     getMoreDetailsStockWatchList(action, stockDetails, type);
@@ -171,7 +172,7 @@ const WatchlistAddition = ({
 
   const handleWatchListClick = useCallback(() => {
     if (isLogin) {
-      const watchlistStatus =
+      const action =
         typeof companyId != "undefined" &&
         !!watchlist &&
         watchlist.some(
@@ -182,9 +183,9 @@ const WatchlistAddition = ({
           ? 0
           : 1;
 
-      console.log("Fetched Watchlist 4:", watchlist, watchlistStatus);    
+      console.log("Fetched Watchlist 4:", watchlist, action);    
       setLoadingStatus(true);
-      addStockInWatchlistHandler(watchlistStatus);
+      addStockInWatchlistHandler(action);
     } else {
       initSSOWidget();
     }
