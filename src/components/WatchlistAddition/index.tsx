@@ -19,16 +19,24 @@ const WatchlistAddition = ({
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [isWatchListAdded, setIsWatchListAdded] = useState(false);
 
+   // Debugging: Log the initial state
+   useEffect(() => {
+    console.log("Watchlist state on mount:", watchlist);
+  }, [watchlist]);
+
   const fetchWatchListStocks = useCallback(async () => {
     try {
       if ((typeof window.watchListApiHitStatus === 'undefined' || window.watchListApiHitStatus === 'failed') && isLogin) {
         window.watchListApiHitStatus = 'hit';
         const data = await fetchAllWatchListData(2, 11);
         window.watchListApiHitStatus = 'success';
-        const watchlistArr = (data?.resData || data || []).map((entry: any) => ({
+        let watchlistArr = [];
+        watchlistArr = (data?.resData || data || []).map((entry: any) => ({
           companyId: entry.prefDataVal,
           companyType: entry.companyType || entry.id,
         })).filter(Boolean);
+
+        console.log("Fetched Watchlist:", watchlistArr);
 
         if (watchlistArr.length > 0) {
           dispatch({
@@ -38,6 +46,8 @@ const WatchlistAddition = ({
             },
           });
         }
+
+        console.log("Fetched Watchlist 2:", watchlist, watchlistArr);
       }
     } catch (error) {
       console.error("Error fetching watchlist stocks:", error);
@@ -53,9 +63,10 @@ const WatchlistAddition = ({
       //   </span>
       // ));
     }
-  }, []);
+  }, [isLogin]);
 
   const addStockInWatchlistHandler = useCallback((action: any) => {
+    console.log("Fetched Watchlist 5:", watchlist, action); 
     const stockDetails = { companyName, companyType, companyId };
     const type = 11;
     getMoreDetailsStockWatchList(action, stockDetails, type);
@@ -75,7 +86,7 @@ const WatchlistAddition = ({
     } catch (error) {
       console.error("Error fetching stock details:", error);
     }
-  }, []);
+  }, [isLogin, dispatch]);
 
   const saveStockInWatchListHandler = useCallback(async (action: any, data: any, type: any) => {
     try {
@@ -104,19 +115,20 @@ const WatchlistAddition = ({
 
       const addWatchlistResAPI = await saveStockInWatchList(followData);
       if (addWatchlistResAPI?.status === "success") {
+        console.log("Fetched Watchlist 3:", watchlist);
         const newWatchList =
-          action === 1
+          action == 1
             ? [
-                ...window.watchListApiRes,
+                ...watchlist,
                 {
                   companyId: data?.companyId?.toString(),
                   companyType: data?.companyType,
                 },
               ]
-            : window.watchListApiRes.filter(
+            : watchlist.filter(
                 (item: any) =>
-                  item.companyId !== data?.companyId?.toString() ||
-                  item.companyType !== data?.companyType,
+                  item.companyId != data?.companyId?.toString() ||
+                  item.companyType != data?.companyType,
               );
 
         toast((t) => (
@@ -135,6 +147,8 @@ const WatchlistAddition = ({
             watchlist: newWatchList,
           },
         });
+
+        console.log("Fetched Watchlist 3:", watchlist, newWatchList);
       } else {
         throw new Error("Failed to update watchlist");
       }
@@ -158,36 +172,38 @@ const WatchlistAddition = ({
 
   const handleWatchListClick = useCallback(() => {
     if (isLogin) {
-      const watchlistStatus =
+      const action =
         typeof companyId != "undefined" &&
         !!watchlist &&
         watchlist.some(
           (item: any) =>
-            item.companyId === companyId?.toString() &&
-            item.companyType === companyType,
+            item.companyId == companyId?.toString() &&
+            item.companyType == companyType,
         )
           ? 0
           : 1;
+
+      console.log("Fetched Watchlist 4:", watchlist, action);    
       setLoadingStatus(true);
-      addStockInWatchlistHandler(watchlistStatus);
+      addStockInWatchlistHandler(action);
     } else {
       initSSOWidget();
     }
-  }, [addStockInWatchlistHandler, companyId, companyType, isLogin]);
+  }, [addStockInWatchlistHandler, companyId, companyType, isLogin, watchlist]);
 
   
 
   useEffect(() => {
-    fetchWatchListStocks();
-  }, [isLogin]);
+    if(isLogin) fetchWatchListStocks();
+  }, [isLogin, fetchWatchListStocks]);
 
   const watchlistCheck =
   typeof companyId != "undefined" &&
   !!watchlist &&
   watchlist.some(
     (item: any) =>
-      item?.companyId === companyId?.toString() &&
-      item?.companyType === companyType,
+      item?.companyId == companyId?.toString() &&
+      item?.companyType == companyType,
   );
 
   return (
