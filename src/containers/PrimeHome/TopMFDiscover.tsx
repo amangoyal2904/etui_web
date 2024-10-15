@@ -78,6 +78,7 @@ const TopMFDiscover = ({isDev}) => {
         <style jsx>{`
             .mf_screener_widget{
                 margin: 2px 0 0;
+                padding-top: 12px;
 
                 .subSprite{
                     background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Tabs({ tabs = [], activeTab, setActiveTab }: any) {
+export default function Tabs({ tabs = [], activeTab, setActiveTab, focusArea }: any) {
   return (
     <>
-      <div className="tabs">
+      <div className={`tabs ${focusArea}`}>
       {
         tabs.map((tab, index) => (
           <div key={index} className={`${activeTab === index ? 'activeTab' : ''} tab`} onClick={() => setActiveTab(index)}>
@@ -18,7 +18,7 @@ export default function Tabs({ tabs = [], activeTab, setActiveTab }: any) {
           gap: 5px;
           font-size: 10px;
           margin-top: 10px;
-          width: 100%;
+          width: 100%;          
 
           .tab {
             padding: 5px;
@@ -26,8 +26,8 @@ export default function Tabs({ tabs = [], activeTab, setActiveTab }: any) {
             cursor: pointer;
           }
 
-          .activeTab {    
-            background: #003B65;
+          .activeTab {  
+            background: #003B65 !important;              
             color: #fff;
             position: relative;
             padding: 5px 7px;
@@ -44,6 +44,12 @@ export default function Tabs({ tabs = [], activeTab, setActiveTab }: any) {
               left: calc(50% - 5px);
             }
           }
+
+          &.market {
+            .tab {
+              background: #fff;
+            }            
+          }          
         }
       `}</style>
     </>

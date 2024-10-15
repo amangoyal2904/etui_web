@@ -5,10 +5,16 @@ import Tabs from '../Tabs'
 import ViewAllCta from '../ViewAllCta';
 import API_CONFIG from '../../../network/config.json';
 import WatchlistAddition from "components/WatchlistAddition";
+import { ET_WEB_URL } from 'utils/common';
 
 export default function BigBullPortfolio({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const tabs = ["Best Picks", "Recent Deals", "All Investors"];
+  const tabLinks = [
+    "/markets/top-india-investors-portfolio/individual/best-picks",
+    "/markets/top-india-investors-portfolio/individual/recent-transactions",
+    "/markets/top-india-investors-portfolio/individual/all-investors"
+  ]
   const [data, setData]: any = useState([]);
 
   const sliderRef = useRef(null);
@@ -124,7 +130,7 @@ export default function BigBullPortfolio({ focusArea }) {
     <>
       <div className={`bigbull ${focusArea}`}>
         <HeadingWithRightArrow title="BigBull Portfolio" />
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
         <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
@@ -182,7 +188,7 @@ export default function BigBullPortfolio({ focusArea }) {
             ))}
           </div>
         </div>
-        <ViewAllCta title="Portfolio" url="https://economictimes.indiatimes.com/bigbull-portfolio" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`  
         .news {
@@ -204,6 +210,7 @@ export default function BigBullPortfolio({ focusArea }) {
           flex-direction: column;
           margin-top: 10px;
           margin-bottom: 10px;
+          min-height: 135px;
         }
         .card {
           font-family: Montserrat;
@@ -212,7 +219,7 @@ export default function BigBullPortfolio({ focusArea }) {
           padding: 12px 10px 12px 10px;          
           border-radius: 7px; 
           position: relative;
-          background: #fff;
+          background: #fff;          
 
           .row2 {
             display: flex;

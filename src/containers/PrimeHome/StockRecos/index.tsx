@@ -14,7 +14,13 @@ import WatchlistAddition from "components/WatchlistAddition";
 export default function StockRecos({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
-  const tabs = ["New Recos", "High Upside", "High Downside"];
+  const tabs = ["New Recos", "Most Buys", "Most Sells"];
+
+  const tabLinks = [
+    "/markets/stock-recos/newrecos/all",
+    "/markets/stock-recos/highupside",
+    "/markets/stock-recos/highdownside",
+  ]
 
   const sliderRef = useRef(null);
   const innerRef = useRef(null);
@@ -26,9 +32,7 @@ export default function StockRecos({ focusArea }) {
     let scrollBy = 251  ; 
     if(innerRef.current && sliderRef.current) {       
       const viewportWidth = sliderRef.current.offsetWidth;
-      const innerWidth = innerRef.current.offsetWidth;
-
-      console.log("viewportWidth", viewportWidth, "innerWidth", innerWidth);
+      const innerWidth = innerRef.current.offsetWidth;      
 
       const scrollableWidth = innerWidth - viewportWidth;
       let scrollAmount = 0;
@@ -120,7 +124,7 @@ export default function StockRecos({ focusArea }) {
     <>
       <div className={`${focusArea}`}>
         <HeadingWithRightArrow title="Stock Recos" />
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea}/>
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
         <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
@@ -207,7 +211,7 @@ export default function StockRecos({ focusArea }) {
           </div>
         </div>
         
-        <ViewAllCta title="Stock Recos" url="https://economictimes.indiatimes.com/markets/stock-recos/overview" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`
         .news {
