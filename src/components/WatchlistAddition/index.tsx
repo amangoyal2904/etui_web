@@ -72,7 +72,7 @@ const WatchlistAddition = ({
     getMoreDetailsStockWatchList(action, stockDetails, type);
   };
 
-  const getMoreDetailsStockWatchList = useCallback(async (action: any, data: any, type: any) => {
+  const getMoreDetailsStockWatchList = async (action: any, data: any, type: any) => {
     try {
       const API_URL = (APIS_CONFIG as any).GETCompanyShortData[window.APP_ENV];
       const ApiFullURL = `${API_URL}?companyid=${data.companyId}&companytype=${data.companyType}`;
@@ -86,9 +86,9 @@ const WatchlistAddition = ({
     } catch (error) {
       console.error("Error fetching stock details:", error);
     }
-  }, []);
+  };
 
-  const saveStockInWatchListHandler = useCallback(async (action: any, data: any, type: any) => {
+  const saveStockInWatchListHandler = async (action: any, data: any, type: any) => {
     try {
       const followData = {
         action,
@@ -168,9 +168,9 @@ const WatchlistAddition = ({
       setLoadingStatus(false);
       if (customeFun) customeFun();
     }
-  }, [customeFun]);
+  };
 
-  const handleWatchListClick = useCallback(() => {
+  const handleWatchListClick = () => {
     if (isLogin) {
       const userAction =
         typeof companyId != "undefined" &&
@@ -189,7 +189,7 @@ const WatchlistAddition = ({
     } else {
       initSSOWidget();
     }
-  }, [addStockInWatchlistHandler, companyId, companyType]);
+  };
 
   
 
