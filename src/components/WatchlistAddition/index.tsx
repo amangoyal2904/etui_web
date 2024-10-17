@@ -65,12 +65,12 @@ const WatchlistAddition = ({
     }
   }, [isLogin]);
 
-  const addStockInWatchlistHandler = useCallback((action: any) => {
+  const addStockInWatchlistHandler = (action: any) => {
     console.log("Fetched Watchlist 5:", watchlist, action); 
     const stockDetails = { companyName, companyType, companyId };
     const type = 11;
     getMoreDetailsStockWatchList(action, stockDetails, type);
-  }, [companyName, companyId, companyType]);
+  };
 
   const getMoreDetailsStockWatchList = useCallback(async (action: any, data: any, type: any) => {
     try {
@@ -86,7 +86,7 @@ const WatchlistAddition = ({
     } catch (error) {
       console.error("Error fetching stock details:", error);
     }
-  }, [isLogin, dispatch]);
+  }, []);
 
   const saveStockInWatchListHandler = useCallback(async (action: any, data: any, type: any) => {
     try {
@@ -172,7 +172,7 @@ const WatchlistAddition = ({
 
   const handleWatchListClick = useCallback(() => {
     if (isLogin) {
-      const action =
+      const userAction =
         typeof companyId != "undefined" &&
         !!watchlist &&
         watchlist.some(
@@ -183,13 +183,13 @@ const WatchlistAddition = ({
           ? 0
           : 1;
 
-      console.log("Fetched Watchlist 4:", watchlist, action);    
+      console.log("Fetched Watchlist 4:", watchlist, userAction);    
       setLoadingStatus(true);
-      addStockInWatchlistHandler(action);
+      addStockInWatchlistHandler(userAction);
     } else {
       initSSOWidget();
     }
-  }, [addStockInWatchlistHandler, companyId, companyType, isLogin, watchlist]);
+  }, [addStockInWatchlistHandler, companyId, companyType]);
 
   
 
