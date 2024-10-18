@@ -8,8 +8,6 @@ import {
 
 import DashBoardTable from "../DashboardTable/DashboardTable";
 
-
-
 export default function MarketDashboard({isDev, ssoid, focusArea}) {
   const [data, setData] = useState<any>(null);
   const intFilter = 2371;

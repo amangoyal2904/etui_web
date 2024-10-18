@@ -11,6 +11,7 @@ export default function StockReportPlus({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
   const tabs = ["High Upside", "Top Score Companies", "Score Upgrade"];
+  const tabLinks = ["/markets/benefits/stockreportsplus", "/markets/benefits/stockreportsplus", "/markets/benefits/stockreportsplus"];
 
   const sliderRef = useRef(null);
   const innerRef = useRef(null);
@@ -119,7 +120,7 @@ export default function StockReportPlus({ focusArea }) {
     <>
       <div className={`${focusArea}`}>
         <HeadingWithRightArrow title="Stock Report Plus" />
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />      
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />     
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
         <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
@@ -202,7 +203,7 @@ export default function StockReportPlus({ focusArea }) {
           })}    
           </div>            
         </div>
-        <ViewAllCta title="High Upside Stocks" url="https://economictimes.indiatimes.com/stock-report-plus" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{` 
         .news {

@@ -9,9 +9,9 @@ import RenderText from 'components/RenderText'
 
 export default function MarketNews({ title, data, podcastData, marketExpertViews, marketMoguls, marketLiveblog }) { 
 
-  const liveblogData = [];
-  const expertViewsData = liveblogData.length > 0 ? marketExpertViews.slice(0, 1) : marketExpertViews;
-  const marketMogulsData = liveblogData.length > 0 ? marketMoguls.slice(0, 1) : marketMoguls;
+  const liveblogData = marketLiveblog;
+  const expertViewsData = marketExpertViews; //liveblogData.length > 0 ? marketExpertViews.slice(0, 1) : marketExpertViews;
+  const marketMogulsData = marketMoguls; //liveblogData.length > 0 ? marketMoguls.slice(0, 1) : marketMoguls;
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function MarketNews({ title, data, podcastData, marketExpertViews
       <div className="third">
         <Podcast podcastData={podcastData}/>
         <StockScreeners />
-        <MyWatchlist />
+        {/* <MyWatchlist /> */}
       </div>
     </section>
     <style jsx>{`
@@ -418,19 +418,27 @@ function MyWatchlist() {
 
 function LiveBlog({ data }) {
 
+  const liveblogData = data?.[0] || {};
+
   return <>
     <div className="liveblog">
       <div className="liveIcon">
         <span className="text">LIVE </span>
         <LiveIcon />
       </div>
-      <div className="lhead"><a target="_blank" href={`${ET_WEB_URL}/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-23-august-2024/liveblog/112724849.cms`}>Sensex Today | Stock Market LIVE Updates | Sensex flat, Nifty tests 24,800; banks &amp; financials under pressure</a></div>
-      <div className="content"><span>08:21 PM</span>Powell has set the stage for rate cuts: David Doyle of Macquarie Group</div>
+      <div className="lhead">
+        <a target="_blank" href={liveblogData?.url}>
+          <RenderText text={liveblogData?.title} />
+        </a>
+      </div>
+      {/* <div className="content"><span>08:21 PM</span>Powell has set the stage for rate cuts: David Doyle of Macquarie Group</div>
       <div className="content"><span>08:19 PM</span>Inflation, labor data opens the door to 50s (rate cut) at some point: ...</div>
-      <div className="content"><span>08:17 PM</span>Powell validates market expectations for a September rate cut: Uto Shi...</div>
+      <div className="content"><span>08:17 PM</span>Powell validates market expectations for a September rate cut: Uto Shi...</div> */}
     </div>      
     <style jsx>{`
       .liveblog {
+        padding-bottom: 20px;
+
         .liveIcon {
           .text {
             background-color: #ed193b;
@@ -449,6 +457,12 @@ function LiveBlog({ data }) {
           font-size: 18px;
           font-weight: 600;
           padding-bottom: 10px;
+
+          a {
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
 
         .content {
@@ -585,7 +599,7 @@ function MarketMoguls({ data }) {
               </a>
               <span className="right">
                 <a href={author.url || ""} className="author" target="_blank">{author?.title || ""}</a>
-                <span className="dib">{""}</span>
+                <span className="dib">{author?.designation}, {author?.organization}</span>
                 <a target="_blank" href={item?.url}><RenderText text={item?.title} /></a>
               </span>
             </div>

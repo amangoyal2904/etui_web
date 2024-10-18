@@ -9,6 +9,7 @@ import {
   import SocialShare from "../../utils/socialShare";
 import Bookmark from 'components/Bookmark';
 import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
+import RenderText from 'components/RenderText';
 
 const MostReadStories = ({MostReadStoriesRes}) => {
     const OPTIONS = {loop: false}
@@ -63,13 +64,15 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         className="im lazy" />
                                                 </a>
                                                 <div className="info_box">
-                                                    <span>News</span>
+                                                    <span>{item?.parenttitle}</span>
                                                     <a 
                                                         title={item.title}  
                                                         target="_blank" 
                                                         className="line_4" 
                                                         href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
-                                                    >{item.title}</a>
+                                                    >
+                                                        <RenderText text={item.title} />                                                                                                            
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div className='icon'>

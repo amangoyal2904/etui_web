@@ -1,12 +1,14 @@
 import "../styles/globals.css";
 import "../styles/common.scss";
 import { Metadata } from 'next';
+// import type { Viewport } from 'next'
 import { StateProvider } from "../store/StateContext";
 import dynamic from "next/dynamic";
 import React from 'react';
 import StyledJsxRegistry from "./registry";
 import { Toaster } from "react-hot-toast";
 import { headers, cookies } from "next/headers";
+import { ET_WEB_URL } from "utils/common";
 
 const DynamicPopupManager = dynamic(() => import('../components/PopupManager'), {
   ssr: true,
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
   title: 'Home',
   description: '',
   icons: {
-    icon: "/icons/etfavicon.ico",
+    icon: `${ET_WEB_URL}/icons/etfavicon.ico`,
   },
 };
 
@@ -44,4 +46,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </body>
     </html>
   );
+}
+
+//viewport to not make responsive
+export const viewport = {
+  width: "device-width",
+  initialScale: 1
 }

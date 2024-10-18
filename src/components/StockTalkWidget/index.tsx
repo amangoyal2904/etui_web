@@ -115,18 +115,22 @@ export default function StockTalkWidget() {
             "pageSize":5
         };
         
-        const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
-        //const apiUrl = "http://localhost:3002/api/livestream";
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data),
-          cache: "no-store"
-        });
-        const newData = await response.json();
-        return newData;
+        try {
+            const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
+            //const apiUrl = "http://localhost:3002/api/livestream";
+            const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+            cache: "no-store"
+            });
+            const newData = await response.json();
+            return newData;
+        } catch (error) {
+            console.error("Error:", error);            
+        }
       };
 
     const streamData = async() => {

@@ -248,6 +248,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
           .slider {
             overflow: hidden;
             margin-top: 10px;
+            min-height: 112px;
 
             .seriesWrapper {
               display: inline-flex;

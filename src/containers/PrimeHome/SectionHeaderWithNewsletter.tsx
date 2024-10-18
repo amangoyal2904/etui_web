@@ -1,12 +1,12 @@
 import { ET_WEB_URL } from 'utils/common'
-import NewsLetter from './NewsLetter'
+import NewsLetterSignup from './NewsLetterSignup'
 
-export default function SectionHeaderWithNewsletter({ url, title }) {
+export default function SectionHeaderWithNewsletter({ url, title, sid }) {
   return (
     <>
       <div className="sectionHeader">
         <h2><a href={`${ET_WEB_URL}${url}`}>{title}</a></h2>
-        <NewsLetter section={title}/>
+        <NewsLetterSignup section={title} sid={sid}/>
       </div>
       <style jsx>{`
         .sectionHeader {

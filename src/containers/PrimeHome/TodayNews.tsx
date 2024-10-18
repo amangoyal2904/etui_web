@@ -17,7 +17,7 @@ export default function TodayNews({ todayNews }) {
             <li key={index}>
               <a href={item?.url} target="_blank">
                 {item.type == "liveblog" &&  <LiveIcon />}
-                {item?.title}
+                <RenderText text={item?.title} />
               </a>
             </li>
           ))
@@ -68,6 +68,11 @@ export default function TodayNews({ todayNews }) {
           font-weight: 800;
           padding-bottom: 7px;
           text-transform: uppercase;
+        }
+        a {
+          &:hover {
+            text-decoration: underline;
+          }
         }
         ul {
           padding-left: 0;

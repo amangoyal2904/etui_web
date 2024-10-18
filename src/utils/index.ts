@@ -813,7 +813,7 @@ export const convertMilliseconds = (milliseconds) => {
 }
 
 export function changeImageWidthHeight({imageUrl, desiredWidth, desiredHeight, desiredResizeMode = 0, quality = 0}) {
-  let newUrl = imageUrl?.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
+  let newUrl = imageUrl?.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`) || "";
 
   if(desiredResizeMode) {
     // replace if resizemode is already present, else add it
