@@ -6,6 +6,7 @@ import ViewAllCta from '../ViewAllCta';
 import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
 import { ET_WEB_URL } from 'utils/common';
+import PrimeIcon from 'components/Icons/PrimeIcon';
 
 export default function StockReportPlus({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
@@ -119,6 +120,7 @@ export default function StockReportPlus({ focusArea }) {
   return (
     <>
       <div className={`${focusArea}`}>
+      { <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title="Stock Report Plus" />
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />     
 

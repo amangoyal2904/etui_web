@@ -9,6 +9,7 @@ import { ET_WEB_URL } from 'utils/common';
 import { dateFormat } from 'utils/utils';
 import RenderText from 'components/RenderText';
 import Loading from 'components/Loading';
+import RightArrow from 'components/Icons/RightArrow'
 
 export default function BigBullPortfolio({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
@@ -147,7 +148,12 @@ export default function BigBullPortfolio({ focusArea }) {
   return (
     <>
       <div className={`bigbull ${focusArea}`}>
-        <HeadingWithRightArrow title="BigBull Portfolio" />
+        {/* <HeadingWithRightArrow title="BigBull Portfolio" /> */}
+        <a className='dflex align-center' href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/individual`} target='_blank'>
+          <img className='mr-6' width={24} src="https://img.etimg.com/photo/114352551.jpg" />
+          <img width={138} src="https://img.etimg.com/photo/114352673.jpg" />
+          <RightArrow />
+        </a>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
@@ -168,7 +174,20 @@ export default function BigBullPortfolio({ focusArea }) {
           .arr {
             display: none;
           }
-        }      
+        } 
+          
+        .dflex{
+          display: flex;
+        }
+
+        .align-center{
+          align-items: center;
+        }
+        
+        .mr-6{
+          margin-right: 6px;
+        }
+
         .slider {
           overflow: hidden;
         }
