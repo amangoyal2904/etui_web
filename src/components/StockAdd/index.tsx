@@ -78,7 +78,7 @@ const AddStockComponent = ({ moduelClose, updateTableHandler }: any) => {
     }
     setLoading(false);
   };
-  const fetchMostPopularStocks = async (watchListUserData: any = []) => {alert(1)
+  const fetchMostPopularStocks = async (watchListUserData: any = []) => {
     setLoading(true);
     try {
       const API_URL = (APIS_CONFIG as any)?.SEARCH.mostPopular[window.APP_ENV];
