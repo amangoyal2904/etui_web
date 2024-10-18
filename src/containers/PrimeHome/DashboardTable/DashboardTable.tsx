@@ -172,7 +172,7 @@ const DashBoardTable = ({
                 />
               ))
             ) : (
-              <Blocker type={"noDataMinimal"} />
+              <Blocker type={"noStocks"} />
             )}
             <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />
           </div>
@@ -191,6 +191,13 @@ const DashBoardTable = ({
       <style jsx>{`
         .dflex {
           display: flex;
+        }
+        .news{
+          .head_dashboard{
+            h2{
+              font-size: 15px;
+            }
+          }  
         }
         .head_dashboard {
           justify-content: space-between;
