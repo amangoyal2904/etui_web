@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 
 export default function RenderText({ text = "" }) {
+
+  const textStr = text?.toString();
   
   function renderText(text) {
     // replace html entities
@@ -12,5 +14,5 @@ export default function RenderText({ text = "" }) {
   }
 
   // if text contains html tags, render them as react elements else return text as it is
-  return text.includes('<') ? <div dangerouslySetInnerHTML={{ __html: text }} /> : <Fragment>{renderText(text)}</Fragment>
+  return textStr?.toString()?.includes('<') ? <div dangerouslySetInnerHTML={{ __html: textStr }} /> : <Fragment>{renderText(textStr)}</Fragment>
 }

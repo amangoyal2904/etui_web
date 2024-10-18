@@ -31,6 +31,7 @@ export default function Tabs({ tabs = [], activeTab, setActiveTab, focusArea }: 
             color: #fff;
             position: relative;
             padding: 5px 7px;
+            font-weight: 700;
 
             &::after {
               content: "";
