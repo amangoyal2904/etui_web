@@ -6,6 +6,7 @@ import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
 import { fetchAdaptiveData } from "utils/ga";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
 import Separator from "components/Separator";
+import PrimeIcon from 'components/Icons/PrimeIcon';
 
 export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   const APP_ENV = isDev ? "development" : "production";
@@ -176,7 +177,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     <>
       <div className={`grandmaster ${focusArea}`}>
         { focusArea === "news" && <Separator /> }
-        <span className='title'></span>
+        { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title={focusArea == "news" ? "Lessons from The Grandmasters" : "ET GrandMasters"} />
         <div className="slider" ref={sliderRef}>
           <div className="seriesWrapper" ref={innerRef}>
