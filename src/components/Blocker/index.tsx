@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styles from "./Blocker.module.scss";
 import { initSSOWidget } from "../../utils";
 import GLOBAL_CONFIG from "../../network/global_config.json";
+import AddStockComponent from "components/StockAdd";
 
 interface propsType {
   type: any;
@@ -32,10 +33,10 @@ const blockerList: any = {
   },
   noStocks: {
     id: 3,
-    message: "You've not added any stocks to your Watchlist yet.",
+    message: "Looks like your watchlist is empty <br /> Add stocks to get personalised alerts",
     cta: "Add Stocks Now",
     action: "",
-    icon: 107522570,
+    icon: 114316182,
   },
   notFound: {
     id: 4,
@@ -62,6 +63,10 @@ const blockerList: any = {
 const Blocker = (props: propsType) => {
   const { type, updateTableHander } = props;
   const { message, cta, action, icon, id } = blockerList[type] || {};
+  const [addStockShow, setAddStockShow] = useState(false);
+  const handleAddStocks = () => {
+    setAddStockShow(true);
+  };
 
   return (
     <>
@@ -85,8 +90,14 @@ const Blocker = (props: propsType) => {
             Go to Economictimes.com
           </a>
         )}
-        {cta && <button onClick={action}>{cta}</button>}
+        {cta && <button onClick={id == 3 ? handleAddStocks : action}>{cta}</button>}
       </div>
+      {addStockShow ? (
+        <AddStockComponent
+          moduelClose={setAddStockShow}
+          updateTableHandler={updateTableHander}
+        />
+      ) : null}
     </>
   );
 };

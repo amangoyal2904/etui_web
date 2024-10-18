@@ -40,6 +40,7 @@ const EditionTimeStamp = ({ APP_ENV }) => {
 const getETLogo = (page) => {
   switch(page){
     case "home":
+    case "primehome":  
       return {etLogo: LOGO.ethomelogo, etLogoWidth: 464, etLogoHeight: 51}
     case "articleshow":
     case "primearticleshow": 
