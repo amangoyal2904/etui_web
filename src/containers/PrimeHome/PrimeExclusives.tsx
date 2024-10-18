@@ -4,6 +4,7 @@ import PrimeIcon from 'components/Icons/PrimeIcon'
 import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow';
 import Bookmark from 'components/Bookmark';
+import { ET_WEB_URL } from 'utils/common'
 
 export default function PrimeExclusives({ title, data, focusArea }) {
   const firstRow = data[0] || {};
@@ -28,7 +29,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
               focusArea == 'news' && <div className="meta">
                 <span className="left">
                   <span className="duration">{firstRow.readtime} mins read</span>
-                  <span className="author">By <a href="#">Shishir Prasad</a></span>
+                  <span className="author">By <Authors authors={firstRow.authors} /></span>
                 </span>
                 <Bookmark msid={firstRow.msid} hostId={`153`} type="5" widget={`mostread_primehome`} apiType={'all'} />
               </div>
@@ -68,7 +69,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             })
           }
         </div>
-        {focusArea == 'news' && <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>}
+        {focusArea == 'news' && <a className="seeAllLink" href={`${ET_WEB_URL}/prime`} target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>}
       </div>
       <style jsx>{`
         .primeExclusives {                

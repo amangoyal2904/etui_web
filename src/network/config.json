@@ -43,6 +43,14 @@
       "development": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"],
       "production": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"]
     },
+    "mostPopular": {
+      "development": [
+        "https://bselivefeeds.indiatimes.com/ET_Community/multicompanyobject?varname=searchresult&exchange=50&order=true&pagsize=15&companytype=equity&companies=12934,13554,23479,10960,13215"
+      ],
+      "production": [
+        "https://json.bselivefeeds.indiatimes.com/ET_Community/multicompanyobject?varname=searchresult&exchange=50&order=true&pagsize=15&companytype=equity&companies=12934,13554,23479,10960,13215"
+      ]
+    },
     "definition": {
       "development": ["https://etdev8243.indiatimes.com/json_definitionsearch.cms"],
       "production": ["https://economictimes.indiatimes.com/json_definitionsearch.cms"]

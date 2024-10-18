@@ -90,7 +90,7 @@ const Blocker = (props: propsType) => {
             Go to Economictimes.com
           </a>
         )}
-        {cta && <button onClick={id == 3 ? handleAddStocks : action}>{cta}</button>}
+        {cta && <button onClick={id == 3 ? handleAddStocks : action} className={`${id == 3 ? styles.bgred : ''}`}>{id == 3 && <span className={styles.plusIcon} />}<span>{cta}</span></button>}
       </div>
       {addStockShow ? (
         <AddStockComponent
