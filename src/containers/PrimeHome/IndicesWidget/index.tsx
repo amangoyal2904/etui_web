@@ -37,10 +37,12 @@ export default function IndicesWidget({ isDev, focusArea }) {
   useEffect(() => {
 
     let chartURL = indicesData?.indicesList?.[activeIndex]?.graphURL || "";
-    chartURL = isDev ? chartURL.replace("https://economictimes.indiatimes.com", "https://etdev8243.indiatimes.com") : chartURL;    
-    chartURL += `${chartURL.includes('?') ? '&' : '?'}period=${period}`;    
-    chartURL += `${chartURL.includes('?') ? '&' : '?'}height=150`;
-    setChartURL(chartURL);
+    if(chartURL){
+      chartURL = isDev ? chartURL.replace("https://economictimes.indiatimes.com", "https://etdev8243.indiatimes.com") : chartURL;    
+      chartURL += `${chartURL.includes('?') ? '&' : '?'}period=${period}`;    
+      chartURL += `${chartURL.includes('?') ? '&' : '?'}height=150`;
+      setChartURL(chartURL);
+    }
   }, [activeIndex, period, indicesData]);
 
   return (
