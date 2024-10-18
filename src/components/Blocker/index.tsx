@@ -33,7 +33,8 @@ const blockerList: any = {
   },
   noStocks: {
     id: 3,
-    message: "Looks like your watchlist is empty <br /> Add stocks to get personalised alerts",
+    message: "Looks like your watchlist is empty",
+    submessage: "Add stocks to get personalised alerts",
     cta: "Add Stocks Now",
     action: "",
     icon: 114316182,
@@ -62,7 +63,7 @@ const blockerList: any = {
 };
 const Blocker = (props: propsType) => {
   const { type, updateTableHander } = props;
-  const { message, cta, action, icon, id } = blockerList[type] || {};
+  const { message, submessage, cta, action, icon, id } = blockerList[type] || {};
   const [addStockShow, setAddStockShow] = useState(false);
   const handleAddStocks = () => {
     setAddStockShow(true);
@@ -82,6 +83,7 @@ const Blocker = (props: propsType) => {
           />
         )}
         {message && <p dangerouslySetInnerHTML={{ __html: message }} />}
+        {submessage && <p className={styles.submessage} dangerouslySetInnerHTML={{ __html: submessage }} />}
         {type == "notFound" && (
           <a
             className="linkUnderline"
