@@ -161,7 +161,7 @@ const DashBoardTable = ({
             isCenter="true"
           />
           <div className={styles.stockData}>
-            {isPrime != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? (
+            {isLogin != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? (
               tableData.map((item: any, index: any) => (
                 <DashboardStockData
                   key={index}
