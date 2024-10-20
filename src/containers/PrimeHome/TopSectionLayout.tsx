@@ -189,6 +189,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
               padding-bottom: 7px;
               border-bottom: 3px solid #9b8680;
               align-items: center;
+              position: relative;
 
               .title {
                 font-size: 20px;
@@ -247,42 +248,76 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
 function FocuseAreaNotification({ focusArea }) {
 
   return (
-    <>
-      <div>
-        <div className="notification">
-          <div className="icon">
-            <img src="/images/primeHome/notification.svg" alt="" />
-          </div>
-          <div className="text">
-            <div className="title">Focus Area</div>
-            <div className="desc">You are currently viewing Market Focus. Click here to switch to News Focus</div>
-          </div>
-        </div>
+    <>      
+      <div className="notification">           
+        <span className="close">&times;</span>
+        <div className="title">You're experiencing market centric view!</div>
+        <div className="desc">Want more news? Switch to '<span className="focus">News Focus</span>' anytime.</div>          
       </div>
+    
       <style jsx>{`
-        .notification {
-          display: flex;
-          align-items: center;
-          padding: 10px;
-          background: #f5f5f5;
-          border-radius: 5px;
-          margin-top: 10px;
+        @keyframes moveUpDown {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        
+        .notification {          
+          padding: 14px 28px 14px 14px;
+          background: #000;
+          border-radius: 10px;
+          color: #fff;
+          font-family: Montserrat;
+          line-height: 20px;
+          position: absolute;
+          right: -90px;
+          top: -75px;
+          animation: moveUpDown 2s infinite;          
 
-          .icon {
-            margin-right: 10px;
+          &::after {            
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: #000;
+            border-bottom: 0;
+            margin-left: -10px;
+            margin-top: -1px;
           }
 
-          .text {
-            .title {
-              font-size: 14px;
-              font-weight: 600;
-            }
-
-            .desc {
-              font-size: 12px;
-              color: #666;
-            }
+          .focus {
+            color: #efc222;
           }
+          .close {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            cursor: pointer;
+            background: #F00;
+            width: 14px;
+            height: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 20px;
+          }
+
+          .title {            
+            font-size: 17px;
+            font-weight: 600;
+          }  
+
+          .desc {            
+            font-size: 13px;
+            font-weight: 400;            
+          }               
         }
       `}</style>
     </>
