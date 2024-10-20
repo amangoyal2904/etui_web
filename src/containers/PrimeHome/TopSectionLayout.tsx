@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TodayNews from './TodayNews'
 import PrimeBenefitsBucket from './PrimeBenefitsBucket';
 import PrimeExclusives from './PrimeExclusives';
@@ -17,6 +17,7 @@ import LiveStream from './LiveStream';
 import Opinion from "./Opinion";
 import NewsByIndustry from "./NewsByIndustry";
 import MyWatchListDashboard from './MyWatchListDashboard';
+import API_CONFIG from "../../network/config.json";
 
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const [focusArea, setFocusArea] = React.useState("market");
@@ -27,7 +28,30 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   const marketsTopNews  = searchResult?.find(item => item?.name === "markets_top_news") || {};
-  // console.log("topNews", searchResult);
+  
+  useEffect(() => {
+    const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET"][window?.APP_ENV];
+    const ssoid = window?.objUser?.info?.ssoid || "bo6gekyrgw2kekv61lq1e8m77a";
+
+    fetch(api, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${ssoid}`
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // if (data?.focusArea) {
+        //   setFocusArea(data?.focusArea);
+        // }
+        console.log("Focus Area Data: ", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
   return (
     <>
       <section className="topLayout">
@@ -38,6 +62,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             </div>
             <div className="col2">
               <div className="titleNSwitch">
+                <FocuseAreaNotification focusArea={focusArea} />
                 <span className="title">ETPRIME</span>
                 <span className="switch">
                   <span className={focusArea === "news" ? "active" : ""} onClick={() => setFocusArea("news")}>NEWS FOCUS</span>
@@ -211,6 +236,51 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
               font-weight: 800;
               padding-bottom: 7px;
               border-bottom: 3px solid #9b8680;
+            }
+          }
+        }
+      `}</style>
+    </>
+  )
+}
+
+function FocuseAreaNotification({ focusArea }) {
+
+  return (
+    <>
+      <div>
+        <div className="notification">
+          <div className="icon">
+            <img src="/images/primeHome/notification.svg" alt="" />
+          </div>
+          <div className="text">
+            <div className="title">Focus Area</div>
+            <div className="desc">You are currently viewing Market Focus. Click here to switch to News Focus</div>
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        .notification {
+          display: flex;
+          align-items: center;
+          padding: 10px;
+          background: #f5f5f5;
+          border-radius: 5px;
+          margin-top: 10px;
+
+          .icon {
+            margin-right: 10px;
+          }
+
+          .text {
+            .title {
+              font-size: 14px;
+              font-weight: 600;
+            }
+
+            .desc {
+              font-size: 12px;
+              color: #666;
             }
           }
         }

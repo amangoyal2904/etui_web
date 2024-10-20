@@ -205,5 +205,13 @@
   "getFollowedExperts": {
     "development": "https://etusersqc2.economictimes.indiatimes.com/et/getpref?type=Follow&usersettingsubType=23",
     "production": "https://etup.economictimes.indiatimes.com/et/getpref?type=Follow&usersettingsubType=23"
+  },
+  "SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/fetch/homepage/newspref.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/fetch/homepage/newspref.json"
+  },
+  "SUBSCRIBER_HOMEPAGE_FOCUSAREA_SAVE": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/save/homepage/newspref.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/save/homepage/newspref.json"
   }
 }

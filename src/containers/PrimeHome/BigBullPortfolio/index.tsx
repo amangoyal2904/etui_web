@@ -168,6 +168,10 @@ export default function BigBullPortfolio({ focusArea }) {
           .arr {
             display: none;
           }
+
+          &.cards {
+            min-height: 350px;
+          }
         }      
         .slider {
           overflow: hidden;
@@ -179,7 +183,7 @@ export default function BigBullPortfolio({ focusArea }) {
           flex-direction: column;
           margin-top: 10px;
           margin-bottom: 10px;
-          min-height: 135px;
+          min-height: 135px;                    
         }        
 
         .arr {
@@ -342,6 +346,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
           position: relative;
           background: #fff; 
           width: 320px;  
+          box-sizing: border-box;
 
           .comWrp{
             display: flex;
@@ -493,6 +498,7 @@ function AllInvestorsCard({ item }) {
           position: relative;
           background: #fff;  
           width: 320px;
+          box-sizing: border-box;
 
           .investorRow {
             display: flex;
