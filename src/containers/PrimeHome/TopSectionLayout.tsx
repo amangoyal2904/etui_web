@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TodayNews from './TodayNews'
 import PrimeBenefitsBucket from './PrimeBenefitsBucket';
 import PrimeExclusives from './PrimeExclusives';
@@ -18,9 +18,11 @@ import Opinion from "./Opinion";
 import NewsByIndustry from "./NewsByIndustry";
 import MyWatchListDashboard from './MyWatchListDashboard';
 import API_CONFIG from "../../network/config.json";
+import jStorageReact from 'jstorage-react';
 
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
-  const [focusArea, setFocusArea] = React.useState("market");
+  const [focusArea, setFocusArea] = useState("market");
+  const [showNotification, setShowNotification] = useState(false);
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   const investmentIdeas = searchResult?.find(item => item?.name === "investment_ideas") || {};
@@ -28,6 +30,41 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   const marketsTopNews  = searchResult?.find(item => item?.name === "markets_top_news") || {};
+
+  function saveFocusAreaPreference(focusArea) {    
+    setFocusArea(focusArea);
+
+    const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
+    if(primeHomeFocusArea2024) {
+      primeHomeFocusArea2024.focusArea = focusArea;
+      primeHomeFocusArea2024.focusAreaChangedAt = Date.now();
+    }
+
+    // save for 1 year
+    jStorageReact.set("primeHomeFocusArea2024", JSON.stringify(primeHomeFocusArea2024), {TTL: 365*24*60*60*1000});
+
+    const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_SAVE"][window?.APP_ENV];
+    const ssoid = window?.objUser?.info?.ssoid || "bo6gekyrgw2kekv61lq1e8m77a";
+    const data = {
+      enableMarketFocus: focusArea === "market" ? true : false,
+      ssoId: ssoid
+    };
+
+    fetch(api, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"        
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Focus Area Data: ", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      })
+  }
   
   useEffect(() => {
     const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET"][window?.APP_ENV];
@@ -45,6 +82,10 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
         // if (data?.focusArea) {
         //   setFocusArea(data?.focusArea);
         // }
+        if(data?.statusCode === 200) {
+          setFocusArea(data?.enableMarketFocus ? "market" : "news");
+          setShowNotification(data?.showFocusNotification)
+        }
         console.log("Focus Area Data: ", data);
       })
       .catch((error) => {
@@ -62,16 +103,16 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             </div>
             <div className="col2">
               <div className="titleNSwitch">
-                <FocuseAreaNotification focusArea={focusArea} />
+                { showNotification && <FocusAreaNotification focusArea={focusArea} /> }
                 <span className="title">ETPRIME</span>
                 <span className="switch">
-                  <span className={focusArea === "news" ? "active" : ""} onClick={() => setFocusArea("news")}>NEWS FOCUS</span>
+                  <span className={focusArea === "news" ? "active" : ""} onClick={() => saveFocusAreaPreference("news")}>NEWS FOCUS</span>
                   <span className="switchIcon" onClick={() => {
                     focusArea === "news" ? setFocusArea("market") : setFocusArea("news")
                   }}>
                     <i className={focusArea === "news" ? "left" : "right"}></i>
                   </span>
-                  <span className={focusArea === "market" ? "active" : ""} onClick={() => setFocusArea("market")}>MARKET FOCUS</span>
+                  <span className={focusArea === "market" ? "active" : ""} onClick={() => saveFocusAreaPreference("market")}>MARKET FOCUS</span>
                 </span>
               </div>
               <PrimeBenefitsBucket focusArea={focusArea}/>
@@ -245,14 +286,47 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   )
 }
 
-function FocuseAreaNotification({ focusArea }) {
+function FocusAreaNotification({ focusArea }) {
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
+    
+    console.log("primeHomeFocusArea2024: ", primeHomeFocusArea2024);
+
+    // on first load and if time elapsed is 2 days, show notification
+    if(primeHomeFocusArea2024) {
+      if(!primeHomeFocusArea2024.focusArea || !primeHomeFocusArea2024.focusAreaChangedAt) {
+        setShowNotification(true);
+      } else {
+        const timeElapsed = Date.now() - primeHomeFocusArea2024.focusAreaChangedAt;
+        if(timeElapsed > 2*24*60*60*1000) {
+          setShowNotification(true);
+        }
+      }
+    }
+
+    const timer = setTimeout(() => {
+      setShowNotification(false);
+    }, 10*1000);
+
+    return () => {
+      timer && clearTimeout(timer); 
+    }
+  }, []);
+
+  if (!showNotification) return null;
 
   return (
     <>      
       <div className="notification">           
-        <span className="close">&times;</span>
-        <div className="title">You're experiencing market centric view!</div>
-        <div className="desc">Want more news? Switch to '<span className="focus">News Focus</span>' anytime.</div>          
+        <span className="close" onClick={() => setShowNotification(false)}>&times;</span>
+        <div className="title">
+          {focusArea === "market" ? 
+          "You're experiencing market centric view!"
+          : "You're in the news view!"}
+        </div>
+        <div className="desc">Want more {focusArea === "market" ? "news" : "market updates"}? Switch to '<span className="focus">{focusArea === "market" ? "News" : "Market"} Focus</span>' {focusArea === "market" ? "anytime" : "now"}.</div>          
       </div>
     
       <style jsx>{`
@@ -265,7 +339,8 @@ function FocuseAreaNotification({ focusArea }) {
           }
         }
         
-        .notification {          
+        .notification {     
+          width: 384px;     
           padding: 14px 28px 14px 14px;
           background: #000;
           border-radius: 10px;
@@ -273,7 +348,7 @@ function FocuseAreaNotification({ focusArea }) {
           font-family: Montserrat;
           line-height: 20px;
           position: absolute;
-          right: -90px;
+          right: -102px;
           top: -75px;
           animation: moveUpDown 2s infinite;          
 
