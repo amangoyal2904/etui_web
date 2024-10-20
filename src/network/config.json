@@ -43,6 +43,14 @@
       "development": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"],
       "production": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"]
     },
+    "mostPopular": {
+      "development": [
+        "https://bselivefeeds.indiatimes.com/ET_Community/multicompanyobject?varname=searchresult&exchange=50&order=true&pagsize=15&companytype=equity&companies=12934,13554,23479,10960,13215"
+      ],
+      "production": [
+        "https://json.bselivefeeds.indiatimes.com/ET_Community/multicompanyobject?varname=searchresult&exchange=50&order=true&pagsize=15&companytype=equity&companies=12934,13554,23479,10960,13215"
+      ]
+    },
     "definition": {
       "development": ["https://etdev8243.indiatimes.com/json_definitionsearch.cms"],
       "production": ["https://economictimes.indiatimes.com/json_definitionsearch.cms"]
@@ -213,5 +221,13 @@
   "SUBSCRIBER_HOMEPAGE_FOCUSAREA_SAVE": {
     "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/save/homepage/newspref.json",
     "production": "https://etonboard.economictimes.indiatimes.com/etonboard/save/homepage/newspref.json"
+  },
+  "stockSearch": {
+    "development": [
+      "https://etsearch.indiatimes.com/etspeeds/etsearchMdata.ep?matchCompanyName=true&realstate=true&pp=new&dvr=new&idr=new&trust=true&mcx=false&mf=false&nps=false&detail=false&forex=false&index=false&mecklai=false&etf=false&nonList=false&pagesize=10&outputtype=json&ticker="
+    ],
+    "production": [
+      "https://etsearch.indiatimes.com/etspeeds/etsearchMdata.ep?matchCompanyName=true&realstate=true&pp=new&dvr=new&idr=new&trust=true&mcx=false&mf=false&nps=false&detail=false&forex=false&index=false&mecklai=false&etf=false&nonList=false&pagesize=10&outputtype=json&ticker="
+    ]
   }
 }

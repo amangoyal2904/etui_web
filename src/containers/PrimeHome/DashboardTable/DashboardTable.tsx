@@ -32,7 +32,7 @@ const DashBoardTable = ({
   const dashboardRef = useRef<HTMLDivElement>(null);
   const { state } = useStateContext();
   const { currentMarketStatus } = state.marketStatus;
-  const { isPrime } = state.login;
+  const { isPrime, isLogin } = state.login;
   const [showFilter, setShowFilter] = useState(false);
   const [niftyFilterData, setNiftyFilterData] = useState(selectedFilter);
   const [payload, setPayload] = useState(bodyParams);
@@ -161,7 +161,7 @@ const DashBoardTable = ({
             isCenter="true"
           />
           <div className={styles.stockData}>
-            {tableData?.length ? (
+            {isLogin != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? (
               tableData.map((item: any, index: any) => (
                 <DashboardStockData
                   key={index}
@@ -172,8 +172,8 @@ const DashBoardTable = ({
                 />
               ))
             ) : (
-              <Blocker type={"noDataMinimal"} />
-            )}
+              <Blocker type={wdName == "My Watchlist" ? "noStocks" : "noDataFound"} />
+            ))}
             <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />
           </div>
         </div>
@@ -191,6 +191,13 @@ const DashBoardTable = ({
       <style jsx>{`
         .dflex {
           display: flex;
+        }
+        .news{
+          .head_dashboard{
+            h2{
+              font-size: 15px;
+            }
+          }  
         }
         .head_dashboard {
           justify-content: space-between;

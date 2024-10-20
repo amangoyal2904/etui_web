@@ -588,7 +588,7 @@ function MarketMoguls({ data }) {
     return <>
       <div className="marketMoguls">
         <div className="title">
-          <a className="title" href={`${ET_WEB_URL}/markets/market-moguls/articlelist/50649959.cms`} data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
+          <a className="title" href={`${ET_WEB_URL}/markets/market-moguls`} data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
         </div>
         {data.map((item, index) => {
           const author = item?.authors?.[0] || {};
@@ -605,7 +605,7 @@ function MarketMoguls({ data }) {
             </div>
           )
         })}
-        <MoreFromLink href="/markets/market-moguls/articlelist/50649959.cms" appendText="Market Moguls" moreText="More" />
+        <MoreFromLink href="/markets/market-moguls" appendText="Market Moguls" moreText="More" />
       </div>
       <style jsx>{`
         .marketMoguls {

@@ -4,6 +4,7 @@ import HeadingWithRightArrow from './HeadingWithRightArrow'
 import PrimeIcon from 'components/Icons/PrimeIcon'
 import Separator from 'components/Separator'
 import RenderText from 'components/RenderText'
+import { ET_WEB_URL } from 'utils/common'
 
 export default function InvestmentIdeas({ data, focusArea }) {
   const firstRow = data[0] || {};
@@ -52,7 +53,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
             )
           })
         }
-        { focusArea === "news" && <a className="seeAllLink" href="/prime/investment-ideas" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
+        { focusArea === "news" && <a className="seeAllLink" href={`${ET_WEB_URL}/prime/investment-ideas`} target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
       </div>
       <style jsx>{`
         .investmentIdeas {          

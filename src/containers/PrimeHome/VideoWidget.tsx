@@ -176,7 +176,7 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
                                       data-msid={listData?.msid}
                                     >
                                       <div className="imgDiv">
-                                        <div className="active leayer hide">
+                                        <div className={`active leayer ${(autoplay && selectVideo[0] == listData.msid) ? "" : "hide"}`}>
                                           <span>NOW PLAYING</span>
                                         </div>
                                         <span className="imgdiv">

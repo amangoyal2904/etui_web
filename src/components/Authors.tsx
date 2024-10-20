@@ -4,9 +4,18 @@ export const Authors = (authors) => {
     <>
       {authors.authors.map((author, index) => {
         return (
-          <a href={author.url} key={index}>{author.title}</a>
+          <span key={index}>
+            {index > 0 && index === authors.authors.length - 1 ? " & " : ""}
+            <a className="authorlink" href={author.url}>{author.title}</a>
+            {index < authors.authors.length - 2 && ", "}
+          </span>
         )
       })}
+      <style jsx>{`
+        .authorlink:hover{
+          text-decoration: underline;
+        }
+      `}</style>
     </>
   )
 }

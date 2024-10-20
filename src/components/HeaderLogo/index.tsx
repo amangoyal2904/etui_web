@@ -6,9 +6,11 @@ import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
 import Login from "../Login";
 import { useStateContext } from "../../store/StateContext";
+import { dateFormat } from "../../utils/utils";
 
 const EditionTimeStamp = ({ APP_ENV }) => {
   const currentDate = new Date();
+  const siteDateTime = dateFormat(currentDate, "%d %MM, %Y, %h:%m %p IST");
 
   return (
     <>
@@ -27,7 +29,8 @@ const EditionTimeStamp = ({ APP_ENV }) => {
               <a className={styles.edHin} target="_blank" rel="noopener dofollow noreferrer" href="https://telugu.economictimes.com/?utm_source=logo&utm_medium=referral&utm_campaign=et">తెలుగు</a>
           </span>
         </div>
-        
+        <span> | </span>
+        <span>{siteDateTime}</span>
         <span> | </span>
         <div>
           <a rel="nofollow" data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" className={`dib ${styles.epaper}`} href={`${ePaper_URL[APP_ENV]}/timesepaper/publication-the-economic-times,city-delhi.cms`} target="_blank">Today's Paper</a>
@@ -40,6 +43,7 @@ const EditionTimeStamp = ({ APP_ENV }) => {
 const getETLogo = (page) => {
   switch(page){
     case "home":
+    case "primehome":  
       return {etLogo: LOGO.ethomelogo, etLogoWidth: 464, etLogoHeight: 51}
     case "articleshow":
     case "primearticleshow": 
