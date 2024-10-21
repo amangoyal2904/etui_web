@@ -17,7 +17,7 @@ export default function MarketMood({ focusArea }) {
     try {
       const [selectedFilter, allFilters] = await Promise.all([
         fetchSelectedFilter(intFilter),
-        fetchFilters({ all: true, marketcap: false }),
+        fetchFilters({}),
       ]);
 
       setData({ selectedFilter, allFilters });
