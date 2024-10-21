@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TextImageMiddile from 'components/TextImageMiddile';
+import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
 export default function Politics({ title, data }) {  
-  const politicsNews = data.slice(0,9);
-  const politicsInbrif = data.slice(14,19);
+  const politicsNews = data.slice(0, 9);
+  const politicsInbrif = data.slice(15, 20);
   return (
     <>
     <section className="politics" data-ga-impression={`Subscriber Homepage#Politics widget impression#`}>
-      <h2><a href="">{title}</a></h2>
-      <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics"}}/>
+      <SectionHeaderWithNewsletter url="/news/politics-nation" title="Politics" sid="5f5a31db80f79664e95679d8"/>
+      <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics", link: "/news/politics"}}/>
       <div className="second">
         <TextImageMiddile data={politicsInbrif} heading="IN Brief"/>
       </div>
@@ -22,32 +23,7 @@ export default function Politics({ title, data }) {
         padding-bottom: 50px;
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
-        border-bottom: 1px solid #9b8680;
-
-        h2 {
-          font-size: 36px;
-          padding-top: 35px;
-          border-top: 3px solid #9b8680;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-          margin-top: 1px;
-
-          a {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              top: -4px;
-              left: 3px;
-              border-top: 2px solid #000;
-              border-left: 2px solid #000;
-              position: relative;
-              cursor: pointer;
-              transform: rotate(135deg);
-            }
-          }
-        }
+        border-bottom: 1px solid #9b8680;        
 
         .first {
           width: 335px;

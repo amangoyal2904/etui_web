@@ -3,6 +3,8 @@ import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow'
 import PrimeIcon from 'components/Icons/PrimeIcon'
 import Separator from 'components/Separator'
+import RenderText from 'components/RenderText'
+import { ET_WEB_URL } from 'utils/common'
 
 export default function InvestmentIdeas({ data, focusArea }) {
   const firstRow = data[0] || {};
@@ -29,7 +31,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
 
         <a href={firstRow.url} target="_blank" className="first">
           <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
-          { firstRow.title }
+          <RenderText text={firstRow.title} />
         </a>        
         {
           rest.map((item, index) => {
@@ -40,7 +42,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
                     <div className="col" key={`col-${index1}`}>
                       { focusArea === "news" && <span className="counter">{(index + 1) * 2 + index1}</span> }
                       <a target="_blank" className="hl" href={item.url} data-conttype="100">
-                        {item.title}
+                        <RenderText text={item.title} />
                         { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }
                       </a>                      
                     </div>
@@ -51,7 +53,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
             )
           })
         }
-        { focusArea === "news" && <a className="seeAllLink" href="/prime" target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
+        { focusArea === "news" && <a className="seeAllLink" href={`${ET_WEB_URL}/prime/investment-ideas`} target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
       </div>
       <style jsx>{`
         .investmentIdeas {          

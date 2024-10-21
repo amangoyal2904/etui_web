@@ -13,11 +13,11 @@ const CryptoExpert = ({ data,title = ""}) => {
                 <li key={ele.msid}>
                   <img alt={ele?.title} src={ele?.img} loading="lazy" height="56" width="56" decoding="async"></img>
                   <div className="details">
-                    <a href={ele?.url} title={ele?.title} className="article">
+                    <a href={ele?.url} title={ele?.title} className="article" target="_blank">
                       {ele?.title}
                     </a>
                     {ele.authors && Array.isArray(ele.authors) && ele.authors.length && (
-                      <a href={ele?.authors[0]?.url} title={ele?.authors[0]?.title} className="author">
+                      <a href={ele?.authors[0]?.url} title={ele?.authors[0]?.title} className="author" target="_blank">
                         {ele?.authors[0]?.title}
                       </a>
                     )}

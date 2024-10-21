@@ -473,3 +473,5 @@ export const getDevStatus = (host: string | string[]) => {
   }
   return false;
 };
+
+export const isWeekend = new Date().getDay() == 0 || new Date().getDay() == 6;

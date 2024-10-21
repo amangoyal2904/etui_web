@@ -4,6 +4,7 @@ import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
+import {dateFormat} from "./utils"
 
 declare global {
   interface Window {
@@ -582,10 +583,6 @@ export const initSSOWidget = () => {
             : "891351984915-kodsh6b9vik3h6ue008fh8jgfstageh6.apps.googleusercontent.com",
       },
       {
-        type: "Facebook",
-        clientId: "424450167700259",
-      },
-      {
         type: "Apple",
         clientId: "com.economictimes.login",
       },
@@ -743,6 +740,26 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
 export const getPageSpecificDimensions = (seo) => {
   const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
   const dateArray = updated.split(",");
+  function formatDate(inputDate) {
+    // Parse the input date string
+      const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+      const parsedDate = new Date(inputDate);
+
+      // Extract and format the date parts
+      const year = parsedDate.getFullYear();
+      const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-11
+      const day = String(parsedDate.getDate()).padStart(2, '0');
+      const hours = String(parsedDate.getHours()).padStart(2, '0');
+      const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+      const seconds = String(parsedDate.getSeconds()).padStart(2, '0');
+
+      // Format as "YYYY-MM-DD HH:mm:ss"
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+  const dateValue = dateArray;
+  const formattedDate = formatDate(dateValue);
+  //console.log("Date Value:-" + formattedDate);
+
   const dateString = dateArray[0] || "";
   const timeString = dateArray[1] || "";
   const { subsec1, subsecname1, subsecname2, subsecname3 } = subsecnames;
@@ -757,7 +774,7 @@ export const getPageSpecificDimensions = (seo) => {
 
   const payload = {
     dimension4: agency,
-    dimension8: dateString,
+    dimension8: formattedDate,
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,
@@ -767,6 +784,7 @@ export const getPageSpecificDimensions = (seo) => {
     dimension29: subsec1,
     dimension48: msid
   };
+  console.log("test for date:--" + dateString);
   return payload;
 };
 
@@ -794,11 +812,34 @@ export const convertMilliseconds = (milliseconds) => {
   }
 }
 
-export function changeImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
-  const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
+export function changeImageWidthHeight({imageUrl, desiredWidth, desiredHeight, desiredResizeMode = 0, quality = 0}) {
+  let newUrl = imageUrl?.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`) || "";
 
   if(desiredResizeMode) {
-    return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+    // replace if resizemode is already present, else add it
+    if(newUrl?.includes('resizemode-')) {
+      newUrl = newUrl?.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+    } else {
+      // add after width
+      newUrl = newUrl?.replace(/(width-\d+)/g, `$1,-resizemode-${desiredResizeMode}`); 
+    }
+  } else {
+    // just remove the resizemode-<mode> part
+    newUrl = newUrl?.replace(/resizemode-\w+/g, '');
+  }
+
+  if(quality) {
+    // replace if quality is already present, else add it
+    if(newUrl.includes('quality-')) {
+      newUrl = newUrl?.replace(/quality-\d+/g, `quality-${quality}`);
+    } else {
+      // add after width
+      newUrl = newUrl?.replace(/(width-\d+)/g, `$1,-quality-${quality}`);
+    }
+    
+  } else {
+    // just remove the quality-<quality> part
+    newUrl = newUrl?.replace(/quality-\d+/g, '');
   }
 
   return newUrl;
@@ -1078,4 +1119,35 @@ export const fetchAllWatchListData = async (
     console.error("Error fetching watchlist data:", error);
     throw error;
   }
+};
+
+export const getOverviewData = async (indexid: number, pageno: number) => {
+  const response = await fetch(`${(APIS_CONFIG as any)?.MARKETMOODS_OVERVIEW[APP_ENV]}?indexid=${indexid}&pageno=${pageno}&pagesize=100`, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers you might need here
+      }
+  });
+  const originalJson = await response?.json();
+  return {
+    labels: originalJson.labels,
+    dataList: originalJson.dataList.map((item: any) => ({
+      date: dateFormat(item.date, "%d %MMM"),
+      indexPrice: formatNumber(item.indexPrice),
+      percentChange: item.percentChange.toFixed(2),
+      trend:
+        item.percentChange > 0
+          ? "up"
+          : item.percentChange < 0
+            ? "down"
+            : "neutral",
+      others: item.count.map((count: number, index: number) => ({
+        count: count,
+        percent: item.percent[index],
+        color: item.color[index],
+      })),
+    })),
+    pageSummary: originalJson.pageSummary,
+  };
 };

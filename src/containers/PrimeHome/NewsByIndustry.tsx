@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from "react";
 import Loading from "../../components/Loading";
+import RenderText from "components/RenderText";
+import { ET_WAP_URL, ET_WEB_URL } from "utils/common";
 
 const IndustryTabsJSON = [
     {
@@ -85,14 +87,12 @@ const NewsByIndustry = ({data, title}) => {
     const [showLoading, setShowLoading] = useState(false);
     const selectedObj = IndustryTabsJSON.find(item => Number(item?.msid) == Number(showTab));
 
-    const articleListApiHit = (listMsid) => {
-        // console.log("test ---- ", articleData?.some(article => console.log("article test", Number(article.msid), listMsid)))
+    const articleListApiHit = (listMsid) => {        
         setShowTab(listMsid);
-        if(!articleData?.some(article => Number(article.msid) == Number(listMsid))){
-            // console.log("articleData --- ", articleData);
+        if(!articleData?.some(article => Number(article.msid) == Number(listMsid))){            
             const pllistArr = [13352306, 107115, 81585238, 78404305, 18606290];
             const typeVal = pllistArr.includes(listMsid) ? "plist" : "articlelist";
-            const apiLink = `https://etpwaapipre.economictimes.com/request?type=${typeVal}&msid=${listMsid}`;
+            const apiLink = `https://etpwaapi${window?.isDev ? 'pre' : ''}.economictimes.com/request?type=${typeVal}&msid=${listMsid}`;
             setShowLoading(true);
 
             fetch(apiLink)
@@ -103,10 +103,10 @@ const NewsByIndustry = ({data, title}) => {
                 setShowLoading(false);
             })
             .catch(error => {
-            console.error('Error:', error);
+                console.error('Error:', error);
             })
             .finally(() => {
-            console.log('finally');
+                console.log('finally');
             });
         }
     }
@@ -193,13 +193,13 @@ const NewsByIndustry = ({data, title}) => {
                         articleList?.map((value, index) => {
                             return (                                                                    
                                 index == 0 && <div className="first" key={index}>
-                                    <a target="_blank" href={value.url}>
+                                    <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
                                         <img 
                                             width="293" 
                                             height="226" 
-                                            title={value.title}
-                                            alt={value.title} 
-                                            src={value.img}
+                                            title={value?.title}
+                                            alt={value?.title} 
+                                            src={value?.img}
                                             loading="lazy" 
                                         />
                                     </a>
@@ -208,11 +208,11 @@ const NewsByIndustry = ({data, title}) => {
                                             <a 
                                                 className="hl" 
                                                 target="_blank" 
-                                                href={value.url}
-                                            >{value.title}</a>
+                                                href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
+                                            ><RenderText text={value?.title || ""} /></a>
                                         </h4>
-                                        <p className="desc wrapLines l3">
-                                            {value.synopsis}
+                                        <p className="desc wrapLines l3">                                            
+                                            <RenderText text={value.synopsis || ""} />
                                         </p>
                                     </div>
                                 </div>                        
@@ -224,7 +224,7 @@ const NewsByIndustry = ({data, title}) => {
                             articleList?.map((value, index) => {
                                 return (                                    
                                     index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv" key={index}>
-                                        <a target="_blank" className="flt" href={value.url}>
+                                        <a target="_blank" className="flt" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
                                             <img 
                                                 width="88" 
                                                 height="66" 
@@ -236,8 +236,8 @@ const NewsByIndustry = ({data, title}) => {
                                         </a>
                                         <div className=" data">
                                             <h4 className="otherDivH">
-                                                <a target="_blank" href={value.url} className="font_faus">
-                                                    {value.title}
+                                                <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className="font_faus">                                                    
+                                                    <RenderText text={value?.title || ""} />
                                                 </a>
                                             </h4>
                                         </div>
@@ -502,11 +502,11 @@ const NewsByIndustry = ({data, title}) => {
         `}</style>
         <section id="newsInds" data-ga-impression={`Subscriber Homepage#Industry widget impression#`} >
             <div className="heading_box">
-                <a href="/industry" target="_blank" className="secname">
+                <a href={`${ET_WEB_URL}/industry`} target="_blank" className="secname">
                     News by <span className="sec_heading">Industry</span>
                 </a>
                 <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href={selectedObj?.link}>{selectedObj?.tabName}</a>
+                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`}>{selectedObj?.tabName}</a>
             </div>
             <div className="news_menu tabsView tabVertical">
                 <ul className="tabs">

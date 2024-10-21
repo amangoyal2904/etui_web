@@ -1,13 +1,14 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import CryptoRhs from './CryptoRhs';
+import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
 export default function CryptocurrencyNews({ title, data, dataTv, dataExpert, titleTv, titleExpert, isDev }) {  
   return (
     <>
     <section className="politics" data-ga-impression={`Subscriber Homepage#Cryptocurrency News widget impression#`}>
-      <h2><a href="">{title}</a></h2>
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Cryptocurrency News"}} />
+      <SectionHeaderWithNewsletter url="/newslist/82519373.cms" title="Cryptocurrency News" sid="610a5e3ce7c4da1efefcdc40"/>
+      <OneImgTwoColsNewsLayout data={data} more={{text: "Cryptocurrency News", link: "/newslist/82519373.cms"}} />
       <CryptoRhs dataTv={dataTv} dataExpert={dataExpert} titleTv={titleTv} titleExpert = {titleExpert} isDev={isDev} />
     </section>
     <style jsx>{`
@@ -15,31 +16,7 @@ export default function CryptocurrencyNews({ title, data, dataTv, dataExpert, ti
         padding-bottom: 50px;
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
-        border-bottom: 1px solid #9b8680;
-
-        h2 {
-          font-size: 36px;
-          padding-top: 35px;
-          border-top: 3px solid #9b8680;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-
-          a {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              top: -4px;
-              left: 3px;
-              border-top: 2px solid #000;
-              border-left: 2px solid #000;
-              position: relative;
-              cursor: pointer;
-              transform: rotate(135deg);
-            }
-          }
-        }
+        border-bottom: 1px solid #9b8680;        
 
         .first {
           width: 335px;

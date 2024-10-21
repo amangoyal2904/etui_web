@@ -13,7 +13,7 @@ interface LoginState {
   error: any | null;
 }
 
-type LoginAction = { type: "LOGIN_SUCCESS"; payload: any } | { type: "LOGOUT"; payload: any };
+type LoginAction = { type: "LOGIN_SUCCESS"; payload: any } | { type: "LOGOUT"; payload: any } | { type: "SETPINKTHEME"; payload: any };
 
 const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
   switch (action.type) {
@@ -46,9 +46,14 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         permissions: [], 
         email: "",
         isAdfree: action.payload.ssoReady,
-        isPink: false,
+        isPink: action.payload.isPink,
         error: null
       };
+    case "SETPINKTHEME": 
+      return {
+        ...state,
+        isPink: action.payload.isPink,
+      }; 
     default:
       return state;
   }

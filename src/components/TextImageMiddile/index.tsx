@@ -1,8 +1,8 @@
-import MoreFromLink from 'containers/PrimeHome/MoreFromLink'
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 import styles from './styles.module.scss';
+import RenderText from 'components/RenderText';
 
-const TextImageMiddile = ({data, heading}) => {
-    // console.log("test", data);
+const TextImageMiddile = ({data, heading}) => {    
   return (
     <div className={styles.riseMiddle}>
         <div className={styles.heading}>{heading}</div>
@@ -10,11 +10,13 @@ const TextImageMiddile = ({data, heading}) => {
             <ul>
                 {data?.map((item, index) => (
                     <li key={`politics_${index}`}> 
-                        <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href={item.url} className={styles.imglink}>
+                        <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className={styles.imglink}>
                             <img width="100" height="75" alt={item.title} loading="lazy" src={item.img} />
                             {item.type === "slideshow" && <span className={`${styles.subSprite} ${styles.slideIcon}`}></span> }
                         </a>
-                        <a data-ga-onclick="Expert Views - 1 - href" target="_blank" href={item.url}>{item.title}</a>
+                        <a target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+                            <RenderText text={item.title} />
+                        </a>
                     </li>
                 ))}
             </ul>

@@ -1,17 +1,35 @@
 import MoreFromLink from 'containers/PrimeHome/MoreFromLink'
 import styles from './styles.module.scss';
+import useEmblaCarousel from 'embla-carousel-react';
+import {
+    PrevButton,
+    NextButton,
+    usePrevNextButtons
+  } from '../../components/CarouselArrowBtn';
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
+import { changeImageWidthHeight } from 'utils';
 
 const WealthWebstory = ({data, heading}) => {
+    const OPTIONS = {loop: false}
+    const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
+
+    const {
+        prevBtnDisabled,
+        nextBtnDisabled,
+        onPrevButtonClick,
+        onNextButtonClick
+    } = usePrevNextButtons(emblaApi)
+
   return (
     <div className={styles.wealth_ws}>
         <div className={styles.pd_txt}>Web Stories</div>
-        <div className={styles.overh}>
-            <div className={styles.sliderWidget}>
-                <ul className={styles.slider_ul}>
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled}  color={'red'} widget={`other`} />
+            <div ref={emblaRef} className={`embla ${styles.sliderWidget}`}>
+                <ul className={`embla__container ${styles.slider_ul}`}>
                     {data?.map((item, index) => (
-                        <li className={styles.listItem} key={`politics_${index}`}> 
-                            <a target="_blank" href={item.url} className={styles.ancher}>
-                                <img width="250" height="444" alt={item.title} loading="lazy" src={item.img} />
+                        <li className={`embla__slide ${styles.listItem}`} key={`politics_${index}`}> 
+                            <a target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className={styles.ancher}>
+                                <img width="250" height="444" alt={item.title} loading="lazy" src={changeImageWidthHeight({imageUrl: item.img, desiredWidth: 250, desiredHeight: 444})} />
                                 <p className={styles.title}>
                                     <span className={`${styles.subSprite} ${styles.webStIcon}`}></span>
                                     {item.title}
@@ -22,11 +40,7 @@ const WealthWebstory = ({data, heading}) => {
                     ))}
                 </ul>
             </div>
-            <div className={styles.nextprevBtn}>
-                <i className={`${styles.subSprite} ${styles.prevbtn} ${styles.btn} ${styles.disable}`} title="Button Prev"></i>
-                <i className={`${styles.subSprite} ${styles.nextbtn} ${styles.btn} ${styles.flr}`} title="Button Next"></i>
-            </div>
-        </div>
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled}  color={'red'} widget={`other`} />  
     </div>
   )
 }

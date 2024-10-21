@@ -1,6 +1,7 @@
 import LiveIcon from 'components/Icons/LiveIcon'
 import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow'
+import RenderText from 'components/RenderText';
 
 export default function MarketsTopNews({ data, focusArea }) {
   
@@ -25,7 +26,7 @@ export default function MarketsTopNews({ data, focusArea }) {
           data.map((item, index) => (
             <li key={index}>
               {item.type == "liveblog" && <LiveIcon />}
-              <a href={item.url}>{item.title}</a>              
+              <a href={item.url} target="_blank"><RenderText text={item.title} /></a>
             </li>
           ))
         }

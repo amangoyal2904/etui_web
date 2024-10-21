@@ -9,11 +9,18 @@ import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
 import { ET_WEB_URL } from 'utils/common';
 import { dateFormat } from 'utils/utils';
+import WatchlistAddition from "components/WatchlistAddition";
 
 export default function StockRecos({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
-  const tabs = ["New Recos", "High Upside", "High Downside"];
+  const tabs = ["New Recos", "Most Buys", "Most Sells"];
+
+  const tabLinks = [
+    "/markets/stock-recos/newrecos/all",
+    "/markets/stock-recos/highupside",
+    "/markets/stock-recos/highdownside",
+  ]
 
   const sliderRef = useRef(null);
   const innerRef = useRef(null);
@@ -25,9 +32,7 @@ export default function StockRecos({ focusArea }) {
     let scrollBy = 251  ; 
     if(innerRef.current && sliderRef.current) {       
       const viewportWidth = sliderRef.current.offsetWidth;
-      const innerWidth = innerRef.current.offsetWidth;
-
-      console.log("viewportWidth", viewportWidth, "innerWidth", innerWidth);
+      const innerWidth = innerRef.current.offsetWidth;      
 
       const scrollableWidth = innerWidth - viewportWidth;
       let scrollAmount = 0;
@@ -119,7 +124,7 @@ export default function StockRecos({ focusArea }) {
     <>
       <div className={`${focusArea}`}>
         <HeadingWithRightArrow title="Stock Recos" />
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea}/>
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
         <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
@@ -130,7 +135,20 @@ export default function StockRecos({ focusArea }) {
               data?.slice(0, howMany)?.map((item, index) => (
                 <div className={`${styles.card} card`} key={index}>
                   { activeTab == 0 && <div className={styles.firstRow}><span className={styles.cat}>{item?.recoType}</span> | Call Date: {dateFormat(item?.priceAtRecosDate || "", "%MMM %d, %Y")}</div>}
-                  <div className={`${styles.title} ${activeTab > 0 ? 'thisTop' : ''}`}><a href={`${ET_WEB_URL}${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank">{item?.companyName}</a></div>
+                  <div className={`${styles.title} ${activeTab > 0 ? styles['thisTop'] : ''} ${activeTab > 0 ? 'thisTop' : ''}`}>
+                    <a href={`${ET_WEB_URL}/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank">{item?.companyName}</a>
+                    <span className={styles.watchlistIcWrp}>
+                      <WatchlistAddition
+                        companyName={item.companyShortName}
+                        companyId={item?.companyId}
+                        companyType={item.companyType}
+                        customStyle={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+                    </span>
+                  </div>
                   <div className={styles.row}>
                     <div className={`${styles.col} ${styles.up} ${activeTab == 2 ? 'down' : ''}`}>
                       {item?.potentialText}
@@ -173,7 +191,7 @@ export default function StockRecos({ focusArea }) {
                   </div>
                   { activeTab == 0 ? 
                   <div className={styles.footer}>
-                    Brokerage: <a href={`${ET_WEB_URL}markets/stock-recos/brokerages/${item?.seoName}/all`} target="_blank">{item?.organisation}</a>
+                    Brokerage: <a href={`${ET_WEB_URL}/markets/stock-recos/brokerages/${item?.seoName}/all`} target="_blank">{item?.organisation}</a>
                   </div>
                   : <div className="footer">
                       <div className="left">
@@ -186,7 +204,6 @@ export default function StockRecos({ focusArea }) {
                       </div>
                     </div>
                   }
-                  <span className={`addToWatchListIcon`}>&#43;</span>
                 </div>
               ))
               
@@ -194,9 +211,14 @@ export default function StockRecos({ focusArea }) {
           </div>
         </div>
         
-        <ViewAllCta title="Stock Recos" url="/markets/stock-recos/overview" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`
+        .news {
+          .arr {
+            display: none;
+          }
+        }
         .market {
           position: relative;
           .cardsWrapper {

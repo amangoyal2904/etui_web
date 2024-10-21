@@ -6,11 +6,13 @@ import ViewAllCta from '../ViewAllCta';
 import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
 import { ET_WEB_URL } from 'utils/common';
+import PrimeIcon from 'components/Icons/PrimeIcon';
 
 export default function StockReportPlus({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
   const tabs = ["High Upside", "Top Score Companies", "Score Upgrade"];
+  const tabLinks = ["/markets/benefits/stockreportsplus", "/markets/benefits/stockreportsplus", "/markets/benefits/stockreportsplus"];
 
   const sliderRef = useRef(null);
   const innerRef = useRef(null);
@@ -118,8 +120,9 @@ export default function StockReportPlus({ focusArea }) {
   return (
     <>
       <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Stock reports plus widget impression#`}>
+      { <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title="Stock Report Plus" />
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />      
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />     
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
         <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
@@ -149,7 +152,7 @@ export default function StockReportPlus({ focusArea }) {
             return (
               <div className="card" key={index}>
                 <div className="left">
-                  <a href={`${ET_WEB_URL}${item?.seoName}/stocks/companyid-${item?.companyID}.cms`} className="name" target="_blank">{item?.name || ""}</a>
+                  <a href={`${ET_WEB_URL}/${item?.seoName}/stocks/companyid-${item?.companyID}.cms`} className="name" target="_blank">{item?.name || ""}</a>
                   <div className="title">{recText?.value}</div>
                   <div className="description">Mean Recos by {parseInt(recCnt?.value || 0)} Analysts</div>
                   <div className="graph">
@@ -181,7 +184,7 @@ export default function StockReportPlus({ focusArea }) {
                       Strong Buy
                     </span>
                   </div>
-                  <ViewReportCta url={`${ET_WEB_URL}${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} />
+                  <ViewReportCta url={`${ET_WEB_URL}/${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} />
                 </div>
                 <div className="right up">
                   <div>
@@ -202,9 +205,14 @@ export default function StockReportPlus({ focusArea }) {
           })}    
           </div>            
         </div>
-        <ViewAllCta title="High Upside Stocks" url="/stock-report-plus" isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
-      <style jsx>{`        
+      <style jsx>{` 
+        .news {
+          .arr {
+            display: none;
+          }
+        }       
         .slider {
           overflow: hidden;
         }
@@ -221,6 +229,8 @@ export default function StockReportPlus({ focusArea }) {
           margin: 10px 0;
           display: flex;
           gap: 10px;
+          box-sizing: border-box;
+          width: 320px;
 
           .left {
             flex: 1;
@@ -378,10 +388,7 @@ export default function StockReportPlus({ focusArea }) {
 
           .cardsWrapper {
             flex-direction: row;
-            gap: 20px;
-            .card {
-              min-width: 320px;
-            }
+            gap: 20px;            
           }          
         }      
       `}</style>

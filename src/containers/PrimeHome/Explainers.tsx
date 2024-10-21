@@ -6,6 +6,9 @@ import {
     NextButton,
     usePrevNextButtons
   } from '../../components/CarouselArrowBtn';
+import { changeImageWidthHeight } from 'utils';
+import RenderText from 'components/RenderText';
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 
 export default function Explainers({ data, title }) {
   const OPTIONS = {loop: false}
@@ -27,16 +30,7 @@ export default function Explainers({ data, title }) {
       <section className="explainers secBox" data-ga-impression={`Subscriber Homepage#Editor Pick widget impression widget impression#`}>
         <h2>{title || ""}</h2>
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
-        <div className="slider embla" ref={emblaRef}>
-          {/* <div className="itemWrap">
-          {
-            data?.map((item, index) => <a key={index} className="item" href={item?.link} target="_blank">
-                <img src={item?.img} alt={item?.title} width={256} height={192} title={item?.title} />
-                {item?.title || ""}
-              </a>            
-            )
-          }
-          </div>           */}
+        <div className="slider embla" ref={emblaRef}>          
           <div className="embla__container">
             {
               subsets.map((subset, index) => {
@@ -45,9 +39,9 @@ export default function Explainers({ data, title }) {
                     {
                       subset.map((item, index1) => {
                         return (
-                          <a href={item?.link} target="_blank" className="item" key={`${index}_${index1}`}>
-                            <img src={item?.img} alt={item?.title} width={256} height={192} title={item?.title} />
-                            {item?.title || ""}
+                          <a target="_blank" className="item" key={`${index}_${index1}`} href={`${item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`}>
+                            <img alt={item?.title} width={256} height={192} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 256, desiredHeight: 192})} />
+                            <RenderText text={item?.title} />
                           </a>
                         )
                       })
@@ -60,10 +54,9 @@ export default function Explainers({ data, title }) {
         </div>
         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`other`} />
       </section>
-      <style jsx>{`
-        
+      <style jsx>{`        
         .subSprite {
-          background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+          background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
           display: inline-block;
           background-size: 475px;
         }
@@ -89,6 +82,12 @@ export default function Explainers({ data, title }) {
                 background-color: #fff9f7;
                 padding: 15px;
                 margin-right: 33.357px;
+                font-size: 18px;
+                font-family: 'Faustina', serif;
+
+                &:hover {
+                  text-decoration: underline;
+                }
 
                 &:nth-child(4n) {
                   margin-right: 0;

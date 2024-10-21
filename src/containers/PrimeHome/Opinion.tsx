@@ -1,5 +1,6 @@
 import React from 'react';
 import GLOBAL_CONFIG from "../../network/global_config.json";
+import { ET_WEB_URL } from 'utils/common'
 
 const Opinion = ({OpinionData, focusArea}) => {
     const imgDomain = GLOBAL_CONFIG["ET_IMG_DOMAIN"];
@@ -7,7 +8,7 @@ const Opinion = ({OpinionData, focusArea}) => {
     <>
         <div className={`opinionWidget ${focusArea}`} data-ga-impression={`Subscriber Homepage#Opinion widget impression#`}>
             <h2 className="heading">
-                <a href="/opinion" target="_blank">OPINION</a>
+                <a href={`${ET_WEB_URL}/opinion`} target="_blank">OPINION</a>
             </h2>
             <ul className="opinionWdWrp">
                 {

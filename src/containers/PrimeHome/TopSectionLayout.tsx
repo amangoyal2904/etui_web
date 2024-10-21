@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TodayNews from './TodayNews'
 import PrimeBenefitsBucket from './PrimeBenefitsBucket';
 import PrimeExclusives from './PrimeExclusives';
@@ -16,9 +16,13 @@ import MarketMood from './MarketMood';
 import LiveStream from './LiveStream';
 import Opinion from "./Opinion";
 import NewsByIndustry from "./NewsByIndustry";
+import MyWatchListDashboard from './MyWatchListDashboard';
+import API_CONFIG from "../../network/config.json";
+import jStorageReact from 'jstorage-react';
 
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
-  const [focusArea, setFocusArea] = React.useState("news");
+  const [focusArea, setFocusArea] = useState("market");
+  const [showNotification, setShowNotification] = useState(false);
   const todayNews = searchResult?.find(item => item?.name === "today_news") || {};
   const primeExclusives = searchResult?.find(item => item?.name === "prime_exclusives") || {};
   const investmentIdeas = searchResult?.find(item => item?.name === "investment_ideas") || {};
@@ -26,7 +30,69 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const NewsByIndustryData = searchResult?.find(item => item?.name === "news_by_industry") || {};
   const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   const marketsTopNews  = searchResult?.find(item => item?.name === "markets_top_news") || {};
-  // console.log("topNews", searchResult);
+
+  function saveFocusAreaPreference(focusArea) {    
+    setFocusArea(focusArea);
+
+    const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
+    if(primeHomeFocusArea2024) {
+      primeHomeFocusArea2024.focusArea = focusArea;
+      primeHomeFocusArea2024.focusAreaChangedAt = Date.now();
+    }
+
+    // save for 1 year
+    jStorageReact.set("primeHomeFocusArea2024", JSON.stringify(primeHomeFocusArea2024), {TTL: 365*24*60*60*1000});
+
+    const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_SAVE"][window?.APP_ENV];
+    const ssoid = window?.objUser?.info?.ssoid || "bo6gekyrgw2kekv61lq1e8m77a";
+    const data = {
+      enableMarketFocus: focusArea === "market" ? true : false,
+      ssoId: ssoid
+    };
+
+    fetch(api, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"        
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Focus Area Data: ", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      })
+  }
+  
+  useEffect(() => {
+    const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET"][window?.APP_ENV];
+    const ssoid = window?.objUser?.info?.ssoid || "bo6gekyrgw2kekv61lq1e8m77a";
+
+    fetch(api, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${ssoid}`
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // if (data?.focusArea) {
+        //   setFocusArea(data?.focusArea);
+        // }
+        if(data?.statusCode === 200) {
+          setFocusArea(data?.enableMarketFocus ? "market" : "news");
+          setShowNotification(data?.showFocusNotification)
+        }
+        console.log("Focus Area Data: ", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
   return (
     <>
       <section className="topLayout">
@@ -37,15 +103,16 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             </div>
             <div className="col2">
               <div className="titleNSwitch">
+                { showNotification && <FocusAreaNotification focusArea={focusArea} /> }
                 <span className="title">ETPRIME</span>
                 <span className="switch">
-                  <span className={focusArea === "news" ? "active" : ""} onClick={() => setFocusArea("news")}>NEWS FOCUS</span>
+                  <span className={focusArea === "news" ? "active" : ""} onClick={() => saveFocusAreaPreference("news")}>NEWS FOCUS</span>
                   <span className="switchIcon" onClick={() => {
                     focusArea === "news" ? setFocusArea("market") : setFocusArea("news")
                   }}>
                     <i className={focusArea === "news" ? "left" : "right"}></i>
                   </span>
-                  <span className={focusArea === "market" ? "active" : ""} onClick={() => setFocusArea("market")}>MARKET FOCUS</span>
+                  <span className={focusArea === "market" ? "active" : ""} onClick={() => saveFocusAreaPreference("market")}>MARKET FOCUS</span>
                 </span>
               </div>
               <PrimeBenefitsBucket focusArea={focusArea}/>
@@ -63,6 +130,8 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                   <Separator />
                   <IndicesWidget isDev={isDev} focusArea={focusArea}/>
                   <Separator />
+                  <MyWatchListDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
+                  <Separator />
                   <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea}/>
                   <Separator />
                   <StockRecos focusArea={focusArea}/>
@@ -71,7 +140,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                   <Separator />
                   <BigBullPortfolio focusArea={focusArea}/>
                   <Separator />
-                  <MarketMood />
+                  <MarketMood focusArea={focusArea} />
                 </>
               }
             </div>
@@ -101,6 +170,8 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <Separator />
             <IndicesWidget isDev={isDev} focusArea={focusArea}/>
             <Separator />
+            <MyWatchListDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
+            <Separator />
             <MarketDashboard isDev={isDev} ssoid={ssoid} focusArea={focusArea} />
             <Separator />
             <StockRecos focusArea={focusArea}/>
@@ -109,12 +180,12 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <Separator />
             <BigBullPortfolio focusArea={focusArea}/>
             <Separator />
-            <MarketMood />
+            <MarketMood focusArea={focusArea} />
           </>
           }
 
           <Separator />
-          <LiveStream />
+          <LiveStream isDev={isDev} />
         </div>
       </section>
       {
@@ -159,6 +230,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
               padding-bottom: 7px;
               border-bottom: 3px solid #9b8680;
               align-items: center;
+              position: relative;
 
               .title {
                 font-size: 20px;
@@ -208,6 +280,119 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
               border-bottom: 3px solid #9b8680;
             }
           }
+        }
+      `}</style>
+    </>
+  )
+}
+
+function FocusAreaNotification({ focusArea }) {
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
+    
+    console.log("primeHomeFocusArea2024: ", primeHomeFocusArea2024);
+
+    // on first load and if time elapsed is 2 days, show notification
+    if(primeHomeFocusArea2024) {
+      if(!primeHomeFocusArea2024.focusArea || !primeHomeFocusArea2024.focusAreaChangedAt) {
+        setShowNotification(true);
+      } else {
+        const timeElapsed = Date.now() - primeHomeFocusArea2024.focusAreaChangedAt;
+        if(timeElapsed > 2*24*60*60*1000) {
+          setShowNotification(true);
+        }
+      }
+    }
+
+    const timer = setTimeout(() => {
+      setShowNotification(false);
+    }, 10*1000);
+
+    return () => {
+      timer && clearTimeout(timer); 
+    }
+  }, []);
+
+  if (!showNotification) return null;
+
+  return (
+    <>      
+      <div className="notification">           
+        <span className="close" onClick={() => setShowNotification(false)}>&times;</span>
+        <div className="title">
+          {focusArea === "market" ? 
+          "You're experiencing market centric view!"
+          : "You're in the news view!"}
+        </div>
+        <div className="desc">Want more {focusArea === "market" ? "news" : "market updates"}? Switch to '<span className="focus">{focusArea === "market" ? "News" : "Market"} Focus</span>' {focusArea === "market" ? "anytime" : "now"}.</div>          
+      </div>
+    
+      <style jsx>{`
+        @keyframes moveUpDown {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        
+        .notification {     
+          width: 384px;     
+          padding: 14px 28px 14px 14px;
+          background: #000;
+          border-radius: 10px;
+          color: #fff;
+          font-family: Montserrat;
+          line-height: 20px;
+          position: absolute;
+          right: -102px;
+          top: -75px;
+          animation: moveUpDown 2s infinite;          
+
+          &::after {            
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: #000;
+            border-bottom: 0;
+            margin-left: -10px;
+            margin-top: -1px;
+          }
+
+          .focus {
+            color: #efc222;
+          }
+          .close {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            cursor: pointer;
+            background: #F00;
+            width: 14px;
+            height: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 20px;
+          }
+
+          .title {            
+            font-size: 17px;
+            font-weight: 600;
+          }  
+
+          .desc {            
+            font-size: 13px;
+            font-weight: 400;            
+          }               
         }
       `}</style>
     </>

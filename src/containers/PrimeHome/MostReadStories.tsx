@@ -8,6 +8,8 @@ import {
   import { DotButton, useDotButton } from '../../components/CarouselDotBtn';
   import SocialShare from "../../utils/socialShare";
 import Bookmark from 'components/Bookmark';
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
+import RenderText from 'components/RenderText';
 
 const MostReadStories = ({MostReadStoriesRes}) => {
     const OPTIONS = {loop: false}
@@ -50,7 +52,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                             <div className='contentWrap'>
                                                 <a 
                                                     target="_blank" 
-                                                    href={item.url}
+                                                    href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                                                     className='flr'
                                                 >
                                                     <img 
@@ -62,13 +64,15 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         className="im lazy" />
                                                 </a>
                                                 <div className="info_box">
-                                                    <span>News</span>
+                                                    <span>{item?.parenttitle}</span>
                                                     <a 
                                                         title={item.title}  
                                                         target="_blank" 
                                                         className="line_4" 
-                                                        href={item.url}
-                                                    >{item.title}</a>
+                                                        href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
+                                                    >
+                                                        <RenderText text={item.title} />                                                                                                            
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div className='icon'>
@@ -78,14 +82,15 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         <div className='shareIconWrp'>
                                                             <span 
                                                                 className="fb cSprite" 
-                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "fb" })}></span>
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}, type: "fb" })}
+                                                            ></span>
                                                             <span 
                                                                 className="twt cSprite" 
-                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "twt" })}
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}, type: "twt" })}
                                                             ></span>
                                                             <span 
                                                                 className="wa cSprite" 
-                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item.url}, type: "wa" })}
+                                                                onClick={e => SocialShare.Share(e, { ...{title: item.title, url:item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}, type: "wa" })}
                                                             ></span>
                                                         </div>
                                                     </div>
@@ -119,6 +124,12 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                 display: flex;
                 justify-content: center;
                 padding: 30px 0 50px;
+            }
+            .mostReadStories{
+                padding-top: 1px;
+                position: relative;
+                border-top: 1px solid #9b8680;
+                box-sizing: border-box;
             }
             .mostReadStoriesWrp{
                 padding-top: 50px;

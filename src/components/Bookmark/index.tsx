@@ -11,8 +11,8 @@ interface BookmarkProps {
     msid: string;
     hostId: string;
     type: string;
-    widget: string;
-    apiType: string;
+    widget?: string;
+    apiType?: string;
 }
 
 const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) => {
@@ -52,10 +52,16 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                 const data = await response.json();
                 
                 if (apiType === 'single' && data && data.details && data.details.length) {
-                    window.bookmarkApiRes = data.details;
+                    const bookmarkListArr = data.details.map((entry: any) => ({
+                        msid: entry.msid,
+                      })).filter(Boolean);
+                    window.bookmarkApiRes = bookmarkListArr;
                     setIsBookmarked(1);
                 } else if (apiType === 'all' && data && data.details && data.details.length) {
-                    window.bookmarkApiRes = data.details;
+                    const bookmarkListArr = data.details.map((entry: any) => ({
+                        msid: entry.msid,
+                      })).filter(Boolean);
+                    window.bookmarkApiRes = bookmarkListArr;
                     const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
                     document.dispatchEvent(bookmarkStatusForAll);
                 }
@@ -63,6 +69,9 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                 window.bookmarkApiHitStatus = 'failed';
                 console.error("Error fetching bookmark status:", error);
             }
+        }else if(window.bookmarkApiHitStatus === 'success' && window.bookmarkApiRes.length > 0){
+            const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
+            document.dispatchEvent(bookmarkStatusForAll);    
         }
     }, [msid, type, apiType, setIsBookmarked]);
 
@@ -100,7 +109,8 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
             console.log('saveBookmark isLogin');
             const Authorization = getCookie("peuuid") || '';
             const url = APIS_CONFIG.saveNews[window.APP_ENV];
-            const channelId = hostId === "364" ? 4 : 0;
+            const channelId = hostId === "364" ? 4 : hostId === "318" ? 1 : 0;
+            const action = isBookmarked === 1 ? 0 : 1
 
             try{
                 const response = await fetch(`${url}`, {
@@ -131,6 +141,18 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                 const data = await response.json();
 
                 if (data.length && data[0]?.status === "success") {
+                    window.bookmarkApiRes =
+                        action === 1
+                            ? [
+                                ...window.bookmarkApiRes,
+                                {
+                                msid: msid
+                            },
+                            ]
+                            : window.bookmarkApiRes.filter(
+                                (item: any) =>
+                                item.msid != msid
+                            );
                     setIsBookmarked((prev) => (prev === 1 ? 0 : 1));
                 }
             } catch(e){
@@ -142,7 +164,10 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
     }
     return (
         <span className={`${widget == 'mostread_primehome' ? 'mostread_bookmark' : 'bookmark'}  ${isBookmarked ? 'saved' : ''}`} onClick={saveBookmark}>
-            <img src={`https://img.etimg.com/photo/${isBookmarked ? '63696446' : '63696304'}.cms`} alt="bookmark icon" />
+            {
+                apiType == "all" ? <span className={`cSprite bookmark-icon ${isBookmarked ? 'saved' : ''}`}></span> :
+                <img src={`https://img.etimg.com/photo/${isBookmarked ? '63696446' : '63696304'}.cms`} alt="bookmark icon" />
+            }
             <style jsx>{`
                 .bookmark {
                     position: relative;
@@ -157,6 +182,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    margin-top: 10px;
                 }
 
                 .mostread_bookmark{
@@ -167,6 +193,22 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                     align-items: flex-start;
                     justify-content: center;
                     cursor: pointer;
+                }
+
+                .cSprite {
+                    background: url('https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg') no-repeat;
+                    display: inline-block;
+                    background-size: 475px;
+
+                    &.bookmark-icon {
+                        width: 9px;
+                        height: 15px;
+                        background-position: -79px -6px;
+
+                        &.saved {
+                            background-position: -91px -6px;
+                        }
+                    }
                 }
             `}</style>
         </span>

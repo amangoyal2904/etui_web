@@ -4,7 +4,7 @@ import styles from "./DashboardWidget.module.scss";
 import StockFilterNifty from "../../../components/StockFilterNifty";
 import refeshConfig from "../../../utils/refreshConfig.json";
 import { fetchSelectedFilter } from "../../../utils";
-import { getCustomViewTable } from "./MarketDashboadFetch";
+import { getCustomViewTable } from "./DashboadFetch";
 import { useStateContext } from "../../../store/StateContext";
 import VerticalTabs from "../../../components/VerticalTabs";
 import DashboardStockData from "./DashboardStockData";
@@ -14,8 +14,9 @@ import ViewAllLink from "../../../components/ViewAllLink";
 import useIntervalApiCall from "../../../utils/useIntervalApiCall";
 import HeadingWithRightArrow from "../HeadingWithRightArrow";
 import DayFilter from "./DayFilter";
+import { ET_WEB_URL } from "../../../utils/common";
 
-const MarketDashBoardTable = ({
+const DashBoardTable = ({
   selectedFilter = {},
   allFilters = {},
   bodyParams = {},
@@ -25,12 +26,13 @@ const MarketDashBoardTable = ({
   shortUrlMapping = [],
   focusArea,
   ssoid = "",
-  APP_ENV = ""
+  APP_ENV = "",
+  wdName = ""
 }: any) => {
   const dashboardRef = useRef<HTMLDivElement>(null);
   const { state } = useStateContext();
   const { currentMarketStatus } = state.marketStatus;
-  const { isPrime } = state.login;
+  const { isPrime, isLogin } = state.login;
   const [showFilter, setShowFilter] = useState(false);
   const [niftyFilterData, setNiftyFilterData] = useState(selectedFilter);
   const [payload, setPayload] = useState(bodyParams);
@@ -85,9 +87,9 @@ const MarketDashBoardTable = ({
     const bodyParams = {
       viewId: selectedTab.viewId,
       apiType: activeTab,
-      ...((selectedTab.viewId == 6925 || selectedTab.viewId == 6926) && dayFilterData.value ? { duration: dayFilterData.value } : {}),
-      filterValue: filter,
-      filterType: filter == undefined || !isNaN(Number(filter)) ? "index" : "marketcap",
+      ...( dayFilterData.value ? { duration: dayFilterData.value } : {}),
+      filterValue: wdName == "My Watchlist" ? [] : filter,
+      filterType: wdName == "My Watchlist" ? "watchlist" : filter == undefined || !isNaN(Number(filter)) ? "index" : "marketcap",
       sort: [],
       pagesize: 6,
       pageno: 1,
@@ -130,22 +132,23 @@ const MarketDashBoardTable = ({
       <div className={`wrapper ${styles.wrapper} ${focusArea} ${styles[focusArea]}`} ref={dashboardRef}>
         <div className="dflex space-between head_dashboard">
           <div>
-            <HeadingWithRightArrow title={`Stocks Dashboard`} />
+            <HeadingWithRightArrow title={wdName} />
           </div>
-          <div className="filterBtnWrp">
+          {wdName != "My Watchlist" &&<div className="filterBtnWrp">
             <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)}>
-              <i className="eticon_filter"></i>
+              <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
               <span>{niftyFilterData?.name}</span>
             </span>
             {(selectedTab.viewId == 6925 || selectedTab.viewId == 6926) && focusArea == "market" && (
               <div className={`prel dayflWrp`}>
                 <span className="roundBtn" onClick={() => setDayFilterShow(!dayFilterShow)}>
                   {dayFilterData.label}
+                  <img src="https://img.etimg.com/photo/114042583.cms" width={20} height={20} alt="Stock Filter" />
                 </span>
                 {dayFilterShow && <DayFilter setDayFilterShow={setDayFilterShow} dayList={dayList} dayFilterData={dayFilterData} setDayFilterData={setDayFilterData} />}
               </div>
             )}
-          </div>
+          </div>}
         </div>
         <div className={`dflex ${styles.fullWidth}`}>
           {!!processingLoader && <Loading />}
@@ -158,23 +161,24 @@ const MarketDashBoardTable = ({
             isCenter="true"
           />
           <div className={styles.stockData}>
-            {tableData?.length ? (
+            {isLogin != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? (
               tableData.map((item: any, index: any) => (
                 <DashboardStockData
                   key={index}
                   item={item}
                   highlightLtp={!!currentMarketStatus && currentMarketStatus != "CLOSED"}
                   focusArea={focusArea}
+                  wdName={wdName}
                 />
               ))
             ) : (
-              <Blocker type={"noDataMinimal"} />
-            )}
-            <ViewAllLink text={selectedTab.cta} link={linkHref} />
+              <Blocker type={wdName == "My Watchlist" ? "noStocks" : "noDataFound"} />
+            ))}
+            <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />
           </div>
         </div>
       </div>
-      {showFilter && (
+      {wdName != "My Watchlist" && showFilter && (
         <StockFilterNifty
           data={filterMenuData}
           onclick={showFilterMenu}
@@ -187,6 +191,13 @@ const MarketDashBoardTable = ({
       <style jsx>{`
         .dflex {
           display: flex;
+        }
+        .news{
+          .head_dashboard{
+            h2{
+              font-size: 15px;
+            }
+          }  
         }
         .head_dashboard {
           justify-content: space-between;
@@ -225,4 +236,4 @@ const MarketDashBoardTable = ({
   );
 };
 
-export default MarketDashBoardTable;
+export default DashBoardTable;

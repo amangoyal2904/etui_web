@@ -21,89 +21,67 @@ import { useStateContext } from "store/StateContext";
 
 function PrimeHome({ searchResult, isDev, ssoid}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
+  const marketExpertViews = searchResult?.find(item => item?.name === "market_expert_views") || {};
+  const marketLiveblog = searchResult?.find(item => item?.name === "market_liveblog") || {};
+  const marketMoguls = searchResult?.find(item => item?.name === "market_moguls") || {};
   const marketPodcastData = searchResult?.find(item => item?.name === "market_podcast") || {};
   const mutualFunds = searchResult?.find(item => item?.name === "mutual_funds") || {};
   const wealth = searchResult?.find(item => item?.name === "wealth") || {};
   const tech = searchResult?.find(item => item?.name === "tech") || {};
   const techNewsLetters = searchResult?.find(item => item?.name === "tech_newsletters") || {};
   const rise = searchResult?.find(item => item?.name === "rise") || {};
+  const popularInSmallBiz = searchResult?.find(item => item?.name === "popular_in_small_biz") || {};
   const cryptocurrencyNews = searchResult?.find(item => item?.name === "cryptocurrency_news") || {};
   const wealthslideshow = searchResult?.find(item => item?.name === "et_wealth_slideshow") || {};
+  const wealthWebStories = searchResult?.find(item => item?.name === "wealth_web_stories") || {};
   const cryptoTv = searchResult?.find(item => item?.name === "crypto_tv") || {};
   const cryptoExpert = searchResult?.find(item => item?.name === "crypto_expert_speak") || {};
   const politics = searchResult?.find(item => item?.name === "politics") || {};
   const slideshows = searchResult?.find(item => item?.name === "slideshows") || {};
   const webStories = searchResult?.find(item => item?.name === "web_stories") || {};
   const panache = searchResult?.find(item => item?.name === "panache") || {};
+  const panacheVideosSlideshows = searchResult?.find(item => item?.name === "panache_videos_slideshow") || {};
   const explainers = searchResult?.find(item => item?.name === "explainers") || {};
   const moreFromeEconomicTimes = searchResult?.find(item => item?.name === "more_from_economictimes")?.data || [];
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
-  const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};
-  // console.log("explainers", explainers);
+  const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};  
 
   const { state, dispatch } = useStateContext();
+  const { isLogin } = state.login;
 
   useEffect(() => {
-    document.body.classList.add('isprimeuser');
-    // document.querySelector('#topnav')?.classList.add('layout1260');
-    // document.querySelector('nav')?.classList.add('layout1260');
-    document.querySelectorAll('header nav, header > div:first-child').forEach((el) => {
-      el?.classList?.add('layout1260');
-      // el?.style?.backgroundColor = 'transparent';
+    dispatch({
+      type: "SETPINKTHEME",
+      payload: {
+        isPink: true
+      },
     });
-
-    // append css rules in head
-    const style = document.createElement('style');
-    style.innerHTML = `
-      #topnavBlk {
-        border-top: 1px solid #debdb4;
-        border-bottom: 2px solid #debdb4;
-        background-color: #ffded4;
-        width: 100%;
-      }
-      header nav {
-        background: transparent !important;
-      }
-      #topnav > div{
-        padding-left: 7px;
-        padding-right: 7px;
-      }
-      #topnav > div > a {
-        background: transparent !important;
-        color: #000 !important;
-        font-weight: 400;
-        padding: 7px 3px 8px;
-      }
-      header nav:last-of-type {
-        padding-left: 7px;
-        padding-right: 7px;
-      }
-    `;
-    document.head.appendChild(style);
-
-    return () => {
-      document.body.classList.remove('isprimeuser');
-    };
   }, []);
+
+  useEffect(() => {    
+    const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");    
+    if(isLogin != null && !isLogin && !devCheck){
+      location.href = "https://etdev8243.indiatimes.com/"
+    }    
+  }, [isLogin]);
 
   return (
     <>
       <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid || ssoid}/>
-      <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />
-      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
-      
-      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} />
+      <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />          
+      <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} marketExpertViews={marketExpertViews?.data || []} marketMoguls={marketMoguls?.data || []} marketLiveblog={marketLiveblog?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
-      <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow}/>
+      <VideoWidget VideoWidgetData={VideoWidgetData?.data || []} isDev={isDev} />
+      <Wealth data={wealth?.data || []} title={wealth?.title || ""} wealthslideshow={wealthslideshow} wealthWebStories={wealthWebStories} />
       <Tech data={tech?.data || []} title={tech?.title || ""} newsLetterData= {techNewsLetters?.data}/>
-      <Rise data={rise?.data || []} title={rise?.title || ""} />
+      <Rise data={rise?.data || []} title={rise?.title || ""} isDev={isDev} popularInSmallBiz={popularInSmallBiz} />
       <CryptocurrencyNews data={cryptocurrencyNews?.data || []} dataTv={cryptoTv?.data || []} dataExpert={cryptoExpert?.data || []} title={cryptocurrencyNews?.title || ""} titleTv={cryptoTv?.title || ""} titleExpert={cryptoExpert?.title || ""} isDev={isDev} />
       <Podcast data={podcast || []}/>
       <Politics data={politics?.data || []} title={politics?.title || ""} />
       <Slideshows data={slideshows?.data || []} title={slideshows?.title || ""} />
       <WebStories data={webStories?.data || []} title={webStories?.title || ""} />
-      <Panache data={panache?.data || []} title={panache?.title || ""} />
+      <Panache data={panache?.data || []} title={panache?.title || ""} panacheVideosSlideshows={panacheVideosSlideshows} />
       <Explainers data={explainers?.data || []} title={explainers?.title || ""} />
       <MoreFromEconomicTimes data={moreFromeEconomicTimes} />
       <style jsx global>{`
@@ -134,6 +112,16 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
           position: absolute;
           right: 10px;
           top: 10px;
+        }
+
+        @media (max-width: 1260px) {
+          .layout1260 {
+            padding: 0 20px;
+          }
+
+          .isprimeuser .pageHolder {
+            width: 1260px;
+          }
         }
       `}</style>
     </>

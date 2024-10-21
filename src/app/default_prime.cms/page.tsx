@@ -13,9 +13,11 @@ export default async function Page({ params }: {
   const isDev = getDevStatus(domain);
   const APP_ENV = isDev ? "development" : "production";  
   const slugArr = params?.all || [];
-  const isprimeuser = cookies().get('isprimeuser') || false;
+  const isprimeuser = cookies().get('isprimeuser')?.value || false;
   const cookieStore = cookies();
   const ssoid = cookieStore.get("ssoid")?.value;
+
+  console.log("ssoid --- ", ssoid);
 
   let extraParams: any = {},
   response: any = {},

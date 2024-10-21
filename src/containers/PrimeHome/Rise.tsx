@@ -1,53 +1,29 @@
 import React from 'react'
 import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TextImageMiddile from 'components/TextImageMiddile';
-import MarketGainers from './RiseGainers';
+import MarketGainers from 'components/RiseGainers';
+import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
-export default function Rise({ title, data }) { 
-  const smallBizMiddle = data.slice(1,6);
+export default function Rise({ title, data, isDev, popularInSmallBiz }) { 
+  
   return (
     <>
     <section className="rise" data-ga-impression={`Subscriber Homepage#Rise widget impression#`}>
-      <h2><a href="">{title}</a></h2>
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Rise"}} />
+      <SectionHeaderWithNewsletter url="/small-biz" title="Rise" sid="5f5a31db80f79664e95679d5" />
+      <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} />
       <div className="second">
-      <TextImageMiddile data={smallBizMiddle} heading="Popular in Small Biz"/>
+      <TextImageMiddile data={popularInSmallBiz?.data || []} heading="Popular in Small Biz"/>
       </div>
       <div className="third">
-        <MarketGainers/>
-      </div>
-      
+        <MarketGainers isDev={isDev} />
+      </div>      
     </section>
     <style jsx>{`
       .rise {
         padding-bottom: 50px;
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
-        border-bottom: 1px solid #9b8680;
-
-        h2 {
-          font-size: 36px;
-          padding-top: 35px;
-          border-top: 3px solid #9b8680;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-
-          a {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              top: -4px;
-              left: 3px;
-              border-top: 2px solid #000;
-              border-left: 2px solid #000;
-              position: relative;
-              cursor: pointer;
-              transform: rotate(135deg);
-            }
-          }
-        }
+        border-bottom: 1px solid #9b8680;        
 
         .first {
           width: 335px;

@@ -7,6 +7,7 @@ import {
     NextButton,
     usePrevNextButtons
   } from '../../components/CarouselArrowBtn';
+  import { changeImageWidthHeight } from 'utils';
 
 export default function Slideshows({ title, data }) {
   const OPTIONS = {loop: false}
@@ -17,16 +18,6 @@ export default function Slideshows({ title, data }) {
     onPrevButtonClick,
     onNextButtonClick
   } = usePrevNextButtons(emblaApi);
-
-  function changeImageWidthHeight(imageUrl, desiredWidth, desiredHeight, desiredResizeMode) {
-    const newUrl = imageUrl.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`);
-
-    if(desiredResizeMode) {
-      return newUrl.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
-    }
-
-    return newUrl;
-  }
 
   const subsets = [];
   for (let i = 0; i < data.length; i += 5) {
@@ -43,20 +34,7 @@ export default function Slideshows({ title, data }) {
       </div>      
       <div className="right">
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
-        <div className="embla" ref={emblaRef}>
-          {/*
-            data?.map((item, index) => {
-              return (              
-                <a href={item?.link} target="_blank" className="item" key={index}>
-                  <span className="imgWrap">
-                    <img src={changeImageWidthHeight(item?.img, 165, 124, 6)} alt={item?.title} width={165} height={124} title={item?.title} />                  
-                    <span className="subSprite webStIcon"></span>                    
-                  </span>
-                  {item?.title || ""}
-                </a>              
-              )
-            })
-          */} 
+        <div className="embla" ref={emblaRef}>          
           <div className="embla__container">
           {
             subsets.map((subset, index) => {
@@ -67,7 +45,7 @@ export default function Slideshows({ title, data }) {
                       return (
                         <a href={item?.url} target="_blank" className="item" key={index1}>
                           <span className="imgWrap">
-                            <img src={changeImageWidthHeight(item?.img, 165, 124, 6)} alt={item?.title} width={165} height={124} title={item?.title} />                  
+                            <img alt={item?.title} width={165} height={124} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 165, desiredHeight: 124})} />
                             <span className="subSprite webStIcon"></span>                    
                           </span>
                           <span className="caption">{item?.title || ""}</span>
@@ -86,7 +64,7 @@ export default function Slideshows({ title, data }) {
     </section>
     <style jsx>{`
       .subSprite {
-        background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+        background: url("https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg") no-repeat;
         display: inline-block;
         background-size: 475px;
       }

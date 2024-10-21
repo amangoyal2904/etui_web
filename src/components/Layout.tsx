@@ -17,7 +17,7 @@ import { useStateContext } from "../store/StateContext";
 import { useMarketStatus } from "hooks/useMarketStatus";
 
 const RotatingCube = dynamic(() => import("./RotatingCube"), {
-  ssr: false
+  ssr: true
 });
 
 interface Props {
@@ -57,11 +57,20 @@ const Layout:FC<Props> = ({ page, className = "", dynamicFooterData, menuData, o
     const hostname = window.location.hostname;
     window.isDev = hostname === 'economictimes.indiatimes.com' ? false : true;
     window.APP_ENV = window.isDev ? 'development' : 'production';
-  }
+  }  
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
   useMarketStatus();
+
+  useEffect(() => {
+    if (className == "layout1260") {
+      document.body.classList.add('isprimeuser');
+      document.querySelectorAll('header nav, header > div:first-child').forEach((el) => {
+          el?.classList?.add('layout1260');
+      });
+    }
+  }, [className]);
 
   useEffect(() => {
     callJsOnRouteChange();

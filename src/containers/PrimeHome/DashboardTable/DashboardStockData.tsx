@@ -5,7 +5,7 @@ import { useStateContext } from "../../../store/StateContext";
 import { gotoPlanPage } from '../../../utils/utils';
 import WatchlistAddition from "components/WatchlistAddition";
 // import WatchlistAddition from "../../../components/WatchlistAddition";
-const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
+const DashboardStockData = ({ item, highlightLtp, focusArea, wdName }: any) => {
   const prevStockCardRef = useRef<any>([]);
   const ltpRef = useRef<HTMLDivElement>(null);
   const { state, dispatch } = useStateContext();
@@ -23,19 +23,17 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
   }, [item]);
 
   const prevStockCard = prevStockCardRef.current;
-  const shortName = item?.data.find(item => item.keyId == "shortName").value;
+  const shortName = item?.data.find(item => item.keyId == "shortName")?.value;
   //const prevLastTradedPrice = prevStockCard?.data?.find(item => item.keyId == "lastTradedPrice").value;
-  const lastTradedPrice = item?.data?.find(item => item.keyId == "lastTradedPrice").value;
-  const volumeInThousand = item?.data?.find(item => item.keyId == "volume").value;
-  const percentChange = item?.data?.find(item => item.keyId == "percentChange").value;
-  const percentChange_trend = item?.data?.find(item => item.keyId == "percentChange").trend;
+  const lastTradedPrice = item?.data?.find(item => item.keyId == "lastTradedPrice")?.value;
+  const volumeInThousand = item?.data?.find(item => item.keyId == "volume")?.value;
+  const percentChange = item?.data?.find(item => item.keyId == "percentChange")?.value;
+  const percentChange_trend = item?.data?.find(item => item.keyId == "percentChange")?.trend;
   const netChange = item?.data?.find(item => item.keyId == "netChange")?.value;
-  const sr_targetVsCurrent = item?.data?.find(item => item.keyId == "sr_targetVsCurrent").value;
-  const sr_targetVsCurrent_trend = item?.data?.find(item => item.keyId == "sr_targetVsCurrent").trend;
-  const sr_avgScore = item?.data?.find(item => item.keyId == "sr_avgScore").value;
+  const sr_targetVsCurrent = item?.data?.find(item => item.keyId == "sr_targetVsCurrent")?.value;
+  const sr_targetVsCurrent_trend = item?.data?.find(item => item.keyId == "sr_targetVsCurrent")?.trend;
+  const sr_avgScore = item?.data?.find(item => item.keyId == "sr_avgScore")?.value;
   const colorCls = percentChange_trend;
-
-  console.log("item -- volumeInThousand", volumeInThousand)
 
   return (
     <div className={styles.list}>
@@ -151,7 +149,7 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
         companyType={item?.companyType}
       /> */}
 
-      <WatchlistAddition
+      {wdName != "My Watchlist" && <WatchlistAddition
         companyName={item.assetName}
         companyId={item.assetId}
         companyType={item.assetType}
@@ -159,7 +157,7 @@ const DashboardStockData = ({ item, highlightLtp, focusArea }: any) => {
           width: "18px",
           height: "18px",
         }}
-      />
+      />}
 
       <style jsx>{`
         .tar{
