@@ -983,7 +983,7 @@ export const getPageSpecificDimensions = (seo) => {
   const payload = {
     dimension4: agency,
     dimension5: authors,
-    dimension8: formattedDate,
+    // dimension8: formattedDate,
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,

@@ -214,6 +214,14 @@
     "development": "https://etusersqc2.economictimes.indiatimes.com/et/getpref?type=Follow&usersettingsubType=23",
     "production": "https://etup.economictimes.indiatimes.com/et/getpref?type=Follow&usersettingsubType=23"
   },
+  "SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/fetch/homepage/newspref.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/fetch/homepage/newspref.json"
+  },
+  "SUBSCRIBER_HOMEPAGE_FOCUSAREA_SAVE": {
+    "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/save/homepage/newspref.json",
+    "production": "https://etonboard.economictimes.indiatimes.com/etonboard/save/homepage/newspref.json"
+  },
   "stockSearch": {
     "development": [
       "https://etsearch.indiatimes.com/etspeeds/etsearchMdata.ep?matchCompanyName=true&realstate=true&pp=new&dvr=new&idr=new&trust=true&mcx=false&mf=false&nps=false&detail=false&forex=false&index=false&mecklai=false&etf=false&nonList=false&pagesize=10&outputtype=json&ticker="

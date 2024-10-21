@@ -26,7 +26,7 @@ export default function ViewAllCta({ title, url, isNoBorderRightArrow = false }:
       </>
       :
       <>
-        <a href={url}>View All {title}</a>
+        <a href={url} target="_blank">View All {title}</a>
         <style jsx>{`
           a {
             display: block;
