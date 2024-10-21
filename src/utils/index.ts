@@ -430,8 +430,7 @@ export const loadPrimeApiNew = async () => {
 
     const response = await fetch(url, {
       method: 'GET', // or 'POST' if you need to send a payload
-      headers,
-      body
+      headers
     });
 
     if (!response.ok) {
