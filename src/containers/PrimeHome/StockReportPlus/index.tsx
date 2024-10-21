@@ -229,6 +229,8 @@ export default function StockReportPlus({ focusArea }) {
           margin: 10px 0;
           display: flex;
           gap: 10px;
+          box-sizing: border-box;
+          width: 320px;
 
           .left {
             flex: 1;
@@ -386,10 +388,7 @@ export default function StockReportPlus({ focusArea }) {
 
           .cardsWrapper {
             flex-direction: row;
-            gap: 20px;
-            .card {
-              min-width: 320px;
-            }
+            gap: 20px;            
           }          
         }      
       `}</style>

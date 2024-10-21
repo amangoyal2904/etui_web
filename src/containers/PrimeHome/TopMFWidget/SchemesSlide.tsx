@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Loading from 'components/Loading';
 import {
@@ -315,9 +315,9 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
     const topMfSchemList = (value5, index5, s_type) => {
 
         return (
-            <>
+            <Fragment key={`topmf_schemelist_${index5}`}>
                 {
-                    value5 && <li className={`schemeList`} key={`topmf_schemelist_${index5}`}>
+                    value5 && <li className={`schemeList`}>
                         <div className='mfinfo_wrap'>
                             {s_type == "promotedSchemes" && <div className="promoted_text">FEATURED</div>}
                             <div className='tmf_s_name'>
@@ -424,7 +424,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                         }
                     }
                 `}</style>
-            </>
+            </Fragment>
         )
     }
 
@@ -445,26 +445,26 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                                         return (
                                             value2?.primaryObj == primaryName && value2?.schemeData?.map((value3, index3) => {
                                                 return (
-                                                    <>
+                                                    <Fragment key={index3}>
                                                         {
                                                             value3?.secondaryObj == value1.value && value3?.response.length > 0  ? value3?.response?.map((value4, index4) => {
                                                                 return (
-                                                                    <>
+                                                                    <Fragment key={index4}>
                                                                         {
                                                                           value4?.promotedSchemes && (Array.isArray(value4?.promotedSchemes) ? value4?.promotedSchemes : [value4?.promotedSchemes]).map((value6, index6) => topMfSchemList(value6, index6, 'promotedSchemes'))
                                                                         }
                                                                         {
                                                                             value4?.schemeList ? 
                                                                             value4?.schemeList?.slice(0, (value4?.promotedSchemes?.length == 0 ? 5 : value4?.promotedSchemes?.length > 1 ? 3 : 4)).map((value5, index5) => topMfSchemList(value5, index5, 'schemeList')) :
-                                                                            <li>
+                                                                            <li key={`topmf_schemelist_${index4}`}>
                                                                                 <h2 className="tmf_error">Sorry, we couldn't find any schemes that match our criteria of top funds for this category. Please proceed to other categories.</h2>
                                                                             </li>
                                                                         }
-                                                                    </>    
+                                                                    </Fragment>   
                                                                 )
                                                             }) : value3?.status == "loading" ? <li><Loading /></li> : null
                                                         }
-                                                    </>
+                                                    </Fragment>
                                                 )
                                             })
                                         )
