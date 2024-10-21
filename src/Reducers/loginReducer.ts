@@ -31,7 +31,8 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         email: action.payload.userInfo?.primaryEmail,
         isAdfree: action.payload.isAdfree,
         isPink: action.payload.isPink,
-        error: null 
+        error: null ,
+        subscriptionDetails: action.payload.subscriptionDetails,
       };
     case "LOGOUT":
       return { 
@@ -47,7 +48,8 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         email: "",
         isAdfree: action.payload.ssoReady,
         isPink: action.payload.isPink,
-        error: null
+        error: null,
+        subscriptionDetails: {}
       };
     case "SETPINKTHEME": 
       return {
