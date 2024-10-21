@@ -12,7 +12,8 @@ import {
   saveLogs,
   userMappingData,
   setAdFreeData,
-  getCookie
+  getCookie,
+  loadPrimeApiNew
 } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
@@ -59,28 +60,38 @@ const Login = ({headertext}) => {
         });
       }
 
-      const primeRes = await loadPrimeApi();
-      if (primeRes?.status === "SUCCESS") {
+      const primeRes = await loadPrimeApiNew();
+      if (primeRes.code === "200") {
+        const resObj = primeRes.data.productDetails.filter((item: any) => {
+          return item.productCode == "ETPR";
+        });
+        const oauthAPiRes = resObj[0];
         const isPrime =
-          primeRes?.data &&
-          primeRes?.data.permissions.some(function (item: any) {
+          primeRes.data &&
+          oauthAPiRes.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("subscribed");
           });
         const isExpired =
           primeRes?.data &&
-          primeRes?.data.permissions.some(function (item: any) {
+          oauthAPiRes.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("expired_subscription");
           });  
-        window.objUser.permissions = primeRes?.data?.permissions || [];
+        window.objUser.permissions = oauthAPiRes.permissions || [];
         window.objUser.accessibleFeatures =
-          primeRes.data.accessibleFeatures || [];
-        window.objUser.primeInfo = primeRes?.data;
+          oauthAPiRes.accessibleFeatures || [];
+        window.objUser.userAcquisitionType =
+          oauthAPiRes.subscriptionDetail &&
+          "userAcquisitionType" in oauthAPiRes.subscriptionDetail
+            ? oauthAPiRes.subscriptionDetail.userAcquisitionType
+            : "free";
+        window.objUser.primeInfo = oauthAPiRes;
         window.objUser.isPrime = isPrime;
         window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
         if (primeRes && primeRes?.data?.token) {
           setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, ".indiatimes.com");
         }
+        setCookieToSpecificTime("etprc", oauthAPiRes.prc, 30, 0, 0);
 
         
         (isPink || isPrime) && document.body.classList.add("isprimeuser");
@@ -105,6 +116,7 @@ const Login = ({headertext}) => {
       } else {
         window.objUser.permissions = [];
         window.objUser.accessibleFeatures = [];
+        window.objUser.userAcquisitionType = "free";
         window.objUser.primeInfo = {};
         window.objUser.isPrime = false;
         delete_cookie("isprimeuser");
@@ -132,6 +144,7 @@ const Login = ({headertext}) => {
           ticketId: window.objUser?.ticketId,
           isPink: window.objUser?.isPink,
           accessibleFeatures: window.objUser.accessibleFeatures,
+          subscriptionDetails: window.objUser.primeInfo?.subscriptionDetails,
           // [
           //   "ETSCREE",
           //   "TOIARTCL",

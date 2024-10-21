@@ -1,5 +1,67 @@
 @import "../../styles/variables.scss";
 
+.browseCompany {
+  border-bottom: 1px solid #3a3a3a;
+  padding: 17px 0;
+
+  .browse {
+    margin: 0 auto;
+    width: 94%;
+
+    .browseTitle {
+      display: inline-block;
+      vertical-align: middle;
+
+      span {
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      &:first-child {
+        font-size: 18px;
+      }
+
+      .comp {
+        display: block;
+        font-size: 13px;
+      }
+    }
+
+    .compList {
+      display: inline-block;
+      border-left: 2px solid #373737;
+      padding-left: 14px;
+      margin-left: 8px;
+      vertical-align: middle;
+
+      a {
+        color: #9a9a9a;
+        font-size: 14px;
+        background-color: #191919;
+        border: 1px solid #333;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 4px;
+        width: 26px;
+        height: 26px;
+        text-align: center;
+        line-height: 24px;
+      }
+
+      a:hover {
+        text-decoration: none;
+        background: #333;
+      }
+
+      div {
+        &:last-child {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
 .dynamicContainer {
   box-sizing: border-box;
   border-top: 1px solid #e6e6e6;
@@ -91,6 +153,7 @@
       height: auto;
     }
   }
+  
 
   .downloadSection {
     color: $white;
@@ -223,73 +286,78 @@
   .copyright {
     text-align: center;
     height: 50px;
-  }
+    font-size: 14px;
+    text-align: center;
 
-  .browseCompany {
-    border-bottom: 1px solid #3a3a3a;
-    padding: 17px 0;
-
-    .browse {
-      margin: 0 auto;
-      width: 94%;
-
-      .browseTitle {
-        display: inline-block;
-        vertical-align: middle;
-
-        span {
-          font-weight: 600;
-          text-transform: uppercase;
-        }
-
-        &:first-child {
-          font-size: 18px;
-        }
-
-        .comp {
-          display: block;
-          font-size: 13px;
-        }
-      }
-
-      .compList {
-        display: inline-block;
-        border-left: 2px solid #373737;
-        padding-left: 14px;
-        margin-left: 8px;
-        vertical-align: middle;
-
-        a {
-          color: #9a9a9a;
-          font-size: 14px;
-          background-color: #191919;
-          border: 1px solid #333;
-          border-radius: 50%;
-          display: inline-block;
-          margin-right: 4px;
-          width: 26px;
-          height: 26px;
-          text-align: center;
-          line-height: 24px;
-        }
-
-        a:hover {
-          text-decoration: none;
-          background: #333;
-        }
-
-        div {
-          &:last-child {
-            margin-top: 10px;
-          }
-        }
-      }
+    a:hover{
+      text-decoration: underline;
     }
   }
+
+  
 }
 
 .pink_theme {
   background-color: #ffded4;
+
+  padding-top: 30px;
+  border-top: 4px solid #ecc3b7;
+  background-color: #ffded4;
+
+  .sbr_wrap {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .browseCompany {
+    border-bottom: 0px solid;
+    // width: 50%;
+    border-left: 1px solid #ebc3b7;
+    border-bottom: 1px solid #ecc3b7;
+    position: relative;
+    padding: 0 0 10px;
+
+    .browse {
+      position: absolute;
+      width: 920px;
+      right: 0;
+      // top: -114px;
+      height: 111px;
+      border-left: 1px solid #ebc3b7;
+      padding-left: 10px;
+      .browseTitle {
+        color: #99756b;
+        margin-bottom: 5px;
+
+        span {
+          font-weight: 400;
+        }
+
+        .comp {
+          display: inline-block;
+          font-size: 18px;
+          margin-left: 5px;
+        }
+      }
+
+      .compList {
+        border-left: 0px solid;
+        padding-left: 0;
+        margin-left: 0;
+
+        a {
+          color: #644c45;
+          background-color: #FFF;
+          border: 0px;
+          margin: 3px;
+          width: 29px;
+          height: 29px;
+          font-size: 15px;
+          line-height: 29px;
+        }
+      }
+    }
+  }
 
   .dynamicContainer {
     width: 1260px;
@@ -301,57 +369,38 @@
       background-color: #ffded4;
     }
 
-    .sbr_wrap {
-      display: flex;
-      align-items: flex-start;
-    }
+    
 
     .category {
       .show_hide_interlinking:after {
         border: solid #000;
         border-width: 0 2px 2px 0;
       }
-    }
 
-    .browseCompany {
-      border-bottom: 0px solid;
-      width: 50%;
-      border-left: 1px solid #ebc3b7;
-
-      .browse {
-        .browseTitle {
-          color: #99756b;
-          margin-bottom: 5px;
-
-          span {
-            font-weight: 400;
-          }
-
-          .comp {
-            display: inline-block;
-            font-size: 18px;
-            margin-left: 5px;
-          }
-        }
-
-        .compList {
-          border-left: 0px solid;
-          padding-left: 0;
-          margin-left: 0;
-
-          a {
-            color: #644c45;
-            background-color: #FFF;
-            border: 0px;
-            margin: 3px;
-            width: 29px;
-            height: 29px;
-            font-size: 15px;
-            line-height: 29px;
-          }
+      .latestNewsContent.content{
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+  
+        a.ellipsis{
+         max-width: 168px;
+          font-size: 13px;
+          line-height: 18px;
+          margin-right: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          height: 36px;
+          text-decoration: none;
+          white-space: normal;
+          border-right: 0px solid;
         }
       }
     }
+
+    
 
     .downloadSection {
       .row {

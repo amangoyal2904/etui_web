@@ -82,6 +82,7 @@ declare global {
       primeInfo?: any;
       afterLoginCall?: any;
       loadSsoApi?: any;
+      userAcquisitionType?: any;
     };
     _ibeat_track?: any;
     _sva: any;
