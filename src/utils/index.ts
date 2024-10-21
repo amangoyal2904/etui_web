@@ -685,7 +685,7 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
   let primeUserLoginMap:any = {};
   if (isPrime) {
     //const userData = jStorage.get('userInfo');
-  const resObj = res.data.productDetails.filter((item: any) => {
+  const resObj = res.productDetails.filter((item: any) => {
     return item.productCode == "ETPR";
   });
   const oauthAPiRes = resObj[0];  
