@@ -21,7 +21,7 @@ const MyWatchListDashboard = (props) => {
     const duration = "1D";
     const APP_ENV = isDev ? "development" : "production";
     const { state } = useStateContext();
-    const { isPrime, ssoid } = state.login;
+    const { isPrime, ssoid, isLogin } = state.login;
     const { watchlist } = state.watchlistStatus;
 
     const tabsData = [
@@ -110,8 +110,8 @@ const MyWatchListDashboard = (props) => {
           }
         };
     
-        fetchData();
-    }, []);
+        if(isLogin) fetchData();
+    }, [isLogin]);
     
     if (!data) {
         return <div>Loading...</div>; // Or any loading component
