@@ -685,11 +685,15 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
   let primeUserLoginMap:any = {};
   if (isPrime) {
     //const userData = jStorage.get('userInfo');
+  const resObj = res.data.productDetails.filter((item: any) => {
+    return item.productCode == "ETPR";
+  });
+  const oauthAPiRes = resObj[0];  
   var primaryEmail = userInfo.primaryEmail ? userInfo.primaryEmail : email;
   var mobile = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile && (userInfo.mobileData.Verified.code  + '-' + userInfo.mobileData.Verified.mobile) || '';
   var emailIdStatus = userInfo.emailList && userInfo.emailList[email];
     primeUserLoginMap = {
-      expiry: res.subscriptionDetails[0].expiryDate,
+      expiry: oauthAPiRes.subscriptionDetail.expiryDate,
       loginId:
           primaryEmail && emailIdStatus === 'Verified'
           ? primaryEmail
