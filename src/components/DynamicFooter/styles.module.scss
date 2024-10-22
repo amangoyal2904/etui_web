@@ -113,6 +113,28 @@
         }
       }
 
+      .latestNewsContent.content{
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+  
+        a.ellipsis{
+         max-width: 168px;
+          font-size: 13px;
+          line-height: 18px;
+          margin-right: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          height: 36px;
+          text-decoration: none;
+          white-space: normal;
+          border-right: 0px solid;
+        }
+      }
+
       .show_hide_interlinking {
         // color: #fff;
         float: right;
@@ -304,10 +326,10 @@
   border-top: 4px solid #ecc3b7;
   background-color: #ffded4;
 
-  .sbr_wrap {
-    display: flex;
-    align-items: flex-start;
-  }
+  // .sbr_wrap {
+  //   display: flex;
+  //   align-items: flex-start;
+  // }
 
   .browseCompany {
     border-bottom: 0px solid;
@@ -321,7 +343,7 @@
       position: absolute;
       width: 920px;
       right: 0;
-      // top: -114px;
+      top: -114px;
       height: 111px;
       border-left: 1px solid #ebc3b7;
       padding-left: 10px;
@@ -375,28 +397,6 @@
       .show_hide_interlinking:after {
         border: solid #000;
         border-width: 0 2px 2px 0;
-      }
-
-      .latestNewsContent.content{
-        display: flex;
-        flex-wrap: wrap;
-        row-gap: 10px;
-  
-        a.ellipsis{
-         max-width: 168px;
-          font-size: 13px;
-          line-height: 18px;
-          margin-right: 20px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          height: 36px;
-          text-decoration: none;
-          white-space: normal;
-          border-right: 0px solid;
-        }
       }
     }
 

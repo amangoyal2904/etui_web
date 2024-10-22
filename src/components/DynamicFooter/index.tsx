@@ -188,13 +188,16 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
 
   return (
     <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPink ? styles.pink_theme : ""}`}>
+      {
+          isPink && <div className={styles.sbr_wrap}>
+            <SearchBar footerSearch={true}/>
+            {page == "home" || page == "primehome" && browseCompany()}  
+          </div>
+        }
       <div className={styles.dynamicContainer}>
         {!isPink && <GreyDivider />}
         {
-          isPink ? <div className={styles.sbr_wrap}>
-            <SearchBar footerSearch={true}/>
-            {page == "home" || page == "primehome" && browseCompany()}  
-          </div> : <>
+          !isPink && <>
             <SearchBar footerSearch={true}/>
             {page == "home" && browseCompany()}
           </>
