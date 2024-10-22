@@ -291,8 +291,6 @@ function FocusAreaNotification({ focusArea }) {
 
   useEffect(() => {
     const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
-    
-    console.log("primeHomeFocusArea2024: ", primeHomeFocusArea2024);
 
     // on first load and if time elapsed is 2 days, show notification
     if(primeHomeFocusArea2024) {
