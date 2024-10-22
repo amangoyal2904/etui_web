@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import { formatNumber, chartIntervals, durationOptions } from 'utils/market';
 import HeadingWithRightArrow from '../HeadingWithRightArrow';
 import { dateFormat } from 'utils/utils';
+import { ET_WEB_URL } from 'utils/common';
 
 export default function IndicesWidget({ isDev, focusArea }) {
   const [indicesData, setIndicesData]: any = useState([]);
@@ -95,12 +96,12 @@ export default function IndicesWidget({ isDev, focusArea }) {
         <div className={styles.chartContainer}>          
           {chartURL && <iframe className={styles.chart} src={chartURL} /> }          
           <div className={styles.chartFooter}>
-            <a href={`/markets/indices/${indicesData?.indicesList?.[activeIndex]?.seoName}`}>View {indicesData?.indicesList?.[activeIndex]?.indexName}</a>
+            <a href={`${ET_WEB_URL}/markets/indices/${indicesData?.indicesList?.[activeIndex]?.seoName}`} target="_blank">View {indicesData?.indicesList?.[activeIndex]?.indexName}</a>
           </div>
         </div>
 
         <div className="advanceFiiDii">
-          <div className="advance card">
+          <a className="advance card" href={`${ET_WEB_URL}/markets/stock-market-mood`} target="_blank">
             <div className="heading">Advance/Decline (NSE)</div>
             <div className="value">
               <span>{indicesData?.indicesList?.[activeIndex]?.advances}</span>
@@ -111,18 +112,18 @@ export default function IndicesWidget({ isDev, focusArea }) {
               <span style={{ width: `${(indicesData?.indicesList?.[activeIndex]?.declinesPerChange || 0)}%` }} />
             </div>
             <div className="date">{dateFormat(new Date(indicesData?.indicesList?.[activeIndex]?.dateTimeLong), "%MMM %d, %Y")}</div>
-          </div>
-          <div className="fii card">
+          </a>
+          <a className="fii card" href={`${ET_WEB_URL}/markets/fii-dii-activity`} target="_blank">
             <div className="heading">FII Cash (Cr.)</div>
-            <div className={`value ${indicesData?.fiiData?.netInvestment > 0 ? 'up' : 'down'}`}>₹ {indicesData?.fiiData?.netInvestment}</div>
+            <div className={`value ${indicesData?.fiiData?.netInvestment > 0 ? 'up' : 'down'}`}>₹ <span>{indicesData?.fiiData?.netInvestment}</span></div>
             <div className="date">{dateFormat(new Date(indicesData?.fiiData?.date), "%MMM %d, %Y")}</div>
-          </div>
+          </a>
           { focusArea == "market" &&
-          <div className="dii card">
+          <a className="dii card" href={`${ET_WEB_URL}/markets/fii-dii-activity`} target="_blank">
             <div className="heading">DII Cash (Cr.)</div>
-            <div className={`value ${indicesData?.diiData?.netInvestment > 0 ? 'up' : 'down'}`}>₹ {indicesData?.diiData?.netInvestment}</div>
+            <div className={`value ${indicesData?.diiData?.netInvestment > 0 ? 'up' : 'down'}`}>₹ <span>{indicesData?.diiData?.netInvestment}</span></div>
             <div className="date">{dateFormat(new Date(indicesData?.diiData?.date), "%MMM %d, %Y")}</div>
-          </div>
+          </a>
           }
         </div>
       </div>    
@@ -169,12 +170,16 @@ export default function IndicesWidget({ isDev, focusArea }) {
             .value {
               font-weight: 600;
 
-              .up {
-                color: #009060;
+              &.up {
+                span {
+                  color: #009060;
+                }
               }
 
-              .down {
-                color: #EA2227;
+              &.down {
+                span {
+                  color: #EA2227;
+                }
               }
             }
 
