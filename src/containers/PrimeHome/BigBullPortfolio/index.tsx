@@ -1,6 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState, useRef, act } from 'react'
-import HeadingWithRightArrow from '../HeadingWithRightArrow'
+import React, { useEffect, useState, useRef } from 'react'
 import Tabs from '../Tabs'
 import ViewAllCta from '../ViewAllCta';
 import API_CONFIG from '../../../network/config.json';
@@ -130,8 +129,7 @@ export default function BigBullPortfolio({ focusArea }) {
     );
   }
 
-  useEffect(() => {
-    // console.log("activeTab", activeTab);
+  useEffect(() => {    
     fetchData(activeTab);
   }, [activeTab]);
 
@@ -147,8 +145,7 @@ export default function BigBullPortfolio({ focusArea }) {
 
   return (
     <>
-      <div className={`bigbull ${focusArea}`}>
-        {/* <HeadingWithRightArrow title="BigBull Portfolio" /> */}
+      <div className={`bigbull ${focusArea}`}>        
         <a className='dflex align-center' href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/individual`} target='_blank'>
           <img className='mr-6' width={24} src="https://img.etimg.com/photo/114352551.jpg" />
           <img width={138} src="https://img.etimg.com/photo/114352673.jpg" />
