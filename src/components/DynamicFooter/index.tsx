@@ -8,6 +8,7 @@ import Global_Config from "../../network/global_config.json";
 
 const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> = ({ dynamicFooterData, page, APP_ENV }) => {
   const [isExpanded, setIsExpanded] = useState({});
+  const [isCCPA, setIsCCPA] = useState(false);
   const hide_footer = false;
 
   const { state, dispatch } = useStateContext();
@@ -17,6 +18,26 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
     const paymentUrl = "";
     window.location.href = paymentUrl;
   };
+
+  const handleCCPA = () => {
+    try{
+      const checkCCPA =
+        typeof window != "undefined" && 
+        window.geoinfo &&
+        window.geoinfo.geolocation == "2" &&
+        window.geoinfo.region_code == "CA";
+      setIsCCPA(checkCCPA);
+    }catch(err){
+      console.log('error in handleCCPA', err);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("geoLoaded", handleCCPA);
+    return () => {
+      document.removeEventListener("geoLoaded", handleCCPA);
+    };
+  }, []);
 
   const downloadSection = (isSubscribed = false) => {
     return (
@@ -107,9 +128,29 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
   const copyrightSection = () => {
     return (
       <div className={styles.row}>
-        <div className={styles.copyright}>
+        <div className={`copyright ${styles.copyright}`}>
           Copyright © {new Date().getFullYear()} Bennett Coleman & Co. All rights reserved. Powered by Indiatimes.
+          {isCCPA && (
+            <button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>
+          )}
         </div>
+        <style jsx>{`
+          .copyright {
+            #ot-sdk-btn {
+              &.ot-sdk-show-settings {
+                border: 0;
+                color: #9b9b9b;
+                text-decoration: underline;
+                font-size: 14px;
+                line-height: 1;
+                padding: 0 0 0 10px;
+                &:hover {
+                  background: 0;
+                }
+              }
+            }
+          }
+        `}</style>
       </div>
     )
   }
