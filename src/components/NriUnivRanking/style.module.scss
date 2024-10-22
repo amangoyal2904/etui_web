@@ -1,0 +1,68 @@
+.univRankMain {
+  padding: 32px 0;
+  margin: 0 auto;
+  text-align: center;
+  .title {
+    font-size: 24.1px;
+    font-weight: 700;
+    line-height: 29.37px;
+  }
+}
+
+.univRankSlider {
+  position: relative;
+  max-width: 48rem;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1rem;
+  --slide-size: 55%;
+  .leftRightButton {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 10;
+
+    button {
+      background: transparent;
+      border: none;
+      color: red;
+      cursor: pointer;
+      font-size: 24px;
+      transition: color 0.3s;
+
+      &:disabled {
+        color: gray;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .univRankEmbla {
+    overflow: hidden;
+
+    .univRankEmblacontainer {
+      display: flex;
+      touch-action: pan-y pinch-zoom;
+      margin-left: calc(var(--slide-spacing) * -1);
+      .univRankEmblaslide {
+        transform: translate3d(0, 0, 0);
+        flex: 0 0 var(--slide-size);
+        min-width: 0;
+        padding-left: var(--slide-spacing);
+        &.current {
+          opacity: 1;
+        }
+        &.justbefore {
+          opacity: 0.5;
+        }
+        &.justafter {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
