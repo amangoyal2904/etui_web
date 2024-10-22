@@ -107,9 +107,28 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
   const copyrightSection = () => {
     return (
       <div className={styles.row}>
-        <div className={styles.copyright}>
-          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a data-ga-onclick="Times Syndication Service - href" href="https://timescontent.timesgroup.com/" target="_blank" rel="nofollow">Times Syndication Service</a>
+        <div className={`copyright ${styles.copyright}`}>
+          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a data-ga-onclick="Times Syndication Service - href" href="https://timescontent.timesgroup.com/" target="_blank" rel="nofollow">Times Syndication Service</a><button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>
         </div>
+
+        <style jsx>{`
+          .copyright{
+            #ot-sdk-btn{
+              &.ot-sdk-show-settings{
+                border: 0;
+                color: #9b9b9b;
+                text-decoration: underline;
+                font-size: 14px;
+                line-height: 1;
+                padding: 0 0 0 10px;
+
+                &:hover {
+                    background: 0;
+                }
+              }
+            }
+          }
+        `}</style>
       </div>
     )
   }
