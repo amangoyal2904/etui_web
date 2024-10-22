@@ -33,7 +33,11 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
   };
 
   useEffect(() => {
-    document.addEventListener("geoLoaded", handleCCPA);
+    if (typeof window != "undefined" && window.geoinfo && window.geoinfo.geolocation) {
+      handleCCPA();
+    } else {
+      document.addEventListener("geoLoaded", handleCCPA);
+    }
     return () => {
       document.removeEventListener("geoLoaded", handleCCPA);
     };
