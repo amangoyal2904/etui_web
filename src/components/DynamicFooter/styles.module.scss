@@ -311,7 +311,7 @@
     font-size: 14px;
     text-align: center;
 
-    a:hover{
+    a{
       text-decoration: underline;
     }
   }
@@ -386,10 +386,13 @@
     margin: 0 auto;
     background-color: transparent;
     color: #000;
+    border-color: #ecc3b7;
 
     .divider {
       background-color: #ffded4;
     }
+
+    
 
     
 
@@ -398,11 +401,35 @@
         border: solid #000;
         border-width: 0 2px 2px 0;
       }
+
+      .content{
+        a{
+          border-color: #ecc3b7 !important;  
+        }
+      }
     }
 
     
 
     .downloadSection {
+      border-color: #ecc3b7;
+      position: relative;
+
+      &:before, &:after{
+        background: #ecc3b7;
+        position: absolute;
+        width: 100%;
+        content: '';
+        top: -4px;
+        display: block;
+        height: 1px;
+        left: 0;
+      }
+
+      &:after{
+        top: auto;
+        bottom: -4px;
+      }
       .row {
         .shareIcons {
           .fbShare {
