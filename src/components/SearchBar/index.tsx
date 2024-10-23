@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from "./styles.module.scss";
 import APIS_CONFIG from "network/config.json";
 import SearchList from './SearchList';
@@ -13,6 +13,9 @@ const SearchBar = (props) => {
 
   const { state, dispatch } = useStateContext();
   const { isPrime, isPink } = state.login;
+  const [hideSearch, setHideSearch] = useState(true);
+  const searchListRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (e) => {
     let searchValue = e.target.value;
@@ -90,6 +93,7 @@ const SearchBar = (props) => {
       ).then((data) => {
         setSearchData(data);
         setSearchLoading(false);
+        setHideSearch(false)
       })
         .catch(err => { console.log("Search err: ", err) })
     }
@@ -110,6 +114,25 @@ const SearchBar = (props) => {
     })
     return allEmpty;
   }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+        if (!searchListRef.current?.contains(event.target as Node) && !searchInputRef.current?.contains(event.target as Node)) {
+            setHideSearch(true);
+        }else{
+          setHideSearch(false);
+        }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    searchInputRef?.current?.addEventListener('click', handleClickOutside);
+
+    return () => {
+        document.removeEventListener('click', handleClickOutside);
+        searchInputRef?.current?.removeEventListener('click', handleClickOutside);
+    };
+}, []);
+
   return (
     <>
       <div className={`${styles.srch_container} ${isPink ? styles.pink_theme : ""}`}>
@@ -127,7 +150,7 @@ const SearchBar = (props) => {
               </a>
             </div> : ""}
             <div className={styles.searchContainer}>
-              <input autoComplete="off" data-search-input="" name="ticker_newsearch" className={`${footerSearch ? styles.btm_inputBox : styles.inputBox}`} placeholder="Search News, Stock Quotes &amp; NAV" value={searchKey} type="text" onChange={(e) => handleInput(e)} />
+              <input autoComplete="off" ref={searchInputRef} data-search-input="" name="ticker_newsearch" className={`${footerSearch ? styles.btm_inputBox : styles.inputBox}`} placeholder="Search News, Stock Quotes &amp; NAV" value={searchKey} type="text" onChange={(e) => handleInput(e)} />
               {!footerSearch ? <>
                 <div className={styles.srch_btn} onClick={handleSearchClick}>Search</div>
                 <div className={styles.srch_close} onClick={setSearchBarOff}>+</div>
@@ -135,7 +158,7 @@ const SearchBar = (props) => {
               }
 
               {searchData.length > 0 &&
-                <div className={styles.searchListAll}>
+                <div id="searchListAllWrp" ref={searchListRef} className={`${hideSearch ? styles.searchListHide : ''} ${styles.searchListAll}`}>
                   <ul>
                     {
                       searchData.length > 0 && (!checkIfEmptyResults() ?
