@@ -243,6 +243,18 @@
           display: flex;
           align-items: center;
           margin-top: 7px;
+
+          .searchListAll{
+            -webkit-box-shadow: 0 -1px 24px 0 #000;
+            box-shadow: 0 -1px 24px 0 #000;
+            border: solid 1px #ead8d2;
+            background-color: #fff8f6;
+            color: #000;
+
+            li:hover {
+              background-color: #FFF;
+            }
+          }
         }
         .btm_inputBox{
           background: #FFF;
