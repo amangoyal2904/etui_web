@@ -20,6 +20,14 @@ import MyWatchListDashboard from './MyWatchListDashboard';
 import API_CONFIG from "../../network/config.json";
 import jStorageReact from 'jstorage-react';
 
+// declare window interface
+declare global {
+  interface Window {
+    APP_ENV: string;
+    jstorage: any;
+  }
+}
+
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const [focusArea, setFocusArea] = useState("market");
   const [showNotification, setShowNotification] = useState(false);
@@ -290,6 +298,7 @@ function FocusAreaNotification({ focusArea }) {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
+    window.jstorage = jStorageReact;
     const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
 
     // on first load and if time elapsed is 2 days, show notification
