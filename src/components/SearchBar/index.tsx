@@ -78,8 +78,8 @@ const SearchBar = (props) => {
     let searchValue = searchKey.trim()
     if (searchValue) {
       const ethomeURL = APIS_CONFIG.SEARCH.ethome[window.APP_ENV];
-      const newsSearchURL = APIS_CONFIG.SEARCH.definition[window.APP_ENV];
-      const defSearchURL = APIS_CONFIG.SEARCH.news[window.APP_ENV];
+      const newsSearchURL = APIS_CONFIG.SEARCH.news[window.APP_ENV];
+      const defSearchURL = APIS_CONFIG.SEARCH.definition[window.APP_ENV];
       const reptrSearchURL = APIS_CONFIG.SEARCH.reporter[window.APP_ENV];
       Promise.all([
         fetch(`${ethomeURL}?ticker=${searchValue}&matchCompanyName=true&realstate=true&dvr=true&idr=true&trust=true&mcx=true&mf=true&crypto=true&nps=true&insideet=true&detail=false&forex=false&index=true&mecklai=true&etf=true&nonList=true&pagesize=6&language=&outputtype=json`),

@@ -40,8 +40,8 @@
   },
   "SEARCH": {
     "ethome": {
-      "development": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"],
-      "production": ["https://etsearch.indiatimes.com/etspeeds/ethome.ep"]
+      "development": ["https://etsearch.indiatimes.com/etspeeds/etsearchMdata.ep"],
+      "production": ["https://etsearch.indiatimes.com/etspeeds/etsearchMdata.ep"]
     },
     "mostPopular": {
       "development": [

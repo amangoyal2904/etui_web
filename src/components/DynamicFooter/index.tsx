@@ -12,11 +12,36 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
 
   const { state, dispatch } = useStateContext();
   const { isPrime, isPink } = state.login;
+  const [isCCPA, setIsCCPA] = useState(false);
 
   const paymentButtonListener = () => {
     const paymentUrl = "";
     window.location.href = paymentUrl;
   };
+
+  const handleCCPA = () => {
+    try {
+      const checkCCPA =
+        typeof window != "undefined" &&
+        window.geoinfo &&
+        window.geoinfo.geolocation == "2" &&
+        window.geoinfo.region_code == "CA";
+      setIsCCPA(checkCCPA);
+    } catch (err) {
+      console.log("handleCCPA Error: ", err);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window != "undefined" && window.geoinfo && window.geoinfo.geolocation) {
+      handleCCPA();
+    } else {
+      document.addEventListener("geoLoaded", handleCCPA);
+    }
+    return () => {
+      document.removeEventListener("geoLoaded", handleCCPA);
+    };
+  }, []);
 
   const downloadSection = (isSubscribed = false) => {
     return (
@@ -108,11 +133,13 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
     return (
       <div className={styles.row}>
         <div className={`copyright ${styles.copyright}`}>
-          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a data-ga-onclick="Times Syndication Service - href" href="https://timescontent.timesgroup.com/" target="_blank" rel="nofollow">Times Syndication Service</a><button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>
+          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a data-ga-onclick="Times Syndication Service - href" href="https://timescontent.timesgroup.com/" target="_blank" rel="nofollow">Times Syndication Service</a>{isCCPA && <button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>}
         </div>
 
         <style jsx>{`
           .copyright{
+            margin-top: 10px;
+
             #ot-sdk-btn{
               &.ot-sdk-show-settings{
                 border: 0;
@@ -123,7 +150,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
                 padding: 0 0 0 10px;
 
                 &:hover {
-                    background: 0;
+                    background-color: transparent;
                 }
               }
             }
@@ -179,7 +206,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
               <span className={styles.comp}>Companies:</span>
             </div>
             <div className={styles.compList}>
-              <div>
+              <div className={styles.dii}>
                 {
                   browseCompData[0].data.map((comp, i) => {
                     return (
@@ -188,7 +215,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
                   })
                 }
               </div>
-              <div>
+              <div className={styles.dii}>
                 {
                   browseCompData[0].Numdata && Array.isArray(browseCompData[0].Numdata) && browseCompData[0].Numdata.map((comp, i) => {
                     return (

@@ -1,5 +1,9 @@
 @import "../../styles/variables.scss";
 
+.dii{
+  display: inline;
+}
+
 .browseCompany {
   border-bottom: 1px solid #3a3a3a;
   padding: 17px 0;
@@ -309,7 +313,6 @@
     text-align: center;
     height: 50px;
     font-size: 14px;
-    text-align: center;
 
     a{
       text-decoration: underline;
@@ -341,7 +344,7 @@
 
     .browse {
       position: absolute;
-      width: 920px;
+      width: 812px;
       right: 0;
       top: -114px;
       height: 111px;
