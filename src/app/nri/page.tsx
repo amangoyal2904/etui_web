@@ -43,6 +43,20 @@ const getData = async (isDev:any)=> {
   
     return res.json();
   }
+  const getAdData = async (isDev:any, msid='7771250')=> {
+    const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
+    let apiEndPoint = "";
+      apiEndPoint = `${baseUrl}/reactfeed_nri_ads.cms?platform=web&msid=${msid}&feedtype=etjson&type=nri`;
+    const res = await fetch(apiEndPoint);
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    console.log("baseUrl-------", apiEndPoint);
+    console.log("----------------------------------AD DATA___________________",data);
+
+    return data
+  }
 
   const resData = async(msid:any)=>{
     const APIURL = `https://etpwaapi.economictimes.com/request?type=articlelist&msid=${msid}&top=12`
@@ -64,6 +78,8 @@ const NRIPage =  async ()=>{
 
     const isDev = getDevStatus(domain);
     const APP_ENV = isDev ? "development" : "production";  
+    const adResponse = await getAdData(isDev,'7771250');
+    //console.log("----------------------------------AD DATA___________________",adResponse);
     const response = await getData(isDev);
     const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
     const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson`;
@@ -82,8 +98,8 @@ const NRIPage =  async ()=>{
         visitData
     }
     return (
-    <Layout page="NRI" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
-        <NRIClientPage dynamicFooterData={dynamicFooterData} menuData={menuData} versionControl={versionControl} response={response} pageSeo={pageSeo} isDev={isDev} isprimeuser={isprimeuser} ssoid={ssoid} APP_ENV={APP_ENV} pageData={pageData}/>
+    <Layout page="NRI"  dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
+        <NRIClientPage addata={adResponse} dynamicFooterData={dynamicFooterData} menuData={menuData} versionControl={versionControl} response={response} pageSeo={pageSeo} isDev={isDev} isprimeuser={isprimeuser} ssoid={ssoid} APP_ENV={APP_ENV} pageData={pageData}/>
   </Layout>
     )
 }

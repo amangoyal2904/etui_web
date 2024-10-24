@@ -4,9 +4,16 @@ import styles from "./styles.module.scss";
 import NriWidget from 'components/NriWidget'
 import React from 'react'
 
+declare global {
+  interface Window {  
+      objVc: any;
+  }
+}
 const NriList = (props) => {
   const { seo = {}, version_control, parameters, isprimeuser } = props;
-  console.log('version_control---DAta', version_control)
+  console.log('version_control---DAta', props);
+  let adInfo = props.addata;
+  window.objVc.dfp = props.addata;
   const tabs = [
     { tabId: 'Study', plistId: 110522920 },
     { tabId: 'Work', plistId: 110526445 },
@@ -35,7 +42,7 @@ const NriList = (props) => {
         </div>
         <div className={styles.second}>
             <div className="adContainer">
-              <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={version_control} />
+              <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={adInfo.atf300} />
             </div>
         </div>
       </section>
