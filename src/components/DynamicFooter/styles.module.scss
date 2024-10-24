@@ -350,6 +350,15 @@
       height: 111px;
       border-left: 1px solid #ebc3b7;
       padding-left: 10px;
+
+      &:before {
+        content: "";
+        border-left: 1px solid #ebc3b7;
+        height: 100%;
+        position: absolute;
+        left: 2px;
+      }
+
       .browseTitle {
         color: #99756b;
         margin-bottom: 5px;

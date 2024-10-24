@@ -28,13 +28,6 @@ declare global {
     geoinfo: any;
     pageSeo: any;
     CleoClient: any;
-    e$: {
-      jStorage: {
-        set(arg1: string, arg2: any, arg3: Object): any;
-        get(arg1: string): any;
-        deleteKey(arg1: string);
-      };
-    };
     objInts: any;
     __APP: any;
     google: {

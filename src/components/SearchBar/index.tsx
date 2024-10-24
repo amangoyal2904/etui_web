@@ -135,7 +135,7 @@ const SearchBar = (props) => {
 
   return (
     <>
-      <div className={`${styles.srch_container} ${isPink ? styles.pink_theme : ""}`}>
+      <div className={`${footerSearch ? styles.btm_srch_ctn : ''} ${styles.srch_container} ${isPink ? styles.pink_theme : ""}`}>
         <div className={`${footerSearch ? styles.btm_srch_div : styles.srch_overlay_div}`}>
           <div className={`${footerSearch ? styles.btm_srch_content : styles.srch_overlay_content}`}>
 
