@@ -9,7 +9,7 @@ interface TabData {
 
 interface NriWidgetProps {
   title: string;
-  tabsData: TabData[];
+  tabsData: TabData[] | any;
   data?: any[];
 }
 

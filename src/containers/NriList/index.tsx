@@ -1,11 +1,21 @@
+"use client"
 import DfpAds from "components/Ad/DfpAds";
 import styles from "./styles.module.scss";
 import NriWidget from 'components/NriWidget'
 import React from 'react'
 
-const NriList = async (props) => {
+declare global {
+  interface Window {  
+      objVc: any;
+  }
+}
+
+const NriList = (props) => {
   const { seo = {}, version_control, parameters, isprimeuser, tabsCanadaData, tabsUSData } = props;
   console.log('version_control---DAta', version_control)
+  console.log('version_control---DAta', props);
+  let adInfo = props.addata;
+  window.objVc.dfp = props.addata;
   const canadaData = tabsCanadaData?.searchResult?.find(item => item.name === "plist")?.data || [];
   const usData = tabsUSData?.searchResult?.find(item => item.name === "plist")?.data || [];
   const tabs = [

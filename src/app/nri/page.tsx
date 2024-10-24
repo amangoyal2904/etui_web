@@ -52,8 +52,8 @@ const getData = async (isDev:any)=> {
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    console.log("baseUrl-------", apiEndPoint);
-    console.log("----------------------------------AD DATA___________________",data);
+   // console.log("baseUrl-------", apiEndPoint);
+   // console.log("----------------------------------AD DATA___________________",data);
 
     return data
   }
@@ -114,6 +114,7 @@ const NRIPage =  async ()=>{
           pageData={pageData}
           tabsCanadaData={tabsCanadaData}
           tabsUSData={tabsUSData}
+          addata={adResponse}
           />
   </Layout>
     )
