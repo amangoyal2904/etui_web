@@ -76,6 +76,10 @@ const Login = ({headertext}) => {
           oauthAPiRes.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("expired_subscription");
           });  
+
+        jStorage.set('prime_' +window.objUser?.ticketId, Object.assign({}, primeRes.data || {}, oauthAPiRes), {TTL: 2*60*60*1000}); 
+        jStorage.set('tokenDataExist', 1, {TTL: isPrime ? 2*60*60*1000 : 5*60*1000});
+
         window.objUser.permissions = oauthAPiRes.permissions || [];
         window.objUser.accessibleFeatures =
           oauthAPiRes.accessibleFeatures || [];
