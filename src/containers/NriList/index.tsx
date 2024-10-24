@@ -1,11 +1,24 @@
 "use client"
+import DfpAds from "components/Ad/DfpAds";
 import styles from "./styles.module.scss";
 import NriPagenav from "components/NriPagenav";
 import NriWidget from 'components/NriWidget'
-import React from "react";
+import React from 'react'
 
-const NriList = () => {
+declare global {
+  interface Window {  
+      objVc: any;
+  }
+}
 
+const NriList = (props) => {
+  const { seo = {}, version_control, parameters, isprimeuser, tabsCanadaData, tabsUSData } = props;
+  console.log('version_control---DAta', version_control)
+  console.log('version_control---DAta', props);
+  let adInfo = props.addata;
+  window.objVc.dfp = props.addata;
+  const canadaData = tabsCanadaData?.searchResult?.find(item => item.name === "plist")?.data || [];
+  const usData = tabsUSData?.searchResult?.find(item => item.name === "plist")?.data || [];
   const tabs = [
     { tabId: 'Study', plistId: 110522920 },
     { tabId: 'Work', plistId: 110526445 },
@@ -19,8 +32,7 @@ const NriList = () => {
     { tabId: 'Citizenship', plistId: 108463751 },
     { tabId: 'Travel', plistId: 108464257 }
   ];
-
-
+  //console.log("@@@@-->NRI",tabsCanadaData, tabsUSData)
   return (
     <>
       <div className="banner">
@@ -29,11 +41,13 @@ const NriList = () => {
       {/* <NriPagenav/> */}
       <section className={styles.nrilistTop}>
         <div className={styles.frist}>
-        <NriWidget title="USA" tabsData={tabsUSA} />
-        <NriWidget title="Canada" tabsData={tabs} />
+        <NriWidget title="USA" tabsData={tabsUSA} data={usData} />
+        <NriWidget title="Canada" tabsData={tabs} data={canadaData} />
         </div>
         <div className={styles.second}>
-          RHS element
+            <div className="adContainer">
+              <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={adInfo.atf300} />
+            </div>
         </div>
       </section>
       
