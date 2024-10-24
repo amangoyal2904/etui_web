@@ -1,6 +1,7 @@
 import { headers, cookies } from 'next/headers';
 import { getDevStatus } from 'utils/utils';
 import NRIClientPage from "./clients";
+import Layout from '../../components/Layout';
 
 export async function generateMetadata({ params }) {
     const headersList = headers();
@@ -81,9 +82,9 @@ const NRIPage =  async ()=>{
         visitData
     }
     return (
-        <>
-            <NRIClientPage  dynamicFooterData={dynamicFooterData} menuData={menuData} versionControl={versionControl} response={response} pageSeo={pageSeo} isDev={isDev} isprimeuser={isprimeuser} ssoid={ssoid} APP_ENV={APP_ENV} pageData={pageData}/>
-        </>
+    <Layout page="NRI" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
+        <NRIClientPage dynamicFooterData={dynamicFooterData} menuData={menuData} versionControl={versionControl} response={response} pageSeo={pageSeo} isDev={isDev} isprimeuser={isprimeuser} ssoid={ssoid} APP_ENV={APP_ENV} pageData={pageData}/>
+  </Layout>
     )
 }
 

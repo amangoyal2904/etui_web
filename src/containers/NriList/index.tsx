@@ -1,11 +1,12 @@
 "use client"
+import DfpAds from "components/Ad/DfpAds";
 import styles from "./styles.module.scss";
-import NriPagenav from 'components/NriPagenav'
 import NriWidget from 'components/NriWidget'
 import React from 'react'
 
-const NriList = () => {
-
+const NriList = (props) => {
+  const { seo = {}, version_control, parameters, isprimeuser } = props;
+  console.log('version_control---DAta', version_control)
   const tabs = [
     { tabId: 'Study', plistId: 110522920 },
     { tabId: 'Work', plistId: 110526445 },
@@ -33,7 +34,9 @@ const NriList = () => {
         <NriWidget title="Canada" tabsData={tabs} />
         </div>
         <div className={styles.second}>
-          RHS element
+            <div className="adContainer">
+              <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={version_control} />
+            </div>
         </div>
       </section>
       
