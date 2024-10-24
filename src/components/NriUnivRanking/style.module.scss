@@ -1,21 +1,23 @@
 .univRankMain {
-  padding: 32px 0;
+  max-width: 870px;
+  padding: 32px 10px;
   margin: 0 auto;
   text-align: center;
+  overflow: hidden;
   .title {
     font-size: 24.1px;
     font-weight: 700;
     line-height: 29.37px;
+    text-transform: uppercase;
   }
 }
 
 .univRankSlider {
   position: relative;
-  max-width: 48rem;
   margin: auto;
-  --slide-height: 19rem;
-  --slide-spacing: 1rem;
-  --slide-size: 55%;
+  --slide-size: 100%;
+  padding: 60px 0;
+  margin-top: 32px;
   .leftRightButton {
     position: absolute;
     top: 50%;
@@ -27,42 +29,105 @@
     z-index: 10;
 
     button {
-      background: transparent;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 33px;
+      height: 33px;
+      background: #ED193B;
       border: none;
-      color: red;
+      color: #fff;
       cursor: pointer;
       font-size: 24px;
+      border-radius: 50%;
       transition: color 0.3s;
-
+      svg{
+        width: 12px;
+      }
+      &.univPriv{
+        left: -10px;
+      }
+      &.univNext{
+        right: -10px;
+      }
       &:disabled {
-        color: gray;
+        color: #fff;
         cursor: not-allowed;
       }
     }
+    
   }
 
   .univRankEmbla {
-    overflow: hidden;
+    overflow: visible;
 
     .univRankEmblacontainer {
-      display: flex;
-      touch-action: pan-y pinch-zoom;
-      margin-left: calc(var(--slide-spacing) * -1);
+      display: block;
+      max-width: 100% !important;
+      transform: translate3d(0, 0, 0) !important;
+      perspective: 100px;
       .univRankEmblaslide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        opacity: 0;
+        width: 100% !important;
         transform: translate3d(0, 0, 0);
-        flex: 0 0 var(--slide-size);
-        min-width: 0;
-        padding-left: var(--slide-spacing);
+        transition: transform 1s, opacity 1s;
         &.current {
           opacity: 1;
+          position: relative;
+          display: block;
+          max-width: 370px;
+          transform: translate3d(0, 0, 20px) !important;
+          z-index: 2;
         }
         &.justbefore {
-          opacity: 0.5;
+          max-width: 370px;
+          opacity: 40%;
+          transform: translate3d(-66%, 0, 0) !important;
         }
         &.justafter {
-          opacity: 0.5;
+          max-width: 370px;
+          opacity: 40%;
+          transform: translate3d(66%, 0, 0) !important;
+          z-index: 1;
+        }
+      }
+    }
+  }
+  .univSlideMain{
+    padding: 20px;
+    border: 16px solid #F7F7F7;
+    border-radius: 20px;
+    background-color: #fff;
+    .slideTitle{
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 22.03px;
+      text-align: left;
+
+    }
+    .slideList{
+      list-style: none;
+      li{
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 0 0;
+        span{
+          font-size: 12px;
         }
       }
     }
   }
 }
+.univSlideDot{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+

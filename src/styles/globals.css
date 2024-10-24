@@ -132,7 +132,17 @@ a {
 .embla__dot--selected.red{
   box-shadow: inset 0 0 0 0.2rem red;
 }
-
+.embla__dot.univDot{
+  width: 8px;
+  height: 8px;
+}
+.embla__dot.univDot.embla__dot--selected.red{
+  width: 25px;
+  border-radius: 15px;
+  background-color: #ED193B;
+  box-shadow: none;
+  transition: width 1s, background-color 1s;
+}
 .prel{
   position: relative;
 }
