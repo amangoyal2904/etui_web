@@ -123,7 +123,7 @@ export default function StockRecos({ focusArea }) {
   return (
     <>
       <div className={`${focusArea}`}>
-        <HeadingWithRightArrow title="Stock Recos" />
+        <HeadingWithRightArrow title="Stock Recos" href="/markets/stock-recos/overview"/>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea}/>
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>

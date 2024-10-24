@@ -27,7 +27,8 @@ const DashBoardTable = ({
   focusArea,
   ssoid = "",
   APP_ENV = "",
-  wdName = ""
+  wdName = "",
+  wdHref = ""
 }: any) => {
   const dashboardRef = useRef<HTMLDivElement>(null);
   const { state } = useStateContext();
@@ -132,9 +133,9 @@ const DashBoardTable = ({
       <div className={`wrapper ${styles.wrapper} ${focusArea} ${styles[focusArea]}`} ref={dashboardRef}>
         <div className="dflex space-between head_dashboard">
           <div>
-            <HeadingWithRightArrow title={wdName} />
+            <HeadingWithRightArrow title={wdName} href={wdHref}/>
           </div>
-          {wdName != "My Watchlist" &&<div className="filterBtnWrp">
+          {wdName != "My Watchlist" && <div className="filterBtnWrp">
             <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)}>
               <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
               <span>{niftyFilterData?.name}</span>

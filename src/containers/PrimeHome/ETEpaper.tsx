@@ -22,7 +22,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
       <div className={`etEPaper ${focusArea} ${dayName}`}>
         { focusArea === "news" && <Separator /> }
         { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
-        <HeadingWithRightArrow title={`ET ePaper`} />
+        <HeadingWithRightArrow title={`ET ePaper`} href="https://epaper.indiatimes.com/timesepaper/publication-the-economic-times,city-delhi.cms"/>
         {
           dayName !== "Mon" ? (
             focusArea === "news" ? (

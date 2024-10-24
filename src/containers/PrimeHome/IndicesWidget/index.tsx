@@ -50,7 +50,7 @@ export default function IndicesWidget({ isDev, focusArea }) {
     <>
       <div className={`${focusArea}`}>
         <div className={styles.top}>
-          <HeadingWithRightArrow title="Indices" />
+          <HeadingWithRightArrow title="Indices" href="/markets/indices"/>
           <span className="statusNDate">
             <span className={styles.status}>{indicesData?.marketStatusDto?.currentMarketStatus}</span>
             <span className={styles.date}>| As on {dateFormat(new Date(indicesData?.indicesList?.[activeIndex]?.dateTimeLong || ""), "%d %MMM, %Y %H:%m IST")}</span>

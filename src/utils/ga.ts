@@ -2,6 +2,7 @@
 
 import * as Config from "./common";
 import { getCookie } from "../utils/index"
+import { appendZero } from "./utils";
 import APIS_CONFIG from "../network/config.json"
 import Service from "../network/service";
 import GLOBAL_CONFIG from "../network/global_config.json";
