@@ -16,7 +16,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
   return (
     <>
       <div className={`primeExclusives ${focusArea}`}>
-        { focusArea == 'market' ? <h2 className="title"><PrimeIcon /> {title}</h2> : <><HeadingWithRightArrow title={title} /> <span className="title"></span> </> }
+        { focusArea == 'market' ? <h2 className="title"><PrimeIcon /> {title}</h2> : <><HeadingWithRightArrow title={title} href="/prime"/> <span className="title"></span> </> }
         <div className="grid">
           <div className="col first">            
             <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
