@@ -74,7 +74,7 @@ const Login = ({headertext}) => {
       }
 
       const isTokenDataExist = jStorage.get('tokenDataExist');
-      const primeRes = isTokenDataExist ? await loadPrimeApiNew() : getStorePrimeDetial;
+      const primeRes = isTokenDataExist ? getStorePrimeDetial : await loadPrimeApiNew();
       
       if (primeRes?.code === "200") {
         const resObj = primeRes?.data.productDetails.filter((item: any) => {
