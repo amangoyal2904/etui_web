@@ -18,37 +18,43 @@ export default function PrimeBenefitsBucket({focusArea}) {
     {
       title: "Investment Ideas",
       iconPosition: "-68px -22px",
-      url: "https://economictimes.indiatimes.com/prime/investment-ideas?source=homepage&medium=investment_ideas&campaign=prime_discovery"
+      url: "https://economictimes.indiatimes.com/prime/investment-ideas?source=homepage&medium=investment_ideas&campaign=prime_discovery",
+      forMarket: true
     },
     {
       title: "Stock Reports",
       iconPosition: "-118px -22px",
-      url: "https://economictimes.indiatimes.com/markets/benefits/stockreportsplus?source=homepage&medium=sr_plus&campaign=prime_discovery"
+      url: "https://economictimes.indiatimes.com/markets/benefits/stockreportsplus?source=homepage&medium=sr_plus&campaign=prime_discovery",
+      forMarket: true
     },
     {
       title: "BigBull Portfolio",
       iconPosition: "-114px -99px",      
       url: "https://economictimes.indiatimes.com/markets/top-india-investors-portfolio/individual?source=homepage&medium=big_bull&campaign=prime_discovery",
-      isNew: true
+      isNew: true,
+      forMarket: true
     },
     {
       title: "ET Grandmasters",
       iconPosition: "-48px -255px",
       backgroundSize: "375px",
       url: "https://masterclass.economictimes.indiatimes.com/discover?source=homepage&medium=ET_Grandmasters&campaign=prime_discovery",
-      isNew: true
+      isNew: true,
+      forMarket: true
     },
     {
       title: "Markets Mood",
       iconPosition: "-5px -230px",
       backgroundSize: "340px",
       url: "https://economictimes.indiatimes.com/markets/stock-market-mood?source=homepage&medium=market_moods&campaign=prime_discovery",
-      isNew: true
+      isNew: true,
+      forMarket: true
     },
     {
       title: "Wealth Magazine",
       iconPosition: "-169px -22px",
-      url: "https://epaper.indiatimes.com/wealth_edition.cms?source=homepage&medium=wealth_edition&campaign=prime_discovery"
+      url: "https://epaper.indiatimes.com/wealth_edition.cms?source=homepage&medium=wealth_edition&campaign=prime_discovery",
+      forMarket: true
     },
     {
       title: "Today's ePaper",
@@ -58,7 +64,8 @@ export default function PrimeBenefitsBucket({focusArea}) {
     {
       title: "Redeem Benefits",
       iconPosition: "-118px -60px",
-      url: "https://economictimes.indiatimes.com/et_benefits.cms?source=homepage&medium=addOn_benefits&campaign=prime_discovery"
+      url: "https://economictimes.indiatimes.com/et_benefits.cms?source=homepage&medium=addOn_benefits&campaign=prime_discovery",
+      forMarket: true
     }
   ];
 
@@ -124,13 +131,15 @@ export default function PrimeBenefitsBucket({focusArea}) {
     }
   }, [x]);
 
+  const benefits = focusArea === "market" ? items.filter(item => item.forMarket) : items;
+
   return (
     <>      
       <div className={`primeBenefitsBucket ${focusArea}`}> 
         <div className="slider" ref={sliderRef}>
             <div className="itemWrap" ref={innerRef}>
             {
-              items.map((item, index) => {
+              benefits.map((item, index) => {
                 const style: any = {backgroundPosition: item.iconPosition};
                 item.backgroundSize ? style.backgroundSize = item.backgroundSize : null;
                 return (
