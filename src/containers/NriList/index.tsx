@@ -3,7 +3,7 @@ import DfpAds from "components/Ad/DfpAds";
 import styles from "./styles.module.scss";
 import NriPagenav from "components/NriPagenav";
 import NriWidget from 'components/NriWidget'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 declare global {
   interface Window {  
@@ -13,10 +13,7 @@ declare global {
 
 const NriList = (props) => {
   const { seo = {}, version_control, parameters, isprimeuser, tabsCanadaData, tabsUSData } = props;
-  console.log('version_control---DAta', version_control)
-  console.log('version_control---DAta', props);
   let adInfo = props.addata;
-  window.objVc.dfp = props.addata;
   const canadaData = tabsCanadaData?.searchResult?.find(item => item.name === "plist")?.data || [];
   const usData = tabsUSData?.searchResult?.find(item => item.name === "plist")?.data || [];
   const tabs = [
@@ -32,6 +29,11 @@ const NriList = (props) => {
     { tabId: 'Citizenship', plistId: 108463751 },
     { tabId: 'Travel', plistId: 108464257 }
   ];
+  useEffect(() => {
+    if(window && window.objVc){
+      window.objVc.dfp = props.addata ? props.addata : {};
+    }
+  }, []);
   //console.log("@@@@-->NRI",tabsCanadaData, tabsUSData)
   return (
     <>
