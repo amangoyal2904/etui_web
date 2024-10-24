@@ -8,16 +8,16 @@ import { ET_WEB_URL } from 'utils/common';
 export default function IndicesWidget({ isDev, focusArea }) {
   const [indicesData, setIndicesData]: any = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [period, setPeriod] = useState("1w");
+  const [period, setPeriod] = useState("1d");
   const [changePeriod, setChangePeriod] = useState("netChange");
   const [percentChange, setPercentChange] = useState("percentChange");
   const [chartURL, setChartURL] = useState("");
   // const [asOnDate, setAsOnDate] = useState("");
 
-  const howMany = focusArea == "news" ? 3 : 4;
+  const howMany = focusArea == "news" ? 3 : 6;
 
   function getIndicesData() {
-    fetch('https://etapi.indiatimes.com/et-screener/index-byid?indexids=2369,2365,2371,1913')
+    fetch('https://etapi.indiatimes.com/et-screener/index-byid?indexids=2369,2365,2371,1913,186,13602')
     .then(response => response.json())
     .then(data => {
       setIndicesData(data);

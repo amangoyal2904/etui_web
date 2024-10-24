@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import API_CONFIG from "../../network/config.json"
-import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
+import { ET_WEB_URL, SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
 import { fetchAdaptiveData } from "utils/ga";
 import { getCookie } from "utils";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
@@ -104,7 +104,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     if (isPrimeUser && ticketID && token && formRef) {
       formRef?.submit();
     } else {
-      window.location.href = `https://${window?.isDev ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`;
+      window.location.href = `${ET_WEB_URL}/etgrandmasters/${id}`;
     }
   };
 

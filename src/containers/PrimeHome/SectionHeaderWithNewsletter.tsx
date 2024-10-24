@@ -5,7 +5,7 @@ export default function SectionHeaderWithNewsletter({ url, title, sid }) {
   return (
     <>
       <div className="sectionHeader">
-        <h2><a href={`${ET_WEB_URL}${url}`}>{title}</a></h2>
+        <h2><a href={`${ET_WEB_URL}${url}`} target="_blank">{title}</a></h2>
         <NewsLetterSignup section={title} sid={sid}/>
       </div>
       <style jsx>{`
