@@ -1,36 +1,55 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import styles from "./styles.module.scss";
 import Loading from "../../components/Loading";
 
-const NriWidget = ({title, tabsData}) => {
-  const tabs = tabsData
-  const [activeTab, setActiveTab]:any = useState(tabsData[0] || {});
-  const [plistContent, setPlistContent] = useState([]);
+interface TabData {
+  tabId: string;
+  plistId: string;
+}
+
+interface NriWidgetProps {
+  title: string;
+  tabsData: TabData[];
+  data?: any[];
+}
+
+const NriWidget: React.FC<NriWidgetProps> = ({ title, tabsData, data }) => {
+  const [activeTab, setActiveTab] = useState<TabData | null>(tabsData[0] || {});
+  const [moreTitle, setMoreTitle] = useState('');
+  const [plistContent, setPlistContent] = useState(data);
   const [loading, setLoading] = useState(false);
 
-  
-
-  const fetchContent = async (plistId: any) => {
-    
-    // Replace with your actual API endpoint\
-    setLoading(true)
-    const APIURL = `https://etpwaapi.economictimes.com/request?type=plist&msid=${plistId}&top=1`
-     const response = await fetch(APIURL);
-     const data = await response.json();
-     setLoading(false);
-     if(data && data?.searchResult[0]?.data){
-      setPlistContent(data?.searchResult[0]?.data);
-     }
-     
-     console.log("___data",data)
-    // setContent(data);
+  const fetchContent = async (plistId: string) => {
+    //console.log('@@@___Plist data', plistId);
+    setLoading(true);
+    const APIURL = `https://etpwaapi.economictimes.com/request?type=plist&msid=${plistId}&top=1`;
+    try {
+      const response = await fetch(APIURL);
+      const data = await response.json();
+      setLoading(false);
+      if (data && data?.searchResult[0]?.data) {
+        setPlistContent(data?.searchResult[0]?.data);
+      }
+    } catch (error) {
+      console.error('Error fetching content:', error);
+      setLoading(false);
+    }
   };
 
-  
+  const handleTabClick = (tab: TabData) => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
-    fetchContent(activeTab.plistId);
-  }, [activeTab.tabId]);
+    if (activeTab && activeTab.plistId) {
+      fetchContent(activeTab.plistId);
+    }
+    if(title === 'USA'){
+      setMoreTitle('us')
+    }else{
+      setMoreTitle(title);
+    }
+  }, [activeTab]);
 
   return (
     <div className={styles.tabwidget}>
@@ -39,11 +58,11 @@ const NriWidget = ({title, tabsData}) => {
       </div>
       <div className={styles.content}>
         <ul>
-          {tabs.map(tab => (
+          {tabsData.map(tab => (
             <li
               key={tab.tabId}
-              className={activeTab.tabId === tab.tabId ? styles.active : ''}
-              onClick={() => setActiveTab(tab)}
+              className={activeTab?.tabId === tab.tabId ? styles.active : ''}
+              onClick={() => handleTabClick(tab)}
             >
               {tab.tabId}
             </li>
@@ -51,43 +70,48 @@ const NriWidget = ({title, tabsData}) => {
         </ul>
 
         <div className={styles.mainContent}>
-          {
-            loading ? <Loading /> :
-            plistContent && plistContent.length > 0 && plistContent.map((item:any, index:number)=>{
-              return(
-                <div key={`tabcontent-${index}`} className=''>
-                    <div className={styles.loadContent}>
-                        <div className={styles.content}>
-                            <a target="_blank" href='#'>{item?.title}</a>
-                            <p>{item?.synopsis}</p>
-                    
-                        </div>
-                        <a target="_blank" href={item?.url} className={styles.imglink}>
-                            <img width="130" height="160" alt={item?.title} loading="lazy" src={item?.img} />
-                            {/* {item.type === "slideshow" && <span className={`${styles.subSprite} ${styles.slideIcon}`}></span> } */}
-                        </a>
-                      </div>
-                      <div className={styles.moreLink}>More from <a  className={styles.bdr_btm} target="_blank" href={activeTab.plistId}>{title}<span className={styles.dbl_arw}></span></a></div>
-                    </div>
-              )
-            })
-          }
+          {loading ? (
+            <Loading />
+          ) : (
+            plistContent &&
+            plistContent.length > 0 &&
+            plistContent.map((item: any, index: number) => (
+              <div key={`tabcontent-${index}`} className="">
+                <div className={styles.loadContent}>
+                  <div className={styles.content}>
+                    <a target="_blank" href="#">
+                      {item?.title}
+                    </a>
+                    <p>{item?.synopsis}</p>
+                  </div>
+                  <a target="_blank" href={item?.url} className={styles.imglink}>
+                    <img
+                      width="130"
+                      height="160"
+                      alt={item?.title}
+                      loading="lazy"
+                      src={item?.img}
+                    />
+                  </a>
+                </div>
+                <div className={styles.moreLink}>
+                  More from{' '}
+                  <a
+                    className={styles.bdr_btm}
+                    target="_blank"
+                    href={`https://economictimes.indiatimes.com/nri/${title}#id_${activeTab?.plistId}`}
+                  >
+                    {activeTab?.tabId}
+                    <span className={styles.dbl_arw}></span>
+                  </a>
+                </div>
+              </div>
+            ))
+          )}
         </div>
-        
-        {/* {plistContent && (
-          <div className={styles.loadContent}>
-            <div className={styles.content}>
-              <a target="_blank" href={plistContent.url}>{plistContent.title}</a>
-              <p>{plistContent.description}</p>
-            </div>
-            <a target="_blank" href={content.url} className={styles.imglink}>
-              <img width="130" height="160" alt={content.title} loading="lazy" src={content.imageUrl} />
-            </a>
-          </div>
-        )} */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NriWidget
+export default NriWidget;

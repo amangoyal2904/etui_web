@@ -74,7 +74,9 @@ const NRIPage =  async ()=>{
     const menuData = navBarResult || {};
     const pageSeo = response?.seo || {};
     const versionControl = response?.version_control || {};
-
+    const tabsCanadaData = await fetchContent(110522920);
+    const tabsUSData = await fetchContent(108463119);
+  
     const investData = await resData(79038765);
     const visitData = await resData(79038785);
     const pageData = {
@@ -83,9 +85,28 @@ const NRIPage =  async ()=>{
     }
     return (
     <Layout page="NRI" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
-        <NRIClientPage dynamicFooterData={dynamicFooterData} menuData={menuData} versionControl={versionControl} response={response} pageSeo={pageSeo} isDev={isDev} isprimeuser={isprimeuser} ssoid={ssoid} APP_ENV={APP_ENV} pageData={pageData}/>
+        <NRIClientPage 
+          dynamicFooterData={dynamicFooterData} 
+          menuData={menuData} 
+          versionControl={versionControl} 
+          response={response} 
+          pageSeo={pageSeo} 
+          isDev={isDev} 
+          isprimeuser={isprimeuser} 
+          ssoid={ssoid} 
+          APP_ENV={APP_ENV} 
+          pageData={pageData}
+          tabsCanadaData={tabsCanadaData}
+          tabsUSData={tabsUSData}
+          />
   </Layout>
     )
 }
 
+const fetchContent = async (plistId: any) => {
+  const APIURL = `https://etpwaapi.economictimes.com/request?type=plist&msid=${plistId}&top=1`
+  const response = await fetch(APIURL);
+  const data = await response.json();
+  return data;
+};
 export default NRIPage;
