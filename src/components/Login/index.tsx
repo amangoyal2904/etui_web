@@ -67,7 +67,7 @@ const Login = ({headertext}) => {
 
       if(docRef.indexOf('/plans_success') > -1 || docRef.indexOf('?transcode') > -1 || docRef.indexOf('buy.indiatimes.com/') > -1 || 
       refreshFlag == 'true' || getParameterByName('fromsrc') == 'etprime' || !otrCookieExist ||
-      !getStorePrimeDetial || !getStorePrimeDetial.permissions || getStorePrimeDetial.permissions.length == 0){
+      !getStorePrimeDetial){
         localStorage.removeItem("etsub_refreshTokenFlag");
         jStorage.deleteKey('tokenDataExist');
         jStorage.deleteKey('et_profilelog'); 
