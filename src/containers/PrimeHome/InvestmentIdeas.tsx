@@ -18,13 +18,13 @@ export default function InvestmentIdeas({ data, focusArea }) {
         {
           focusArea == 'market' && <>
             <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/>
-            <HeadingWithRightArrow title="Investment Ideas" /> 
+            <HeadingWithRightArrow title="Investment Ideas" href="/prime/investment-ideas" /> 
           </>
         }
         {
           focusArea == 'news' && <>
             <Separator />
-            <HeadingWithRightArrow title="Investment Ideas" />
+            <HeadingWithRightArrow title="Investment Ideas" href="/prime/investment-ideas" />
             <span className="title"></span>            
           </> 
         }

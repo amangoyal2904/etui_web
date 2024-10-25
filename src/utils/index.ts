@@ -405,6 +405,45 @@ export const loadPrimeApi = async () => {
   }
 };
 
+export const loadPrimeApiNew = async () => {
+  try {
+    const url =
+        (APIS_CONFIG as any)["AUTH_NEW_TOKEN"][window.APP_ENV] +
+        "&grantType=refresh_token",
+      oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
+      deviceId = getCookie("_grx"),
+      ticketId = getCookie("TicketId"),
+      userSsoId = window?.objUser?.ssoid || getCookie("ssoid");
+
+    const body = JSON.stringify({
+      grantType: "refresh_token",
+    });
+    const headers = {
+      accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      "X-CLIENT-ID": oauthClientId,
+      "X-DEVICE-ID": deviceId,
+      "x-sso-id": userSsoId,
+      "x-site-app-code": (GLOBAL_CONFIG as any)[window.APP_ENV]["X_SITE_CODE"],
+      "X-TICKET-ID": ticketId,
+    };
+
+    const response = await fetch(url, {
+      method: 'GET', // or 'POST' if you need to send a payload
+      headers
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response?.json();
+    // Handle the successful response data
+  } catch (e) {
+    console.log("loadPrimeApiNew: " + e);
+  }
+};
+
 export const logout = async () => {
   window?.jsso?.signOutUser(async function (response: any) {
     if (response.status == "SUCCESS") {
@@ -413,6 +452,7 @@ export const logout = async () => {
       delete_cookie("pfuuid");
       delete_cookie("peuuid");
       delete_cookie("fpid");
+      delete_cookie("etprc");
 
       const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
         oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
@@ -645,11 +685,15 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
   let primeUserLoginMap:any = {};
   if (isPrime) {
     //const userData = jStorage.get('userInfo');
+  const resObj = res.productDetails.filter((item: any) => {
+    return item.productCode == "ETPR";
+  });
+  const oauthAPiRes = resObj[0];  
   var primaryEmail = userInfo.primaryEmail ? userInfo.primaryEmail : email;
   var mobile = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile && (userInfo.mobileData.Verified.code  + '-' + userInfo.mobileData.Verified.mobile) || '';
   var emailIdStatus = userInfo.emailList && userInfo.emailList[email];
     primeUserLoginMap = {
-      expiry: res.subscriptionDetails[0].expiryDate,
+      expiry: oauthAPiRes.subscriptionDetail.expiryDate,
       loginId:
           primaryEmail && emailIdStatus === 'Verified'
           ? primaryEmail

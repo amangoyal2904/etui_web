@@ -29,13 +29,6 @@ declare global {
     geoinfo: any;
     pageSeo: any;
     CleoClient: any;
-    e$: {
-      jStorage: {
-        set(arg1: string, arg2: any, arg3: Object): any;
-        get(arg1: string): any;
-        deleteKey(arg1: string);
-      };
-    };
     objInts: any;
     __APP: any;
     google: {
@@ -83,6 +76,7 @@ declare global {
       primeInfo?: any;
       afterLoginCall?: any;
       loadSsoApi?: any;
+      userAcquisitionType?: any;
     };
     _ibeat_track?: any;
     _sva: any;
@@ -291,6 +285,13 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             const gtmLoaded = new Event('gtmLoaded');
             document.dispatchEvent(gtmLoaded);         
           `,
+        }}
+      />
+      <Script
+        src="https://cdn.cookielaw.org/consent/9c436ed7-68da-4e62-86c3-bc55a27afd97/otSDKStub.js"
+        data-domain-script="9c436ed7-68da-4e62-86c3-bc55a27afd97"
+        onLoad={() => {
+          function OptanonWrapper() { }
         }}
       />
       <Script

@@ -20,6 +20,14 @@ import MyWatchListDashboard from './MyWatchListDashboard';
 import API_CONFIG from "../../network/config.json";
 import jStorageReact from 'jstorage-react';
 
+// declare window interface
+declare global {
+  interface Window {
+    APP_ENV: string;
+    jstorage: any;
+  }
+}
+
 export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const [focusArea, setFocusArea] = useState("market");
   const [showNotification, setShowNotification] = useState(false);
@@ -65,8 +73,8 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
         console.error("Error:", error);
       })
   }
-  
-  useEffect(() => {
+
+  function getFocusAreaPreference() {
     const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET"][window?.APP_ENV];
     const ssoid = window?.objUser?.info?.ssoid || "bo6gekyrgw2kekv61lq1e8m77a";
 
@@ -91,6 +99,14 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
       .catch((error) => {
         console.error("Error:", error);
       });
+  }
+  
+  useEffect(() => {
+    if(window?.objUser?.info?.ssoid) {
+      getFocusAreaPreference();
+    } else {
+      document.addEventListener("getUserDetailsSuccess", getFocusAreaPreference);
+    }
   }, []);
 
   return (
@@ -104,7 +120,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
             <div className="col2">
               <div className="titleNSwitch">
                 { showNotification && <FocusAreaNotification focusArea={focusArea} /> }
-                <span className="title">ETPRIME</span>
+                <span className="title">{focusArea === "market" ? "MARKETS" : "ETPRIME"}</span>
                 <span className="switch">
                   <span className={focusArea === "news" ? "active" : ""} onClick={() => saveFocusAreaPreference("news")}>NEWS FOCUS</span>
                   <span className="switchIcon" onClick={() => {
@@ -290,9 +306,8 @@ function FocusAreaNotification({ focusArea }) {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
+    window.jstorage = jStorageReact;
     const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
-    
-    console.log("primeHomeFocusArea2024: ", primeHomeFocusArea2024);
 
     // on first load and if time elapsed is 2 days, show notification
     if(primeHomeFocusArea2024) {

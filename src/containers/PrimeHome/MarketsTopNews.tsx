@@ -20,7 +20,7 @@ export default function MarketsTopNews({ data, focusArea }) {
   return (
     <>
     <div>
-      <HeadingWithRightArrow title="News" />
+      <HeadingWithRightArrow title="News" href="/markets/stocks/news"/>
       <ul>
         {
           data.map((item, index) => (

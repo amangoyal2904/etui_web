@@ -2,8 +2,9 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import API_CONFIG from "../../network/config.json"
-import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
+import { ET_WEB_URL, SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
 import { fetchAdaptiveData } from "utils/ga";
+import { getCookie } from "utils";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
 import Separator from "components/Separator";
 import PrimeIcon from 'components/Icons/PrimeIcon';
@@ -110,7 +111,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     if (isPrimeUser && ticketID && token && formRef) {
       formRef?.submit();
     } else {
-      window.location.href = `https://${window?.isDev ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`;
+      window.location.href = `${ET_WEB_URL}/etgrandmasters/${id}`;
     }
   };
 
@@ -185,7 +186,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
       <div className={`grandmaster ${focusArea}`}>
         { focusArea === "news" && <Separator /> }
         { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
-        <HeadingWithRightArrow title={focusArea == "news" ? "Lessons from The Grandmasters" : "ET GrandMasters"} />
+        <HeadingWithRightArrow title={focusArea == "news" ? "Lessons from The Grandmasters" : "ET GrandMasters"} href="/etgrandmasters" />
         <div className="slider" ref={sliderRef}>
           <div className="seriesWrapper" ref={innerRef}>
           {isFirstSlot()
@@ -261,6 +262,12 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
             .seriesWrapper {
               display: inline-flex;
               gap: 20px;
+
+              .seriesCard {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
 
               & > div {
                 width: 195px;
