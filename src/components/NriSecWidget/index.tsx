@@ -39,7 +39,7 @@ const NriSecWidget = ({title, titleurl ='', widgetId, data}:any) => {
                       <div className={styles.lhsStories}>
                         {secondThird?.map((item, index) => {
                           return (
-                            <div className={index === secondThird.length - 1 ? styles.lhsBlwStories_nob : styles.lhsBlwStories}>
+                            <div className={index === secondThird.length - 1 ? styles.lhsBlwStories_nob : styles.lhsBlwStories} key={'lhsstory'+index}>
                               <h3><a target="_blank" className={styles.wrapLines} title={item?.title} href={item?.url}>{item?.title}</a></h3>
                             </div>
                           );
@@ -49,7 +49,7 @@ const NriSecWidget = ({title, titleurl ='', widgetId, data}:any) => {
                       <div className={styles.rhsStories}>
                         {rest?.map((item, index) => {
                           return (
-                            <div className={index === rest.length - 1 ? styles.lhsBlwStories_nob : styles.lhsBlwStories}>
+                            <div className={index === rest.length - 1 ? styles.lhsBlwStories_nob : styles.lhsBlwStories} key={'rhsstory'+index}>
                                 {
                                   index === 0 && item?.img && <a target="_blank" title={item?.title} href={item?.url}><img className={styles.flr} alt={item?.title} src={item?.img} height="75" width="100" /></a>
                                 }
@@ -66,7 +66,7 @@ const NriSecWidget = ({title, titleurl ='', widgetId, data}:any) => {
                   <div className={styles.rightStories}>
                       {rhsStories?.map((item, index) => {
                           return (
-                            <div className={index === rhsStories.length - 1 ? styles.lhsBlwStories_nob : styles.lhsBlwStories}>
+                            <div className={index === rhsStories.length - 1 ? styles.lhsBlwStories_nob : styles.lhsBlwStories} key={'rhsbottomstory'+index}>
                               {
                               index === 0 && item?.img &&  <a target="_blank" title={item?.title} href={item?.url}><img alt={item?.title} src={item?.img} height="240" width="320" /></a>
                               }
