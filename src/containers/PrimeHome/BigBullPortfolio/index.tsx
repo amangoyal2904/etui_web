@@ -81,7 +81,7 @@ export default function BigBullPortfolio({ focusArea }) {
     if(innerRef.current) {
       innerRef.current.style.transform = `translate3d(${x}px, 0px, 0px)`;
       // translate with transition
-      innerRef.current.style.transition = `transform 0.5s ease 0s`;
+      innerRef.current.style.transition = `transform 0.5s ease 0s`;      
     }
   }, [x]);
 
@@ -119,7 +119,7 @@ export default function BigBullPortfolio({ focusArea }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setData(data);
+        setData(data);        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -129,8 +129,11 @@ export default function BigBullPortfolio({ focusArea }) {
     );
   }
 
-  useEffect(() => {    
+  useEffect(() => {        
     fetchData(activeTab);
+    setX(0);
+    setPrevDisabled(true);
+    setNextDisabled(false);
   }, [activeTab]);
 
   const howMany = focusArea === "news" ? 2 : 5;
@@ -164,7 +167,7 @@ export default function BigBullPortfolio({ focusArea }) {
             ))}
           </div>
         </div>
-        <ViewAllCta title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
+        <ViewAllCta viewAllText={activeTab == 2 ? "View" : ""} title={tabs[activeTab]} url={`${ET_WEB_URL}${tabLinks[activeTab]}`} isNoBorderRightArrow={focusArea === "market"} />
       </div>
       <style jsx>{`  
         .news {
@@ -216,6 +219,7 @@ export default function BigBullPortfolio({ focusArea }) {
           &.disabled {
             opacity: 0.4;              
             cursor: no-drop;
+            pointer-events: none;
           }
 
           &:after {
@@ -261,12 +265,13 @@ export default function BigBullPortfolio({ focusArea }) {
 
 function BestPicksRecentDealsCard({ item, activeTab }) {
 
-  let companyName = "", companyId = "", companyType = "", row2Col1Trend = "", investorDid = "";
+  let companyName = "", companySeoName = "", companyId = "", companyType = "", row2Col1Trend = "", investorDid = "";
   let row2Col1Label = "", row2Col2Label = "", row2Col3Label = "";
   let row2Col1Value = "", row2Col2Value = "", row2Col3Value = "";
 
   if(activeTab === 0) {
     companyName = item?.bestPickStockData?.companyData?.text;
+    companySeoName = item?.bestPickStockData?.companyData?.companySeoName;
     companyId = item?.bestPickStockData?.companyData?.companyId;
     companyType = item?.bestPickStockData?.companyData?.companyType;
     row2Col1Label = item?.bestPickStockData?.stockdata?.[0]?.uiLabel?.text;
@@ -280,6 +285,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
     investorDid = "Best Pick of";
   } else if(activeTab === 1) {    
     companyName = item?.companyData?.text;
+    companySeoName = item?.companyData?.companySeoName;
     companyId = item?.companyData?.companyId;
     companyType = item?.companyData?.companyType;
 
@@ -316,7 +322,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
         <div className='comWrp'> 
           <div className="comp">
             {activeTab === 1 && <span className="date">{dateFormat(new Date(item?.dealDate), "On %D, %MMM %d, %Y")}</span>}             
-            <span className="companyName">{companyName}</span>
+            <a href={`${ET_WEB_URL}/${companySeoName}/stocks/companyid-${companyId}.cms`} target="_blank" className="companyName">{companyName}</a>
           </div>
           <WatchlistAddition
             companyName={companyName}
@@ -342,7 +348,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
             <span className="value">{row2Col3Value}</span>
           </div>
         </div>
-        <div className="investorRow">
+        <a className="investorRow" href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/${item?.investorIntro?.sharkSeoName},expertid-${item?.investorIntro?.sharkID}`} target="_blank">
           <div className="left">
             <img src={item?.investorIntro?.imageURL} alt="Investor Logo" width={42} height={42}/>
           </div>
@@ -350,7 +356,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
             <span className={`best ${item?.dealSignal}`}>{investorDid}</span>
             <span className="investorName">{item?.investorIntro?.name}</span>
           </div>
-        </div>
+        </a>
       </div>
       <style jsx>{`
         .card {
@@ -468,14 +474,14 @@ function AllInvestorsCard({ item }) {
   return (
     <>
       <div className="card">        
-        <div className="investorRow">
+        <a className="investorRow" href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/${item?.investorIntro?.sharkSeoName},expertid-${item?.investorIntro?.sharkID}`} target="_blank">
           <div className="left">
             <img src={item?.investorIntro?.imageURL} alt="Investor Logo" width={42} height={42}/>
           </div>
           <div className="right">
             {item?.investorIntro?.name}
           </div>
-        </div>
+        </a>
         <div className="row2">
           <div className="col1">
             <div className="title">{item?.stockGroupdata?.[0]?.uiLabel?.text || ""}</div>
@@ -494,12 +500,12 @@ function AllInvestorsCard({ item }) {
         <div className="row3">   
             <div className="subCard">
               <span className="floatLabel">{item?.cards?.[0]?.text || ""}</span>
-              <div className="label">{item?.cards?.[0]?.uiLabel?.text || ""}</div>
+              <a className="label" href={`${ET_WEB_URL}/${item?.cards?.[0]?.uiLabel?.companySeoName}/stocks/companyid-${item?.cards?.[0]?.uiLabel?.companyId}.cms`} target="_blank">{item?.cards?.[0]?.uiLabel?.text || ""}</a>
               <div className={`${item?.cards?.[0]?.uiValue?.trend}`}><RenderText text={item?.cards?.[0]?.uiValue?.text || ""} /></div>
             </div>        
             <div className="subCard">
               <span className="floatLabel">{item?.cards?.[1]?.text || ""}</span>
-              <div className="label">{item?.cards?.[1]?.uiLabel?.text || ""}</div>
+              <a className="label" href={`${ET_WEB_URL}/${item?.cards?.[1]?.uiLabel?.companySeoName}/stocks/companyid-${item?.cards?.[1]?.uiLabel?.companyId}.cms`} target="_blank">{item?.cards?.[1]?.uiLabel?.text || ""}</a>
               <div className={`${item?.cards?.[1]?.uiValue?.trend}`}><RenderText text={item?.cards?.[1]?.uiValue?.text || ""} /></div>
             </div>
         </div>
