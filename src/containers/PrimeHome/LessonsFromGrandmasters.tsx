@@ -9,7 +9,6 @@ import HeadingWithRightArrow from "./HeadingWithRightArrow";
 import Separator from "components/Separator";
 import PrimeIcon from 'components/Icons/PrimeIcon';
 import { trackingEvent } from '../../utils/ga';
-import { getCookie } from "utils/utils";
 export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   const APP_ENV = isDev ? "development" : "production";
   const [series, setSeries]: any = useState([]);
