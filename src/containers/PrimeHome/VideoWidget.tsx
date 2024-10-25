@@ -123,96 +123,62 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
     }
   }, [showTab]);
 
-  return (
-    <section className="videoBoxWidget">
-      <div className="primvideo">
-        <div className="etabsView newsTab">
-          <div className="etabsBtn font_mon">
-            <div className="heading ">VIDEOS</div>
-            <ul className="etab">
-              {tabListJSON.map((value, index) => (
-                <li
-                  key={`videoBoxWidget_key_tab_${index}`}
-                  data-msid={value.msid}
-                  className={showTab == value.msid ? "active" : ""}
-                  onClick={() => tabClick(value.msid)}
-                >
-                  {value.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <div className="etabsContent">
-              <ul>
-                {videoData?.some((item) => Number(item.msid) == Number(showTab)) ? (
-                  videoData?.map((value: any, index: any) => {
-                    return (
-                      <li
-                        key={`videowidget_etabsContent_key_${index}`}
-                        data-msid={value.msid}
-                        className={showTab != value.msid ? "hide" : ""}
-                      >
-                        <div className="vdListWrp">
-                          <div className="vplayer">
-                            <iframe
-                              className="lazyIframe"
-                              data-threshold="300"
-                              src={`${etDomain}/videodash.cms?autostart=${autoplay}&msid=${selectVideo[0]}&rlvideo=&fallBackMute=true&skipad=1&widget=subsriberhome&iswebpre=true`}
-                            />
-                            <div className="vtitle">{selectVideo[1]}</div>
-                          </div>
-                          <div className="vdList">
-                            {value?.videoListData.map((listData, index2) => {
-                              return (
-                                index2 < 8 && (
-                                  <div key={`videoListData_key_${index2}`} className="listDiv font_faus">
-                                    <div
-                                      className="content vid"
-                                      onClick={() => {
-                                        videoClick(listData?.msid, listData?.title);
-                                        setAutoplay(1);
-                                      }}
-                                      data-msid={listData?.msid}
-                                    >
-                                      <div className="imgDiv">
-                                        <div className={`active leayer ${(autoplay && selectVideo[0] == listData.msid) ? "" : "hide"}`}>
-                                          <span>NOW PLAYING</span>
-                                        </div>
-                                        <span className="imgdiv">
-                                          <img
-                                            width="155"
-                                            height="116"
-                                            alt="Trump praises Biden, Harris for calling him"
-                                            loading="lazy"
-                                            src={listData?.img}
-                                          />
-                                          <span className="duratio">
-                                            {convertMilliseconds(listData?.videoDuration)}
-                                          </span>
-                                        </span>
-                                      </div>
-                                      <span className="vdTitle">{listData?.title}</span>
-                                    </div>
-                                  </div>
-                                )
-                              );
-                            })}
-                          </div>
+    return (
+        <section className='videoBoxWidget' data-ga-impression={`Subscriber Homepage#Videos widget impression#`}>
+            <div className='primvideo'>
+                <div className='etabsView newsTab'>
+                    <div className='etabsBtn font_mon'>
+                        <div className="heading ">VIDEOS</div>
+                        <ul className="etab">
+                            {
+                                tabListJSON.map((value, index) => <li key={`videoBoxWidget_key_tab_${index}`} data-msid={value.msid} className={showTab == value.msid ? 'active' : ''} onClick={() => tabClick(value.msid)}>{value.name}</li>)
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <div className='etabsContent'>
+                            <ul>
+                                {
+                                    videoData?.some(item => Number(item.msid) == Number(showTab)) ? videoData?.map((value: any, index: any) => {
+                                        return (                                        
+                                            <li key={`videowidget_etabsContent_key_${index}`} data-msid={value.msid} className={showTab != value.msid ? 'hide' : ''}>
+                                                <div className='vdListWrp'>
+                                                    <div className='vplayer'>
+                                                        <iframe className="lazyIframe" data-threshold="300" src={`${etDomain}/videodash.cms?autostart=${autoplay}&msid=${selectVideo[0]}&rlvideo=&fallBackMute=true&skipad=1&widget=subsriberhome&iswebpre=true`}/>
+                                                        <div className="vtitle">{selectVideo[1]}</div>
+                                                    </div>
+                                                    <div className='vdList'>
+                                                        {
+                                                            value?.videoListData.map((listData, index2) => {
+                                                                return (                                                                                                                                            
+                                                                    index2 < 8 && <div key={`videoListData_key_${index2}`} className='listDiv font_faus'>
+                                                                        <div className='content vid' onClick={() => {videoClick(listData?.msid, listData?.title); setAutoplay(1);}} data-msid={listData?.msid}>
+                                                                            <div className='imgDiv'>
+                                                                                <div className='active leayer hide'>
+                                                                                    <span>NOW PLAYING</span>
+                                                                                </div>
+                                                                                <span className="imgdiv" >
+                                                                                    <img width="155" height="116" alt="Trump praises Biden, Harris for calling him" loading="lazy" src={listData?.img} />
+                                                                                    <span className="duratio">{convertMilliseconds(listData?.videoDuration)}</span>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span className='vdTitle'>{listData?.title}</span>
+                                                                        </div>
+                                                                    </div>                                                                                                                                    
+                                                                )
+                                                            })    
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </li>                                            
+                                        )
+                                    }) : <li><Loading /></li>
+                                }
+                            </ul>
                         </div>
-                      </li>
-                    );
-                  })
-                ) : (
-                  <li>
-                    <Loading />
-                  </li>
-                )}
-              </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
       <style jsx>{`
         .primvideo {

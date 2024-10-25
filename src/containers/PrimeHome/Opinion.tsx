@@ -6,7 +6,7 @@ const Opinion = ({OpinionData, focusArea}) => {
     const imgDomain = GLOBAL_CONFIG["ET_IMG_DOMAIN"];
   return (
     <>
-        <div className={`opinionWidget ${focusArea}`}>
+        <div className={`opinionWidget ${focusArea}`} data-ga-impression={`Subscriber Homepage#Opinion widget impression#`}>
             <h2 className="heading">
                 <a href={`${ET_WEB_URL}/opinion`} target="_blank">OPINION</a>
             </h2>

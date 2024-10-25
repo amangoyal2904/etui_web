@@ -26,7 +26,7 @@ export default function WebStories({ title, data }) {
 
   return (
     <>
-    <section className="webStories secBox">
+    <section className="webStories secBox" data-ga-impression={`Subscriber Homepage#Web stories widget impression#`}>
       <h2>{title}</h2>
       <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
       <div className="slider embla" ref={emblaRef}>

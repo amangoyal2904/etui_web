@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import Loading from "../../components/Loading";
 import RenderText from "components/RenderText";
 import { ET_WAP_URL, ET_WEB_URL } from "utils/common";
+import { trackingEvent } from "utils/ga";
 
 const IndustryTabsJSON = [
     {
@@ -110,7 +111,13 @@ const NewsByIndustry = ({data, title}) => {
             });
         }
     }
-
+    const fireTracking = (label) => {
+        trackingEvent("et_push_event", {
+            event_category:  'Subscriber Homepage', 
+            event_action: `Industry widget click`, 
+            event_label: label
+          });
+    }
     const articleHtml = (articleList, apiMsid) => {
         return (
             <>
@@ -193,7 +200,7 @@ const NewsByIndustry = ({data, title}) => {
                         articleList?.map((value, index) => {
                             return (                                                                    
                                 index == 0 && <div className="first" key={index}>
-                                    <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+                                    <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} onClick={()=>fireTracking(`Industry Story 1 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)} >
                                         <img 
                                             width="293" 
                                             height="226" 
@@ -209,6 +216,7 @@ const NewsByIndustry = ({data, title}) => {
                                                 className="hl" 
                                                 target="_blank" 
                                                 href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
+                                                onClick={()=>fireTracking(`Industry Story 1 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}
                                             ><RenderText text={value?.title || ""} /></a>
                                         </h4>
                                         <p className="desc wrapLines l3">                                            
@@ -224,7 +232,7 @@ const NewsByIndustry = ({data, title}) => {
                             articleList?.map((value, index) => {
                                 return (                                    
                                     index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv" key={index}>
-                                        <a target="_blank" className="flt" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+                                        <a target="_blank" className="flt" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} onClick={()=>fireTracking(`Industry Story - 2 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}>
                                             <img 
                                                 width="88" 
                                                 height="66" 
@@ -236,7 +244,7 @@ const NewsByIndustry = ({data, title}) => {
                                         </a>
                                         <div className=" data">
                                             <h4 className="otherDivH">
-                                                <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className="font_faus">                                                    
+                                                <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className="font_faus" onClick={()=>fireTracking(`Industry Story - 2 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}>                                                    
                                                     <RenderText text={value?.title || ""} />
                                                 </a>
                                             </h4>
@@ -500,20 +508,20 @@ const NewsByIndustry = ({data, title}) => {
                 padding-bottom: 50px;    
             }
         `}</style>
-        <section id="newsInds">
+        <section id="newsInds" data-ga-impression={`Subscriber Homepage#Industry widget impression#`} >
             <div className="heading_box">
                 <a href={`${ET_WEB_URL}/industry`} target="_blank" className="secname">
                     News by <span className="sec_heading">Industry</span>
                 </a>
                 <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`}>{selectedObj?.tabName}</a>
+                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`} data-ga-onclick='Subscriber Homepage#Industry widget click"#Title - Featured - /industry'>{selectedObj?.tabName}</a>
             </div>
             <div className="news_menu tabsView tabVertical">
                 <ul className="tabs">
                     {
                         IndustryTabsJSON?.map((value: any, key: any) => {
                             return (                                
-                                <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)} key={key}>
+                                <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} data-ga-onclick={`Subscriber Homepage#Industry widget click"#Tab - ${value?.tabName}`} onClick={() => articleListApiHit(value?.msid)} key={key}>
                                     <span data-msid={value?.msid} className="subSprite tabIcon"></span>
                                     <span>{value?.tabName}</span>
                                     <span className="subSprite nav_arw"></span>

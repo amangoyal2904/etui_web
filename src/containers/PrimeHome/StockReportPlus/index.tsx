@@ -123,7 +123,7 @@ export default function StockReportPlus({ focusArea }) {
 
   return (
     <>
-      <div className={`${focusArea}`}>
+      <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Stock reports plus widget impression#`}>
       { <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title="Stock Report Plus" href="/markets/benefits/stockreportsplus"/>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />     

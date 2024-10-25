@@ -31,7 +31,7 @@ export default function Tech({ title, data, newsLetterData }) {
 
   return (
     <>
-      <section className="techMain">
+      <section className="techMain" data-ga-impression={`Subscriber Homepage#Tech widget impression#`}>
         <SectionHeaderWithNewsletter url="/tech" title="Tech" sid="5f5a31db80f79664e95679e4" />
         <OneImgTwoColsNewsLayout data={data} more={{ text: "Tech", link: "/tech" }} />
         <div className="second">

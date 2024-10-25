@@ -6,7 +6,7 @@ import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 export default function CryptocurrencyNews({ title, data, dataTv, dataExpert, titleTv, titleExpert, isDev }) {  
   return (
     <>
-    <section className="politics">
+    <section className="politics" data-ga-impression={`Subscriber Homepage#Cryptocurrency News widget impression#`}>
       <SectionHeaderWithNewsletter url="/newslist/82519373.cms" title="Cryptocurrency News" sid="610a5e3ce7c4da1efefcdc40"/>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Cryptocurrency News", link: "/newslist/82519373.cms"}} />
       <CryptoRhs dataTv={dataTv} dataExpert={dataExpert} titleTv={titleTv} titleExpert = {titleExpert} isDev={isDev} />

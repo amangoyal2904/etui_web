@@ -136,7 +136,7 @@ export const growthRxInit = () => {
 export const trackingEvent = (type, data) => {
   console.log("trackingEvent------->",data, type);
   const payload = getPageSpecificDimensions(window.pageSeo);
-  window.customDimension = { ...window.customDimension, ...payload };
+  window.customDimension = { ...window.customDimension, ...payload, ...data };
   const objGrx = generateGrxFunnel(data.prevPath);
   window.customDimension = { ...window.customDimension, ...objGrx };
   console.log("CD_----------->",window.customDimension);
@@ -171,6 +171,24 @@ export const trackingEvent = (type, data) => {
           checkGrxready = true;
           window.grx("track", "page_view", grxDimension);
           window.grx("track", "page_view", objCDP);
+        }
+      });
+    }
+  }else if(type == "et_push_event"){
+    const objCDP = generateCDPPageView(data.prevPath, false);
+    if (window.grx || window.isGrxLoaded) {
+      if (!checkGrxready) {
+        checkGrxready = true;
+        window.grx("track", "event", grxDimension);
+        // window.grx("track", "event", objCDP);
+      }
+    } else {
+      document.addEventListener("ready", () => {
+        if (!checkGrxready) {
+          window.isGrxLoaded = true;
+          checkGrxready = true;
+          window.grx("track", "event", grxDimension);
+          // window.grx("track", "event", objCDP);
         }
       });
     }
@@ -705,6 +723,7 @@ export function setVisitInfo() {
   }
     
 }
+export const appendZero = (num) => (num >= 0 && num < 10) ? '0' + num : num;
 export const fetchAdaptiveData = function () {
   const referrer = typeof document != "undefined" && document?.referrer;
   let trafficSource = "Direct";

@@ -13,7 +13,7 @@ const Podcast = ({ data }) => {
     }
     return (
         <>
-            <div className="podcastSection">
+            <div className="podcastSection" data-ga-impression={`Subscriber Homepage#ET Podcasts widget impression#`}>
                 <div className="podcastHead">
                     <p className="subSprite pcIcon"></p>
                     <p className="title">ET PODCASTS</p>

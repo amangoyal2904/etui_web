@@ -7,7 +7,7 @@ import { ET_WEB_URL } from "../../utils/common";
 export default function Wealth({ title, data, wealthslideshow, wealthWebStories }) {    
   return (
     <>
-    <section className="wealth">
+    <section className="wealth" data-ga-impression={`Subscriber Homepage#Wealth widget impression#`}>
 
       <h2><a href={`${ET_WEB_URL}/personal-finance`}>{title}</a></h2>
       <div className="mainWealt">

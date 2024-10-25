@@ -15,7 +15,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
 
   return (
     <>
-      <div className={`primeExclusives ${focusArea}`}>
+      <div className={`primeExclusives ${focusArea}`} data-ga-impression={`Subscriber Homepage#ET prime widget impression#`}>
         { focusArea == 'market' ? <h2 className="title"><PrimeIcon /> {title}</h2> : <><HeadingWithRightArrow title={title} href="/prime"/> <span className="title"></span> </> }
         <div className="grid">
           <div className="col first">            
@@ -23,7 +23,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             <div className="content">
               <div className="text">
                 <a href={firstRow.categoryLink} className="category" target="_blank">{firstRow.categoryName}</a>
-                <a href={firstRow.url} className="heading" target="_blank">{firstRow.title}</a>
+                <a href={firstRow.url} className="heading" target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#Exclusives - 1 - href'>{firstRow.title}</a>
               </div>
               {
               focusArea == 'news' && <div className="meta">
@@ -47,7 +47,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                           <div className="content">
                             <div className="text">
                               <a className="category" href={item?.categoryLink} target="_blank">{item.categoryName}</a>
-                              <a href={item.url} className="heading" target="_blank">{item.title}</a>
+                              <a href={item.url} className="heading" target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#Exclusives - 1 - href'>{item.title}</a>
                             </div>                
                           </div>
                           <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />
@@ -69,7 +69,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             })
           }
         </div>
-        {focusArea == 'news' && <a className="seeAllLink" href={`${ET_WEB_URL}/prime`} target="_blank" data-ga-onclick="Exclusives - See All - href">See All Prime Exclusives Stories <ArrowRnd /></a>}
+        {focusArea == 'news' && <a className="seeAllLink" href={`${ET_WEB_URL}/prime`} target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#Exclusives - See All -  href'>See All Prime Exclusives Stories <ArrowRnd /></a>}
       </div>
       <style jsx>{`
         .primeExclusives {                

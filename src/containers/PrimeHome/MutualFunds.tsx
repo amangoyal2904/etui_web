@@ -7,7 +7,7 @@ import { ET_WEB_URL } from "../../utils/common";
 export default function MutualFunds({ title, data, isDev }) {  
   return (
     <>
-    <section className="politics">
+    <section className="politics" data-ga-impression={`Subscriber Homepage#Mutual Funds widget impression#`}>
       <h2><a href={`${ET_WEB_URL}/mutual-funds`} target="_blank">{title}</a></h2>
       <div className='mfWrap'>
         <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} />

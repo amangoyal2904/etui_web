@@ -13,24 +13,28 @@ export default function PrimeBenefitsBucket({focusArea}) {
     {
       title: "Prime Exclusives",
       iconPosition: "-17px -22px",
-      url: "https://economictimes.indiatimes.com/prime?source=homepage&medium=prime_exclusives&campaign=prime_discovery"
+      url: "https://economictimes.indiatimes.com/prime?source=homepage&medium=prime_exclusives&campaign=prime_discovery",
+      key:"prime_exclusive"
     }, 
     {
       title: "Investment Ideas",
       iconPosition: "-68px -22px",
       url: "https://economictimes.indiatimes.com/prime/investment-ideas?source=homepage&medium=investment_ideas&campaign=prime_discovery",
+      key:"investment_ideas",
       forMarket: true
     },
     {
       title: "Stock Reports",
       iconPosition: "-118px -22px",
       url: "https://economictimes.indiatimes.com/markets/benefits/stockreportsplus?source=homepage&medium=sr_plus&campaign=prime_discovery",
+      key:"stock_reports",
       forMarket: true
     },
     {
       title: "BigBull Portfolio",
       iconPosition: "-114px -99px",      
       url: "https://economictimes.indiatimes.com/markets/top-india-investors-portfolio/individual?source=homepage&medium=big_bull&campaign=prime_discovery",
+      key:"bigbull_portfolio",
       isNew: true,
       forMarket: true
     },
@@ -39,6 +43,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
       iconPosition: "-48px -255px",
       backgroundSize: "375px",
       url: "https://masterclass.economictimes.indiatimes.com/discover?source=homepage&medium=ET_Grandmasters&campaign=prime_discovery",
+      key:"et_grandmasters",
       isNew: true,
       forMarket: true
     },
@@ -47,6 +52,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
       iconPosition: "-5px -230px",
       backgroundSize: "340px",
       url: "https://economictimes.indiatimes.com/markets/stock-market-mood?source=homepage&medium=market_moods&campaign=prime_discovery",
+      key:"markets_mood",
       isNew: true,
       forMarket: true
     },
@@ -54,17 +60,20 @@ export default function PrimeBenefitsBucket({focusArea}) {
       title: "Wealth Magazine",
       iconPosition: "-169px -22px",
       url: "https://epaper.indiatimes.com/wealth_edition.cms?source=homepage&medium=wealth_edition&campaign=prime_discovery",
+      key:"wealth_magazine",
       forMarket: true
     },
     {
       title: "Today's ePaper",
       iconPosition: "-12px -104px",
-      url: "https://epaper.indiatimes.com/timesepaper/publication-the-economic-times,city-delhi.cms?source=homepage&medium=todays_paper&campaign=prime_discovery"
+      url: "https://epaper.indiatimes.com/timesepaper/publication-the-economic-times,city-delhi.cms?source=homepage&medium=todays_paper&campaign=prime_discovery",
+      key:"today's_ePaper"
     },
     {
       title: "Redeem Benefits",
       iconPosition: "-118px -60px",
       url: "https://economictimes.indiatimes.com/et_benefits.cms?source=homepage&medium=addOn_benefits&campaign=prime_discovery",
+      key:"redeem_benefits",
       forMarket: true
     }
   ];
@@ -143,7 +152,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
                 const style: any = {backgroundPosition: item.iconPosition};
                 item.backgroundSize ? style.backgroundSize = item.backgroundSize : null;
                 return (
-                  <a key={index} className="item" href={item?.url} target="_blank">
+                  <a key={item.key} className="item" href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#ET prime widget click#${item.key}`}>
                     <span className="icon" style={style}></span>
                     <span className="title">{item.title}</span>
                     {item.isNew && <span className="newIcon"></span>}

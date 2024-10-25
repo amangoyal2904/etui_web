@@ -57,12 +57,17 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
         isPink: true
       },
     });
+    if(typeof window != "undefined"){
+    window.customDimension = window.customDimension || {};
+    window.customDimension["dimension23"] = "75";
+    window.customDimension["dimension48"] = "2160010";
+    }
   }, []);
 
   useEffect(() => {    
     const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");    
     if(isLogin != null && !isLogin && !devCheck){
-      location.href = "https://etdev8243.indiatimes.com/"
+      // location.href = "https://etdev8243.indiatimes.com/"
     }    
   }, [isLogin]);
 

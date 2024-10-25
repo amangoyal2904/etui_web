@@ -8,7 +8,8 @@ import { getCookie } from "utils";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
 import Separator from "components/Separator";
 import PrimeIcon from 'components/Icons/PrimeIcon';
-
+import { trackingEvent } from '../../utils/ga';
+import { getCookie } from "utils/utils";
 export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   const APP_ENV = isDev ? "development" : "production";
   const [series, setSeries]: any = useState([]);
@@ -100,6 +101,12 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     //   "et_product":"Grandmaster"
     // },
     //    1);
+    trackingEvent("et_push_event", {
+      event_category:  'HP Clicks', 
+      event_action: `Prime Widget - Grandmaster - ${name}`, 
+      event_label: `https://${__APP.isLive ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`,
+      et_product:"Grandmaster"
+    });
    const formRef = formRefs.current[id];
     if (isPrimeUser && ticketID && token && formRef) {
       formRef?.submit();
