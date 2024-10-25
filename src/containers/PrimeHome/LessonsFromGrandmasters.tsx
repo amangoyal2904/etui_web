@@ -7,7 +7,8 @@ import { fetchAdaptiveData } from "utils/ga";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
 import Separator from "components/Separator";
 import PrimeIcon from 'components/Icons/PrimeIcon';
-
+import { trackingEvent } from '../../utils/ga';
+import { getCookie } from "utils/utils";
 export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   const APP_ENV = isDev ? "development" : "production";
   const [series, setSeries]: any = useState([]);
@@ -89,7 +90,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     let { lastClick } = fetchAdaptiveData();
     window.customDimension = { url: window.location.href, title: document.title, referral_url: document.referrer, platform: 'pwa' };
     window.customDimension["last_click_source"] = lastClick || "";
-    window.customDimension["method"] = window.objInts.readCookie("LoginType") || '',
+    window.customDimension["method"] = getCookie("LoginType") || '',
     window.customDimension["login_status"] = window.objUser && window.objUser.info && window.objUser.info.isLogged ? 'y' : 'n',
     window.customDimension["subscription_status"] = 'paid'; 
     // grxEvent('event', {
@@ -99,6 +100,12 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     //   "et_product":"Grandmaster"
     // },
     //    1);
+    trackingEvent("et_push_event", {
+      event_category:  'HP Clicks', 
+      event_action: `Prime Widget - Grandmaster - ${name}`, 
+      event_label: `https://${__APP.isLive ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`,
+      et_product:"Grandmaster"
+    });
    const formRef = formRefs.current[id];
     if (isPrimeUser && ticketID && token && formRef) {
       formRef?.submit();

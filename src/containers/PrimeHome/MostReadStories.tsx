@@ -41,7 +41,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                     <span className="subSprite arrow"></span>
                     <h3>Most Read<span>Stories</span></h3>
                 </div>
-                <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`mostReadStories`} />
+                <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`mostReadStories`} data-ga-onclick='Subscriber Homepage#Trending stories widget click#Button Prev' />
                 <div ref={emblaRef} className={`embla mostReadStoriesSlider`}>
                     <div className={`embla__container`}>
                         {subsets.map((value, index) => (
@@ -54,6 +54,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                     target="_blank" 
                                                     href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                                                     className='flr'
+                                                    data-ga-onclick='Subscriber Homepage#Trending stories widget click"#7 - href'
                                                 >
                                                     <img 
                                                         src={item.img} 
@@ -70,6 +71,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         target="_blank" 
                                                         className="line_4" 
                                                         href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
+                                                        data-ga-onclick='Subscriber Homepage#Trending stories widget click"#7 - href'
                                                     >
                                                         <RenderText text={item.title} />                                                                                                            
                                                     </a>
@@ -105,7 +107,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                         ))}
                     </div>
                 </div>
-                <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`mostReadStories`} />
+                <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`mostReadStories`} data-ga-onclick='Subscriber Homepage#Trending stories widget click#Button Next' />
             </div>
             <div className="embla__dots mostreadDots">
               {scrollSnaps.map((_, index) => (

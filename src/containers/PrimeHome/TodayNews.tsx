@@ -16,7 +16,7 @@ export default function TodayNews({ todayNews }) {
         {
           topNews?.data?.map((item, index) => (
             <li key={index}>
-              <a href={item?.url} target="_blank">
+              <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href' >
                 {item.type == "liveblog" &&  <LiveIcon />}
                 <RenderText text={item?.title} />
               </a>
@@ -31,7 +31,7 @@ export default function TodayNews({ todayNews }) {
           {
             wealthNews?.data?.map((item, index) => (
               <li key={index}>
-                <a href={item?.url} target="_blank">                
+                <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href'>                
                   <RenderText text={item?.title} />                  
                 </a>
               </li>
@@ -48,7 +48,7 @@ export default function TodayNews({ todayNews }) {
           {
             techNews?.data?.map((item, index) => (
               <li key={index}>
-                <a href={item?.url} target="_blank">
+                <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href'>
                   <RenderText text={item?.title} />
                 </a>
               </li>
@@ -116,13 +116,13 @@ function MorningEveningBrief({ briefNews }) {
       <div id="briefWidget">        
         <div className={`subSprite briefIcon ${briefNews?.type == "morning" ? "mb" : "eb"}`}></div>        
         <div className="stry font_faus">
-          <a target="_blank" href={data?.url}>
+          <a target="_blank" href={data?.url} data-ga-onclick='Subscriber Homepage#LHS ET morning brief click#href'>
             <RenderText text={data?.title} />
             <img title={data?.title} alt={data?.title} height={48} width={64} src={data?.img}/>            
           </a>
           </div>
         <div className="tac">
-          <a href={briefNews?.catchUpUrl} target="_blank" className="briefLink">{briefNews?.catchUpTitle}</a>
+          <a href={briefNews?.catchUpUrl} target="_blank" className="briefLink" data-ga-onclick='Subscriber Homepage#LHS ET morning brief click#all-stories'>{briefNews?.catchUpTitle}</a>
         </div>
       </div>
       <style jsx>{`

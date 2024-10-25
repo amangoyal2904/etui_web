@@ -109,6 +109,11 @@ export const callJsOnAppLoad = () => {
               track2 = track2.indexOf('href') != -1 ? (track2.replace('href', href)) : track2;
               track2 = track2.indexOf('url') != -1 ? (track2.replace('url', window.location.href)) : track2;
               if(trackVal.length > 1) {
+                trackingEvent("et_push_event", {
+                  event_category:  trackVal[0],
+                  event_action: trackVal[1],
+                  event_label: track2,
+                });
                 // ga('send', 'event', trackVal[0], trackVal[1], track2, window.customDimension);
                 // // Growth RX Event
                 // grxEvent('event', {'event_category': trackVal[0], 'event_action': trackVal[1], 'event_label': track2});

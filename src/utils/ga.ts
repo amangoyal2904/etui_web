@@ -722,6 +722,7 @@ export function setVisitInfo() {
   }
     
 }
+export const appendZero = (num) => (num >= 0 && num < 10) ? '0' + num : num;
 export const fetchAdaptiveData = function () {
   const referrer = typeof document != "undefined" && document?.referrer;
   let trafficSource = "Direct";

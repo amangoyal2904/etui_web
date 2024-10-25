@@ -62,7 +62,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   useEffect(() => {    
     const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");    
     if(isLogin != null && !isLogin && !devCheck){
-      location.href = "https://etdev8243.indiatimes.com/"
+      // location.href = "https://etdev8243.indiatimes.com/"
     }    
   }, [isLogin]);
 

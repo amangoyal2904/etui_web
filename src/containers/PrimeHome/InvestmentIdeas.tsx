@@ -29,7 +29,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
           </> 
         }
 
-        <a href={firstRow.url} target="_blank" className="first">
+        <a href={firstRow.url} target="_blank" className="first"  data-ga-onclick='Subscriber Homepage#ET prime widget click#InvestmentIdeas - 1 - href'>
           <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
           <RenderText text={firstRow.title} />
         </a>        
@@ -41,7 +41,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
                   return (
                     <div className="col" key={`col-${index1}`}>
                       { focusArea === "news" && <span className="counter">{(index + 1) * 2 + index1}</span> }
-                      <a target="_blank" className="hl" href={item.url} data-conttype="100">
+                      <a target="_blank" className="hl" href={item.url} data-conttype="100" data-ga-onclick='Subscriber Homepage#ET prime widget click#InvestmentIdeas - 1 - href'>
                         <RenderText text={item.title} />
                         { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }
                       </a>                      
@@ -53,7 +53,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
             )
           })
         }
-        { focusArea === "news" && <a className="seeAllLink" href={`${ET_WEB_URL}/prime/investment-ideas`} target="_blank" data-ga-onclick="Exclusives - See All - href">See All Investment Ideas Stories <ArrowRnd /></a> }
+        { focusArea === "news" && <a className="seeAllLink" href={`${ET_WEB_URL}/prime/investment-ideas`} target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#InvestmentIdeas - See All -  href'>See All Investment Ideas Stories <ArrowRnd /></a> }
       </div>
       <style jsx>{`
         .investmentIdeas {          
