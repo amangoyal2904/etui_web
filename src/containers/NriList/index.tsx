@@ -50,6 +50,9 @@ const NriList = (props) => {
             <div className="adContainer">
               <DfpAds adInfo={{ key: "atf300", index: 0 }} objVc={adInfo.atf300} />
             </div>
+            <div className="adContainer">
+              <DfpAds adInfo={{ key: "mtf", index: 0 }} objVc={adInfo.mtf} />
+            </div>
         </div>
       </section>
       

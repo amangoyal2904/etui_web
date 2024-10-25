@@ -8,14 +8,14 @@ export async function generateMetadata({ params }) {
     const domain = headersList.get("host") || "";
    
     return {
-      title: "Test NRI page",
-      description:  "Test NRI page",
-      keywords: "Test NRI page",
+      title: "NRI: NRI news today. NRI updates, immigration news | The Economic Times",
+      description:  "NRI: Latest NRI news today. NRI recent updates, immigration rues, latest visa announcements, visa process, visa fees, visa new rules, work visa requirements, visa policies, NRI investment options, Non resident Indian latest news and more on The Economic Times",
+      keywords: "nri, nri news, nri latest updates, non resident indians, nri latest news, nri updates",
       alternates: {
         canonical: "",
         media: {
-          'only screen and (max-width: 640px)': "",
-          'handheld': ""
+          'only screen and (max-width: 640px)': "https://m.economictimes.com/nri/country",
+          'handheld': "https://economictimes.indiatimes.com/nri/country"
         },
       },
       robots: {
@@ -29,6 +29,12 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const fetchContent = async (plistId: any) => {
+    const APIURL = `https://etpwaapi.economictimes.com/request?type=plist&msid=${plistId}&top=1`
+    const response = await fetch(APIURL);
+    const data = await response.json();
+    return data;
+  }
 
 const getData = async (isDev:any)=> {
     const baseUrl = `https://etpwaapi${isDev ? "pre" : ""}.economictimes.com`;
@@ -134,10 +140,5 @@ const NRIPage =  async ()=>{
     )
 }
 
-const fetchContent = async (plistId: any) => {
-  const APIURL = `https://etpwaapi.economictimes.com/request?type=plist&msid=${plistId}&top=1`
-  const response = await fetch(APIURL);
-  const data = await response.json();
-  return data;
-};
+
 export default NRIPage;
