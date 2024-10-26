@@ -155,14 +155,14 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           </div>
             {
               focusArea === "news" && <>
-                <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+                <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} isDev={isDev} focusArea={focusArea} />
                 <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
               </>
             }
         </div>
         <div className="col3">
           { focusArea === "market" && <>            
-            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
+            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea} />
             <Separator />
             <InvestmentIdeas focusArea={focusArea} data={investmentIdeas?.data || []}/>
             <Separator />
@@ -198,7 +198,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
       </section>
       {
         focusArea === "market" && <>
-          <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+          <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} isDev={isDev} focusArea={focusArea}  />
           <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
         </>
       }

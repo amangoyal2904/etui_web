@@ -237,5 +237,17 @@
   "LOGOUT_AUTH_NEW_TOKEN": {
     "development": "https://qa-oauth.economictimes.indiatimes.com/auth/ET/logout",
     "production": "https://oauth.economictimes.indiatimes.com/auth/ET/logout"
+  },
+  "getAllIndices": {
+    "development": "https://etmarketsapis.indiatimes.com/ET_Stats/getAllIndices",
+    "production": "https://etmarketsapis.indiatimes.com/ET_Stats/getAllIndices"  
+  },
+  "sectorcompanylisting": {
+    "development": "https://etmarketsapis.indiatimes.com/ET_Stats/sectorcompanylisting",
+    "production": "https://etmarketsapis.indiatimes.com/ET_Stats/sectorcompanylisting"  
+  },
+  "getIndexByIds": {
+    "development": "https://etmarketsapis.indiatimes.com/ET_Stats/getIndexByIds",
+    "production": "https://etmarketsapis.indiatimes.com/ET_Stats/getIndexByIds"  
   }
 }
