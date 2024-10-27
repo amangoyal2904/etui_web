@@ -37,7 +37,7 @@ const blockerList: any = {
     submessage: "Add stocks to get personalised alerts",
     cta: "Add Stocks Now",
     action: "",
-    icon: 114316182,
+    icon: 114656418,
   },
   notFound: {
     id: 4,
@@ -74,7 +74,7 @@ const Blocker = (props: propsType) => {
       <div className={styles.blockerContainer}>
         {icon && (
           <img
-            width={150}
+            width={icon == "114656418" ? "auto" : 150}
             height={150}
             alt={message}
             title={message}

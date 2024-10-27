@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import RenderText from "components/RenderText";
 import { ET_WAP_URL, ET_WEB_URL } from "utils/common";
+import NewsIndicesWidget from "./NewsIndicesWidget";
 import { trackingEvent } from "utils/ga";
 
 const IndustryTabsJSON = [
@@ -76,7 +77,9 @@ const IndustryTabsJSON = [
     }
 ];
 
-const NewsByIndustry = ({data, title}) => {
+const NewsByIndustry = ({data, title, isDev, focusArea}) => {
+    const [indexObj, setIndexObj] = useState<any>({"secName": "Indices", "exchange": "NSE"});
+    const [exchangeType, setExchangeType] = useState("NSE");
     const [articleData, setArticleData] = useState([
         {
             msid: '13352306',
@@ -88,8 +91,131 @@ const NewsByIndustry = ({data, title}) => {
     const [showLoading, setShowLoading] = useState(false);
     const selectedObj = IndustryTabsJSON.find(item => Number(item?.msid) == Number(showTab));
 
+    const filterObj = (filterArr, exchangeId, secname) => {
+        let customFilterArr = [];
+        customFilterArr = filterArr.map((val) => ({
+            customValue: val,
+            firstOperand: "industryId",
+            maxValue: null,
+            minValue: null,
+            operator: "EQUALS",
+            secondOperand: null    
+        }));
+        return {
+            customFilterDtoList: customFilterArr,
+            exchangeId: exchangeId,
+            fieldNames: "*",
+            isBankingSector: "false",
+            pageNumber: 1,
+            pageSize: "20",
+            sortedField: "marketCapValue",
+            sortedOrder: "desc",
+            secName: secname
+        }
+    }
+
+    const handleExchangeType = (type) => {
+        setExchangeType(type);
+    };
+
+    const getIndexId = () => {
+        let indexTab = `${showTab}_${exchangeType}`;
+        let filterArr; // Declare filterArr here if not already declared
+        
+
+        switch (indexTab) {
+            case "13352306_NSE": 
+                setIndexObj({"secName": "Indices", "exchange": "NSE"});
+                break;
+            case "13352306_BSE": 
+                setIndexObj({"secName": "Indices", exchange: "BSE"});
+                break;
+            case "13359412_NSE": 
+                setIndexObj({indexId: 13603, secName: "Auto", symbol: "CNXAUTO", exchange: "NSE"});
+                break;
+            case "13359412_BSE": 
+                setIndexObj({indexId: 2416, secName: "Auto", symbol: "AUTO", exchange: "BSE"});
+                break; 
+            case "78404305_NSE": 
+                setIndexObj({"indexId": 186, "secName": "Tech", "symbol": "CNXIT", "exchange": "NSE"});
+                break;
+            case "78404305_BSE": 
+                setIndexObj({"indexId": 2157, "secName": "Tech", "symbol": "BSE IT", "exchange": "BSE"});
+                break;
+            case "13358259_NSE": 
+                setIndexObj({indexId: 1913, secName: "Banking", symbol: "BANKNIFTY", exchange: "NSE"});
+                break;
+            case "13358259_BSE": 
+                setIndexObj({indexId: 2647, secName: "Banking", symbol: "BANKEX", exchange: "BSE"});
+                break;
+            case "13358759_NSE": 
+                setIndexObj({indexId: 13027, secName: "Products", symbol: "CNXFMCG", exchange: "NSE"});
+                break;
+            case "13358759_BSE": 
+            setIndexObj({indexId: 2274, secName: "Products", symbol: "BSEFMC", exchange: "BSE"});
+                break; 
+            case "13358350_NSE":
+                setIndexObj({indexId: 13016, secName: "Energy", symbol: "CNXENERGY", exchange: "NSE"});
+                break;
+            case "13358350_BSE":
+                setIndexObj({indexId: 14911, secName: "Energy", symbol: "ENERGY", exchange: "BSE"});
+                break; 
+            case "13357549_NSE":
+                setIndexObj({indexId: 186, secName: "Internet", symbol: "CNXIT", exchange: "NSE"});
+                break;
+            case "13357549_BSE":
+                setIndexObj({indexId: 2157, secName: "Internet", symbol: "BSE IT", exchange: "BSE"});
+                break; 
+            case "13358050_NSE": 
+                setIndexObj({indexId: 13017, secName: "Pharma", symbol: "CNXPHARMA", exchange: "NSE"});
+                break;
+            case "13358050_BSE": 
+                setIndexObj({indexId: 2276, secName: "Pharma", symbol: "BSE HC", exchange: "BSE"});
+                break; 
+            case "13354120_NSE": 
+                setIndexObj({indexId: 13021, secName: "Services", symbol: "CNXSSI", exchange: "NSE"});
+                break;
+            case "13357212_NSE":     
+                setIndexObj({indexId: 13604, secName: "Media", symbol: "CNXMEDIA", exchange: "NSE"});
+                break;
+            case "13357212_BSE": 
+                setIndexObj({indexId: 13604, secName: "Media", symbol: "CNXMEDIA", exchange: "NSE"});
+                break; 
+            case "13356992_NSE":
+                filterArr = [2121, 2214, 2215, 2216, 2217];
+                setIndexObj(filterObj(filterArr, 50, "Retail"));
+                break; 
+            case "13356992_BSE":
+                filterArr = [2121, 2214, 2215, 2216, 2217];
+                setIndexObj(filterObj(filterArr, 47, "Retail"));
+                break;
+            case "13357688_NSE":
+                filterArr = [2085, 2086, 2087, 2088, 2089];
+                setIndexObj(filterObj(filterArr, 50, "IND'L GOODS / SVS"));
+                break; 
+            case "13357688_BSE":
+                filterArr = [2085, 2086, 2087, 2088, 2089];
+                setIndexObj(filterObj(filterArr, 47, "IND'L GOODS / SVS"));
+                break; 
+            case "13354103_NSE":
+                setIndexObj({sectorid: 559, secName: "Telecommunications", exchange: "NSE"});
+                break; 
+            case "13354103_BSE":
+                setIndexObj({indexId: 14917, secName: "Telecommunications", symbol: "TELCOM", exchange: "BSE"});
+                break;  
+            default:
+                if(exchangeType == 'NSE') {
+                    setIndexObj({indexId: 2369, secName: "Nifty 50", symbol: "NSE Index", exchange: "NSE"});    
+                } else {
+                    setIndexObj({indexId: 2365, secName: "Sensex", symbol: "SENSEX", exchange: "BSE"});   
+                }
+                break;
+        }
+    }
+
     const articleListApiHit = (listMsid) => {        
         setShowTab(listMsid);
+        
         if(!articleData?.some(article => Number(article.msid) == Number(listMsid))){            
             const pllistArr = [13352306, 107115, 81585238, 78404305, 18606290];
             const typeVal = pllistArr.includes(listMsid) ? "plist" : "articlelist";
@@ -111,6 +237,10 @@ const NewsByIndustry = ({data, title}) => {
             });
         }
     }
+
+    useEffect(() => {
+        getIndexId()
+    }, [showTab, exchangeType])
     const fireTracking = (label) => {
         trackingEvent("et_push_event", {
             event_category:  'Subscriber Homepage', 
@@ -262,6 +392,9 @@ const NewsByIndustry = ({data, title}) => {
   return (
     <>
         <style jsx>{`
+            .dflex{
+                display:flex;
+            }
             .loadingLiWrp{
                 height: 612px;
                 position:relative;
@@ -516,33 +649,36 @@ const NewsByIndustry = ({data, title}) => {
                 <span className="semi_oval"></span>
                 <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`} data-ga-onclick='Subscriber Homepage#Industry widget click"#Title - Featured - /industry'>{selectedObj?.tabName}</a>
             </div>
-            <div className="news_menu tabsView tabVertical">
-                <ul className="tabs">
-                    {
-                        IndustryTabsJSON?.map((value: any, key: any) => {
-                            return (                                
-                                <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} data-ga-onclick={`Subscriber Homepage#Industry widget click"#Tab - ${value?.tabName}`} onClick={() => articleListApiHit(value?.msid)} key={key}>
-                                    <span data-msid={value?.msid} className="subSprite tabIcon"></span>
-                                    <span>{value?.tabName}</span>
-                                    <span className="subSprite nav_arw"></span>
-                                </li>                                
-                            )    
-                        })
-                    }
-                </ul>
-                <div className="stories_sec content tabsContent">
-                    <ul className="font_faus">
+            <div className="dflex">
+                <div className="news_menu tabsView tabVertical">
+                    <ul className="tabs">
                         {
-                            showLoading ? <li className="loadingLiWrp"><Loading /></li> : articleData?.map((value, key) => {
-                                return (
-                                    <Fragment key={key}>
-                                         {articleHtml(value.articleList, value.msid)} 
-                                    </Fragment>
-                                )
+                            IndustryTabsJSON?.map((value: any, key: any) => {
+                                return (                                
+                                    <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)} key={key}>
+                                        <span data-msid={value?.msid} className="subSprite tabIcon"></span>
+                                        <span>{value?.tabName}</span>
+                                        <span className="subSprite nav_arw"></span>
+                                    </li>                                
+                                )    
                             })
-                        }    
+                        }
                     </ul>
+                    <div className="stories_sec content tabsContent">
+                        <ul className="font_faus">
+                            {
+                                showLoading ? <li className="loadingLiWrp"><Loading /></li> : articleData?.map((value, key) => {
+                                    return (
+                                        <Fragment key={key}>
+                                            {articleHtml(value.articleList, value.msid)} 
+                                        </Fragment>
+                                    )
+                                })
+                            }    
+                        </ul>
+                    </div>
                 </div>
+                {focusArea === "market" && <NewsIndicesWidget isDev={isDev} handleExchangeType={handleExchangeType} exchangeType={exchangeType} indicesObj={indexObj}/>}
             </div>
         </section>
     </>

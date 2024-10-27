@@ -18,6 +18,7 @@ import MostReadStories from './MostReadStories';
 import VideoWidget from "./VideoWidget";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
+import BackToTopButton from "components/BackToTopButton";
 
 function PrimeHome({ searchResult, isDev, ssoid}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -89,6 +90,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
       <Panache data={panache?.data || []} title={panache?.title || ""} panacheVideosSlideshows={panacheVideosSlideshows} />
       <Explainers data={explainers?.data || []} title={explainers?.title || ""} />
       <MoreFromEconomicTimes data={moreFromeEconomicTimes} />
+      <BackToTopButton />
       <style jsx global>{`
         body {
           background: #ffe9e2;
