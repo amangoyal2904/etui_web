@@ -131,6 +131,7 @@ const MyWatchListDashboard = (props) => {
             ssoid={ssoid}
             APP_ENV={APP_ENV}
             wdName={"My Watchlist"}
+            wdHref="/watchlist"
           />
         </>
     )

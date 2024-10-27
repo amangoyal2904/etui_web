@@ -15,7 +15,7 @@ export default function MarketNews({ title, data, podcastData, marketExpertViews
 
   return (
     <>
-    <section className="marketNews">
+    <section className="marketNews" data-ga-impression={`Subscriber Homepage#Market News widget impression#`}>
       <h2><a href={`${ET_WEB_URL}/markets`}>{title}</a></h2>
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News", link:"/markets"}}/>
       <div className="second">

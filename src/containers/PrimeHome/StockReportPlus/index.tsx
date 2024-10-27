@@ -12,7 +12,11 @@ export default function StockReportPlus({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
   const tabs = ["High Upside", "Top Score Companies", "Score Upgrade"];
-  const tabLinks = ["/markets/benefits/stockreportsplus", "/markets/benefits/stockreportsplus", "/markets/benefits/stockreportsplus"];
+  const tabLinks = [
+    "/markets/stockreportsplus/high-upside/stockreportscategory/screenerid-2554.cms",
+    "/markets/stockreportsplus/top-score-companies/stockreportscategory/screenerid-4205.cms",
+    "/markets/stockreportsplus/score-upgrade/stockreportscategory/screenerid-2518.cms"
+  ];
 
   const sliderRef = useRef(null);
   const innerRef = useRef(null);
@@ -119,9 +123,9 @@ export default function StockReportPlus({ focusArea }) {
 
   return (
     <>
-      <div className={`${focusArea}`}>
+      <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Stock reports plus widget impression#`}>
       { <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
-        <HeadingWithRightArrow title="Stock Report Plus" />
+        <HeadingWithRightArrow title="Stock Report Plus" href="/markets/benefits/stockreportsplus"/>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />     
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>

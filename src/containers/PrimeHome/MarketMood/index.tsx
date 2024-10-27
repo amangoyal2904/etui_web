@@ -59,7 +59,7 @@ export default function MarketMood({ focusArea }) {
         <div className={styles.mmHeadWrap}>
           <div className={styles.dflex}>
             <img src="https://img.etimg.com/photo/114042208.cms" alt='Market Mood' className={styles.logo_mm} />
-            <HeadingWithRightArrow title="Market Mood" />
+            <HeadingWithRightArrow title="Market Mood" href="/markets/stock-market-mood" />
           </div>
           <div>
             <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)}>

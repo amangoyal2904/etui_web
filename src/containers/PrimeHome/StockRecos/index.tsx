@@ -116,6 +116,10 @@ export default function StockRecos({ focusArea }) {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+    setX(0);
+    setPrevDisabled(true);
+    setNextDisabled(false);
   }, [activeTab]);
 
   const howMany = focusArea === "news" ? 2 : 5;
@@ -123,7 +127,7 @@ export default function StockRecos({ focusArea }) {
   return (
     <>
       <div className={`${focusArea}`}>
-        <HeadingWithRightArrow title="Stock Recos" />
+        <HeadingWithRightArrow title="Stock Recos" href="/markets/stock-recos/overview"/>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea}/>
 
         <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
@@ -191,7 +195,7 @@ export default function StockRecos({ focusArea }) {
                   </div>
                   { activeTab == 0 ? 
                   <div className={styles.footer}>
-                    Brokerage: <a href={`${ET_WEB_URL}/markets/stock-recos/brokerages/${item?.seoName}/all`} target="_blank">{item?.organisation}</a>
+                    Brokerage: <a href={`${ET_WEB_URL}/markets/stock-recos/brokerages/${item?.seoName}-${item?.omId}/all`} target="_blank">{item?.organisation}</a>
                   </div>
                   : <div className="footer">
                       <div className="left">

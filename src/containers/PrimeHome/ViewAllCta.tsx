@@ -1,12 +1,12 @@
 import RightArrow from 'components/Icons/RightArrow'
 import React from 'react'
 
-export default function ViewAllCta({ title, url, isNoBorderRightArrow = false }: { title: string, url: string, isNoBorderRightArrow?: boolean }) {
+export default function ViewAllCta({ title, viewAllText = "", url, isNoBorderRightArrow = false }: { title: string, viewAllText?: string, url: string, isNoBorderRightArrow?: boolean }) {
   return (
     <>
       {isNoBorderRightArrow ? <>
         <div className="viewAllCta">
-          <a href={url} target="_blank">View All {title} <RightArrow /></a>
+          <a href={url} target="_blank">{viewAllText ? viewAllText : "View All"} {title} <RightArrow /></a>
         </div>
         <style jsx>{`
           .viewAllCta {

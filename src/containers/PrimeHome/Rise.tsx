@@ -8,7 +8,7 @@ export default function Rise({ title, data, isDev, popularInSmallBiz }) {
   
   return (
     <>
-    <section className="rise">
+    <section className="rise" data-ga-impression={`Subscriber Homepage#Rise widget impression#`}>
       <SectionHeaderWithNewsletter url="/small-biz" title="Rise" sid="5f5a31db80f79664e95679d5" />
       <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} />
       <div className="second">

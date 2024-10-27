@@ -8,7 +8,7 @@ export default function Politics({ title, data }) {
   const politicsInbrif = data.slice(15, 20);
   return (
     <>
-    <section className="politics">
+    <section className="politics" data-ga-impression={`Subscriber Homepage#Politics widget impression#`}>
       <SectionHeaderWithNewsletter url="/news/politics-nation" title="Politics" sid="5f5a31db80f79664e95679d8"/>
       <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics", link: "/news/politics"}}/>
       <div className="second">

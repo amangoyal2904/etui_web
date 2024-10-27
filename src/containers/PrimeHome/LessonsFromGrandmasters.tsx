@@ -2,12 +2,13 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import API_CONFIG from "../../network/config.json"
-import { SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
+import { ET_WEB_URL, SITE_APP_CODE, X_CLIENT_ID } from "utils/common";
 import { fetchAdaptiveData } from "utils/ga";
+import { getCookie } from "utils";
 import HeadingWithRightArrow from "./HeadingWithRightArrow";
 import Separator from "components/Separator";
 import PrimeIcon from 'components/Icons/PrimeIcon';
-
+import { trackingEvent } from '../../utils/ga';
 export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   const APP_ENV = isDev ? "development" : "production";
   const [series, setSeries]: any = useState([]);
@@ -89,7 +90,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     let { lastClick } = fetchAdaptiveData();
     window.customDimension = { url: window.location.href, title: document.title, referral_url: document.referrer, platform: 'pwa' };
     window.customDimension["last_click_source"] = lastClick || "";
-    window.customDimension["method"] = window.objInts.readCookie("LoginType") || '',
+    window.customDimension["method"] = getCookie("LoginType") || '',
     window.customDimension["login_status"] = window.objUser && window.objUser.info && window.objUser.info.isLogged ? 'y' : 'n',
     window.customDimension["subscription_status"] = 'paid'; 
     // grxEvent('event', {
@@ -99,11 +100,17 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
     //   "et_product":"Grandmaster"
     // },
     //    1);
+    trackingEvent("et_push_event", {
+      event_category:  'HP Clicks', 
+      event_action: `Prime Widget - Grandmaster - ${name}`, 
+      event_label: `https://${__APP.isLive ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`,
+      et_product:"Grandmaster"
+    });
    const formRef = formRefs.current[id];
     if (isPrimeUser && ticketID && token && formRef) {
       formRef?.submit();
     } else {
-      window.location.href = `https://${window?.isDev ? 'm' : 'etnext'}.economictimes.com/etgrandmasters/${id}`;
+      window.location.href = `${ET_WEB_URL}/etgrandmasters/${id}`;
     }
   };
 
@@ -178,7 +185,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
       <div className={`grandmaster ${focusArea}`}>
         { focusArea === "news" && <Separator /> }
         { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
-        <HeadingWithRightArrow title={focusArea == "news" ? "Lessons from The Grandmasters" : "ET GrandMasters"} />
+        <HeadingWithRightArrow title={focusArea == "news" ? "Lessons from The Grandmasters" : "ET GrandMasters"} href="/etgrandmasters" />
         <div className="slider" ref={sliderRef}>
           <div className="seriesWrapper" ref={innerRef}>
           {isFirstSlot()
@@ -254,6 +261,12 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
             .seriesWrapper {
               display: inline-flex;
               gap: 20px;
+
+              .seriesCard {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
 
               & > div {
                 width: 195px;

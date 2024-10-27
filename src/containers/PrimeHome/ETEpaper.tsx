@@ -19,15 +19,15 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
 
   return (
     <>
-      <div className={`etEPaper ${focusArea} ${dayName}`}>
+      <div className={`etEPaper ${focusArea} ${dayName}`} data-ga-impression={`Subscriber Homepage#ET prime widget impression#`} >
         { focusArea === "news" && <Separator /> }
         { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
-        <HeadingWithRightArrow title={`ET ePaper`} />
+        <HeadingWithRightArrow title={`ET ePaper`} href="https://epaper.indiatimes.com/timesepaper/publication-the-economic-times,city-delhi.cms"/>
         {
           dayName !== "Mon" ? (
             focusArea === "news" ? (
               <div className="printBox">
-                <a href={epaperUrl} className='printBoxWrp'>
+                <a href={epaperUrl} className='printBoxWrp' data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Card - href'>
                   <div className="lft">
                     <span>
                       <img className="im" src={epaperImage} width="266" height="210" alt="Today's Paper" />
@@ -43,7 +43,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
               </div>
             ) : (
               <div className="epaper-cards">
-                <a href={epaperUrl}>
+                <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>
                   <div className="epaper-card epaper_news">
                     <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
                     <p className="empw">Empower your mornings.</p>
@@ -59,7 +59,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
           ) : (
             <div className="epaper-cards">
               <div className="epaper-card epaper_news">
-                <a href={epaperUrl}>
+                <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>
                   <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
                   <p className="empw">Empower your mornings.</p>
                   <p className="read">Read your favourite newspaper, the digital way.</p>
@@ -70,7 +70,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
                 </a>
               </div>
               <div className="epaper-card epaper_wealth">
-                <a href={wealthEditionUrl}>
+                <a href={wealthEditionUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#Wealth - Explore - href'>
                   <p className="wdText">Wealth Edition</p>
                   <p className="txt"><b>Latest Edition: </b>September 23-29, 2024</p>
                   <p className="read">Your weekly money management guide</p>

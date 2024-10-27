@@ -6,6 +6,7 @@ import {
     createPeuuid
 } from "../../utils";
 import APIS_CONFIG from "../../network/config.json";
+import { trackingEvent } from "utils/ga";
 
 interface BookmarkProps {
     msid: string;
@@ -107,6 +108,11 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
         console.log('saveBookmark', msid,type,isLogin);
         if(isLogin){
             console.log('saveBookmark isLogin');
+            trackingEvent("et_push_event", {
+                event_category: 'UB - Save Article', 
+                event_action: `Save Article - ${msid}`, 
+                event_label: window.location.href
+              });
             const Authorization = getCookie("peuuid") || '';
             const url = APIS_CONFIG.saveNews[window.APP_ENV];
             const channelId = hostId === "364" ? 4 : hostId === "318" ? 1 : 0;
