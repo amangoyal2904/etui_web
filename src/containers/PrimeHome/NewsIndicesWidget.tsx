@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import APP_CONFIG from "../../network/config.json";
 import { dateFormat } from 'utils/utils';
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import Loading from "../../components/Loading";
+import { useStateContext } from "../../store/StateContext";
+import useIntervalApiCall from 'utils/useIntervalApiCall';
 
 const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}) => {
+    const NewsIndicesRef = useRef<HTMLDivElement>(null);
+    const { state } = useStateContext();
+    const { currentMarketStatus } = state.marketStatus;
     const [compData, setCompData] = useState<any>(null);
     const [indexName, setIndexName] = useState<any>("");
     const [error, setError] = useState(null);
@@ -94,6 +99,21 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
         }
     }, [indicesObj]);
 
+    useIntervalApiCall(
+        () => {
+          if (currentMarketStatus === "LIVE"){
+            if (indicesObj.customFilterDtoList) {
+                postAjax();
+            } else {
+                fetchData();    // Handle the case for getAjax if needed
+            }  
+          }
+        },
+        26000,
+        [indicesObj, currentMarketStatus],
+        NewsIndicesRef,
+      );
+
     // if (error) {
     //     return <div>Error: {error?.message}</div>;
     // }
@@ -109,7 +129,7 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
         <>
             {
                 !compData || loading ? <div id="newsInds" className="bse_widget"><Loading /></div> :
-                <div id="newsInds" className="bse_widget">
+                <div id="newsInds" className="bse_widget" ref={NewsIndicesRef}>
                     <div className={`curr_data ${isSectorIdPresent ? 'hide' : ''}`}>
                         <div className="exchange_type">
                             <div className="curr">{indexName}</div>

@@ -8,6 +8,7 @@ import {
 
 import DashBoardTable from "../DashboardTable/DashboardTable";
 import { useStateContext } from 'store/StateContext';
+import Loading from "../../../components/Loading";
 
 
 const MyWatchListDashboard = (props) => {
@@ -114,7 +115,16 @@ const MyWatchListDashboard = (props) => {
     }, [isLogin]);
     
     if (!data) {
-        return <div>Loading...</div>; // Or any loading component
+        return <>
+          <div className='wtlWrp'><Loading /></div>
+          <style jsx>{`
+            .wtlWrp{
+              width: 605px;
+              height: 395px;
+              position: relative;
+            }
+          `}</style>
+        </>
     }  
 
     return (
