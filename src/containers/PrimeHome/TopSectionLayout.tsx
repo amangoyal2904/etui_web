@@ -111,11 +111,11 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
 
   return (
     <>
-      <section className="topLayout">
+      <section className={`topLayout ${focusArea}`}>
         <div className="ly_first_wrp">
           <div className='ly_second_wrp'>
             <div className="col1">
-              <TodayNews todayNews={todayNews} />
+              <TodayNews todayNews={todayNews} focusArea={focusArea} />
             </div>
             <div className="col2">
               <div className="titleNSwitch">
@@ -221,10 +221,13 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           }
 
           .ly_first_wrp{
-            display: flex;
-            justify-content: space-between;
+            display: flex;            
             width: calc(100% - 350px);
             flex-direction: column;
+
+            &.news {
+              justify-content: space-between;
+            }
 
             .ly_second_wrp{
               display: flex;

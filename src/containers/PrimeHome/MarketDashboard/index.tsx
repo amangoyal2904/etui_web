@@ -115,12 +115,16 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
 
   if (!data) {
     return <>
-      <div className='wtlWrp'><Loading /></div>
+      <div className={`wtlWrp ${focusArea}`}><Loading /></div>
       <style jsx>{`
         .wtlWrp{
           width: 605px;
           height: 395px;
           position: relative;
+
+          &.news{
+            width: 320px;
+          }
         }
       `}</style>
     </>

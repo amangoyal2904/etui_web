@@ -5,6 +5,7 @@ import { initSSOWidget } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import APIS_CONFIG from "../../network/config.json";
 import toast from "react-hot-toast";
+import { trackingEvent } from "utils/ga";
 
 const WatchlistAddition = ({
   companyName,
@@ -183,7 +184,12 @@ const WatchlistAddition = ({
           ? 0
           : 1;
 
-      console.log("Fetched Watchlist 4:", watchlist, userAction);    
+      console.log("Fetched Watchlist 4:", watchlist, userAction);   
+      trackingEvent("et_push_event", {
+        event_category: 'Subscriber Homepage', 
+        event_action: `Market Dashboard click`, 
+        event_label: 'add stock',
+      }); 
       setLoadingStatus(true);
       addStockInWatchlistHandler(userAction);
     } else {

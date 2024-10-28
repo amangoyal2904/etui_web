@@ -55,14 +55,14 @@ export default function MarketMood({ focusArea }) {
 
   return (
     <>
-      <div className={`${styles.marketMoodContainer} ${styles[focusArea]}`}>
+      <div className={`${styles.marketMoodContainer} ${styles[focusArea]}`} data-ga-impression={`Subscriber Homepage#Market Mood widget impression#`}>
         <div className={styles.mmHeadWrap}>
           <div className={styles.dflex}>
             <img src="https://img.etimg.com/photo/114042208.cms" alt='Market Mood' className={styles.logo_mm} />
             <HeadingWithRightArrow title="Market Mood" href="/markets/stock-market-mood" />
           </div>
           <div>
-            <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)}>
+            <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)} data-ga-onclick={`Subscriber Homepage#Market Mood click#Filter`}>
               <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
               <span>{niftyFilterData?.name || 'Select Filter'}</span>
             </span>
@@ -107,6 +107,7 @@ export default function MarketMood({ focusArea }) {
             valuechange={handleChangeData}
             selectTab={niftyFilterData?.exchange}
             childMenuTabActive={niftyFilterData?.indexId}
+            widget="Market Mood"
           />
         )}
       </div>
