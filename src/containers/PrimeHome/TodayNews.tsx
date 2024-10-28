@@ -3,7 +3,7 @@ import RenderText from 'components/RenderText';
 import Separator from 'components/Separator';
 import React, { Fragment, useEffect } from 'react'
 
-export default function TodayNews({ todayNews }) {  
+export default function TodayNews({ todayNews, focusArea }) {  
   const topNews = todayNews?.data?.find(item => item.section == "top") || {};
   const wealthNews = todayNews?.data?.find(item => item.section == "wealth") || {};
   const techNews = todayNews?.data?.find(item => item.section == "tech") || {};
@@ -41,7 +41,7 @@ export default function TodayNews({ todayNews }) {
       </>
       }
 
-      {techNews?.data?.length > 0 && <>
+      { focusArea === 'market' && techNews?.data?.length > 0 && <>
         <Separator height={2}/>
         <div className="wealthTitle">{techNews?.title}</div>
         <ul>

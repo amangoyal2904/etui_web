@@ -42,7 +42,7 @@ export default async function Page({ params }: {
     console.log("Error: ", error)
   }
   const pageSeo = response?.seo || {};
-  const versionControl = response?.version_control || {};
+  const versionControl = response?.searchResult?.find(item => item?.name === "common_config")?.data || {};
   return  <Layout page="primehome" className="layout1260" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
     <PrimeHome {...response} objVc={versionControl} isprimeuser={isprimeuser} isDev={isDev} ssoid={ssoid} />
   </Layout>;
