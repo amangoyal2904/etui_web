@@ -1,12 +1,20 @@
 import RightArrow from 'components/Icons/RightArrow'
 import React from 'react'
+import { trackingEvent } from 'utils/ga';
 
 export default function ViewAllCta({ title, viewAllText = "", url, isNoBorderRightArrow = false }: { title: string, viewAllText?: string, url: string, isNoBorderRightArrow?: boolean }) {
+  const fireTracking = (text) => {
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `View All click`, 
+      event_label: text,
+    });
+  }
   return (
     <>
       {isNoBorderRightArrow ? <>
         <div className="viewAllCta">
-          <a href={url} target="_blank">{viewAllText ? viewAllText : "View All"} {title} <RightArrow /></a>
+          <a onClick={()=>fireTracking(title)} href={url} target="_blank">{viewAllText ? viewAllText : "View All"} {title} <RightArrow /></a>
         </div>
         <style jsx>{`
           .viewAllCta {

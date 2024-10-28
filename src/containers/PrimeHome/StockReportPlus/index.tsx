@@ -130,10 +130,15 @@ export default function StockReportPlus({ focusArea }) {
       <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Stock reports plus widget impression#`}>
       { <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title="Stock Report Plus" href="/markets/benefits/stockreportsplus"/>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />     
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} widget="Stock Report Plus"/>     
 
-        <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
-        <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
+        <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}
+          data-ga-onclick="Subscriber Homepage#Stock Report Plus click#prev"
+        ></span>
+        <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} 
+        onClick={() => onNextPrevButtonClick("next")}
+        data-ga-onclick="Subscriber Homepage#Stock Report Plus click#next"
+        ></span>
 
         <div className="slider" ref={sliderRef}>
           <div className="cardsWrapper" ref={innerRef}>
@@ -192,7 +197,7 @@ export default function StockReportPlus({ focusArea }) {
                       Strong Buy
                     </span>
                   </div>
-                  <ViewReportCta url={`${ET_WEB_URL}/${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} />
+                  <ViewReportCta url={`${ET_WEB_URL}/${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} widget="Stock Report Plus"/>
                 </div>
                 <div className="right up">
                   <div>

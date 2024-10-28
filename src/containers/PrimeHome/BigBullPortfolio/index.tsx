@@ -148,16 +148,20 @@ export default function BigBullPortfolio({ focusArea }) {
 
   return (
     <>
-      <div className={`bigbull ${focusArea}`}>        
+      <div className={`bigbull ${focusArea}`} data-ga-impression={`Subscriber Homepage#BigBull Portfolio widget impression#`}>        
         <a className='dflex align-center' href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/individual`} target='_blank'>
           <img className='mr-6' width={24} src="https://img.etimg.com/photo/114352551.jpg" />
           <img width={138} src="https://img.etimg.com/photo/114352673.jpg" />
           <RightArrow />
         </a>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} />
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} widget="BigBull Portfolio"/>
 
-        <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
-        <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
+        <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}
+        data-ga-onclick="Subscriber Homepage#BigBull Portfolio click#next"
+        ></span>
+        <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}
+        data-ga-onclick="Subscriber Homepage#BigBull Portfolio click#next"
+        ></span>
 
         <div className="slider" ref={sliderRef}>
           <div className="cards" ref={innerRef} style={fetchingData ? {width: "100%"} : {}}>

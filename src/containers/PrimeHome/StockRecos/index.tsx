@@ -126,12 +126,18 @@ export default function StockRecos({ focusArea }) {
 
   return (
     <>
-      <div className={`${focusArea}`}>
+    <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Stock Recos widget impression#`}>
         <HeadingWithRightArrow title="Stock Recos" href="/markets/stock-recos/overview"/>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea}/>
+        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} widget="Stock Recos"/>
 
-        <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
-        <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
+        <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} 
+          onClick={() => onNextPrevButtonClick("prev")}
+          data-ga-onclick={`Subscriber Homepage#Stock Recos click#prev`}
+          ></span>
+        <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} 
+        onClick={() => onNextPrevButtonClick("next")}
+        data-ga-onclick={`Subscriber Homepage#Stock Recos click#next`}
+        ></span>
 
         <div className="slider" ref={sliderRef}>
           <div className="cardsWrapper" ref={innerRef}>
@@ -140,7 +146,7 @@ export default function StockRecos({ focusArea }) {
                 <div className={`${styles.card} card`} key={index}>
                   { activeTab == 0 && <div className={styles.firstRow}><span className={styles.cat}>{item?.recoType}</span> | Call Date: {dateFormat(item?.priceAtRecosDate || "", "%MMM %d, %Y")}</div>}
                   <div className={`${styles.title} ${activeTab > 0 ? styles['thisTop'] : ''} ${activeTab > 0 ? 'thisTop' : ''}`}>
-                    <a href={`${ET_WEB_URL}/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank">{item?.companyName}</a>
+                    <a href={`${ET_WEB_URL}/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank"  data-ga-onclick={`Subscriber Homepage#Stock Recos click#${item?.companyName}`}>{item?.companyName}</a>
                     <span className={styles.watchlistIcWrp}>
                       <WatchlistAddition
                         companyName={item.companyShortName}
@@ -175,7 +181,7 @@ export default function StockRecos({ focusArea }) {
                           Current Price
                           <span>{item?.currentPrice}</span>
                         </span>
-                        <ViewReportCta url={item?.pdfUrl} />
+                        <ViewReportCta url={item?.pdfUrl} widget="Stock Recos"/>
                       </div>  
                     </>
                     }

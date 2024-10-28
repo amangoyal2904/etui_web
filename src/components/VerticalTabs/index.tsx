@@ -1,4 +1,5 @@
 
+import { trackingEvent } from "utils/ga";
 import styles from "./styles.module.scss";
 
 export default function VerticalTabs({
@@ -9,6 +10,14 @@ export default function VerticalTabs({
   valueProp,
   isCenter = false,
 }: any) {
+  const handleOnTabClick = (value, name) => {
+    setActiveTab(value);
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `Market Dashboard click`, 
+      event_label: name,
+    });
+  }
   return (
     <div className={`${styles.vtabs} ${!!isCenter ? styles.center : ""}`}>
       {tabs?.map((tab: any, i: number) => (
@@ -20,7 +29,7 @@ export default function VerticalTabs({
               : styles.vtab
           }
           onClick={() => {
-            setActiveTab(idProp === "key" ? tab : tab[idProp]);
+            handleOnTabClick(idProp === "key" ? tab : tab[idProp], tab[valueProp]);
           }}
           dangerouslySetInnerHTML={{ __html: tab[valueProp] }}
         ></div>
