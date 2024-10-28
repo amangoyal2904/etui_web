@@ -17,7 +17,7 @@ export default function MarketNews({ title, data, podcastData, marketExpertViews
     <>
     <section className="marketNews" data-ga-impression={`Subscriber Homepage#Market News widget impression#`}>
       <h2><a href={`${ET_WEB_URL}/markets`}>{title}</a></h2>
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Market News", link:"/markets"}}/>
+      <OneImgTwoColsNewsLayout data={data} more={{text: "Market News", link:"/markets"}} widget="Market News"/>
       <div className="second">
         { liveblogData.length > 0 && <LiveBlog data={marketLiveblog} /> }
         <ExpertViews data={expertViewsData} />
@@ -88,8 +88,10 @@ function Podcast({ podcastData }) {
       <div className="title">Podcast</div>
       <div className="button">{titles?.[0] || ""} <i className="crownIcon"></i></div>
       <div className="datetime">{data?.timeAgo} ago  | {dateFormat(data?.date, "%MMM %d, %Y")}</div>
-      <a className="description" target="_blank" href={data?.url}>{titles?.[1]?.trim() || ""}</a>
-      <a className="cta" target="_blank" href={data?.url}><i className="iconListen"></i>Listen <span className="dot"></span><span className="duration">{data?.duration || ""}</span></a>
+      <a className="description" target="_blank" href={data?.url} data-ga-onclick={`Subscriber Homepage#Market News widget click#Podcast - href`}>{titles?.[1]?.trim() || ""}</a>
+      <a className="cta" target="_blank" href={data?.url} data-ga-onclick={`Subscriber Homepage#Market News widget click#Podcast Listen - href`}>
+        <i className="iconListen"></i>Listen <span className="dot"></span><span className="duration">{data?.duration || ""}</span>
+      </a>
     </div>
     <style jsx>{`
       .podcast {
@@ -202,7 +204,7 @@ function StockScreeners() {
   return <>
     <div className="stockScreeners">
       <h3>
-        <a href={`${ET_WEB_URL}/markets/stocks/stock-screener`} target="_blank">Stock Screeners</a>
+        <a href={`${ET_WEB_URL}/markets/stocks/stock-screener`} target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Stock Screeners Heading - href`}>Stock Screeners</a>
         <i className="iconScreener"></i>
       </h3>
       <ul className="screener">
@@ -211,7 +213,7 @@ function StockScreeners() {
             return <li key={`screener_stockScreener_key_${index}`}>
             <a
               target="_blank"
-              data-ga-onclick="Top Score Companies - href"
+              data-ga-onclick={`Subscriber Homepage#Market News widget click#${stockScreener?.screenerName} - href`}
               href={`${ET_WEB_URL}/stock_screener/predefKey-${stockScreener?.id}.cms`}
             >
               <div className="figure">
@@ -233,7 +235,7 @@ function StockScreeners() {
           <a
             href={`${ET_WEB_URL}/markets/stocks/stock-screener`}
             target="_blank"
-            data-ga-onclick="Stock Screener Count - href"
+            data-ga-onclick={`Subscriber Homepage#Market News widget click#Stock Screener Count - href`}
           >
             <div className="midcontent">
               <span className="count">+{data?.stockScreenersCount || ""}</span>
@@ -427,7 +429,7 @@ function LiveBlog({ data }) {
         <LiveIcon />
       </div>
       <div className="lhead">
-        <a target="_blank" href={liveblogData?.url}>
+        <a target="_blank" href={liveblogData?.url} data-ga-onclick={`Subscriber Homepage#Market News widget click#Live Blog - href`}>
           <RenderText text={liveblogData?.title} />
         </a>
       </div>
@@ -506,20 +508,26 @@ function ExpertViews({ data }) {
   return <>
     <div className="expertViews">
       <div className="title">
-        <a className="title" href={`${ET_WEB_URL}/markets/expert-views/articlelist/50649960.cms`} data-ga-onclick="Title - Expert Views - href" target="_blank">Expert Views</a>
+        <a 
+          className="title" 
+          href={`${ET_WEB_URL}/markets/expert-views/articlelist/50649960.cms`} 
+          data-ga-onclick={`Subscriber Homepage#Market News widget click#Title - Expert Views - href`}
+          target="_blank">
+            Expert Views
+        </a>
       </div>
       {data.map((item, index) => (
       <div className="content" key={`expertViews_content_key_${index}`}>
-        <a href={item?.url} target="_blank">
+        <a href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Expert Views - ${index+1} - href`}>
           <img width="56" height="56" alt={item?.title || ""} src={changeImageWidthHeight({imageUrl: item?.img, desiredHeight: 56, desiredWidth: 56})} />
         </a>
         
         <span className="right">
-          <a href={item?.url} target="_blank"><RenderText text={item?.title} /></a>
+          <a href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Expert Views - ${index+1} - href`}><RenderText text={item?.title} /></a>
           <span className="author">{item?.who}</span>
         </span>
       </div>))}
-      <MoreFromLink href="/markets/expert-views/articlelist/50649960.cms" appendText="Expert Views" moreText="More" />
+      <MoreFromLink href="/markets/expert-views/articlelist/50649960.cms" appendText="Expert Views" moreText="More" widget="Market News" />
     </div>
     <style jsx>{`
       .expertViews {
@@ -588,24 +596,24 @@ function MarketMoguls({ data }) {
     return <>
       <div className="marketMoguls">
         <div className="title">
-          <a className="title" href={`${ET_WEB_URL}/markets/market-moguls`} data-ga-onclick="Title - Market Moguls - href" target="_blank">Market Moguls</a>
+          <a className="title" href={`${ET_WEB_URL}/markets/market-moguls`} data-ga-onclick={`Subscriber Homepage#Market News widget click#Title - Market Moguls - href`} target="_blank">Market Moguls</a>
         </div>
         {data.map((item, index) => {
           const author = item?.authors?.[0] || {};
           return (
             <div className="content" key={`marketMoguls_content_key_${index}`}>
-              <a href={item?.url} target="_blank">
+              <a href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Market Moguls - Author - ${author?.title}`}>
                 <img width="56" height="56" alt={author?.title}  src={changeImageWidthHeight({imageUrl: author?.img, desiredHeight: 56, desiredWidth: 56})} />              
               </a>
               <span className="right">
-                <a href={author.url || ""} className="author" target="_blank">{author?.title || ""}</a>
+                <a href={author.url || ""} className="author" target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Market Moguls - Author - ${author?.title}`}>{author?.title || ""}</a>
                 <span className="dib">{author?.designation}, {author?.organization}</span>
                 <a target="_blank" href={item?.url}><RenderText text={item?.title} /></a>
               </span>
             </div>
           )
         })}
-        <MoreFromLink href="/markets/market-moguls" appendText="Market Moguls" moreText="More" />
+        <MoreFromLink href="/markets/market-moguls" appendText="Market Moguls" moreText="More" widget="Market News" />
       </div>
       <style jsx>{`
         .marketMoguls {

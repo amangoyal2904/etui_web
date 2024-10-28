@@ -33,7 +33,7 @@ export default function Slideshows({ title, data }) {
         <p>Get the glimpse of the top &amp; latest news with trending photos.</p>
       </div>      
       <div className="right">
-        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} data-ga-onclick={`Subscriber Homepage#Slideshows widget click#Button Prev`}/>
         <div className="embla" ref={emblaRef}>          
           <div className="embla__container">
           {
@@ -43,7 +43,9 @@ export default function Slideshows({ title, data }) {
                   {
                     subset.map((item, index1) => {
                       return (
-                        <a href={item?.url} target="_blank" className="item" key={index1}>
+                        <a href={item?.url} target="_blank" className="item" key={index1}
+                          data-ga-onclick={`Subscriber Homepage#Slideshows widget click#${index+1} - href`}
+                          >
                           <span className="imgWrap">
                             <img alt={item?.title} width={165} height={124} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 165, desiredHeight: 124})} />
                             <span className="subSprite webStIcon"></span>                    
@@ -59,7 +61,7 @@ export default function Slideshows({ title, data }) {
           }    
           </div>   
         </div> 
-        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`other`} />
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`other`} data-ga-onclick={`Subscriber Homepage#Slideshows widget click#Button Next`}/>
       </div>        
     </section>
     <style jsx>{`

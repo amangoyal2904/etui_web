@@ -33,7 +33,7 @@ export default function Tech({ title, data, newsLetterData }) {
     <>
       <section className="techMain" data-ga-impression={`Subscriber Homepage#Tech widget impression#`}>
         <SectionHeaderWithNewsletter url="/tech" title="Tech" sid="5f5a31db80f79664e95679e4" />
-        <OneImgTwoColsNewsLayout data={data} more={{ text: "Tech", link: "/tech" }} />
+        <OneImgTwoColsNewsLayout data={data} more={{ text: "Tech", link: "/tech" }} widget="Tech"/>
         <div className="second">
           <NewsLetters newsLetterData={newsLetterData} />
         </div>
@@ -117,7 +117,7 @@ function NewsLetters({ newsLetterData }) {
     <>
       <div className="newslettersMain">
         <div className="heading">
-          <a target="_blank" href={`${ET_WEB_URL}/tech/newsletters/tech-top-5`}>
+          <a target="_blank" href={`${ET_WEB_URL}/tech/newsletters/tech-top-5`} data-ga-onclick={`Subscriber Homepage#Tech widget click#title - Newsletters`}>
             <span className="techLogo subSprite"></span>
             <span className="secname">Newsletters</span>
           </a>
@@ -126,16 +126,28 @@ function NewsLetters({ newsLetterData }) {
           {newsLetterData?.map((item, index) => (
             <div className="newsletterBox" key={`newsLetter_${index}`}>
               <h4 className="publishDate">Published on {dateFormat(item.date, "%d %MMM, %Y")}</h4>
-              <a className="nListTitle" target="_blank" title={item.title} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+              <a 
+                className="nListTitle" 
+                target="_blank" 
+                title={item.title} 
+                href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
+                data-ga-onclick={`Subscriber Homepage#Tech widget click#Newsletters - ${index+1} - href`}
+              >
                 {item.title}
               </a>
-              <a className="nListImgBox" target="_blank" title={item.title} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}>
+              <a 
+                className="nListImgBox" 
+                target="_blank" 
+                title={item.title} 
+                href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
+                data-ga-onclick={`Subscriber Homepage#Tech widget click#Newsletters - ${index+1} - href`}
+                >
                 <img height="191" width="255" className="lazy" alt={item.title} src={changeImageWidthHeight({ imageUrl: item.img, desiredWidth: 255, desiredHeight: 191 })} />
               </a>
             </div>
           ))}
         </div>
-        <MoreFromLink href="/tech/newsletters/tech-top-5" appendText="From Tech Newsletters" moreText="More" />
+        <MoreFromLink href="/tech/newsletters/tech-top-5" appendText="From Tech Newsletters" moreText="More" widget="Tech widget"/>
       </div>
       <style jsx>{`
         .newslettersMain {
@@ -216,7 +228,15 @@ function MarketChange({ niftyITData }) {
       <div className="dataTable">
         {compnData?.companies?.map((data, index) => (
           <div className="dataTableBox" key={`niftyITCompany_${index}`}>
-            <a className="compName" target="_blank" data-ga-onclick={`Nifty IT - ${data.companyShortName} - href`} title={`Nifty IT - ${data.companyShortName}`}href={`${ET_WEB_URL}/${data.seoName}/stocks/companyid-${data.companyId}.cms`}>{data.companyShortName}</a>
+            <a 
+              className="compName" 
+              target="_blank" 
+              data-ga-onclick={`Subscriber Homepage#Tech widget click#Nifty IT - ${data.companyShortName} - href`}
+              title={`Nifty IT - ${data.companyShortName}`} 
+              href={`${ET_WEB_URL}/${data.seoName}/stocks/companyid-${data.companyId}.cms`}
+              >
+                {data.companyShortName}
+              </a>
             <span className="curntVal">{data.current}</span>
             <span className={`chngVal ${data.percentChange > 0 ? "up" : "down"}`}>({data.percentChange}%)</span>
           </div>

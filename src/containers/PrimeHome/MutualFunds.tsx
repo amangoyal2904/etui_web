@@ -8,9 +8,9 @@ export default function MutualFunds({ title, data, isDev }) {
   return (
     <>
     <section className="politics" data-ga-impression={`Subscriber Homepage#Mutual Funds widget impression#`}>
-      <h2><a href={`${ET_WEB_URL}/mutual-funds`} target="_blank">{title}</a></h2>
+      <h2><a href={`${ET_WEB_URL}/mutual-funds`} target="_blank" data-ga-onclick={`Subscriber Homepage#Mutual Funds widget click#title - href`}>{title}</a></h2>
       <div className='mfWrap'>
-        <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} />
+        <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} widget="Mutual Funds"/>
         <TopMF />
       </div>
       <TopMFDiscover isDev={isDev} />

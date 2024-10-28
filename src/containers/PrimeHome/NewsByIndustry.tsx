@@ -330,7 +330,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                         articleList?.map((value, index) => {
                             return (                                                                    
                                 index == 0 && <div className="first" key={index}>
-                                    <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} onClick={()=>fireTracking(`Industry Story 1 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)} >
+                                    <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} onClick={()=>fireTracking(`Industry Story - ${index+1} - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)} >
                                         <img 
                                             width="293" 
                                             height="226" 
@@ -346,7 +346,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                                                 className="hl" 
                                                 target="_blank" 
                                                 href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
-                                                onClick={()=>fireTracking(`Industry Story 1 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}
+                                                onClick={()=>fireTracking(`Industry Story - ${index+1} - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}
                                             ><RenderText text={value?.title || ""} /></a>
                                         </h4>
                                         <p className="desc wrapLines l3">                                            
@@ -362,7 +362,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                             articleList?.map((value, index) => {
                                 return (                                    
                                     index > 0 && index < 8 && value.type != "colombia" && value.type != "mrec"  ? <div className="otherDiv" key={index}>
-                                        <a target="_blank" className="flt" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} onClick={()=>fireTracking(`Industry Story - 2 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}>
+                                        <a target="_blank" className="flt" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} onClick={()=>fireTracking(`Industry Story - ${index+2} - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}>
                                             <img 
                                                 width="88" 
                                                 height="66" 
@@ -374,7 +374,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                                         </a>
                                         <div className=" data">
                                             <h4 className="otherDivH">
-                                                <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className="font_faus" onClick={()=>fireTracking(`Industry Story - 2 - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}>                                                    
+                                                <a target="_blank" href={value?.url?.replace(ET_WAP_URL, ET_WEB_URL)} className="font_faus" onClick={()=>fireTracking(`Industry Story - ${index+2} - ${value?.url?.replace(ET_WAP_URL, ET_WEB_URL)}`)}>                                                    
                                                     <RenderText text={value?.title || ""} />
                                                 </a>
                                             </h4>
@@ -647,7 +647,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                     News by <span className="sec_heading">Industry</span>
                 </a>
                 <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`} data-ga-onclick='Subscriber Homepage#Industry widget click"#Title - Featured - /industry'>{selectedObj?.tabName}</a>
+                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`} data-ga-onclick={`Subscriber Homepage#Industry widget click"#Title - ${selectedObj?.tabName} - /industry`}>{selectedObj?.tabName}</a>
             </div>
             <div className="dflex">
                 <div className="news_menu tabsView tabVertical">
@@ -655,7 +655,14 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                         {
                             IndustryTabsJSON?.map((value: any, key: any) => {
                                 return (                                
-                                    <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)} key={key}>
+                                    <li 
+                                        className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} 
+                                        data-msid={value?.msid} 
+                                        data-href={value?.link} 
+                                        onClick={() => articleListApiHit(value?.msid)} 
+                                        key={key}
+                                        data-ga-onclick={`Subscriber Homepage#Industry widget click"#Tab - ${value?.tabName}`}
+                                    >
                                         <span data-msid={value?.msid} className="subSprite tabIcon"></span>
                                         <span>{value?.tabName}</span>
                                         <span className="subSprite nav_arw"></span>

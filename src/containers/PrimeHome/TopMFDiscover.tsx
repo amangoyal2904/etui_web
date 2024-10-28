@@ -62,7 +62,12 @@ const TopMFDiscover = ({isDev}) => {
                     discoverList.map((value, index) => {
                         return (
                             <li className="item" key={`mf_screener_widget_${index}`}>
-                                <a target="_blank" rel="sponsored" href={`${etDomain}${value.link}`}>
+                                <a 
+                                    target="_blank" 
+                                    rel="sponsored" 
+                                    href={`${etDomain}${value.link}`}
+                                    data-ga-onclick={`Subscriber Homepage#Mutual Funds widget click#Discover Mutual Funds - ${value.text}`}
+                                >
                                     <div className="icon">
                                         <i className={`subSprite ${value.iconClass}`}></i>
                                     </div>

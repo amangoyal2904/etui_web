@@ -40,14 +40,14 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             rest.map((item, index) => {
               return (
                 <div className="row" key={index}>
-                  {item.map((item, index) => {
+                  {item.map((item, innerIndex) => {
                     return (
-                      <div className="col" key={`col-${index}`}>
+                      <div className="col" key={`col-${innerIndex}`}>
                         <div className="innerCol">
                           <div className="content">
                             <div className="text">
                               <a className="category" href={item?.categoryLink} target="_blank">{item.categoryName}</a>
-                              <a href={item.url} className="heading" target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#Exclusives - 1 - href'>{item.title}</a>
+                              <a href={item.url} className="heading" target="_blank" data-ga-onclick={`Subscriber Homepage#ET prime widget click#Exclusives - ${index+innerIndex+2} - href`}>{item.title}</a>
                             </div>                
                           </div>
                           <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />

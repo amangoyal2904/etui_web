@@ -10,9 +10,9 @@ export default function Politics({ title, data }) {
     <>
     <section className="politics" data-ga-impression={`Subscriber Homepage#Politics widget impression#`}>
       <SectionHeaderWithNewsletter url="/news/politics-nation" title="Politics" sid="5f5a31db80f79664e95679d8"/>
-      <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics", link: "/news/politics"}}/>
+      <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics", link: "/news/politics"}} widget="Politics"/>
       <div className="second">
-        <TextImageMiddile data={politicsInbrif} heading="IN Brief"/>
+        <TextImageMiddile data={politicsInbrif} heading="IN Brief" widget="Politics"/>
       </div>
       <div className="third">
         <TwitterWidget/>

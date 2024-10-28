@@ -131,7 +131,7 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
                         <div className="heading ">VIDEOS</div>
                         <ul className="etab">
                             {
-                                tabListJSON.map((value, index) => <li key={`videoBoxWidget_key_tab_${index}`} data-msid={value.msid} className={showTab == value.msid ? 'active' : ''} onClick={() => tabClick(value.msid)}>{value.name}</li>)
+                                tabListJSON.map((value, index) => <li key={`videoBoxWidget_key_tab_${index}`} data-msid={value.msid} className={showTab == value.msid ? 'active' : ''} onClick={() => tabClick(value.msid)} data-ga-onclick={`Subscriber Homepage#Videos widget click#Tabs - ${value.name}`}>{value.name}</li>)
                             }
                         </ul>
                     </div>
@@ -152,7 +152,12 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
                                                             value?.videoListData.map((listData, index2) => {
                                                                 return (                                                                                                                                            
                                                                     index2 < 8 && <div key={`videoListData_key_${index2}`} className='listDiv font_faus'>
-                                                                        <div className='content vid' onClick={() => {videoClick(listData?.msid, listData?.title); setAutoplay(1);}} data-msid={listData?.msid}>
+                                                                        <div 
+                                                                          className='content vid' 
+                                                                          onClick={() => {videoClick(listData?.msid, listData?.title); setAutoplay(1);}} 
+                                                                          data-msid={listData?.msid}
+                                                                          data-ga-onclick={`Subscriber Homepage#Videos widget click#News - ${index2+1} - ${listData?.url}`}
+                                                                          >
                                                                             <div className='imgDiv'>
                                                                                 <div className='active leayer hide'>
                                                                                     <span>NOW PLAYING</span>

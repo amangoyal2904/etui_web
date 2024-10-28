@@ -54,7 +54,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                     target="_blank" 
                                                     href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                                                     className='flr'
-                                                    data-ga-onclick='Subscriber Homepage#Trending stories widget click"#7 - href'
+                                                    data-ga-onclick={`Subscriber Homepage#Trending stories widget click"#${j+1} - href`}
                                                 >
                                                     <img 
                                                         src={item.img} 
@@ -71,7 +71,7 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         target="_blank" 
                                                         className="line_4" 
                                                         href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
-                                                        data-ga-onclick='Subscriber Homepage#Trending stories widget click"#7 - href'
+                                                        data-ga-onclick={`Subscriber Homepage#Trending stories widget click"#${j+1} - href`}
                                                     >
                                                         <RenderText text={item.title} />                                                                                                            
                                                     </a>
