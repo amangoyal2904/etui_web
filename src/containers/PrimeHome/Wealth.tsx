@@ -16,7 +16,7 @@ export default function Wealth({ title, data, wealthslideshow, wealthWebStories 
         </div>
         <div className="WealtS">
           <div className="second">
-            <TextImageMiddile data={wealthslideshow.data || []} heading={wealthslideshow.title || ""} />
+            <TextImageMiddile data={wealthslideshow.data || []} heading={wealthslideshow.title || ""} widget="Wealth"/>
           </div>
           <div className="third">
             <WealthWebstory data={wealthWebStories.data || []} heading={wealthWebStories.title || ""} />

@@ -60,7 +60,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
                 </a>
               );
             })}
-            <MoreFromLink href="/panache" appendText="Pananche" />
+            <MoreFromLink href="/panache" appendText="Pananche" widget="Panache widget" />
           </div>
         </div>
         <div className="third">

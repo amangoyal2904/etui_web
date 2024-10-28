@@ -19,7 +19,7 @@ const Opinion = ({OpinionData, focusArea}) => {
                                     <div className="ctgry">{value.section}</div>
                                     <div className="etPrint">FROM ET PRINT</div>
                                 </div>
-                                <a target="_blank" className="font_faus listTitle" href={value.url}>
+                                <a target="_blank" className="font_faus listTitle" href={value.url} data-ga-onclick={`Subscriber Homepage#Opinion widget click#${index+1} - href`}>
                                     {
                                         value.section == "Speaking Tree" && <img src={`${imgDomain}/thumb/msid-81702281,width-51,height-42,resizemode-8.cms`} className="flr" width="" height="" alt="Speaking Tree" />
                                     }

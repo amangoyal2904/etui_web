@@ -12,7 +12,7 @@ export default function Politics({ title, data }) {
       <SectionHeaderWithNewsletter url="/news/politics-nation" title="Politics" sid="5f5a31db80f79664e95679d8"/>
       <OneImgTwoColsNewsLayout data={politicsNews} more={{text: "Politics", link: "/news/politics"}}/>
       <div className="second">
-        <TextImageMiddile data={politicsInbrif} heading="IN Brief"/>
+        <TextImageMiddile data={politicsInbrif} heading="IN Brief" widget="Politics"/>
       </div>
       <div className="third">
         <TwitterWidget/>

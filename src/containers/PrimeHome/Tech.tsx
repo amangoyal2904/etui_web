@@ -135,7 +135,7 @@ function NewsLetters({ newsLetterData }) {
             </div>
           ))}
         </div>
-        <MoreFromLink href="/tech/newsletters/tech-top-5" appendText="From Tech Newsletters" moreText="More" />
+        <MoreFromLink href="/tech/newsletters/tech-top-5" appendText="From Tech Newsletters" moreText="More" widget="Tech widget"/>
       </div>
       <style jsx>{`
         .newslettersMain {

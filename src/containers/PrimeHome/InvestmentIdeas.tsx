@@ -41,7 +41,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
                   return (
                     <div className="col" key={`col-${index1}`}>
                       { focusArea === "news" && <span className="counter">{(index + 1) * 2 + index1}</span> }
-                      <a target="_blank" className="hl" href={item.url} data-conttype="100" data-ga-onclick='Subscriber Homepage#ET prime widget click#InvestmentIdeas - 1 - href'>
+                      <a target="_blank" className="hl" href={item.url} data-conttype="100" data-ga-onclick={`Subscriber Homepage#ET prime widget click#InvestmentIdeas - ${index1+1} - href`}>
                         <RenderText text={item.title} />
                         { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }
                       </a>                      
