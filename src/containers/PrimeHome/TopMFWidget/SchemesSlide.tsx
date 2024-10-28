@@ -276,7 +276,12 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
             <>
                 {
                     promotedURL && <div className="tmf_s_btns">
-                        <a target="_blank" rel="nofollow sponsered" href={promotedURL}>{buttonText}</a>
+                        <a 
+                            target="_blank" 
+                            rel="nofollow sponsered" 
+                            href={promotedURL}
+                            data-ga-onclick={`Buy Direct - ${value5?.mfBuyclientObject?.clientName ? value5?.mfBuyclientObject?.clientName : ""}#WEB - Click - ${value5?.nameOfScheme} - ${buttonText} - 600_MF_widget#600_MF_widget - url`}
+                            >{buttonText}</a>
                     </div>
                 }
                 <style jsx>{`
@@ -313,7 +318,6 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
     }
 
     const topMfSchemList = (value5, index5, s_type) => {
-
         return (
             <Fragment key={`topmf_schemelist_${index5}`}>
                 {
@@ -321,7 +325,10 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                         <div className='mfinfo_wrap'>
                             {s_type == "promotedSchemes" && <div className="promoted_text">FEATURED</div>}
                             <div className='tmf_s_name'>
-                                <a target="_blank" href={schemeURL(value5)}>{value5?.nameOfScheme}</a>
+                                <a 
+                                    target="_blank" 
+                                    href={schemeURL(value5)} 
+                                    data-ga-onclick={`Buy Direct - ${value5?.mfBuyclientObject?.clientName ? value5?.mfBuyclientObject?.clientName : ""}#WEB - Click - ${value5?.nameOfScheme} - Scheme Name - 600_MF_widget#600_MF_widget - url`}>{value5?.nameOfScheme}</a>
                                 <div className='tmf_s_rating'>
                                     {renderStars(value5.vrRating)}
                                 </div>

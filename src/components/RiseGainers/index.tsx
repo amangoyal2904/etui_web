@@ -50,47 +50,95 @@ const MarketGainers = ({ isDev }) => {
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, [activeSlide]);
 
-    return <>
-    
-      <div className={styles.marketChangeMain}>
-        <h3 className={styles.marketChangeTitle}>
-            <span className={styles.h_name}>{activeSlide === 'gainer' ? 'Gainers' : 'Losers'}</span>
+    return (
+      <>
+        <div className={styles.marketChangeMain}>
+          <h3 className={styles.marketChangeTitle}>
+            <span className={styles.h_name}>{activeSlide === "gainer" ? "Gainers" : "Losers"}</span>
             <div className={`${styles.btn_wrp}, ${styles.flr}`}>
-                <span className={`${styles.ar_btn}, ${styles.gl_prev}`} onClick={()=> {setSlide("gainer")} }></span>
-                <span className={`${styles.ar_btn}, ${styles.gl_next}`} onClick={()=> {setSlide("loser")} }></span>
+              <span
+                className={`${styles.ar_btn}, ${styles.gl_prev}`}
+                onClick={() => {
+                  setSlide("gainer");
+                }}
+              ></span>
+              <span
+                className={`${styles.ar_btn}, ${styles.gl_next}`}
+                onClick={() => {
+                  setSlide("loser");
+                }}
+              ></span>
             </div>
-        </h3>
-        
-        <div className={styles.currDataBox}>
+          </h3>
+
+          <div className={styles.currDataBox}>
             <div className={styles.topcomp}>
-                <a title={`${compnData[0]?.companyShortName}`} target="_blank" href={`${ET_WEB_URL}/${compnData[0]?.seoName}/stocks/companyid-${compnData[0]?.companyId}.cms`}><span className={styles.c_name}>{compnData[0]?.companyShortName}</span></a>
+              <a
+                title={`${compnData[0]?.companyShortName}`}
+                target="_blank"
+                href={`${ET_WEB_URL}/${compnData[0]?.seoName}/stocks/companyid-${compnData[0]?.companyId}.cms`}
+                data-ga-onclick={`Subscriber Homepage#Rise widget click#${activeSlide === "gainer" ? "Gainers" : "Losers"} - 1 - ${compnData[0]?.companyShortName} - href`}
+              >
+                <span className={styles.c_name}>{compnData[0]?.companyShortName}</span>
+              </a>
             </div>
             <span className={styles.currVal}>{compnData[0]?.current}</span>
             <span className={`${styles.changeval} ${compnData[0]?.percentChange > 0 ? styles.up : styles.down}`}>
-                <span className={`${styles.subSprite} ${styles.icon_arrow} ${compnData[0]?.percentChange > 0 ? styles.up : styles.down}`}></span>
-                <span>{compnData[0]?.absoluteChange} ({compnData[0]?.percentChange}%)</span>
+              <span
+                className={`${styles.subSprite} ${styles.icon_arrow} ${
+                  compnData[0]?.percentChange > 0 ? styles.up : styles.down
+                }`}
+              ></span>
+              <span>
+                {compnData[0]?.absoluteChange} ({compnData[0]?.percentChange}%)
+              </span>
             </span>
+          </div>
+          <iframe
+            className={styles.lazyIframe}
+            style={{ border: "none" }}
+            width="246"
+            height="139"
+            src={`https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com/chart.cms?companyId=${
+              compnData[0]?.companyId
+            }&candlestick_insights_show=false&save_layout=false&ga_hit=true&multiple_btn=true&et_logo=false&symbol=${encodeURIComponent(
+              compnData[0]?.ticker || ""
+            )}&currencypairname=&exchange=${
+              compnData[0]?.segment
+            }&entity=company&periodicity=&expirydate=&right_align=true&hide_fullscreen=false&chart_type=mountain&tagId=&dsg=&currencypairnameparent=&createdby=&local=&sbl_domain=&layoutchangescheck=true&symbol_search=false&ver=1656060840000&no_menu=1&zoom=false&ohlc_hide=true&background_color=transparent&custom_theme=1&grid_color=false&xaxis_color=%23666`}
+          />
+          <div className={styles.dataTable}>
+            {compnData?.slice(1, 4)?.map((data, index) => (
+              <div className={styles.dataTableBox} key={`gainersCompany_${index}`}>
+                <a
+                  className={styles.compName}
+                  target="_blank"
+                  title={`Gainers - ${data?.companyShortName}`}
+                  href={`${ET_WEB_URL}/${data?.seoName}/stocks/companyid-${data?.companyId}.cms`}
+                  data-ga-onclick={`Subscriber Homepage#Rise widget click#${activeSlide === "gainer" ? "Gainers" : "Losers"} - ${index+2} - ${data?.companyShortName} - href`}
+                >
+                  {data?.companyShortName}
+                </a>
+                <span className={styles.curntVal}>{data?.current}</span>
+                <span className={`${styles.chngVal}, ${data?.percentChange > 0 ? styles.up : styles.down}`}>
+                  ({data?.percentChange}%)
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className={styles.moreLink}>
+            <a
+              target="_blank"
+              href={`https://economictimes.indiatimes.com/stocks/marketstats/${
+                activeSlide === "gainer" ? "top-gainers" : "top-losers"
+              }`}
+              data-ga-onclick={`Subscriber Homepage#Rise widget click#${activeSlide === "gainer" ? "Gainers" : "Losers"} More`}
+            >
+              More {activeSlide === "gainer" ? "Gainers" : "Losers"} &nbsp;»
+            </a>
+          </div>
         </div>
-        <iframe 
-            className={styles.lazyIframe} 
-            style={{border: 'none'}} 
-            width="246" 
-            height="139" 
-            src={`https://${isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/chart.cms?companyId=${compnData[0]?.companyId}&candlestick_insights_show=false&save_layout=false&ga_hit=true&multiple_btn=true&et_logo=false&symbol=${encodeURIComponent(compnData[0]?.ticker || '')}&currencypairname=&exchange=${compnData[0]?.segment}&entity=company&periodicity=&expirydate=&right_align=true&hide_fullscreen=false&chart_type=mountain&tagId=&dsg=&currencypairnameparent=&createdby=&local=&sbl_domain=&layoutchangescheck=true&symbol_search=false&ver=1656060840000&no_menu=1&zoom=false&ohlc_hide=true&background_color=transparent&custom_theme=1&grid_color=false&xaxis_color=%23666`}
-            />
-        <div className={styles.dataTable}>
-          {compnData?.slice(1,4)?.map((data, index) => (
-            <div className={styles.dataTableBox} key={`gainersCompany_${index}`}>
-              <a className={styles.compName} target="_blank" data-ga-onclick={`gainer - ${data?.companyShortName} - href`} title={`Gainers - ${data?.companyShortName}`}href={`${ET_WEB_URL}/${data?.seoName}/stocks/companyid-${data?.companyId}.cms`}>{data?.companyShortName}</a>
-              <span className={styles.curntVal}>{data?.current}</span>
-              <span className={`${styles.chngVal}, ${data?.percentChange > 0 ? styles.up : styles.down}`}>({data?.percentChange}%)</span>
-            </div>
-          ))}
-        </div>
-        <div className={styles.moreLink}>
-            <a target="_blank" href={`https://economictimes.indiatimes.com/stocks/marketstats/${activeSlide === 'gainer' ? 'top-gainers' : 'top-losers'}`}>More {activeSlide === 'gainer' ? 'Gainers' : 'Losers'} &nbsp;»</a>
-        </div>
-      </div> 
-    </>
+      </>
+    );
 }
 export default MarketGainers;

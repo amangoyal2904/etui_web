@@ -10,7 +10,7 @@ export default function Rise({ title, data, isDev, popularInSmallBiz }) {
     <>
     <section className="rise" data-ga-impression={`Subscriber Homepage#Rise widget impression#`}>
       <SectionHeaderWithNewsletter url="/small-biz" title="Rise" sid="5f5a31db80f79664e95679d5" />
-      <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} />
+      <OneImgTwoColsNewsLayout data={data} more={{text: "Rise", link: "/small-biz"}} widget="Rise"/>
       <div className="second">
       <TextImageMiddile data={popularInSmallBiz?.data || []} heading="Popular in Small Biz" widget="Rise"/>
       </div>

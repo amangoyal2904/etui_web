@@ -19,7 +19,7 @@ const TextImageMiddile = ({data, heading, widget}) => {
                             <img width="100" height="75" alt={item.title} loading="lazy" src={item.img} />
                             {item.type === "slideshow" && <span className={`${styles.subSprite} ${styles.slideIcon}`}></span> }
                         </a>
-                        <a target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}  data-ga-onclick={`Subscriber Homepage#${widget} widget click#${index+1} - href`}>
+                        <a target="_blank" href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} data-ga-onclick={`Subscriber Homepage#${widget} widget click#${index+1} - href`}>
                             <RenderText text={item.title} />
                         </a>
                     </li>

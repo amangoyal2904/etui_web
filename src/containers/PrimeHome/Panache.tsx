@@ -12,9 +12,9 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
   return (
     <>
       <section className="panache secBox" data-ga-impression={`Subscriber Homepage#Panache widget impression#`}>
-        <h2>{title}</h2>
+        <h2><a href="/panache" target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#title - href`}>{title}</a></h2>
         <div className="flex Pleft">
-          <a className="firstBox" href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
+          <a className="firstBox" href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#1 - href`}>
             <figure>
               <img
                 src={changeImageWidthHeight({imageUrl: first?.img, desiredWidth: 335, desiredHeight: 507, desiredResizeMode: 6, quality: 100})}
@@ -31,7 +31,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
           <div className="secondThird">
             {secondThird?.map((item, index) => {
               return (
-                <a key={index} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
+                <a key={index} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#${index+2} - href`}>
                   {item?.title}
                   <img
                     src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 255, desiredHeight: 162})}
@@ -48,7 +48,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
           <div className="rest">
             {rest?.map((item, index) => {
               return (
-                <a key={index} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank">
+                <a key={index} href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#${index+4} - href`}>
                   <span>{item?.title}</span>
                   <img
                     src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 70, desiredHeight: 54})}

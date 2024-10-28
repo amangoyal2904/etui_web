@@ -14,13 +14,16 @@ const CryptoVideo = ({ data, title = "", isDev }) => {
           height="195"
           width="255"
           data-threshold="300"
-          src={`https://${
-            !isDev ? "economictimes" : "etdev8243"
-          }.indiatimes.com/videodash.cms?msid=${
+          src={`https://${!isDev ? "economictimes" : "etdev8243"}.indiatimes.com/videodash.cms?msid=${
             data[0]?.msid
           }&rlvideo=87021446&fallBackMute=true&skipad=1&widget=subscriberhome&iswebpre=true`}
         ></iframe>
-        <a target="_blank" href={data[0]?.url} title={data[0]?.title}>
+        <a
+          target="_blank"
+          href={data[0]?.url}
+          title={data[0]?.title}
+          data-ga-onclick={`Subscriber Homepage#Cryptocurrency News widget click#Crypto TV - href`}
+        >
           {data[0]?.title}{" "}
         </a>
       </div>

@@ -28,7 +28,7 @@ export default function WebStories({ title, data }) {
     <>
     <section className="webStories secBox" data-ga-impression={`Subscriber Homepage#Web stories widget impression#`}>
       <h2>{title}</h2>
-      <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} />
+      <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'red'} widget={`other`} data-ga-onclick={`Subscriber Homepage#Web Stories widget click#Button Prev`}/>
       <div className="slider embla" ref={emblaRef}>
         <div className="embla__container">
           {
@@ -38,7 +38,7 @@ export default function WebStories({ title, data }) {
                   {
                     subset.map((item, index1) => {
                       return (
-                        <a href={item?.url} target="_blank" className="item" key={`${index}_${index1}`}>
+                        <a href={item?.url} target="_blank" className="item" key={`${index}_${index1}`} data-ga-onclick={`Subscriber Homepage#Web Stories widget click#${index+1} - href`}>
                           <img alt={item?.title} width={240} height={427} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 240, desiredHeight: 427})} />
                           <span className="title">
                             <span className="subSprite webStIcon"></span>
@@ -54,7 +54,7 @@ export default function WebStories({ title, data }) {
           }
         </div>
       </div>
-      <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`other`} />
+      <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'red'} widget={`other`} data-ga-onclick={`Subscriber Homepage#Web Stories widget click#Button Next`}/>
       </section>
       <style jsx>{`
         .subSprite {

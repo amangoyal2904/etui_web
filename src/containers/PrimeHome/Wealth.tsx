@@ -9,10 +9,10 @@ export default function Wealth({ title, data, wealthslideshow, wealthWebStories 
     <>
     <section className="wealth" data-ga-impression={`Subscriber Homepage#Wealth widget impression#`}>
 
-      <h2><a href={`${ET_WEB_URL}/personal-finance`}>{title}</a></h2>
+      <h2><a href={`${ET_WEB_URL}/personal-finance`} data-ga-onclick={`Subscriber Homepage#Wealth widget click#title - href`} target="_blank">{title}</a></h2>
       <div className="mainWealt">
         <div className="WealtF">
-          <OneImgTwoColsNewsLayout data={data} more={{text: "Wealth", link: "/personal-finance"}}/>
+          <OneImgTwoColsNewsLayout data={data} more={{text: "Wealth", link: "/personal-finance"}} widget="Wealth"/>
         </div>
         <div className="WealtS">
           <div className="second">
@@ -25,7 +25,7 @@ export default function Wealth({ title, data, wealthslideshow, wealthWebStories 
             <h2 className="cals_heading">Tools & Calculators</h2>
             <ul className="">
               <li className="tc_list">
-                <a target="_blank" href={`${ET_WEB_URL}/wealth/calculators/income-tax-calculator`}>
+                <a target="_blank" href={`${ET_WEB_URL}/wealth/calculators/income-tax-calculator`} data-ga-onclick={`Subscriber Homepage#Wealth widget click#Tax Calculator`}>
                   <span className="subSprite tax_icon"></span>
                   <div className="dib tc_detail">
                     <span className="tc_name">Income Tax Calculator</span><span className="tc_btn">FIND OUT NOW</span>
@@ -33,7 +33,7 @@ export default function Wealth({ title, data, wealthslideshow, wealthWebStories 
                 </a>
               </li>
               <li className="tc_list">
-                <a target="_blank" href={`${ET_WEB_URL}/wealth/ifsc-bank-code`}>
+                <a target="_blank" href={`${ET_WEB_URL}/wealth/ifsc-bank-code`} data-ga-onclick={`Subscriber Homepage#Wealth widget click#IFSC Code Finder`}>
                   <span className="subSprite ifsc_icon"></span>
                   <div className="dib tc_detail">
                     <span className="tc_name">IFSC Code Finder</span><span className="tc_btn">FIND OUT NOW</span>
@@ -41,7 +41,7 @@ export default function Wealth({ title, data, wealthslideshow, wealthWebStories 
                 </a>
               </li>
               <li className="tc_list">
-                <a target="_blank" href={`${ET_WEB_URL}/wealth/calculators/employees-provident-fund`}>
+                <a target="_blank" href={`${ET_WEB_URL}/wealth/calculators/employees-provident-fund`} data-ga-onclick={`Subscriber Homepage#Wealth widget click#EPF Calculator`}>
                   <span className="subSprite epf_icon"></span>
                   <div className="dib tc_detail">
                     <span className="tc_name">EPF Calculator</span><span className="tc_btn">FIND OUT NOW</span>

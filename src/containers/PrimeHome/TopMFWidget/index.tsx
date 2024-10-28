@@ -8,6 +8,7 @@ import {
 import { DotButton, useDotButton } from '../../../components/CarouselDotBtn';
 import SchemesSlide from './SchemesSlide';
 import Service from "../../../network/service";
+import { trackingEvent } from 'utils/ga';
 
 const TopMF = () => {
     const OPTIONS = { loop: false, dragFree: false, watchDrag: false };
@@ -128,7 +129,15 @@ const TopMF = () => {
         selectedTabClick(primaryObj, selectedSubSlideName);
         if (emblaApi && emblaThumbsApi) emblaApi.scrollTo(index);
     }, [emblaApi, emblaThumbsApi]);
-
+    const onChangeDuration = (e) => {
+        setTopMFScheme([])
+        setSelectedYear(e.target.value)
+        trackingEvent("et_push_event", {
+            event_category: 'MF Widget Interactions', 
+            event_action: `WEB - Change - ${e.target.value}`, 
+            event_label: `600_MF_widget - ${window.location.href}`
+          })
+    }
     return (
         <section className="top_mf_wdgt">
             <div className="tmf_head">
@@ -143,6 +152,7 @@ const TopMF = () => {
                             data-scat={getSecObj(value.primaryObj.secondaryObj)}
                             data-cat={value.primaryObj.value}
                             onClick={() => onThumbClick(index, value.primaryObj.value)}
+                            data-ga-onclick={`MF Widget Interactions#WEB - Click - ${value.primaryObj.value}#600_MF_widget - url`}
                         >
                             {value.primaryObj.value}
                         </li>
@@ -155,8 +165,7 @@ const TopMF = () => {
                         id="tmf_duration"
                         value={selectedYear}
                         onChange={(e) => {
-                            setTopMFScheme([])
-                            setSelectedYear(e.target.value)
+                            onChangeDuration(e)
                         }}
                     >
                         <option disabled>Select Duration</option>

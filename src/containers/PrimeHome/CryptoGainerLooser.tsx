@@ -40,7 +40,10 @@ const CryptoGainerLooser = ({ isDev }) => {
             if (index > 3) return;
             return (
               <li key={`gainer_loser${index}`}>
-                <a className="coin_name" href={val?.pageUrl} title={val?.coinName}>
+                <a className="coin_name" href={val?.pageUrl} title={val?.coinName}
+                target="_blank"
+                 data-ga-onclick={`Subscriber Homepage#Cryptocurrency News widget click#${gainers === "gainers" ? "Gainers" : "Losers"} - ${index+1} - ${val?.coinName} - href`}
+                >
                   {val?.coinName}
                 </a>
                 <div>

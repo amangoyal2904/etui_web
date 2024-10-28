@@ -647,7 +647,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                     News by <span className="sec_heading">Industry</span>
                 </a>
                 <span className="semi_oval"></span>
-                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`} data-ga-onclick='Subscriber Homepage#Industry widget click"#Title - Featured - /industry'>{selectedObj?.tabName}</a>
+                <a className="curr_secname font_faus" target="_blank" href={`${ET_WEB_URL}${selectedObj?.link}`} data-ga-onclick={`Subscriber Homepage#Industry widget click"#Title - ${selectedObj?.tabName} - /industry`}>{selectedObj?.tabName}</a>
             </div>
             <div className="dflex">
                 <div className="news_menu tabsView tabVertical">
@@ -655,7 +655,14 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
                         {
                             IndustryTabsJSON?.map((value: any, key: any) => {
                                 return (                                
-                                    <li className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} data-msid={value?.msid} data-href={value?.link} onClick={() => articleListApiHit(value?.msid)} key={key}>
+                                    <li 
+                                        className={`tabLi ${showTab == value?.msid ? 'active' : ''}`} 
+                                        data-msid={value?.msid} 
+                                        data-href={value?.link} 
+                                        onClick={() => articleListApiHit(value?.msid)} 
+                                        key={key}
+                                        data-ga-onclick={`Subscriber Homepage#Industry widget click"#Tab - ${value?.tabName}`}
+                                    >
                                         <span data-msid={value?.msid} className="subSprite tabIcon"></span>
                                         <span>{value?.tabName}</span>
                                         <span className="subSprite nav_arw"></span>

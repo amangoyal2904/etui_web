@@ -4,7 +4,7 @@ import RenderText from 'components/RenderText'
 import { ET_WAP_URL, ET_WEB_URL } from 'utils/common'
 import { changeImageWidthHeight } from 'utils'
 
-export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: ""} }) {
+export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: ""}, widget }) {
   const first = data[0]
   const rest = data.slice(1)
   
@@ -12,7 +12,7 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: 
     <>
       <div className="wrap">
         <div className="first">
-          <a href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick="Subscriber Homepage#Market News widget click#1 - href">
+          <a href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick={`Subscriber Homepage#${widget} widget click#1 - href`}>
             <img alt={first?.title} width={335} height={291} src={changeImageWidthHeight({imageUrl: first?.img, desiredWidth: 335, desiredHeight: 291, quality: 100})} />
             <h3><RenderText text={first?.title} /> </h3>
           </a>
@@ -20,12 +20,12 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: 
         </div>
         <div className="rest">
           {rest.map((item, index) => (
-            <a href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" key={index} data-ga-onclick={`Subscriber Homepage#Market News widget click#${index+1} - href`}>
+            <a href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" key={index} data-ga-onclick={`Subscriber Homepage#${widget} widget click#${index+2} - href`}>
               <RenderText text={item?.title} />
             </a>
           ))}
           
-          <MoreFromLink href={more.link} appendText={more.text} widget="Market News"/>
+          <MoreFromLink href={more.link} appendText={more.text} widget={widget}/>
         </div>
       </div>
       <style jsx>{`

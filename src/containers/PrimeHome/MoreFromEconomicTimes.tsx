@@ -1,35 +1,47 @@
-import React from 'react';
+import React from "react";
 import { ET_WEB_URL } from "../../utils/common";
 
-export default function MoreFromEconomicTimes({data}) {
+export default function MoreFromEconomicTimes({ data }) {
   return (
     <>
-      <section className="moreFromEconomicTimes secBox" data-ga-impression={`Subscriber Homepage#More from ET impression#`}>
+      <section
+        className="moreFromEconomicTimes secBox"
+        data-ga-impression={`Subscriber Homepage#More from ET impression#`}
+      >
         <h2>{data?.title || ""}</h2>
         <div className="flex">
-          {
-            data?.children?.map((item, index) => {
-              return (
-                <div key={index} className="whiteBox">
-                  <a href={`${ET_WEB_URL}${item?.link}`} target="_blank" className="category">{item?.category || ""}</a>
-                  <ul>
-                  {
-                    item?.children?.map((child, index) => {
-                      return (
-                        <li key={index}>
-                          <a href={`${child?.url}`} target="_blank">
-                            {index === 0 && <img src={child?.img} alt={child?.title} width={256} height={192} title={child?.title} />}
-                            {child?.title || ""}
-                          </a>
-                        </li>
-                      )
-                    })
-                  }
-                  </ul>
-                </div>
-              )
-            })
-          }
+          {data?.children?.map((item, index) => {
+            return (
+              <div key={index} className="whiteBox">
+                <a
+                  href={`${ET_WEB_URL}${item?.link}`}
+                  target="_blank"
+                  className="category"
+                  data-ga-onclick={`Subscriber Homepage#More from ET widget click#${item?.category} - title - href`}
+                >
+                  {item?.category || ""}
+                </a>
+                <ul>
+                  {item?.children?.map((child, index) => {
+                    return (
+                      <li key={index}>
+                        <a
+                          href={`${child?.url}`}
+                          target="_blank"
+                          data-ga-onclick={`Subscriber Homepage#More from ET widget click#${item?.category} - ${index+1} - href`}
+                        >
+                          {index === 0 && (
+                            <img src={child?.img} alt={child?.title} width={256} height={192} title={child?.title} />
+                          )}
+                          {child?.title || ""}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </section>
       <style jsx>{`
@@ -100,5 +112,5 @@ export default function MoreFromEconomicTimes({data}) {
         }
       `}</style>
     </>
-  )
+  );
 }
