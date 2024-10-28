@@ -195,7 +195,7 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
                             compData?.map(comp => {
                                 return (
                                     <p className="comp_data" key={comp.indexId}>
-                                        <a target="_blank" rel="noopener noreferrer" href={`/${comp.seoName}/stocks/companyid-${comp.companyId}.cms`} className="comp_name">
+                                        <a target="_blank" rel="noopener noreferrer" href={`https://${isDev ? 'etmarketswebpre' : 'economictimes'}.indiatimes.com/${comp.seoName}/stocks/companyid-${comp.companyId}.cms`} className="comp_name">
                                             {comp.companyName}
                                         </a>
                                         <span className="val">{fixedVal(comp.current)}</span>
@@ -209,7 +209,7 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
                             compData?.map(comp => {
                                 return (
                                     <p className="comp_data" key={comp.indexId}>
-                                        <a target="_blank" rel="noopener noreferrer" href={`/${comp.seoName}/stocks/companyid-${comp.companyId}.cms`} className="comp_name">
+                                        <a target="_blank" rel="noopener noreferrer" href={`https://${isDev ? 'etmarketswebpre' : 'economictimes'}.indiatimes.com/${comp.seoName}/stocks/companyid-${comp.companyId}.cms`} className="comp_name">
                                             {comp.companyName}
                                         </a>
                                         <span className="val">{fixedVal(comp.ltp)}</span>
@@ -223,7 +223,7 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
                             compData[0]?.companies?.map(comp => {
                                 return (
                                     <p className="comp_data" key={comp.indexId}>
-                                        <a target="_blank" rel="noopener noreferrer" href={`/${comp.seoName}/stocks/companyid-${comp.companyId}.cms`} className="comp_name">
+                                        <a target="_blank" rel="noopener noreferrer" href={`https://${isDev ? 'etmarketswebpre' : 'economictimes'}.indiatimes.com/${comp.seoName}/stocks/companyid-${comp.companyId}.cms`} className="comp_name">
                                             {comp.companyShortName}
                                         </a>
                                         <span className="val">{fixedVal(comp.current)}</span>
