@@ -9,72 +9,124 @@ export default function PrimeBenefitsBucket({focusArea}) {
   const [isPrevDisabled, setPrevDisabled] = useState(true);
   const [isNextDisabled, setNextDisabled] = useState(false);
 
-  const items = [
+  const primeItems = [
     {
       title: "Prime Exclusives",
-      iconPosition: "-17px -22px",
+      iconPosition: "-22px -20px",
       url: "https://economictimes.indiatimes.com/prime?source=homepage&medium=prime_exclusives&campaign=prime_discovery",
       key:"prime_exclusive"
     }, 
     {
-      title: "Investment Ideas",
-      iconPosition: "-68px -22px",
-      url: "https://economictimes.indiatimes.com/prime/investment-ideas?source=homepage&medium=investment_ideas&campaign=prime_discovery",
-      key:"investment_ideas",
-      forMarket: true
-    },
-    {
-      title: "Stock Reports",
-      iconPosition: "-118px -22px",
-      url: "https://economictimes.indiatimes.com/markets/benefits/stockreportsplus?source=homepage&medium=sr_plus&campaign=prime_discovery",
-      key:"stock_reports",
-      forMarket: true
-    },
-    {
-      title: "BigBull Portfolio",
-      iconPosition: "-114px -99px",      
-      url: "https://economictimes.indiatimes.com/markets/top-india-investors-portfolio/individual?source=homepage&medium=big_bull&campaign=prime_discovery",
-      key:"bigbull_portfolio",
-      isNew: true,
-      forMarket: true
+      title: "Wealth Edition",
+      iconPosition: "-64px -22px",
+      width: "15px",
+      height: "20px",
+      url: "https://epaper.indiatimes.com/wealth_edition.cms?source=homepage&medium=wealth_edition&campaign=prime_discovery",
+      key:"wealth_magazine"      
     },
     {
       title: "ET Grandmasters",
-      iconPosition: "-48px -255px",
-      backgroundSize: "375px",
+      iconPosition: "-99px -20px",      
       url: "https://masterclass.economictimes.indiatimes.com/discover?source=homepage&medium=ET_Grandmasters&campaign=prime_discovery",
-      key:"et_grandmasters",
-      isNew: true,
-      forMarket: true
-    },
+      key:"et_grandmasters"       
+    },   
     {
-      title: "Markets Mood",
-      iconPosition: "-5px -230px",
-      backgroundSize: "340px",
-      url: "https://economictimes.indiatimes.com/markets/stock-market-mood?source=homepage&medium=market_moods&campaign=prime_discovery",
-      key:"markets_mood",
-      isNew: true,
-      forMarket: true
-    },
-    {
-      title: "Wealth Magazine",
-      iconPosition: "-169px -22px",
-      url: "https://epaper.indiatimes.com/wealth_edition.cms?source=homepage&medium=wealth_edition&campaign=prime_discovery",
-      key:"wealth_magazine",
-      forMarket: true
-    },
+      title: "News",
+      iconPosition: "-144px -20px",
+      width: "12px",
+      height: "26px",
+      url: "https://economictimes.indiatimes.com/news",
+      key:"news",      
+    },     
     {
       title: "Today's ePaper",
-      iconPosition: "-12px -104px",
+      iconPosition: "-181px -24px",
+      width: "20px",
+      height: "16px",
       url: "https://epaper.indiatimes.com/timesepaper/publication-the-economic-times,city-delhi.cms?source=homepage&medium=todays_paper&campaign=prime_discovery",
-      key:"today's_ePaper"
+      key:"todays_ePaper",
+      isNew: true     
     },
     {
       title: "Redeem Benefits",
-      iconPosition: "-118px -60px",
+      iconPosition: "-222px -20px",
+      width: "18px",
       url: "https://economictimes.indiatimes.com/et_benefits.cms?source=homepage&medium=addOn_benefits&campaign=prime_discovery",
       key:"redeem_benefits",
       forMarket: true
+    }
+  ];
+
+  const marketItems = [
+    {
+      title: "Investment Ideas",
+      iconPosition: "-20px -70px",
+      url: "https://economictimes.indiatimes.com/prime/investment-ideas?source=homepage&medium=investment_ideas&campaign=prime_discovery",
+      key:"investment_ideas"      
+    },
+    {
+      title: "Stock Reports",
+      iconPosition: "-62px -72px",
+      url: "https://economictimes.indiatimes.com/markets/benefits/stockreportsplus?source=homepage&medium=sr_plus&campaign=prime_discovery",
+      key:"stock_reports"      
+    },
+    {
+      title: "BigBull Portfolio",
+      iconPosition: "-99px -72px",      
+      url: "https://economictimes.indiatimes.com/markets/top-india-investors-portfolio/individual?source=homepage&medium=big_bull&campaign=prime_discovery",
+      key:"bigbull_portfolio",
+      isNew: true      
+    },
+    {
+      title: "Market Mood",
+      iconPosition: "-139px -71px",  
+      width: "25px",    
+      url: "https://economictimes.indiatimes.com/markets/stock-market-mood?source=homepage&medium=market_moods&campaign=prime_discovery",
+      key:"markets_mood",
+      isNew: true    
+    },
+    {
+      title: "Stocks",
+      iconPosition: "-179px -75px",
+      url: "https://economictimes.indiatimes.com/stocks/marketstats/top-gainers",
+      key:"stocks"
+    },
+    {
+      title: "Recos",
+      iconPosition: "-218px -71px",
+      url: "https://economictimes.indiatimes.com/markets/stock-recos/overview",
+      key:"recos",
+      isNew: true
+    },
+    {
+      title: "Screener",
+      iconPosition: "-260px -73px",
+      url: "https://economictimes.indiatimes.com/markets/stock-screener",
+      key:"screener"
+    },
+    {
+      title: "Data Downloader",
+      iconPosition: "-298px -72px",
+      url: "https://economictimes.indiatimes.com/markets/live-coverage",
+      key:"data_downloader"
+    },
+    {
+      title: "Market Scans",
+      iconPosition: "-21px -115px",
+      url: "https://economictimes.indiatimes.com/markets/stocks/market-scan",
+      key:"market_scans"
+    },
+    {
+      title: "StockTalk",
+      iconPosition: "-60px -116px",
+      url: "https://economictimes.indiatimes.com/markets/stocks/stock-talk",
+      key:"stock_talk"
+    },
+    {
+      title: "AI Chart Patterns",
+      iconPosition: "-99px -114px",
+      url: "https://economictimes.indiatimes.com/markets/stocks/ai-chart-patterns",
+      key:"ai_chart_patterns"
     }
   ];
 
@@ -134,13 +186,34 @@ export default function PrimeBenefitsBucket({focusArea}) {
 
   useEffect(() => {
     if(innerRef.current) {
-      innerRef.current.style.transform = `translate3d(${x}px, 0px, 0px)`;
-      // translate with transition
+      innerRef.current.style.transform = `translate3d(${x}px, 0px, 0px)`;      
       innerRef.current.style.transition = `transform 0.5s ease 0s`;
     }
   }, [x]);
 
-  const benefits = focusArea === "market" ? items.filter(item => item.forMarket) : items;
+  useEffect(() => {
+    setX(0);
+    setPrevDisabled(true);
+    // if innerWidth is less than viewportWidth, then disable next button
+    if(innerRef.current && sliderRef.current) {      
+      const viewportWidth = sliderRef.current.offsetWidth;
+      const innerWidth = innerRef.current.offsetWidth;
+      if(innerWidth <= viewportWidth) {
+        setNextDisabled(true);
+        sliderRef.current.style.display = "flex";
+        sliderRef.current.style.justifyContent = "center";
+      } else {
+        setNextDisabled(false);
+        // remove inline styles
+        sliderRef.current.style.display = "";
+        sliderRef.current.style.justifyContent = "";
+      }
+    } 
+  }, [focusArea]);
+
+  const benefits = focusArea === "market" ? marketItems : primeItems;
+
+  console.log("benefits", benefits);
 
   return (
     <>      
@@ -149,8 +222,9 @@ export default function PrimeBenefitsBucket({focusArea}) {
             <div className="itemWrap" ref={innerRef}>
             {
               benefits.map((item, index) => {
-                const style: any = {backgroundPosition: item.iconPosition};
-                item.backgroundSize ? style.backgroundSize = item.backgroundSize : null;
+                const style: any = {backgroundPosition: item.iconPosition};                
+                item.width ? style.width = item.width : null;
+                item.height ? style.height = item.height : null;
                 return (
                   <a key={item.key} className="item" href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#ET prime widget click#${item.key}`}>
                     <span className="icon" style={style}></span>
@@ -170,7 +244,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
           position: relative;
 
           .slider {
-            overflow: hidden;
+            overflow: hidden;            
           }
 
           &.news {
@@ -190,6 +264,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
             &.disabled {
               opacity: 0.4;              
               cursor: no-drop;
+              pointer-events: none;
             }
 
             &:after {
@@ -249,9 +324,9 @@ export default function PrimeBenefitsBucket({focusArea}) {
 
               .icon {
                 margin-bottom: 7px;
-                background: url("https://img.etimg.com/photo/msid-112277608,quality-100/benefits-icon-sprite.jpg") no-repeat;
+                background: url("https://img.etimg.com/photo/msid-114662409,quality-100/benefits-icon-sprite.jpg") no-repeat;
                 display: inline-block;
-                background-size: 210px;
+                background-size: 402px 308px;
                 width: 24px;
                 height: 24px;
               }
