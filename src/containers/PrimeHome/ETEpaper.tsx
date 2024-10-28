@@ -27,50 +27,58 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
           dayName !== "Mon" ? (
             focusArea === "news" ? (
               <div className="printBox">
-                <div className="lft">
-                  <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Card - href' >
-                    <img className="im" src={epaperImage} width="266" height="210" alt="Today's Paper" />
-                  </a>
-                </div>
-                <div className="rht">
-                  <img src={`${imgDomain}/photo/110526566.cms`} alt="Today's Paper" width="223" height="36" />
-                  <p className="empw">Empower your mornings.</p>
-                  <p className="read">Read your favourite newspaper, the digital way.</p>
-                  <a href={epaperUrl} className="explore_cta" data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>Explore<span className="dbl_arw"></span></a>
-                </div>
+                <a href={epaperUrl} className='printBoxWrp' data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Card - href'>
+                  <div className="lft">
+                    <span>
+                      <img className="im" src={epaperImage} width="266" height="210" alt="Today's Paper" />
+                    </span>
+                  </div>
+                  <div className="rht">
+                    <img src={`${imgDomain}/photo/110526566.cms`} alt="Today's Paper" width="223" height="36" />
+                    <p className="empw">Empower your mornings.</p>
+                    <p className="read">Read your favourite newspaper, the digital way.</p>
+                    <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
+                  </div>
+                </a>
               </div>
             ) : (
               <div className="epaper-cards">
-                <div className="epaper-card epaper_news">
+                <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>
+                  <div className="epaper-card epaper_news">
+                    <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
+                    <p className="empw">Empower your mornings.</p>
+                    <p className="read">Read your favourite newspaper, the digital way.</p>
+                    <div className="mainImg">
+                      <img title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
+                    </div>
+                    <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
+                  </div>
+                </a>
+              </div>
+            )
+          ) : (
+            <div className="epaper-cards">
+              <div className="epaper-card epaper_news">
+                <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>
                   <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
                   <p className="empw">Empower your mornings.</p>
                   <p className="read">Read your favourite newspaper, the digital way.</p>
                   <div className="mainImg">
                     <img title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
                   </div>
-                  <a href={epaperUrl} className="explore_cta" data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>Explore<span className="dbl_arw"></span></a>
-                </div>
-              </div>
-            )
-          ) : (
-            <div className="epaper-cards">
-              <div className="epaper-card epaper_news">
-                <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
-                <p className="empw">Empower your mornings.</p>
-                <p className="read">Read your favourite newspaper, the digital way.</p>
-                <div className="mainImg">
-                  <img title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
-                </div>
-                <a href={epaperUrl} className="explore_cta" data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>Explore<span className="dbl_arw"></span></a>
+                  <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
+                </a>
               </div>
               <div className="epaper-card epaper_wealth">
-                <p className="wdText">Wealth Edition</p>
-                <p className="txt"><b>Latest Edition: </b>September 23-29, 2024</p>
-                <p className="read">Your weekly money management guide</p>
-                <div className="mainImg">
-                  <img title="September 23-29, 2024" alt="Wealth Edition" height="152" width="178" src={wealthImage} className="im" />
-                </div>
-                <a href={wealthEditionUrl} className="explore_cta" data-ga-onclick='Subscriber Homepage#ET prime widget click#Wealth - Explore - href'>Explore<span className="dbl_arw"></span></a>
+                <a href={wealthEditionUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#Wealth - Explore - href'>
+                  <p className="wdText">Wealth Edition</p>
+                  <p className="txt"><b>Latest Edition: </b>September 23-29, 2024</p>
+                  <p className="read">Your weekly money management guide</p>
+                  <div className="mainImg">
+                    <img title="Wealth Edition" alt="Wealth Edition" height="152" width="178" src={wealthImage} className="im" />
+                  </div>
+                  <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
+                </a>
               </div>
             </div>
           )
@@ -221,7 +229,12 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
             text-align: left;
             border: 10px solid #FFF2EECC;
             padding: 14px 4px 10px 0;
-            margin-top: 10px;            
+            margin-top: 10px;  
+            
+            .printBoxWrp{
+              display: flex;
+              justify-content: space-between;
+            }
 
             .read {
               font-size: 15px;

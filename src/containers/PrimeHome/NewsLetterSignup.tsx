@@ -1,11 +1,11 @@
 import useNewsletterSubscription from "components/useNewsletterSubscription";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function NewsLetterSignup({ section, sid }) {
   const [email, setEmail] = useState('');
   const [subs, setSubs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { initSubscription, unsubsNews } = useNewsletterSubscription();
+  const { initSubscription, unsubsNews, getNewsLtrSuggestion } = useNewsletterSubscription();
   
   function handleSubscription(e, sid) {
     // debugger
@@ -20,6 +20,13 @@ export default function NewsLetterSignup({ section, sid }) {
       }
     });
   }
+
+  useEffect(() => {
+    getNewsLtrSuggestion({limit: 5}, function(newsletterSuggestions) {
+      // debugger
+      console.log({newsletterSuggestions})
+    });
+  }, []);
 
   return (
     <>

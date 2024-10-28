@@ -31,13 +31,16 @@ const Login = ({headertext}) => {
 
   const adFreeEx = () => {
   
-    var isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
-        isExpiredUser = permissions.indexOf("expired_subscription") !== -1,
-        getSSOID = ssoid || getCookie('_grx'),
+    // const isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
+    const isAddFreeEnabled = 1 || 0,
+        isExpiredUser = window.objUser.permissions.some(function (item: any) {
+          return !item.includes("etadfree") && item.includes("expired_subscription");
+        }),
+        getSSOID = window.objUser?.ssoid || getCookie('_grx'),
         addFreeCampignRef = jStorage.get('adFreeCampign_'+getSSOID);
   
         if(isExpiredUser && Number(isAddFreeEnabled)) {
-          setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, ticketId, dispatch);
+          setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, window.objUser?.ticketId, dispatch);
       }
       
       if(!Number(isAddFreeEnabled)) {

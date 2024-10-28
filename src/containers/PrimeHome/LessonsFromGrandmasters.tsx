@@ -115,7 +115,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
   };
 
   function onNextPrevButtonClick(type) {  
-    let scrollBy = 224; 
+    let scrollBy = focusArea === "market" ? 200 : 224; 
     if(innerRef.current && sliderRef.current) {       
       const viewportWidth = sliderRef.current.offsetWidth;
       const innerWidth = innerRef.current.offsetWidth;

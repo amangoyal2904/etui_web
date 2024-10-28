@@ -7,6 +7,7 @@ import {
 } from "../../../utils";
 
 import DashBoardTable from "../DashboardTable/DashboardTable";
+import Loading from 'components/Loading';
 
 export default function MarketDashboard({isDev, ssoid, focusArea}) {
   const [data, setData] = useState<any>(null);
@@ -82,7 +83,7 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
         const [selectedFilter, allFilters, tableData, shortUrlMapping] =
           await Promise.all([
             fetchSelectedFilter(intFilter),
-            fetchFilters({ all: true, marketcap: false }),
+            fetchFilters({ all: true, marketcap: true }),
             getCustomViewTable(
               bodyParams,
               true,
@@ -113,8 +114,17 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
   }, [data]);
 
   if (!data) {
-    return <div>Loading...</div>; // Or any loading component
-  }
+    return <>
+      <div className='wtlWrp'><Loading /></div>
+      <style jsx>{`
+        .wtlWrp{
+          width: 605px;
+          height: 395px;
+          position: relative;
+        }
+      `}</style>
+    </>
+} 
 
   return (
     <>

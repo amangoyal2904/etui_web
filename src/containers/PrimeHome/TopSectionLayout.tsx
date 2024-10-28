@@ -111,11 +111,11 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
 
   return (
     <>
-      <section className="topLayout">
+      <section className={`topLayout ${focusArea}`}>
         <div className="ly_first_wrp">
           <div className='ly_second_wrp'>
             <div className="col1">
-              <TodayNews todayNews={todayNews} />
+              <TodayNews todayNews={todayNews} focusArea={focusArea} />
             </div>
             <div className="col2">
               <div className="titleNSwitch">
@@ -163,14 +163,14 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           </div>
             {
               focusArea === "news" && <>
-                <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+                <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} isDev={isDev} focusArea={focusArea} />
                 <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
               </>
             }
         </div>
         <div className="col3">
           { focusArea === "market" && <>            
-            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea}/>
+            <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea} />
             <Separator />
             <InvestmentIdeas focusArea={focusArea} data={investmentIdeas?.data || []}/>
             <Separator />
@@ -206,7 +206,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
       </section>
       {
         focusArea === "market" && <>
-          <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} />
+          <NewsByIndustry data={NewsByIndustryData?.data || []} title={NewsByIndustryData?.title || ''} isDev={isDev} focusArea={focusArea}  />
           <Opinion OpinionData={OpinionData?.data || []} focusArea={focusArea} />
         </>
       }
@@ -221,10 +221,13 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
           }
 
           .ly_first_wrp{
-            display: flex;
-            justify-content: space-between;
+            display: flex;            
             width: calc(100% - 350px);
             flex-direction: column;
+
+            &.news {
+              justify-content: space-between;
+            }
 
             .ly_second_wrp{
               display: flex;
