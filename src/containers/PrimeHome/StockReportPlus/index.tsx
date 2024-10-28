@@ -117,6 +117,10 @@ export default function StockReportPlus({ focusArea }) {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+    setX(0);
+    setPrevDisabled(true);
+    setNextDisabled(false);
   }, [activeTab]);
 
   const howMany = focusArea === "news" ? 2 : 5;
