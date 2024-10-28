@@ -1,12 +1,21 @@
 import React from 'react'
+import { trackingEvent } from 'utils/ga';
 
-export default function Tabs({ tabs = [], activeTab, setActiveTab, focusArea }: any) {
+export default function Tabs({ tabs = [], activeTab, setActiveTab, focusArea, widget }: any) {
+  const tabsClick= (index, name) =>{
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `${widget} click`, 
+      event_label: name,
+    });
+    setActiveTab(index)
+  }
   return (
     <>
       <div className={`tabs ${focusArea}`}>
       {
         tabs.map((tab, index) => (
-          <div key={index} className={`${activeTab === index ? 'activeTab' : ''} tab`} onClick={() => setActiveTab(index)}>
+          <div key={index} className={`${activeTab === index ? 'activeTab' : ''} tab`} onClick={() =>tabsClick(index, tab)}>
             {tab}
           </div>
         ))

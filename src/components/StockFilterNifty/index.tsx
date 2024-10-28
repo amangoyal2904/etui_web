@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import styles from "./styles.module.scss";
+import { trackingEvent } from "utils/ga";
 
 interface StockSRFilterProps {
   data: {
@@ -14,6 +15,7 @@ interface StockSRFilterProps {
   selectTab: string;
   childMenuTabActive?: string;
   showFilter: boolean;
+  widget:string
 }
 
 export default function StockFilterNifty({
@@ -23,6 +25,7 @@ export default function StockFilterNifty({
   selectTab,
   childMenuTabActive,
   showFilter,
+  widget
 }: StockSRFilterProps) {
   const activeFilterValue = childMenuTabActive;
 
@@ -88,16 +91,31 @@ export default function StockFilterNifty({
   const nseBseMenu = useCallback((e: any) => {
     const selectedMenu = e.target.textContent.toLowerCase();
     setNseBseMenuSelect(selectedMenu);
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `${widget} click`, 
+      event_label: selectedMenu,
+    });
   }, []);
 
-  const handleItemClick = useCallback((index: number) => {
+  const handleItemClick = useCallback((index: number, name: string) => {
     setActiveItem(index);
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `${widget} click`, 
+      event_label: name,
+    });
   }, []);
 
   const clickFilterMenu = useCallback(
     (name: any, indexid: any) => {
       const selectedTab = nseBseMenuSelect;
       valuechange(indexid, name, selectedTab);
+      trackingEvent("et_push_event", {
+        event_category: 'Subscriber Homepage', 
+        event_action: `${widget} click`, 
+        event_label: name,
+      });
     },
     [nseBseMenuSelect, valuechange],
   );
@@ -116,7 +134,7 @@ export default function StockFilterNifty({
   const renderSection = (sectionData: any, sectionIndex: number) => {
     return (
       <li
-        onClick={() => handleItemClick(sectionIndex)}
+        onClick={() => handleItemClick(sectionIndex, sectionData.name)}
         className={activeItem === sectionIndex ? styles.active : ""}
       >
         <div className={styles.subMenu}>
@@ -198,7 +216,7 @@ export default function StockFilterNifty({
               renderSection(data.marketcap, 3)}
             {(data?.all || {}).name && (
               <li
-                onClick={() => handleItemClick(4)}
+                onClick={() => handleItemClick(4, data.all.name)}
                 className={activeItem === 4 ? styles.active : ""}
               >
                 <div

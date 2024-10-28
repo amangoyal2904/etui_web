@@ -48,7 +48,7 @@ export default function IndicesWidget({ isDev, focusArea }) {
 
   return (
     <>
-      <div className={`${focusArea}`}>
+      <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Market Indices widget impression#`}>
         <div className={styles.top}>
           <HeadingWithRightArrow title="Indices" href="/markets/indices"/>
           <span className="statusNDate">
@@ -66,6 +66,7 @@ export default function IndicesWidget({ isDev, focusArea }) {
                 setChangePeriod(item.change);
                 setPercentChange(item.percentChange);
               }}
+              data-ga-onclick={`Subscriber Homepage#Indices click#${item.value}`}
             >
               {item.value}
             </span>
@@ -74,7 +75,11 @@ export default function IndicesWidget({ isDev, focusArea }) {
         <div className={`${styles.indiceTabs} indiceTabs`}>
           {
             indicesData?.indicesList?.slice(0, howMany)?.map((item: any, index: number) => (
-              <div key={index} className={`${styles.indiceTab} indiceTab1 ${activeIndex == index ? styles.active : ""}`} onClick={() => setActiveIndex(index)}>
+              <div key={index} 
+                className={`${styles.indiceTab} indiceTab1 ${activeIndex == index ? styles.active : ""}`} 
+                onClick={() => setActiveIndex(index)}
+                data-ga-onclick={`Subscriber Homepage#Indices click#${item.indexName}`}
+                >
                 <div className="indexName">{item.indexName}</div>
                 <div className="indexPrice">{formatNumber(item.lastTradedPrice || 0)}</div>
                 <div className={`numberFonts ${item[changePeriod] > 0 ? styles.up : item[changePeriod] < 0 ? styles.down : ""} ${styles.indexChange}`}>
@@ -96,12 +101,15 @@ export default function IndicesWidget({ isDev, focusArea }) {
         <div className={styles.chartContainer}>          
           {chartURL && <iframe className={styles.chart} src={chartURL} /> }          
           <div className={styles.chartFooter}>
-            <a href={`${ET_WEB_URL}/markets/indices/${indicesData?.indicesList?.[activeIndex]?.seoName}`} target="_blank">View {indicesData?.indicesList?.[activeIndex]?.indexName}</a>
+            <a href={`${ET_WEB_URL}/markets/indices/${indicesData?.indicesList?.[activeIndex]?.seoName}`} 
+              target="_blank"
+              data-ga-onclick={`Subscriber Homepage#Indices click#View${indicesData?.indicesList?.[activeIndex]?.indexName}`}
+              >View {indicesData?.indicesList?.[activeIndex]?.indexName}</a>
           </div>
         </div>
 
         <div className="advanceFiiDii">
-          <a className="advance card" href={`${ET_WEB_URL}/markets/stock-market-mood`} target="_blank">
+          <a className="advance card" href={`${ET_WEB_URL}/markets/stock-market-mood`} target="_blank" data-ga-onclick={`Subscriber Homepage#Indices click#Advance/Decline (NSE)`}>
             <div className="heading">Advance/Decline (NSE)</div>
             <div className="value">
               <span>{indicesData?.indicesList?.[activeIndex]?.advances}</span>
@@ -113,13 +121,13 @@ export default function IndicesWidget({ isDev, focusArea }) {
             </div>
             <div className="date">{dateFormat(new Date(indicesData?.indicesList?.[activeIndex]?.dateTimeLong), "%MMM %d, %Y")}</div>
           </a>
-          <a className="fii card" href={`${ET_WEB_URL}/markets/fii-dii-activity`} target="_blank">
+          <a className="fii card" href={`${ET_WEB_URL}/markets/fii-dii-activity`} target="_blank" data-ga-onclick={`Subscriber Homepage#Indices click#FII Cash`}>
             <div className="heading">FII Cash (Cr.)</div>
             <div className={`value ${indicesData?.fiiData?.netInvestment > 0 ? 'up' : 'down'}`}>₹ <span>{indicesData?.fiiData?.netInvestment}</span></div>
             <div className="date">{dateFormat(new Date(indicesData?.fiiData?.date), "%MMM %d, %Y")}</div>
           </a>
           { focusArea == "market" &&
-          <a className="dii card" href={`${ET_WEB_URL}/markets/fii-dii-activity`} target="_blank">
+          <a className="dii card" href={`${ET_WEB_URL}/markets/fii-dii-activity`} target="_blank" data-ga-onclick={`Subscriber Homepage#Indices click#DII Cash`}>
             <div className="heading">DII Cash (Cr.)</div>
             <div className={`value ${indicesData?.diiData?.netInvestment > 0 ? 'up' : 'down'}`}>₹ <span>{indicesData?.diiData?.netInvestment}</span></div>
             <div className="date">{dateFormat(new Date(indicesData?.diiData?.date), "%MMM %d, %Y")}</div>

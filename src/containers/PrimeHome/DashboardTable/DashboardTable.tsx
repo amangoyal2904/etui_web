@@ -130,13 +130,13 @@ const DashBoardTable = ({
 
   return (
     <>      
-      <div className={`wrapper ${styles.wrapper} ${focusArea} ${styles[focusArea]}`} ref={dashboardRef}>
+      <div className={`wrapper ${styles.wrapper} ${focusArea} ${styles[focusArea]}`} ref={dashboardRef} data-ga-impression={`Subscriber Homepage#Market Dashboard widget impression#`}>
         <div className="dflex space-between head_dashboard">
           <div>
-            <HeadingWithRightArrow title={wdName} href={wdHref}/>
+            <HeadingWithRightArrow title={wdName} href={wdHref} data-ga-onclick={`Subscriber Homepage#$Market Dashboard Title click #href`}/>
           </div>
           {wdName != "My Watchlist" && <div className="filterBtnWrp">
-            <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)}>
+            <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)} data-ga-onclick={`Subscriber Homepage#Market Dashboard click#Filter`}>
               <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
               <span>{niftyFilterData?.name}</span>
             </span>
@@ -187,6 +187,7 @@ const DashBoardTable = ({
           valuechange={handleChangeData}
           selectTab={niftyFilterData.exchange}
           childMenuTabActive={niftyFilterData.indexId}
+          widget="Market Dashboard"
         />
       )}
       <style jsx>{`
