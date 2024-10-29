@@ -500,7 +500,7 @@ export const generateGrxFunnel = (prevPath) => {
     objGrx["dimension10"] =
       typeof window.objUser.info != "undefined" ? "Logged In" : "Not Logged In";
     objGrx["dimension20"] = "Web";
-    // objGrx["dimension25"] = site_section.substring(lastSlash + 1);
+    objGrx["dimension25"] = site_section.substring(lastSlash + 1);
     // objGrx["dimension26"] =
     //   site_section.indexOf("/") == -1
     //     ? site_section.substring(site_section.indexOf("/") + 1)
@@ -985,7 +985,11 @@ export const dateFormat = (dt, format = "%Y-%M-%d") => {
   return newDate;
 };
 export const getPageSpecificDimensions = (seo) => {
-  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow",authors } = seo;
+  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "",authors } = seo;
+  const pagePathName = window.location.pathname;
+  const pageElem = window.location.pathname.split("/");
+  let site_section = pagePathName.slice(1);
+  let lastSlash = site_section.lastIndexOf("/");
   const dateArray = updated.split(",");
   const dateString = dateArray[0] || "";
   const timeString = dateArray[1] || "";
@@ -1006,7 +1010,7 @@ export const getPageSpecificDimensions = (seo) => {
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,
-    dimension25: page,
+    dimension25: page || site_section.substring(lastSlash + 1),
     dimension26: subsecname1,
     dimension27: sectionsList,
     dimension29: subsec1,
