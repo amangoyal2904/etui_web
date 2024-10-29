@@ -301,7 +301,7 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
                         background: #ed193b;
                         line-height: 12px;
                         padding: 2px;
-                        z-index: 10;
+                        z-index: 8;
                         font-family: "Montserrat";
                         font-weight: 600;
                       }

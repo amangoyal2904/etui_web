@@ -8,6 +8,8 @@ import { gotoPlanPage } from "utils/utils";
 
 function NudgeContainer({data}) {
     const [nudgeShow, setNudgeShow] = useState(true);
+    const [topValue, setTopValue] = useState('0px');
+
     useEffect(() => {
         if(data?.bannerType) {
             grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Viewed - True', 'event_label': data?.bannerType + ' | Banner Location '+ currPageType()});
@@ -40,9 +42,21 @@ function NudgeContainer({data}) {
         setNudgeShow(false);
     }
 
+    useEffect(() => {
+        const userInfoBand = document.querySelector('#topUserInfoBand');
+        const topnavBlk = document.getElementById('topnavBlk');
+        
+
+        if (topnavBlk) {
+            const height = (userInfoBand as HTMLElement)?.offsetHeight || 78; // Get the height of the topUserInfoBand
+            setTopValue(nudgeShow ? `${height}px` : '0px'); // Set top value based on nudgeShow
+            topnavBlk.style.top = nudgeShow ? `${height}px` : '0px'; // Apply the style directly
+        }
+    }, [nudgeShow]);
+
     return (
         <>
-            {nudgeShow && <div className={`${styles?.topUserInfoBand} ${data?.banner_type}`} onClick={onBannerClick}>
+            {nudgeShow && <div id="topUserInfoBand" className={`${styles?.topUserInfoBand} ${data?.banner_type}`} onClick={onBannerClick}>
                 {/* style={`background: ${banner_bg}`} */}
                 <div className={styles?.info_content}>
                     <span className={styles?.info_icon}>
