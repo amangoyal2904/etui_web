@@ -75,7 +75,7 @@ const Blocker = (props: propsType) => {
         {icon && (
           <img
             width={icon == "114656418" ? "auto" : 150}
-            height={150}
+            height={icon == "114656418" ? 90 : 150}
             alt={message}
             title={message}
             src={(GLOBAL_CONFIG as any).ET_IMG_DOMAIN + `/photo/${icon}.cms`}

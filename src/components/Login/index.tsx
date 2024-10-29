@@ -30,9 +30,9 @@ const Login = ({headertext}) => {
   //console.log(state.login);
 
   const adFreeEx = () => {
-  
-    // const isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
-    const isAddFreeEnabled = 1 || 0,
+    
+    // const isAddFreeEnabled = 1 || 0,
+    const isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
         isExpiredUser = window.objUser.permissions.some(function (item: any) {
           return !item.includes("etadfree") && item.includes("expired_subscription");
         }),

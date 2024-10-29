@@ -219,13 +219,14 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
         if(!articleData?.some(article => Number(article.msid) == Number(listMsid))){            
             const pllistArr = [13352306, 107115, 81585238, 78404305, 18606290];
             const typeVal = pllistArr.includes(listMsid) ? "plist" : "articlelist";
-            const apiLink = `https://etpwaapi${window?.isDev ? 'pre' : ''}.economictimes.com/request?type=${typeVal}&msid=${listMsid}`;
+            const apiLink = `https://etpwaapi${window?.isDev ? 'pre' : ''}.economictimes.com/request?type=plist&msid=${listMsid}${typeVal == "articlelist" ? "&mode=hierarchy" : ''}`;
             setShowLoading(true);
 
             fetch(apiLink)
             .then(response => response.json())
             .then(res => {
-                const resData = typeVal == "plist" ? res?.searchResult[0]?.data : res?.searchResult?.find(item => item?.name === "articlelist")?.data?.news;
+                //const resData = typeVal == "plist" ? res?.searchResult[0]?.data : res?.searchResult?.find(item => item?.name === "articlelist")?.data?.news;
+                const resData = res?.searchResult[0]?.data;
                 setArticleData(prev => [...prev, { msid:res?.parameters?.msid , articleList: resData }]);
                 setShowLoading(false);
             })

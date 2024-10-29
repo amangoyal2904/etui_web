@@ -244,7 +244,7 @@ export default function TopNudge({objVc}) {
 
   return (
     <>      
-      <div className={`${styles.breadCrumb} ${isPink ? styles.pink_theme : ""}`}>
+      <div className={`${styles.topNudgeWrp} ${isPink ? styles.pink_theme : ""}`}>
         <div className={styles.breadCrumbWrap}>
           {metaInfo?.banner_enabled === "on" && <NudgeContainer data={metaInfo} />}
         </div>
