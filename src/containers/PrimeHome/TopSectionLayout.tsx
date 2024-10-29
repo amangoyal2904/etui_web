@@ -19,6 +19,7 @@ import NewsByIndustry from "./NewsByIndustry";
 import MyWatchListDashboard from './MyWatchListDashboard';
 import API_CONFIG from "../../network/config.json";
 import jStorageReact from 'jstorage-react';
+import { trackingEvent } from 'utils/ga';
 
 // declare window interface
 declare global {
@@ -39,9 +40,16 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
   const etEpaperData = searchResult?.find(item => item?.name === "epaper").data || {};
   const marketsTopNews  = searchResult?.find(item => item?.name === "markets_top_news") || {};
 
-  function saveFocusAreaPreference(focusArea) {    
+  function saveFocusAreaPreference(focusArea) {   
     setFocusArea(focusArea);
-
+    trackingEvent("et_push_event", {
+      event_category:  'HP Clicks', 
+      event_action: `Click on Switch Tab`, 
+      event_label: `Viewed ${focusArea === "market" ? "Market Focus" : "News Focus "}`,
+    });
+    if (window.customDimension) {
+      window.customDimension['experiment_variant_name'] = focusArea === "market" ? "Variant 1- Markets focus" : "Variant 2- News focus ";
+    } 
     const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
     if(primeHomeFocusArea2024) {
       primeHomeFocusArea2024.focusArea = focusArea;
@@ -91,6 +99,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
         //   setFocusArea(data?.focusArea);
         // }
         if(data?.statusCode === 200) {
+          window.customDimension['experiment_variant_name'] = focusArea === "market" ? "Variant 2- Direct Landing Market Focus" : "Variant 1- Direct Landing News Focus";
           setFocusArea(data?.enableMarketFocus ? "market" : "news");
           setShowNotification(data?.showFocusNotification)
         }

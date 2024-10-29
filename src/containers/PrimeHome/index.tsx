@@ -60,7 +60,6 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
     });
     if(typeof window != "undefined"){
     window.customDimension = window.customDimension || {};
-    window.customDimension["dimension23"] = "75";
     window.customDimension["dimension48"] = "2160010";
     }
   }, []);

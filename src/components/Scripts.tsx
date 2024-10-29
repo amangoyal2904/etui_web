@@ -24,6 +24,7 @@ declare global {
     geolocation: any;
     customDimension: any;
     grxDimension_cdp: any;
+    grx:any;
     opera?: string;
     MSStream?: string;
     geoinfo: any;
@@ -126,13 +127,6 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   };
   useEffect(() => {
     try {
-      document.addEventListener("gtmLoaded",()=>{
-        prevPath !== null &&
-        trackingEvent("et_push_pageload", {
-          url: window.location.href,
-          prevPath: prevPath
-        });
-      })
       setPrevPath(pathName || document.referrer);
       if (typeof window.objUser == "undefined") window.objUser = {};
       window.objUser && (window.objUser.prevPath = prevPath);
@@ -170,6 +164,19 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
     };
     sendMouseFlowEvent();
     callJsOnAppLoad();
+    if(window.grx){
+      trackingEvent("et_push_pageload", {
+        url: window.location.href,
+        prevPath: pathName || document.referrer
+      });
+    }else{
+    document.addEventListener("gtmLoaded",()=>{
+      trackingEvent("et_push_pageload", {
+        url: window.location.href,
+        prevPath: pathName || document.referrer
+      });
+    })
+  }
   }, []);
 
   return (

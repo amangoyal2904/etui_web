@@ -782,7 +782,7 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
 }
 
 export const getPageSpecificDimensions = (seo) => {
-  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
+  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "" } = seo;
   const dateArray = updated.split(",");
   function formatDate(inputDate) {
     // Parse the input date string
