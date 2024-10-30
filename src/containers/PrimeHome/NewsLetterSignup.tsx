@@ -5,27 +5,38 @@ export default function NewsLetterSignup({ section, sid }) {
   const [email, setEmail] = useState('');
   const [subs, setSubs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { initSubscription, unsubsNews, getNewsLtrSuggestion } = useNewsletterSubscription();
+  const { initSubscription, getNewsLtrSuggestion } = useNewsletterSubscription();
   
-  function handleSubscription(e, sid) {
-    // debugger
+  function handleSubscription(e, sid) {    
     e.preventDefault();
-    initSubscription({ sid: sid, email: email }, function (res) {
-      console.log(res);
-      if (res.message === 'successfully saved.') {
-          setSubs(true);
-        // Update UI accordingly after subscribing
-        console.log("Successfully subscribed.");
-        setIsLoading(false);
+    setIsLoading(true);
+    initSubscription({ sid: sid, email: email }, function (res) {      
+      if (res.success) {
+        setSubs(true);         
       }
+      setIsLoading(false);
     });
   }
 
   useEffect(() => {
-    getNewsLtrSuggestion({limit: 5}, function(newsletterSuggestions) {
-      // debugger
+    getNewsLtrSuggestion({limit: 10}, function(newsletterSuggestions) {      
       console.log({newsletterSuggestions})
     });
+
+    if(window?.objUser?.info?.email) {
+      setEmail(window.objUser.info.email);
+    } else {
+      document.addEventListener('getUserDetailsSuccess', function() {
+        // debugger
+        setEmail(window?.objUser?.primaryEmail || "");
+      });
+    }
+
+    return () => {
+      document.removeEventListener('getUserDetailsSuccess', function() {
+        setEmail(window?.objUser?.info?.email || "");
+      });
+    }
   }, []);
 
   return (

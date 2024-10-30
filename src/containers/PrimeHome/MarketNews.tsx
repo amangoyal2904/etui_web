@@ -6,6 +6,7 @@ import { ET_WEB_URL } from 'utils/common'
 import { dateFormat } from 'utils/utils'
 import { changeImageWidthHeight } from 'utils'
 import RenderText from 'components/RenderText'
+import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter'
 
 export default function MarketNews({ title, data, podcastData, marketExpertViews, marketMoguls, marketLiveblog }) { 
 
@@ -15,8 +16,8 @@ export default function MarketNews({ title, data, podcastData, marketExpertViews
 
   return (
     <>
-    <section className="marketNews" data-ga-impression={`Subscriber Homepage#Market News widget impression#`}>
-      <h2><a href={`${ET_WEB_URL}/markets`}>{title}</a></h2>
+    <section className="marketNews" data-ga-impression={`Subscriber Homepage#Market News widget impression#`}>      
+      <SectionHeaderWithNewsletter url="/markets" title={title} sid="5f5a31db80f79664e95679d3" />
       <OneImgTwoColsNewsLayout data={data} more={{text: "Market News", link:"/markets"}} widget="Market News"/>
       <div className="second">
         { liveblogData.length > 0 && <LiveBlog data={marketLiveblog} /> }
@@ -35,31 +36,7 @@ export default function MarketNews({ title, data, podcastData, marketExpertViews
         border-top: 1px solid #9b8680;
         margin-bottom: 1px;
         border-bottom: 1px solid #9b8680;
-        padding-top: 1px;
-
-        h2 {
-          font-size: 36px;
-          padding-top: 35px;
-          border-top: 3px solid #9b8680;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-
-          a {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              top: -4px;
-              left: 3px;
-              border-top: 2px solid #000;
-              border-left: 2px solid #000;
-              position: relative;
-              cursor: pointer;
-              transform: rotate(135deg);
-            }
-          }
-        }
+        padding-top: 1px;        
 
         .second {
           width: 250px;

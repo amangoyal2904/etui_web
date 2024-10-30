@@ -3,13 +3,13 @@ import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TextImageMiddile from 'components/TextImageMiddile'
 import WealthWebstory from 'components/WealthWebstory';
 import { ET_WEB_URL } from "../../utils/common";
+import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
 export default function Wealth({ title, data, wealthslideshow, wealthWebStories }) {    
   return (
     <>
-    <section className="wealth" data-ga-impression={`Subscriber Homepage#Wealth widget impression#`}>
-
-      <h2><a href={`${ET_WEB_URL}/personal-finance`} data-ga-onclick={`Subscriber Homepage#Wealth widget click#title - href`} target="_blank">{title}</a></h2>
+    <section className="wealth" data-ga-impression={`Subscriber Homepage#Wealth widget impression#`}>      
+      <SectionHeaderWithNewsletter url="/personal-finance" title={title} sid="5f5a31db80f79664e95679cb" />
       <div className="mainWealt">
         <div className="WealtF">
           <OneImgTwoColsNewsLayout data={data} more={{text: "Wealth", link: "/personal-finance"}} widget="Wealth"/>
@@ -62,39 +62,17 @@ export default function Wealth({ title, data, wealthslideshow, wealthWebStories 
         margin-bottom: 1px;
         border-bottom: 1px solid #9b8680;
         padding-top: 1px;
-
-        h2 {
-          font-size: 36px;
-          padding-top: 35px;
-          border-top: 3px solid #9b8680;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-
-          a {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              top: -4px;
-              left: 3px;
-              border-top: 2px solid #000;
-              border-left: 2px solid #000;
-              position: relative;
-              cursor: pointer;
-              transform: rotate(135deg);
-            }
-          }
-        }
-      .mainWealt{display: flex;
-        .WealtF{width: 710px;
-          display: table-cell;}
-        .WealtS{
-              width: 585px;
-              display: table-cell;
-        }
         
-      }
+        .mainWealt{display: flex;
+          .WealtF{
+            width: 710px;
+            display: table-cell;
+          }
+          .WealtS{
+            width: 585px;
+            display: table-cell;
+          }          
+        }
         .second{
           width: 253px;
           display: inline-block;
