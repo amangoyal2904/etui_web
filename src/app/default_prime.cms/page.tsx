@@ -32,7 +32,7 @@ export default async function Page({ params }: {
     const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
     
     const extraParamsQuery = Object.keys(extraParams).map(key => `${key}=${extraParams[key]}`).join('&');
-    const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson`;
+    const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson&subsec1=0&subsec2=0&quicklink=1&pageType=&pageName=default_prime&section_id=0&template_name=articlelist&sub_type=0`;
     const navBarApi = `${baseUrl}/reactfeed_menu.cms?platform=web&feedtype=etjson`
     const promiseApis = [footerMenuApi, navBarApi];    
     const [footerMenuResult, navBarResult] = await Promise.all(promiseApis.map(api => fetch(api).then(res => res.json())));    

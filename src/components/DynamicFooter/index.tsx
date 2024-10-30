@@ -170,7 +170,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
   const Interlinking = () => {
     let interLinkingData = dynamicFooterData?.widgets || [];
     const interLinkingList = interLinkingData?.map((i, index) => (
-      interLinkingData[index].title != "Browse Company" ?
+      interLinkingData[index].title != "Browse Company" && typeof interLinkingData[index].data != "undefined" ?
       <div data-attr="interlinking" className={`${styles.category} ${isExpanded[index] || interLinkingData[index].title == "Latest News" ? styles.visible :""}`} key={`inkl_${index}`}>
         {interLinkingData[index]["data"] && Array.isArray(interLinkingData[index]["data"]) && (
             <>
