@@ -84,26 +84,25 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
 
   function getFocusAreaPreference() {
     const api = API_CONFIG["SUBSCRIBER_HOMEPAGE_FOCUSAREA_GET"][window?.APP_ENV];
-    const ssoid = window?.objUser?.info?.ssoid || "bo6gekyrgw2kekv61lq1e8m77a";
+    const ssoid = window?.objUser?.info?.ssoid || "";
+
+    if(!ssoid) return;
 
     fetch(api, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `${ssoid}`
+        "Authorization": `${ssoid}`,
+        "Cache-Control": "no-cache"
       }
     })
       .then((response) => response.json())
-      .then((data) => {
-        // if (data?.focusArea) {
-        //   setFocusArea(data?.focusArea);
-        // }
+      .then((data) => {        
         if(data?.statusCode === 200) {
           window.customDimension['experiment_variant_name'] = focusArea === "market" ? "Variant 2- Direct Landing Market Focus" : "Variant 1- Direct Landing News Focus";
           setFocusArea(data?.enableMarketFocus ? "market" : "news");
           setShowNotification(data?.showFocusNotification)
-        }
-        console.log("Focus Area Data: ", data);
+        }        
       })
       .catch((error) => {
         console.error("Error:", error);
