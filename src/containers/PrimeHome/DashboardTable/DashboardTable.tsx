@@ -218,7 +218,7 @@ const DashBoardTable = ({
           display: none;
         }
         .wrapper.news .filterBtnWrp {
-          min-width: 140px;
+          min-width: 130px;
         }
         .roundBtn {
           display: flex;
