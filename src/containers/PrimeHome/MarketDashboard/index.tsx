@@ -108,10 +108,10 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(data?.tableData
-      , "niftyFilterData");
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data?.tableData
+  //     , "niftyFilterData");
+  // }, [data]);
 
   if (!data) {
     return <>

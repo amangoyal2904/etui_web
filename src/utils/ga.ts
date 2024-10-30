@@ -134,12 +134,12 @@ export const growthRxInit = () => {
 };
 
 export const trackingEvent = (type, data) => {
-  console.log("trackingEvent------->",data, type);
+  // console.log("trackingEvent------->",data, type);
   const payload = getPageSpecificDimensions(window.pageSeo);
   window.customDimension = { ...window.customDimension, ...payload, ...data };
   const objGrx = generateGrxFunnel(data.prevPath);
   window.customDimension = { ...window.customDimension, ...objGrx };
-  console.log("CD_----------->",window.customDimension);
+  // console.log("CD_----------->",window.customDimension);
   let grxDimension ={};
   for (const key in window.customDimension) {
       if (grxMappingObj[key] && [key] && typeof window.customDimension[key] !== "undefined") {
@@ -394,7 +394,7 @@ export const getPageName = (pageURL = "") => {
 
 export const updateGtm = (_gtmEventDimension, prevPath) => {
   try {
-    console.log("window.seo----->",window.pageSeo);
+    // console.log("window.seo----->",window.pageSeo);
     const pagePathName = window.location.pathname;
     const pageElem = window.location.pathname.split("/");
     let site_section = pagePathName.slice(1);

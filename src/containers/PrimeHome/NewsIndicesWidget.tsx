@@ -33,7 +33,7 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
         }else{
             ajaxUrl = `${APP_CONFIG["getIndexByIds"][APP_ENV]}?indexid=${indicesObj.indexId}&indexname=${indicesObj.secName}&exchange=${indicesObj.exchange}&pagesize=10&sortorder=desc&sortby=percentChange&company=true`;
         }
-        console.log("indicesObj -indexObj- result2", ajaxUrl, indicesObj)
+        // console.log("indicesObj -indexObj- result2", ajaxUrl, indicesObj)
         try {
             setLoading(true);
             const response = await fetch(`${ajaxUrl}`);
@@ -91,7 +91,7 @@ const NewsIndicesWidget = ({isDev, handleExchangeType, exchangeType, indicesObj}
     };
 
     useEffect(() => {
-        console.log("indicesObj -indexObj- result1")
+        // console.log("indicesObj -indexObj- result1")
         if (indicesObj.customFilterDtoList) {
             postAjax();
         } else {

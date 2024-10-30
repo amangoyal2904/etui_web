@@ -497,7 +497,7 @@ export const createPeuuid = async (cb) => {
       },
     });
     const data = await res.json();
-    console.log("res", res, data);
+    // console.log("res", res, data);
     if (data && data.id != 0) {
       const peuuid: any = data.id;
       setCookieToSpecificTime("peuuid", peuuid, 365, 0, 0);
