@@ -51,6 +51,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                 window.bookmarkApiHitStatus = 'success';
         
                 const data = await response.json();
+                window.bookmarkApiRes = [];
                 
                 if (apiType === 'single' && data && data.details && data.details.length) {
                     const bookmarkListArr = data.details.map((entry: any) => ({
