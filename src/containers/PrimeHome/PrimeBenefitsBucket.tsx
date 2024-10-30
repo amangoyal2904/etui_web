@@ -211,9 +211,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
     } 
   }, [focusArea]);
 
-  const benefits = focusArea === "market" ? marketItems : primeItems;
-
-  console.log("benefits", benefits);
+  const benefits = focusArea === "market" ? marketItems : primeItems;  
 
   return (
     <>      
