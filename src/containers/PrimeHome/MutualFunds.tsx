@@ -3,12 +3,13 @@ import OneImgTwoColsNewsLayout from './OneImgTwoColsNewsLayout'
 import TopMF from './TopMFWidget'
 import TopMFDiscover from './TopMFDiscover';
 import { ET_WEB_URL } from "../../utils/common";
+import SectionHeaderWithNewsletter from './SectionHeaderWithNewsletter';
 
 export default function MutualFunds({ title, data, isDev }) {  
   return (
     <>
-    <section className="politics" data-ga-impression={`Subscriber Homepage#Mutual Funds widget impression#`}>
-      <h2><a href={`${ET_WEB_URL}/mutual-funds`} target="_blank" data-ga-onclick={`Subscriber Homepage#Mutual Funds widget click#title - href`}>{title}</a></h2>
+    <section className="politics" data-ga-impression={`Subscriber Homepage#Mutual Funds widget impression#`}>      
+      <SectionHeaderWithNewsletter url="/mutual-funds" title={title} sid="5f5a31db80f79664e95679cf" />
       <div className='mfWrap'>
         <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} widget="Mutual Funds"/>
         <TopMF />
@@ -26,31 +27,7 @@ export default function MutualFunds({ title, data, isDev }) {
         .mfWrap{
           display: flex;
           justify-content: space-between;
-        }
-
-        h2 {
-          font-size: 36px;
-          padding-top: 35px;
-          border-top: 3px solid #9b8680;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-
-          a {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              top: -4px;
-              left: 3px;
-              border-top: 2px solid #000;
-              border-left: 2px solid #000;
-              position: relative;
-              cursor: pointer;
-              transform: rotate(135deg);
-            }
-          }
-        }
+        }        
 
         .first {
           width: 335px;

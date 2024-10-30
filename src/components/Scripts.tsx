@@ -60,6 +60,7 @@ declare global {
       loginType?: string;
       afterCheckUserLoginStatus?: boolean;
       email?: any;
+      primaryEmail?: any;
       prevPath?: string;
       isPink?: any;
       info?: {
@@ -70,6 +71,7 @@ declare global {
         isLogged: any;
         mobile: any;
         lastName: any;
+        email: any;
       };
       isPrime?: any;
       permissions?: any;
