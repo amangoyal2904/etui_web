@@ -118,7 +118,7 @@ export default function BigBullPortfolio({ focusArea }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setData(data);        
       })
       .catch((error) => {

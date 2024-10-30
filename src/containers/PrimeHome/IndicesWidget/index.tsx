@@ -21,7 +21,7 @@ export default function IndicesWidget({ isDev, focusArea }) {
     .then(response => response.json())
     .then(data => {
       setIndicesData(data);
-      console.log('Success:', data);
+      // console.log('Success:', data);
     })
     .catch(error => {
       console.error('Error:', error);

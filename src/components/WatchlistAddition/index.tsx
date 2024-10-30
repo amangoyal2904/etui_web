@@ -21,9 +21,9 @@ const WatchlistAddition = ({
   const [isWatchListAdded, setIsWatchListAdded] = useState(false);
 
    // Debugging: Log the initial state
-   useEffect(() => {
-    console.log("Watchlist state on mount:", watchlist);
-  }, [watchlist]);
+  //  useEffect(() => {
+  //   console.log("Watchlist state on mount:", watchlist);
+  // }, [watchlist]);
 
   const fetchWatchListStocks = useCallback(async () => {
     try {
@@ -37,7 +37,7 @@ const WatchlistAddition = ({
           companyType: entry.companyType || entry.id,
         })).filter(Boolean);
 
-        console.log("Fetched Watchlist:", watchlistArr);
+        // console.log("Fetched Watchlist:", watchlistArr);
 
         if (watchlistArr.length > 0) {
           dispatch({
@@ -48,7 +48,7 @@ const WatchlistAddition = ({
           });
         }
 
-        console.log("Fetched Watchlist 2:", watchlist, watchlistArr);
+        // console.log("Fetched Watchlist 2:", watchlist, watchlistArr);
       }
     } catch (error) {
       console.error("Error fetching watchlist stocks:", error);
@@ -67,7 +67,7 @@ const WatchlistAddition = ({
   }, [isLogin]);
 
   const addStockInWatchlistHandler = (action: any) => {
-    console.log("Fetched Watchlist 5:", watchlist, action); 
+    // console.log("Fetched Watchlist 5:", watchlist, action); 
     const stockDetails = { companyName, companyType, companyId };
     const type = 11;
     getMoreDetailsStockWatchList(action, stockDetails, type);
@@ -116,7 +116,7 @@ const WatchlistAddition = ({
 
       const addWatchlistResAPI = await saveStockInWatchList(followData);
       if (addWatchlistResAPI?.status === "success") {
-        console.log("Fetched Watchlist 3:", watchlist);
+        // console.log("Fetched Watchlist 3:", watchlist);
         const newWatchList =
           action == 1
             ? [
@@ -149,7 +149,7 @@ const WatchlistAddition = ({
           },
         });
 
-        console.log("Fetched Watchlist 3:", watchlist, newWatchList);
+        // console.log("Fetched Watchlist 3:", watchlist, newWatchList);
       } else {
         throw new Error("Failed to update watchlist");
       }
@@ -184,7 +184,7 @@ const WatchlistAddition = ({
           ? 0
           : 1;
 
-      console.log("Fetched Watchlist 4:", watchlist, userAction);   
+      // console.log("Fetched Watchlist 4:", watchlist, userAction);   
       trackingEvent("et_push_event", {
         event_category: 'Subscriber Homepage', 
         event_action: `Market Dashboard click`, 

@@ -139,7 +139,7 @@ export default function StockTalkWidget() {
         const data = await fetchList();
         const streamDataFromAPI = data?.livestreamdata?.result?.[0];
 
-        console.log('stream data', streamDataFromAPI);
+        // console.log('stream data', streamDataFromAPI);
         if(streamDataFromAPI) {
             setStartingSoon(false);
             setLiveStreamStarted(true);

@@ -93,7 +93,7 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
     if (videoData?.some((item) => Number(item.msid) == Number(showTab))) {
       const selectedObj = videoData?.find((item) => Number(item.msid) == Number(showTab))?.videoListData[0];
 
-      console.log("selectedObj --- ", selectedObj);
+      // console.log("selectedObj --- ", selectedObj);
       if (selectedObj?.msid) {
         videoClick(selectedObj?.msid, selectedObj?.title);
         setAutoplay(0);
