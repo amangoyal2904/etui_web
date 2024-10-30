@@ -56,13 +56,13 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
                     const bookmarkListArr = data.details.map((entry: any) => ({
                         msid: entry.msid,
                       })).filter(Boolean);
-                    window.bookmarkApiRes = bookmarkListArr;
+                    window.bookmarkApiRes = bookmarkListArr || [];
                     setIsBookmarked(1);
                 } else if (apiType === 'all' && data && data.details && data.details.length) {
                     const bookmarkListArr = data.details.map((entry: any) => ({
                         msid: entry.msid,
                       })).filter(Boolean);
-                    window.bookmarkApiRes = bookmarkListArr;
+                    window.bookmarkApiRes = bookmarkListArr || [];
                     const bookmarkStatusForAll = new Event("bookmarkStatusForAll");
                     document.dispatchEvent(bookmarkStatusForAll);
                 }
