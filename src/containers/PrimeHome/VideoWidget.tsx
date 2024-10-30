@@ -66,7 +66,7 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
     setAutoplay(0);
 
     if (!videoData?.some((item) => Number(item.msid) == Number(tabMsid))) {
-      const apiLink = `https://etpwaapipre.economictimes.com/request?type=plist&msid=${tabMsid}&contenttype=VIDEO&mode=hierarchy`;
+      const apiLink = `https://etpwaapi${window?.isDev ? 'pre' : ''}.economictimes.com/request?type=plist&msid=${tabMsid}&contenttype=VIDEO&mode=hierarchy`;
       setShowLoading(true);
 
       fetch(apiLink)
@@ -159,7 +159,7 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
                                                                           data-ga-onclick={`Subscriber Homepage#Videos widget click#News - ${index2+1} - ${listData?.url}`}
                                                                           >
                                                                             <div className='imgDiv'>
-                                                                                <div className='active leayer hide'>
+                                                                                <div className={`active leayer ${autoplay && listData?.msid == selectVideo[0] ? "" : 'hide'} `}>
                                                                                     <span>NOW PLAYING</span>
                                                                                 </div>
                                                                                 <span className="imgdiv" >
