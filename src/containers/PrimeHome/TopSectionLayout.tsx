@@ -132,7 +132,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                 <span className="switch">
                   <span className={focusArea === "news" ? "active" : ""} onClick={() => saveFocusAreaPreference("news")}>NEWS FOCUS</span>
                   <span className="switchIcon" onClick={() => {
-                    focusArea === "news" ? setFocusArea("market") : setFocusArea("news")
+                    focusArea === "news" ? saveFocusAreaPreference("market") : saveFocusAreaPreference("news");
                   }}>
                     <i className={focusArea === "news" ? "left" : "right"}></i>
                   </span>
