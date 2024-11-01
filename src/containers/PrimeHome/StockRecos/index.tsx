@@ -149,7 +149,7 @@ export default function StockRecos({ focusArea }) {
                     <a href={`${ET_WEB_URL}/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank"  data-ga-onclick={`Subscriber Homepage#Stock Recos click#${item?.companyName}`}>{item?.companyName}</a>
                     <span className={styles.watchlistIcWrp}>
                       <WatchlistAddition
-                        companyName={item.companyShortName}
+                        companyName={item?.companyName}
                         companyId={item?.companyId}
                         companyType={item.companyType}
                         customStyle={{
