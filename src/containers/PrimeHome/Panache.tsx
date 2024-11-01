@@ -12,7 +12,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
   return (
     <>
       <section className="panache secBox" data-ga-impression={`Subscriber Homepage#Panache widget impression#`}>
-        <h2><a href="/panache" target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#title - href`}>{title}</a></h2>
+        <h2><a href={`${ET_WEB_URL}/panache`} target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#title - href`}>{title}</a></h2>
         <div className="flex Pleft">
           <a className="firstBox" href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick={`Subscriber Homepage#Panache widget click#1 - href`}>
             <figure>
@@ -75,6 +75,22 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
             border-top: 3px solid #9b8680;
             text-transform: uppercase;
             margin-bottom: 20px;
+
+            a {
+              &::after {
+                content: '';
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                top: -4px;
+                left: 3px;
+                border-top: 2px solid #000;
+                border-left: 2px solid #000;
+                position: relative;
+                cursor: pointer;
+                transform: rotate(135deg);
+              }
+            }
           }
           .firstBox {
             width: 335px;
