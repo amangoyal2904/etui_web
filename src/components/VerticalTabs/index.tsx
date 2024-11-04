@@ -1,5 +1,5 @@
 
-import { trackingEvent } from "utils/ga";
+import { fireTracking, trackingEvent } from "utils/ga";
 import styles from "./styles.module.scss";
 
 export default function VerticalTabs({
@@ -12,12 +12,9 @@ export default function VerticalTabs({
 }: any) {
   const handleOnTabClick = (value, name) => {
     setActiveTab(value);
-    trackingEvent("et_push_event", {
-      event_category: 'Subscriber Homepage', 
-      event_action: `Market Dashboard click`, 
-      event_label: name,
-    });
+    fireTracking("et_push_event", {category:"Subscriber Homepage", action:"Market Dashboard click",label:name})
   }
+
   return (
     <div className={`${styles.vtabs} ${!!isCenter ? styles.center : ""}`}>
       {tabs?.map((tab: any, i: number) => (

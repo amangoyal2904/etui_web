@@ -411,6 +411,7 @@ export const updateGtm = (_gtmEventDimension, prevPath) => {
     _gtmEventDimension["user_login_status_session"] =
       typeof window.objUser.info != "undefined" ? "Logged In" : "Not Logged In";
     _gtmEventDimension["last_click_source"] = site_section;
+    _gtmEventDimension["experiment_variant_name"] = window.customDimension['experiment_variant_name'] ;
     let trafficSource = "direct";
     let dref = document.referrer,
       wlh = window.location.href.toLowerCase();
@@ -1019,3 +1020,10 @@ export const getPageSpecificDimensions = (seo) => {
   //console.log("Date Value:-" + dimension8)
   return payload;
 };
+export const fireTracking = (type,  payload) => {
+  trackingEvent("et_push_event", {
+    event_category: payload.category, 
+    event_action: payload.action, 
+    event_label: payload.label,
+  });
+}

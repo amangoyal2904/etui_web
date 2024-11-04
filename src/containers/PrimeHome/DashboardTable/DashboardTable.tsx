@@ -15,6 +15,7 @@ import useIntervalApiCall from "../../../utils/useIntervalApiCall";
 import HeadingWithRightArrow from "../HeadingWithRightArrow";
 import DayFilter from "./DayFilter";
 import { ET_WEB_URL } from "../../../utils/common";
+import { fireTracking } from "utils/ga";
 
 const DashBoardTable = ({
   selectedFilter = {},
@@ -127,16 +128,18 @@ const DashBoardTable = ({
   const showFilterMenu = useCallback((value: boolean) => {
     setShowFilter(value);
   }, []);
-
+  const onClickTracking = (label) => {
+    fireTracking("et_push_event", {category:"Subscriber Homepage", action:"Market Dashboard click",label:label})
+  }
   return (
     <>      
       <div className={`wrapper ${styles.wrapper} ${focusArea} ${styles[focusArea]}`} ref={dashboardRef} data-ga-impression={`Subscriber Homepage#Market Dashboard widget impression#`}>
         <div className="dflex space-between head_dashboard">
           <div>
-            <HeadingWithRightArrow title={wdName} href={wdHref} data-ga-onclick={`Subscriber Homepage#$Market Dashboard Title click #href`}/>
+            <HeadingWithRightArrow title={wdName} href={wdHref}/>
           </div>
           {wdName != "My Watchlist" && <div className="filterBtnWrp">
-            <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)} data-ga-onclick={`Subscriber Homepage#Market Dashboard click#Filter`}>
+            <span className={styles.filterNseBse} onClick={() => { showFilterMenu(true); onClickTracking("Filter")}} >
               <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
               <span>{niftyFilterData?.name}</span>
             </span>
