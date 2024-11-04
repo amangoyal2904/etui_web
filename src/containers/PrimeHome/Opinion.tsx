@@ -8,7 +8,7 @@ const Opinion = ({OpinionData, focusArea}) => {
     <>
         <div className={`opinionWidget ${focusArea}`} data-ga-impression={`Subscriber Homepage#Opinion widget impression#`}>
             <h2 className="heading">
-                <a href={`${ET_WEB_URL}/opinion`} target="_blank">OPINION</a>
+                <a href={`${ET_WEB_URL}/opinion`} data-ga-onclick={`Subscriber Homepage#Opinion widget click#title - href`} target="_blank">OPINION</a>
             </h2>
             <ul className="opinionWdWrp">
                 {

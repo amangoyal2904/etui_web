@@ -73,12 +73,12 @@ const LiveStreamCards = ({
       </div>
       <div className={styles.cardDescBox}>
         <div className={styles.titleBox}>
-          <a className="font_faus" href={streamURL} title={slide.title}>
+          <a className="font_faus" href={streamURL} title={slide.title} data-ga-onclick={`ETLive-Core#et-subscriber-hp-widget-new#Label=VideoClick-Link=${index+1}/Title=VID-${streamData.eventId}-StockTalk:${slide.title}/Expert ID=${expertId}`}>
             {slide.title}
           </a>
         </div>
         <div className={styles.expertBox}>
-          <a href={expertURL} target="_blank" title={slide.expertName}>
+          <a href={expertURL} target="_blank" title={slide.expertName} data-ga-onclick={`ETLive-Core#et-subscriber-hp-widget-new#Label=ExpertNameClick-Link=${index+1}/Title=VID-${streamData.eventId}-StockTalk: ${slide.title}/Expert ID=${expertId}`}>
             <span className={`${styles.expertimgBox} ${isLive ? styles.liveIcon : ""}`}>
               {expertImg && <img src={expertImg} alt={expertName} title={expertName} loading="lazy" />}
             </span>
