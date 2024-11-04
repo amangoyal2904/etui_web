@@ -173,7 +173,7 @@
     "production": "https://screener.indiatimes.com/screener/getScreenerByScreenerId"
   },
   "MARKETSTATS_INTRADAY": {
-    "development": "https://etapi.indiatimes.com/et-screener/intraday-stats",
+    "development": "https://qcbselivefeeds.indiatimes.com/et-screener/intraday-stats",
     "production": "https://etapi.indiatimes.com/et-screener/intraday-stats"
   },
   "INDEX_FILTERS": {
