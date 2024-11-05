@@ -149,7 +149,7 @@ export const trackingEvent = (type, data) => {
       }
   } 
   if (window.dataLayer) {
-    let _gtmEventDimension = {};
+    let _gtmEventDimension =  window._gtmEventDimension || {};
     _gtmEventDimension = updateGtm(_gtmEventDimension, data.prevPath);
     _gtmEventDimension["event"] = type;
     _gtmEventDimension = Object.assign(_gtmEventDimension, data);
@@ -411,7 +411,6 @@ export const updateGtm = (_gtmEventDimension, prevPath) => {
     _gtmEventDimension["user_login_status_session"] =
       typeof window.objUser.info != "undefined" ? "Logged In" : "Not Logged In";
     _gtmEventDimension["last_click_source"] = site_section;
-    _gtmEventDimension["experiment_variant_name"] = window.customDimension['experiment_variant_name'] ;
     let trafficSource = "direct";
     let dref = document.referrer,
       wlh = window.location.href.toLowerCase();

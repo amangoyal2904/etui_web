@@ -24,6 +24,7 @@ declare global {
     geolocation: any;
     customDimension: any;
     grxDimension_cdp: any;
+    _gtmEventDimension: any;
     grx:any;
     opera?: string;
     MSStream?: string;
