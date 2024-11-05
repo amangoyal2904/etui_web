@@ -46,10 +46,15 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
       event_category:  'HP Clicks', 
       event_action: `Click on Switch Tab`, 
       event_label: `Viewed ${focusArea === "market" ? "Market Focus" : "News Focus "}`,
+      experiment_variant_name: focusArea === "market" ? "Variant 1- Markets focus" : "Variant 2- News focus "
     });
     if (window.customDimension) {
       window.customDimension['experiment_variant_name'] = focusArea === "market" ? "Variant 1- Markets focus" : "Variant 2- News focus ";
     } 
+    if(typeof window._gtmEventDimension == "undefined"){
+      window._gtmEventDimension = {};
+      window._gtmEventDimension['experiment_variant_name'] = focusArea === "market" ? "Variant 1- Markets focus" : "Variant 2- News focus ";
+    }
     const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
     if(primeHomeFocusArea2024) {
       primeHomeFocusArea2024.focusArea = focusArea;
@@ -99,7 +104,12 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
         //   setFocusArea(data?.focusArea);
         // }
         if(data?.statusCode === 200) {
-          window.customDimension['experiment_variant_name'] = focusArea === "market" ? "Variant 2- Direct Landing Market Focus" : "Variant 1- Direct Landing News Focus";
+          const variant = focusArea === "market" ? "Variant 2- Direct Landing Market Focus" : "Variant 1- Direct Landing News Focus";
+          window.customDimension['experiment_variant_name'] = variant;
+          if(typeof window._gtmEventDimension == "undefined"){
+            window._gtmEventDimension = {};
+            window._gtmEventDimension['experiment_variant_name'] = variant;
+          }
           setFocusArea(data?.enableMarketFocus ? "market" : "news");
           setShowNotification(data?.showFocusNotification)
         }
