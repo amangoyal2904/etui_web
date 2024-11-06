@@ -149,7 +149,7 @@ export const trackingEvent = (type, data) => {
       }
   } 
   if (window.dataLayer) {
-    let _gtmEventDimension =  window._gtmEventDimension || {};
+    let _gtmEventDimension = grxDimension || {};
     _gtmEventDimension = updateGtm(_gtmEventDimension, data.prevPath);
     _gtmEventDimension["event"] = type;
     _gtmEventDimension = Object.assign(_gtmEventDimension, data);
