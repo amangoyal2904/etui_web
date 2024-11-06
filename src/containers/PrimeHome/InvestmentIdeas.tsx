@@ -5,13 +5,20 @@ import PrimeIcon from 'components/Icons/PrimeIcon'
 import Separator from 'components/Separator'
 import RenderText from 'components/RenderText'
 import { ET_WEB_URL } from 'utils/common'
+import { trackingEvent } from 'utils/ga'
 
 export default function InvestmentIdeas({ data, focusArea }) {
   const firstRow = data[0] || {};
   const secondRow = data.slice(1, 3) || [];
   const thirdRow = data.slice(3, 5) || [];
   const rest = [secondRow, thirdRow];
-  
+  const fireTracking = (label) => {
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `ET prime widget click`, 
+      event_label: label,
+    });
+  }
   return (
     <>
       <div className={`investmentIdeas ${focusArea}`} data-ga-impression={`Subscriber Homepage#ET investmentIdeas widget impression#`}>
@@ -29,7 +36,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
           </> 
         }
 
-        <a href={firstRow.url} target="_blank" className="first"  data-ga-onclick='Subscriber Homepage#ET prime widget click#InvestmentIdeas - 1 - href'>
+        <a href={firstRow.url} target="_blank" className="first" onClick={()=>fireTracking(`InvestmentIdeas - 1 - ${firstRow.url}`)} >
           <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
           <RenderText text={firstRow.title} />
         </a>        
@@ -41,7 +48,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
                   return (
                     <div className="col" key={`col-${index1}`}>
                       { focusArea === "news" && <span className="counter">{(index + 1) * 2 + index1}</span> }
-                      <a target="_blank" className="hl" href={item.url} data-conttype="100" data-ga-onclick={`Subscriber Homepage#ET prime widget click#InvestmentIdeas - ${index1+1} - href`}>
+                      <a target="_blank" className="hl" href={item.url} data-conttype="100" onClick={()=>fireTracking(`InvestmentIdeas - ${index1+1} - ${item.url}`)} >
                         <RenderText text={item.title} />
                         { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }
                       </a>                      
@@ -53,7 +60,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
             )
           })
         }
-        { focusArea === "news" && <a className="seeAllLink" href={`${ET_WEB_URL}/prime/investment-ideas`} target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#InvestmentIdeas - See All -  href'>See All Investment Ideas Stories <ArrowRnd /></a> }
+        { focusArea === "news" && <a className="seeAllLink" href={`${ET_WEB_URL}/prime/investment-ideas`} target="_blank" onClick={()=>fireTracking(`InvestmentIdeas - See All - ${ET_WEB_URL}/prime/investment-ideas`)} >See All Investment Ideas Stories <ArrowRnd /></a> }
       </div>
       <style jsx>{`
         .investmentIdeas {          

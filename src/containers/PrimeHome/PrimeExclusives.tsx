@@ -5,6 +5,7 @@ import React from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow';
 import Bookmark from 'components/Bookmark';
 import { ET_WEB_URL } from 'utils/common'
+import { trackingEvent } from 'utils/ga';
 
 export default function PrimeExclusives({ title, data, focusArea }) {
   const firstRow = data[0] || {};
@@ -12,7 +13,13 @@ export default function PrimeExclusives({ title, data, focusArea }) {
   const thirdRow = data.slice(3, 5) || [];
 
   const rest = [secondRow, thirdRow];
-
+  const fireTracking = (label) => {
+    trackingEvent("et_push_event", {
+      event_category: 'Subscriber Homepage', 
+      event_action: `ET prime widget click`, 
+      event_label: label,
+    });
+  }
   return (
     <>
       <div className={`primeExclusives ${focusArea}`} data-ga-impression={`Subscriber Homepage#ET prime widget impression#`}>
@@ -23,7 +30,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             <div className="content">
               <div className="text">
                 <a href={firstRow.categoryLink} className="category" target="_blank">{firstRow.categoryName}</a>
-                <a href={firstRow.url} className="heading" target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#Exclusives - 1 - href'>{firstRow.title}</a>
+                <a href={firstRow.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - 1 - ${firstRow.url}`)} >{firstRow.title}</a>
               </div>
               {
               focusArea == 'news' && <div className="meta">
@@ -47,7 +54,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                           <div className="content">
                             <div className="text">
                               <a className="category" href={item?.categoryLink} target="_blank">{item.categoryName}</a>
-                              <a href={item.url} className="heading" target="_blank" data-ga-onclick={`Subscriber Homepage#ET prime widget click#Exclusives - ${index+innerIndex+2} - href`}>{item.title}</a>
+                              <a href={item.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - ${index+innerIndex+2} - ${item.url}`)}>{item.title}</a>
                             </div>                
                           </div>
                           <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />
@@ -69,7 +76,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             })
           }
         </div>
-        {focusArea == 'news' && <a className="seeAllLink" href={`${ET_WEB_URL}/prime`} target="_blank" data-ga-onclick='Subscriber Homepage#ET prime widget click#Exclusives - See All -  href'>See All Prime Exclusives Stories <ArrowRnd /></a>}
+        {focusArea == 'news' && <a className="seeAllLink" href={`${ET_WEB_URL}/prime`} target="_blank" onClick={() => fireTracking(`Exclusives - See All -  ${ET_WEB_URL}/prime`)} >See All Prime Exclusives Stories <ArrowRnd /></a>}
       </div>
       <style jsx>{`
         .primeExclusives {                
