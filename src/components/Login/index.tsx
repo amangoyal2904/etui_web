@@ -378,18 +378,18 @@ const Login = ({headertext}) => {
                     <div className={styles.outerContainer}>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.menulist} ${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>
                         {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}referrals`} rel="nofollow noreferrer" target="_blank" className={`${styles.refer} ${styles.cSprite_b}`}>Refer & Earn <img src="https://img.etimg.com/photo/107514300.cms" width="36" height="17" className={styles.new_badge} alt="New Feature"></img></a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
-                        <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
-                        <a href="#" onClick={logout} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}referrals`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.refer} ${styles.cSprite_b}`}>Refer & Earn <img src="https://img.etimg.com/photo/107514300.cms" width="36" height="17" className={styles.new_badge} alt="New Feature"></img></a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.menulist} ${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
+                        <span onClick={handleRedeemVoucher} className={`${styles.menulist} ${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</span>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
+                        <span onClick={logout} className={`${styles.menulist} ${styles.cSprite_b} ${styles.logOut}`}>Logout</span>
                       </div>
                     </div>
                   </div>
