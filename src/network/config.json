@@ -123,12 +123,12 @@
     "development": "https://etpwaapipre.economictimes.com/pushGaData"
   },
   "AUTH_TOKEN": {
-    "development": "https://qa-oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token?frm=market_web",
-    "production": "https://oauth2.economictimes.indiatimes.com/oauth/api/merchant/ET/token?frm=market_web"
+    "development": "https://qa-oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token?frm=next_web",
+    "production": "https://oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token?frm=next_web"
   },
   "LOGOUT_AUTH_TOKEN": {
     "development": "https://qa-oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout",
-    "production": "https://oauth2.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout"
+    "production": "https://oauth.economictimes.indiatimes.com/oauth/api/merchant/ET/token/logout"
   },
   "SAVEPROFILE": {
     "development": "https://etonboard-stg.economictimes.indiatimes.com/etonboard/api/v1/saveUserResponse.json",
