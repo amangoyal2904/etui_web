@@ -141,6 +141,9 @@
                     font-weight: 500;
                     border: 1px solid #afafaf;
                     text-align: left;
+                    &:placeholder-shown{
+                        border: 1px solid #E99A00;
+                    }
                 }
             }
         }
