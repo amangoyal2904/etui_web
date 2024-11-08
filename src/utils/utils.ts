@@ -1,5 +1,8 @@
 import os from "os";
 import { grxPushData } from "./articleUtility";
+import APIS_CONFIG from "network/config.json";
+import jStorageReact from "utils/jStorage";
+import { fetchAdaptiveData } from "./ga";
 const serverHost = os.hostname() || "";
 
 declare global {
@@ -475,3 +478,101 @@ export const getDevStatus = (host: string | string[]) => {
 };
 
 export const isWeekend = new Date().getDay() == 0 || new Date().getDay() == 6;
+export const getSubscriptionContent = async (callback) => {
+  try { 
+    const url = APIS_CONFIG.discountOffers[window.APP_ENV];
+    const userInfo = typeof window.objUser !== "undefined" && window.objUser.info && window.objUser.info;
+    const isFreeTrialEnabled = jStorageReact.get("et_freetrial") || {};
+    let subscriptionWebContent =jStorageReact.get('subscriptioncontent');
+    const freeTrialSubsFetched = window.sessionStorage.getItem("freeTrialDataFetch");
+
+    if (subscriptionWebContent && isFreeTrialEnabled?.eligible && freeTrialSubsFetched == "1") {
+      subscriptionWebContent = JSON.parse(subscriptionWebContent)?.message;
+      if (typeof callback != "undefined") {
+        callback(subscriptionWebContent);
+      }
+    } else {
+      let { paidArticleReadCountMonth } = fetchAdaptiveData();
+      const data:any = {
+        ssoid: getCookie("ssoid") || "",
+        gid: getCookie("_grx") || "",
+        country: typeof window.geoinfo !== "undefined" && window.geoinfo.CountryCode,
+        city: (typeof window.geoinfo !== "undefined" && window.geoinfo.city) || "",
+        monthlyArticle: paidArticleReadCountMonth,
+        monthlyTools: "",
+        planPageDrop: "",
+        paymentDrop: "",
+        loggedIn: userInfo && userInfo.isLogged,
+        domain: window.location.hostname
+      };
+      if (isFreeTrialEnabled?.eligible) {
+        window.sessionStorage.setItem("freeTrialDataFetch", "1");
+        data.clOffType = "free_trial";
+      } else {
+        window.sessionStorage.setItem("freeTrialDataFetch", "0");
+      }
+      fetch(url, {
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(data),
+        method: "POST"
+      }).then(async (res) => {
+        if (res.status == 200) {
+          res.json().then((response) => {
+            console.log("@@@@-->res",response);
+            jStorageReact.set('subscriptioncontent', JSON.stringify(response), { TTL: 600000 });
+            if (typeof callback != "undefined") {
+              callback(response.message);
+            }
+          });
+        } else {
+          const data = await fetchContentMasterAPI();
+          callback(data);
+        }
+      });
+    }
+  } catch (e) {
+    console.log("failed to get offers data", e);
+    const data = await fetchContentMasterAPI();
+    callback(data);
+  }
+};
+const fetchContentMasterAPI = async () => {
+  try {
+    const isFreeTrialEnabled:any = window.sessionStorage.getItem("et_freetrial") || {};
+    let subsWebMasterContent = jStorageReact.get('mastersubcontent');
+    if (subsWebMasterContent) {
+      subsWebMasterContent = JSON.parse(subsWebMasterContent);
+      if (isFreeTrialEnabled?.eligible) {
+        return subsWebMasterContent.free_trial;
+      } else {
+        return subsWebMasterContent.free;
+      }
+    } else {
+      const url =  (APIS_CONFIG as any)?.discountMasterOffers[window.APP_ENV];
+
+      const response = await fetch(url, {
+        headers: {
+          accept: "application/json, text/javascript, */*; q=0.01",
+          "content-type": "application/json; charSet=UTF-8"
+        },
+        method: "GET"
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        jStorageReact.set('mastersubcontent', JSON.stringify(data), { TTL: 600000 });
+        if (isFreeTrialEnabled) {
+          return data.free_trial;
+        } else {
+          return data.free;
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Error in master API", e);
+    return null;
+  }
+};
