@@ -13,8 +13,13 @@ export default function MarketsTopNews({ data, focusArea }) {
   });
 
   // if focusArea is market, keep only first 3 items
-  if (focusArea === "market") {
-    data = data.slice(0, 3);
+  const sliceMap = {
+      market: 3,
+      news: 5,
+  };
+
+  if (sliceMap[focusArea]) {
+      data = data.slice(0, sliceMap[focusArea]);
   }
 
   return (
