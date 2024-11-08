@@ -20,6 +20,7 @@ import MyWatchListDashboard from './MyWatchListDashboard';
 import API_CONFIG from "../../network/config.json";
 import jStorageReact from 'jstorage-react';
 import { trackingEvent } from 'utils/ga';
+import WealthEditionList from './WealthEditionList';
 
 // declare window interface
 declare global {
@@ -151,6 +152,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid }) {
                 <InvestmentIdeas focusArea={focusArea} data={investmentIdeas?.data || []}/>
                 <ETEpaper focusArea={focusArea} etEpaperData={etEpaperData} isDev={isDev}/>
                 <LessonsFromGrandmasters focusArea={focusArea} isDev={isDev}/>
+                <WealthEditionList />
               </>
               }
 

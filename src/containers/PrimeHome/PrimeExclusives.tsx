@@ -11,8 +11,10 @@ export default function PrimeExclusives({ title, data, focusArea }) {
   const firstRow = data[0] || {};
   const secondRow = data.slice(1, 3) || [];
   const thirdRow = data.slice(3, 5) || [];
+  const fourthRow = data.slice(5, 7) || [];
 
-  const rest = [secondRow, thirdRow];
+  const rest = focusArea === "market" ? [secondRow, thirdRow, fourthRow] : [secondRow, thirdRow];
+  // console.log("rest --- ", rest, data, fourthRow)
   const fireTracking = (label) => {
     trackingEvent("et_push_event", {
       event_category: 'Subscriber Homepage', 

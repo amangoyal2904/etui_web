@@ -46,7 +46,7 @@ export default function TodayNews({ todayNews, focusArea }) {
         <div className="wealthTitle">{techNews?.title}</div>
         <ul>
           {
-            techNews?.data?.map((item, index) => (
+            techNews?.data?.slice(0,7)?.map((item, index) => (
               <li key={index}>
                 <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href'>
                   <RenderText text={item?.title} />

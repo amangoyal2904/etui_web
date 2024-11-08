@@ -95,6 +95,25 @@
     }
   }
 
+  &.wealthEidtion{
+    border-radius: 50%;
+    background: #F86B3E;
+    width: 19px;
+    height: 19px;
+    padding: 4px;
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+
+    &.prevbtn{
+      left: 9px;
+    }
+
+    &.nextbtn{
+      right: -9px;
+    }
+  }
+
   &.topMFWd {
     width: auto;
     height: auto;
@@ -145,6 +164,10 @@
 
   &.black {
     color: #000;
+  }
+
+  &.white{
+    color: #fff;
   }
 }
 .embla__button:disabled {
