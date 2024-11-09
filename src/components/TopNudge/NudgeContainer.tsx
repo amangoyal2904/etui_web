@@ -6,15 +6,27 @@ import { grxEvent } from "utils/ga";
 import { currPageType } from "utils";
 import { gotoPlanPage } from "utils/utils";
 
-function NudgeContainer({data}) {
+function NudgeContainer({subsContent}) {
     const [nudgeShow, setNudgeShow] = useState(true);
     const [topValue, setTopValue] = useState('0px');
+    const {
+      et_topnudge_bgColor,
+      et_topnudge_crossFrequency,
+      et_topnudge_ctaText,
+      et_topnudge_header,
+      et_topnudge_hideClose,
+      et_topnudge_icon,
+      et_topnudge_show,
+      et_topnudge_subHeader,
+      et_topnudge_type,
+      et_topnudge_ctaLink
+    } = subsContent || {};
 
     useEffect(() => {
-        if(data?.bannerType) {
-            grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Viewed - True', 'event_label': data?.bannerType + ' | Banner Location '+ currPageType()});
+        if(et_topnudge_type) {
+            grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Viewed - True', 'event_label': et_topnudge_type + ' | Banner Location '+ currPageType()});
         }
-    }, [data]);
+    }, [et_topnudge_type]);
 
     const onBannerClick = (e) => {
         var isCloseRef = e.target.classList.contains('info_cross');
@@ -23,19 +35,19 @@ function NudgeContainer({data}) {
             grxEvent('event', {'event_category': 'Subscription Flow ET',  'event_action': 'SYFT | Flow Started', 'event_label': "Adfree expired"});
         }
         if(!isCloseRef) {
-            grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Click', 'event_label': data.bannerType + ' | Banner Location '+ currPageType()});
-            gotoPlanPage({url: data?.button_link.replace('https://economictimes.indiatimes.com','https://dev-buy.indiatimes.com/ET') || ""});   
+            grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Click', 'event_label': et_topnudge_type + ' | Banner Location '+ currPageType()});
+            gotoPlanPage({url: et_topnudge_ctaLink});   
         }
     }
 
     const onCloseClick = (e) => {
-        var frequencyVal = data?.cross_frequency;
+        var frequencyVal =  et_topnudge_crossFrequency;
         if(frequencyVal) {
             var reActivatedOn = +new Date() + (Number(frequencyVal) * 1000 * 60 * 60 * 24);
             jStorage.set('topNudgeObj', JSON.stringify({reActivatedOn: reActivatedOn}));
         }
         
-        grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Dismiss', 'event_label': data.bannerType + ' | Banner Location '+ currPageType()});
+        grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Dismiss', 'event_label': et_topnudge_type + ' | Banner Location '+ currPageType()});
         // $("#topnavBlk").css("top", "0");
         // $('.topUserInfoBand').slideUp();
         // $('.topUserInfoBand').remove();
@@ -56,19 +68,19 @@ function NudgeContainer({data}) {
 
     return (
         <>
-            {nudgeShow && <div id="topUserInfoBand" className={`${styles?.topUserInfoBand} ${data?.banner_type}`} onClick={onBannerClick}>
+            {nudgeShow && et_topnudge_show && <div id="topUserInfoBand" className={`${styles?.topUserInfoBand} ${et_topnudge_type}`} onClick={onBannerClick}>
                 {/* style={`background: ${banner_bg}`} */}
                 <div className={styles?.info_content}>
                     <span className={styles?.info_icon}>
-                        <img height="100%" src={`${ET_IMG_DOMAIN}/photo/msid-${data?.image_msid},quality-100,imgsize-100.cms`} />
+                        <img height="100%" src={et_topnudge_icon} />
                     </span>
                     <div className={styles?.tac}>
-                        <p className={styles?.info_text}>{data?.banner_text}</p>
-                        {data?.banner_subtext && <p className={styles?.info_subtext}>{data?.banner_subtext}</p>}
+                        <p className={styles?.info_text}>{et_topnudge_header}</p>
+                        {et_topnudge_subHeader && <p className={styles?.info_subtext}>{et_topnudge_subHeader}</p>}
                     </div>
-                    <a className={styles?.info_cta} data-url={data?.button_link}>{data?.button_text}</a>
+                    <a className={styles?.info_cta} data-url={et_topnudge_ctaLink}>{et_topnudge_ctaText}</a>
                 </div>
-                {data?.banner_cross === 'true' && <span className={styles?.info_cross} data-frequency={data?.cross_frequency} onClick={onCloseClick} />}
+                {et_topnudge_crossFrequency && <span className={styles?.info_cross} data-frequency={et_topnudge_crossFrequency} onClick={onCloseClick} />}
             </div>}
         </>
     );

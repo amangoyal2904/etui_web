@@ -249,5 +249,13 @@
   "getIndexByIds": {
     "development": "https://etmarketsapis.indiatimes.com/ET_Stats/getIndexByIds",
     "production": "https://etmarketsapis.indiatimes.com/ET_Stats/getIndexByIds"  
+  },
+  "discountOffers":{
+    "development":"https://offers-stg.indiatimes.com/offer-engine/api/v1/offers/et/web/get",
+    "production":"https://offers.indiatimes.com/offer-engine/api/v1/offers/et/web/get"
+  },
+  "discountMasterOffers": {
+    "development": "https://offers-stg.indiatimes.com/offer-engine/api/v1/fetch-master-messages/et/web/get",
+    "production": "https://offers.indiatimes.com/offer-engine/api/v1/fetch-master-messages/et/web/get"
   }
 }
