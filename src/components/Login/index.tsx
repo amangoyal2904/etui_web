@@ -368,12 +368,17 @@ const Login = ({headertext}) => {
       {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPink ? styles.pink_theme : ""}`}>
+            <a className={styles.watchlist} href="https://economictimes.indiatimes.com/watchlist?source=homepage&medium=header&campaign=watchlist">My Watchlist</a>
             {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
                 ? <>
-                  <span className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</span>
+                  <span className={styles.prime_icon}></span>
+                  <div className={styles.userDeatils}>
+                    <p className={styles.userPrime}>{isPrime ? 'Prime Member' : 'Free Member'}</p>
+                    <p className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</p>
+                  </div>
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
