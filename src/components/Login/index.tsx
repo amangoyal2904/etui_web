@@ -381,6 +381,7 @@ const Login = ({headertext}) => {
                   </div>
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
+                    <p className={styles.userName}>{`Hi ${userInfo?.firstName}`}</p>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
                         <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.menulist} ${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>

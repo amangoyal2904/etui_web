@@ -737,7 +737,7 @@ export const setAdFreeExp = (nudgeFlag, ssoid, dispatch) => {
       window.objUser.isPink = true;
       
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: "SETPINKTHEME",
         payload: {
           isAdfree: true,
           isPink: window.objUser.isPink
