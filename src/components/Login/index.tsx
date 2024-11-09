@@ -374,11 +374,17 @@ const Login = ({headertext}) => {
               {
                 isLogin 
                 ? <>
-                  <span className={styles.prime_icon}></span>
-                  <div className={styles.userDeatils}>
-                    <p className={styles.userPrime}>{isPrime ? 'Prime Member' : 'Free Member'}</p>
-                    <p className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</p>
-                  </div>
+                  {
+                    isPink ? <>
+                      <span className={styles.prime_icon}></span>
+                      <div className={styles.userDeatils}>
+                        <p className={styles.userPrime}>{isPrime ? 'Prime Member' : 'Free Member'}</p>
+                        <p className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</p>
+                      </div>
+                    </> : <>
+                      <p className={styles.free_dd} title={userInfo?.loginId}>{userInfo?.firstName[0] || ''}</p>
+                    </>
+                  }
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
                     <p className={styles.userName}>{`Hi ${userInfo?.firstName}`}</p>
