@@ -368,14 +368,20 @@ const Login = ({headertext}) => {
       {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPink ? styles.pink_theme : ""}`}>
+            <a className={styles.watchlist} href="https://economictimes.indiatimes.com/watchlist?source=homepage&medium=header&campaign=watchlist">My Watchlist</a>
             {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
                 ? <>
-                  <span className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</span>
+                  <span className={styles.prime_icon}></span>
+                  <div className={styles.userDeatils}>
+                    <p className={styles.userPrime}>{isPrime ? 'Prime Member' : 'Free Member'}</p>
+                    <p className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</p>
+                  </div>
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
+                    <p className={styles.userName}>{`Hi ${userInfo?.firstName}`}</p>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
                         <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.menulist} ${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>

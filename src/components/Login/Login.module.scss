@@ -11,11 +11,19 @@
   text-align: right;
   top:14px;
 
-  .subscribe:not(.cSprite_b){
-    padding: 2px 7px 3px 8px;
-    border-radius: 2px;
+  .subscribe:not(.cSprite_b), .watchlist{
+    // padding: 2px 7px 3px 8px;
+    // border-radius: 2px;
+    // border: solid 1px black;
+    // margin-right: 15px;
+    // margin-bottom: 5px;
+    // cursor: pointer;
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 40px;
+    font-weight: 600;
     border: solid 1px black;
-    margin-right: 15px;
+    margin-right: 7px;
     margin-bottom: 5px;
     cursor: pointer;
   }
@@ -89,6 +97,12 @@
       background-color: #fafafa;
       .bgWhite{
         background: #fff;
+      }
+      .userName{
+        color: #5c5c5c;
+        text-align: center;
+        margin-bottom: 3px;
+        font-weight: 600;
       }
       .emailLbl{
         color: #5c5c5c;
@@ -216,81 +230,114 @@
 
 .pink_theme{
   &.subSign{
-    &:before{
-      background: url($subscriber-sprite) no-repeat;
-      display: inline-block;
-      background-size: 475px;
-      content: "";
-      height: 5px;
-      width: 10px;
-      background-position: -47px -10px;
-      position: relative;
-      top: 20px;
-      left: 48px;
-      z-index: 2;
-    }
+    display: flex;
+    padding-top: 10px;
+    // &:before{
+    //   background: url($subscriber-sprite) no-repeat;
+    //   display: inline-block;
+    //   background-size: 475px;
+    //   content: "";
+    //   height: 5px;
+    //   width: 10px;
+    //   background-position: -47px -10px;
+    //   position: relative;
+    //   top: 20px;
+    //   left: 48px;
+    //   z-index: 2;
+    // }
   }
   .loginBoxWrap{
-    border-top: 34px solid #183651;
-    top: -7px;
-    width: 86px;
-    position: relative;
-    &:before{
-      background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+    // border-top: 34px solid #183651;
+    // top: -7px;
+    // width: 86px;
+    // position: relative;
+
+    border-radius: 40px;
+    border: 1px solid #000;
+    padding: 2px 25px 2px 14px;
+    max-height: 22px;
+    display: flex;
+    align-items: center;
+
+    .prime_icon{
+      background: url(https://img.etimg.com/photo/msid-110869446,quality-100/common-sprite.jpg) no-repeat;
+      background-size: 500px;
+      width: 15px;
+      height: 15px;
       display: inline-block;
-      background-size: 475px;
-      content: '';
-      display: block;
-      position: absolute;
-      height: 35px;
-      width: 40px;
-      top: -36px;
-      left: 28px;
+      background-position: -299px -6px;
     }
-    &:after{
-      content: '';
-      width: 0;
-      border-left: 43px solid transparent;
-      border-right: 43px solid transparent;
-      border-top: 15px solid #183651;
-      display: block;
-      height: 0;
+    // &:after{
+    //   content: '';
+    //   width: 0;
+    //   border-left: 43px solid transparent;
+    //   border-right: 43px solid transparent;
+    //   border-top: 15px solid #183651;
+    //   display: block;
+    //   height: 0;
+    //   position: relative;
+    //   top: 15px;
+    // }
+    .userDeatils{
+      text-align: left;
+      margin-left: 4px;
+      font-size: 9px;
+      font-weight: 600;
       position: relative;
-      top: 15px;
+
+      &:after {
+        position: absolute;
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-top: 2px solid #333;
+        border-left: 2px solid #333;
+        transform: rotate(-135deg);
+        top: 6px;
+        right: -15px;
+      }
+    }
+    .userPrime{
+      color: #ed193b;
+      font-size: 9px;
     }
     .dd{
-      min-height: 15px;
-      display: inline-block;
-      position: relative;
-      top: 15px;
-      width: 86px;
-      text-align: center;
-      color: #FFF;
-      background-color: #183651;
-      text-transform: uppercase;
       font-size: 9px;
-      padding-top: 4px;
-      &:before{
-        content: 'Prime Member';
-        background: #FFF;
-        padding: 2px 0;
-        position: absolute;
-        left: 0;
-        width: 86px;
-        letter-spacing: .41px;
-        color: #ed193b;
-        text-transform: uppercase;
-        font-size: 9px;
-        font-weight: 700;
-        text-align: center;
-        top: -15px;
-      }
+      // min-height: 15px;
+      // display: inline-block;
+      // position: relative;
+      // top: 15px;
+      // width: 86px;
+      // text-align: center;
+      // color: #FFF;
+      // background-color: #183651;
+      // text-transform: uppercase;
+      // font-size: 9px;
+      // padding-top: 4px;
+      display: flex;
+      align-items: center;
+      min-height: auto;
+      // &:before{
+      //   content: 'Prime Member';
+      //   background: #FFF;
+      //   padding: 2px 0;
+      //   position: absolute;
+      //   left: 0;
+      //   width: 86px;
+      //   letter-spacing: .41px;
+      //   color: #ed193b;
+      //   text-transform: uppercase;
+      //   font-size: 9px;
+      //   font-weight: 700;
+      //   text-align: center;
+      //   top: -15px;
+      // }
       &:after{
         display: none;
       }
     }
     .signMenu{
-      top: auto;
+      top: 26px;
       // bottom: -270px;
       border-radius: 6px;
       .outerContainer{
