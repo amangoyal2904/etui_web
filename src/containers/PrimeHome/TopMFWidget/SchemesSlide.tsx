@@ -461,7 +461,7 @@ const SchemesSlide = ({ primaryName, secondaryObj, keyIndex, selectedTabClick, s
                                                                           value4?.promotedSchemes && (Array.isArray(value4?.promotedSchemes) ? value4?.promotedSchemes : [value4?.promotedSchemes]).map((value6, index6) => topMfSchemList(value6, index6, 'promotedSchemes'))
                                                                         }
                                                                         {
-                                                                            value4?.schemeList ? 
+                                                                            value4?.schemeList && value4?.schemeList.length > 0 ? 
                                                                             value4?.schemeList?.slice(0, (value4?.promotedSchemes?.length == 0 ? 5 : value4?.promotedSchemes?.length > 1 ? 3 : 4)).map((value5, index5) => topMfSchemList(value5, index5, 'schemeList')) :
                                                                             <li key={`topmf_schemelist_${index4}`}>
                                                                                 <h2 className="tmf_error">Sorry, we couldn't find any schemes that match our criteria of top funds for this category. Please proceed to other categories.</h2>

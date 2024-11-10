@@ -12,7 +12,7 @@ export default function MutualFunds({ title, data, isDev }) {
       <SectionHeaderWithNewsletter url="/mutual-funds" title={title} sid="5f5a31db80f79664e95679cf" />
       <div className='mfWrap'>
         <OneImgTwoColsNewsLayout data={data} more={{text: "Mutual Funds", link: "/mutual-funds"}} widget="Mutual Funds"/>
-        <TopMF />
+        <TopMF isDev={isDev} />
       </div>
       <TopMFDiscover isDev={isDev} />
     </section>

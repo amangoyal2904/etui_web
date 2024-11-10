@@ -16,6 +16,7 @@ export default async function Page({ params }: {
   const isprimeuser = cookies().get('isprimeuser')?.value || false;
   const cookieStore = cookies();
   const ssoid = cookieStore.get("ssoid")?.value;
+  const siteCurrentTime = new Date().toISOString();
 
   console.log("ssoid --- ", ssoid);
 
@@ -43,7 +44,7 @@ export default async function Page({ params }: {
   }
   const pageSeo = response?.seo || {};
   const versionControl = response?.searchResult?.find(item => item?.name === "common_config")?.data || {};
-  return  <Layout page="primehome" className="layout1260" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
+  return  <Layout page="primehome" className="layout1260" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV} siteCurrentTime={siteCurrentTime}>          
     <PrimeHome {...response} objVc={versionControl} isprimeuser={isprimeuser} isDev={isDev} ssoid={ssoid} />
   </Layout>;
 }

@@ -19,6 +19,8 @@ import VideoWidget from "./VideoWidget";
 import { useEffect } from "react";
 import { useStateContext } from "store/StateContext";
 import BackToTopButton from "components/BackToTopButton";
+import jStorage from "jstorage-react";
+import GLOBAL_CONFIG from "../../network/global_config.json";
 
 function PrimeHome({ searchResult, isDev, ssoid}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -47,6 +49,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   const podcast = searchResult?.find(item => item?.name === "podcast")?.data || [];
   const MostReadStoriesData = searchResult?.find(item => item?.name === "most_read_stories") || {};
   const VideoWidgetData = searchResult?.find(item => item?.name === "videos") || {};  
+  const APP_ENV = isDev ? "development" : "production"; 
 
   const { state, dispatch } = useStateContext();
   const { isLogin } = state.login;
@@ -65,15 +68,27 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
   }, []);
 
   useEffect(() => {    
-    const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");    
-    if(isLogin != null && !isLogin && !devCheck){
-      // location.href = "https://etdev8243.indiatimes.com/"
-    }    
+    try {
+      const devCheck = typeof window !== "undefined" && window.location.href.includes("dev=1");   
+      const ssoidValue = state?.login?.ssoid || ssoid; // Extracted for clarity
+      const adFreeCampaign = jStorage.get(`adFreeCampign_${ssoidValue}`);
+      const isExpiredUserEligible = adFreeCampaign && adFreeCampaign.eligible || 0;
+
+      if (isLogin != null) {
+        if (devCheck || (isLogin || isExpiredUserEligible)) {
+          // ... existing logic ...
+        } else {
+          location.href = GLOBAL_CONFIG[APP_ENV]["ET_WEB_URL"];
+        }
+      }
+    } catch (error) {
+      console.error("An error occurred in useEffect:", error);
+    }
   }, [isLogin]);
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state.ssoid || ssoid}/>
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state?.login?.ssoid || ssoid}/>
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />          
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} marketExpertViews={marketExpertViews?.data || []} marketMoguls={marketMoguls?.data || []} marketLiveblog={marketLiveblog?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />

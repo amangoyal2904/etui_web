@@ -219,7 +219,7 @@ const NewsByIndustry = ({data, title, isDev, focusArea}) => {
         if(!articleData?.some(article => Number(article.msid) == Number(listMsid))){            
             const pllistArr = [13352306, 107115, 81585238, 78404305, 18606290];
             const typeVal = pllistArr.includes(listMsid) ? "plist" : "articlelist";
-            const apiLink = `https://etpwaapi${window?.isDev ? 'pre' : ''}.economictimes.com/request?type=plist&msid=${listMsid}${typeVal == "articlelist" ? "&mode=hierarchy" : ''}`;
+            const apiLink = `https://etpwaapi${window?.isDev ? 'pre' : ''}.economictimes.com/request?type=plist&top=7&msid=${listMsid}${typeVal == "articlelist" ? "&mode=hierarchy" : ''}`;
             setShowLoading(true);
 
             fetch(apiLink)
