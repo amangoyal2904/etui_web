@@ -110,22 +110,22 @@ export default function PrimeBenefitsBucket({focusArea}) {
       url: "https://economictimes.indiatimes.com/markets/live-coverage",
       key:"data_downloader"
     },
-    {
-      title: "Market Scans",
-      iconPosition: "-21px -115px",
-      url: "https://economictimes.indiatimes.com/markets/stocks/market-scan",
-      key:"market_scans"
-    },
+    // {
+    //   title: "Market Scans",
+    //   iconPosition: "-21px -115px",
+    //   url: "https://economictimes.indiatimes.com/markets/stocks/market-scan",
+    //   key:"market_scans"
+    // },
     {
       title: "StockTalk",
       iconPosition: "-60px -116px",
-      url: "https://economictimes.indiatimes.com/markets/stocks/stock-talk",
+      url: "https://economictimes.indiatimes.com/markets/etmarkets-live/stocktalk:-get-your-query-answered-by-experts/streamsrecorded/streamid-npnfmmmg66,expertid-133.cms",
       key:"stock_talk"
     },
     {
       title: "AI Chart Patterns",
       iconPosition: "-99px -114px",
-      url: "https://economictimes.indiatimes.com/markets/stocks/ai-chart-patterns",
+      url: "https://economictimes.indiatimes.com/stocks/chart-patterns",
       key:"ai_chart_patterns"
     }
   ];
