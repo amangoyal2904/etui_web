@@ -4,7 +4,7 @@ export const Authors = (authors) => {
   
   return (
     <>
-      {authors.authors.map((author, index) => {
+      {authors?.authors?.map((author, index) => {
         return (
           <span key={index}>
             {index > 0 && index === authors.authors.length - 1 ? " & " : ""}

@@ -8,12 +8,12 @@ interface PageProps {
 }
 
 const HeaderMain = (props) => {
-const { page, menuData, subsecnames, sectiondetail, commonMeta } = props;
+const { page, menuData, subsecnames, sectiondetail, commonMeta, siteCurrentTime } = props;
 const {headerText = " "} = commonMeta || {};
  //console.log("commonMeta", commonMeta, headerText)
   return (
     <header>
-      {headerText && <HeaderLogo page={page} headertext={headerText} subsecnames={subsecnames} sectiondetail={sectiondetail} APP_ENV={props.APP_ENV} />}
+      {headerText && <HeaderLogo page={page} headertext={headerText} subsecnames={subsecnames} sectiondetail={sectiondetail} APP_ENV={props.APP_ENV} siteCurrentTime={siteCurrentTime} />}
       <HeaderNav menuData={menuData} subsecnames={subsecnames} page={page} />
       {/* <pre>{JSON.stringify(props.menuData, null, 2)}</pre> */}
     </header>

@@ -257,5 +257,9 @@
   "discountMasterOffers": {
     "development": "https://offers-stg.indiatimes.com/offer-engine/api/v1/fetch-master-messages/et/web/get",
     "production": "https://offers.indiatimes.com/offer-engine/api/v1/fetch-master-messages/et/web/get"
+  },
+  "getFilteredData": {
+    "development": "https://etmarketsapis.indiatimes.com/ET_MfScreeners/getFilteredData",
+    "production": "https://etmarketsapis.indiatimes.com/ET_MfScreeners/getFilteredData"
   }
 }

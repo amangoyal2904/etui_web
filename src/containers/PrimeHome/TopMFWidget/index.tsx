@@ -9,8 +9,9 @@ import { DotButton, useDotButton } from '../../../components/CarouselDotBtn';
 import SchemesSlide from './SchemesSlide';
 import Service from "../../../network/service";
 import { trackingEvent } from 'utils/ga';
+import APIS_CONFIG from "network/config.json";
 
-const TopMF = () => {
+const TopMF = ({isDev}) => {
     const OPTIONS = { loop: false, dragFree: false, watchDrag: false };
     const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
     const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
@@ -30,6 +31,7 @@ const TopMF = () => {
     const [selectedTab, setSelectedTab] = useState<any>({});
     const [topMFSchemes, setTopMFScheme] = useState<any>([]);
     const [selectedYear, setSelectedYear] = useState("r3Year");
+    const APP_ENV = isDev ? "development" : "production"; 
 
     const fetchTabs = useCallback(async () => {
         try{
@@ -68,11 +70,86 @@ const TopMF = () => {
                             : [{ secondaryObj, status: 'loading', response: [] }]
                     },
                 ]);
-                const res = await Service.get({
-                    url: `https://etdev8243.indiatimes.com/topmf_schemesjson.cms`,
-                    params: { feedtype: "etjson", primaryObj, secondaryObj, year: selectedYear },
+                const apiLink = APIS_CONFIG["getFilteredData"][APP_ENV];
+                const yearval = selectedYear || 'r3Year';
+                const customobj = primaryObj == 'promotedFeatured' ? [{
+                    firstOperand: primaryObj,
+                    secondOperand: null,
+                    operator: "EQUALS",
+                    value: "True",
+                    min: null,
+                    max: null
+                }] : [{
+                    firstOperand: "primaryObjectiveManual",
+                    secondOperand: null,
+                    operator: "EQUALS",
+                    value: primaryObj,
+                    min: null,
+                    max: null
+                },{
+                    firstOperand: "secondaryObjectiveManual",
+                    secondOperand: null,
+                    operator: "EQUALS",
+                    value: secondaryObj,
+                    min: null,
+                    max: null
+                }, ...(secondaryObj !== "Multi Cap" ? [{
+                    firstOperand: "vrRating",
+                    secondOperand: null,
+                    operator: "EQUALS",
+                    value: 5,
+                    min: null,
+                    max: null
+                }, {
+                    firstOperand: "vrRating",
+                    secondOperand: null,
+                    operator: "EQUALS",
+                    value: 4,
+                    min: null,
+                    max: null
+                }, {
+                    firstOperand: "vrRating",
+                    secondOperand: null,
+                    operator: "EQUALS",
+                    value: 3,
+                    min: null,
+                    max: null
+                }, {
+                    firstOperand: "option",
+                    secondOperand: "",
+                    operator: "EQUALS",
+                    value: "Direct",
+                    min: "",
+                    max: ""
+                }, {
+                    firstOperand: "planName",
+                    secondOperand: "",
+                    operator: "EQUALS",
+                    value: "Growth",
+                    min: "",
+                    max: ""
+                }] : [])];
+                const bodyparams = {
+                    sortedField: yearval,
+                    sortedOrder: "desc",
+                    pageNumber: 1,
+                    pageSize: 5,
+                    customFilterDtoList: customobj
+                }
+
+                console.log("bodyparams ---", bodyparams)
+
+                // const res = await fetch(`https://etdev8243.indiatimes.com/topmf_schemesjson.cms?feedtype=etjson&primaryObj=${primaryObj}&secondaryObj=${secondaryObj}&year=${selectedYear}`);
+                // const response = res.ok ? await res.json() : [];
+
+                const res = await fetch(apiLink, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bodyparams)
                 });
-                const response = res?.data || [];
+                const response = res.ok ? await res.json() : [];
 
                 setTopMFScheme((prev) => [
                     ...prev.filter((item) => item.primaryObj !== primaryObj),
