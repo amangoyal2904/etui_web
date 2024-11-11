@@ -64,7 +64,7 @@ function NudgeContainer({subsContent}) {
             setTopValue(newHeight); // Set top value based on nudgeShow
             topnavBlk.style.top = newHeight; // Apply the style directly
         }
-    }, [nudgeShow]);
+    }, [nudgeShow, et_topnudge_show]);
 
     return (
         <>
