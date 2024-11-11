@@ -122,7 +122,27 @@ const VideoShow = (props) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className={styles.vidWrapper} ref={vidRef}>
+        <h1>{result.title}</h1>
+        <div className={styles.byline}>
+          <div>
+            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
+          </div>
+          <Bookmark msid={result.msid} hostId={result.hostid} type="5" widget={``} apiType={'single'} />
+          <PostComments />
+        </div>
+        <div className={styles.vidWrapper} ref={vidRef}>
+          <div className={styles.shareBar}>
+            <SocialShare
+              mailData={{
+                shareUrl: ET_WEB_URL +"/"+ result.url,
+                title: result.title,
+                msid: result.msid,
+                hostId: result.hostid,
+                type: "5"
+              }}
+              articleData={result}
+            />
+          </div>
           <div className={`vidWrapInner ${!isPopupVidClosed && isPopupVid ? styles.popupVid : ""}`}>
             {!isPopupVidClosed && isPopupVid && (
               <div>

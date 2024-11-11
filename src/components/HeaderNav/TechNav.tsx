@@ -2,6 +2,7 @@ import React, { useEffect, useState, MouseEvent } from 'react';
 import styles from "./styles.module.scss";
 import Service from "../../network/service";
 import APIS_CONFIG from "../../network/config.json";
+import { ET_WEB_URL } from "utils/common";
 
 // Define the type for the props passed to TechNav component
 interface TechNavProps {
@@ -76,8 +77,6 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
       }
     });
 
-    console.log("techNavListBlock hook", targetElementId, techNavListBlock)
-
   }, [techNavListBlock])
 
   // Define the handleMouseOver function to handle mouseover event on the links
@@ -138,7 +137,7 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
           title="Tech"
           data-ga-onclick="/tech"
           onMouseOver={(event) => handleMouseOver(event)}
-          href="/tech"
+          href={`${ET_WEB_URL}/tech`}
           className={styles.active}
           data-rel-id="78404305"
         >

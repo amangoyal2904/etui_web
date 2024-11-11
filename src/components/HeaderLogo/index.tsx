@@ -6,12 +6,13 @@ import styles from "./styles.module.scss";
 import LOGO from "./logo.json";
 import Login from "../Login";
 import { useStateContext } from "../../store/StateContext";
+import { dateFormat } from "../../utils/utils";
 
-const EditionTimeStamp = ({ APP_ENV }) => {
-  const currentDate = new Date();
+const EditionTimeStamp = ({ APP_ENV, page, siteCurrentTime }) => {
+  //const currentDate = new Date();
+  const siteDateTime = dateFormat(siteCurrentTime, "%d %MM, %Y, %h:%m %p IST");
 
   return (
-    <>
       <div className={styles.edition_wrap}>
         <div className={styles.editionList}>
           <span role="heading">English Edition</span>
@@ -27,19 +28,22 @@ const EditionTimeStamp = ({ APP_ENV }) => {
               <a className={styles.edHin} target="_blank" rel="noopener dofollow noreferrer" href="https://telugu.economictimes.com/?utm_source=logo&utm_medium=referral&utm_campaign=et">తెలుగు</a>
           </span>
         </div>
-        
+        <span className={`${page == "home" || page == "primehome" ? '' : styles.hide}`}> | </span>
+        {
+          (page == "home" || page == "primehome") && <time suppressHydrationWarning={true}>{siteDateTime}</time>
+        }
         <span> | </span>
         <div>
           <a rel="nofollow" data-ga-onclick="Web Top Nav Epaper link#Click on Epaper link#url" className={`dib ${styles.epaper}`} href={`${ePaper_URL[APP_ENV]}/timesepaper/publication-the-economic-times,city-delhi.cms`} target="_blank">Today's Paper</a>
         </div>
       </div>
-    </>
   )
 }
 
 const getETLogo = (page) => {
   switch(page){
     case "home":
+    case "primehome":  
       return {etLogo: LOGO.ethomelogo, etLogoWidth: 464, etLogoHeight: 51}
     case "articleshow":
     case "primearticleshow": 
@@ -66,7 +70,7 @@ const ETSecLogo = (props) => {
 }
 
 const HeaderLogo = (props) => {
-  const {page, subsecnames, sectiondetail, headertext} = props;
+  const {page, subsecnames, sectiondetail, headertext, siteCurrentTime} = props;
   const {etLogo, etLogoWidth, etLogoHeight} = getETLogo(page);
   const { state } = useStateContext();
   const { isPink } = state.login;
@@ -81,7 +85,7 @@ const HeaderLogo = (props) => {
         <a className={`${styles.sec_logo} ${styles.head_name}`} href={sectiondetail?.url} title={sectiondetail?.title}>
           <ETSecLogo subsecnames={subsecnames} sectiondetail={sectiondetail} />
         </a>}
-        <EditionTimeStamp APP_ENV={props.APP_ENV} />
+        <EditionTimeStamp APP_ENV={props.APP_ENV} page={page} siteCurrentTime={siteCurrentTime} />
         <Login headertext={headertext}/>
       </div>
     </div>

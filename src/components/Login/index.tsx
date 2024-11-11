@@ -12,13 +12,14 @@ import {
   saveLogs,
   userMappingData,
   setAdFreeData,
-  getCookie
+  getCookie,
+  loadPrimeApiNew
 } from "../../utils";
 import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import Image from "next/image";
 import APIS_CONFIG from "../../network/config.json";
-import { gotoPlanPage } from '../../utils/utils';
+import { getParameterByName, gotoPlanPage } from '../../utils/utils';
 import jStorage from "jstorage-react";
 
 const Login = ({headertext}) => {
@@ -29,14 +30,17 @@ const Login = ({headertext}) => {
   //console.log(state.login);
 
   const adFreeEx = () => {
-  
-    var isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
-        isExpiredUser = permissions.indexOf("expired_subscription") !== -1,
-        getSSOID = ssoid || getCookie('_grx'),
+    
+    // const isAddFreeEnabled = 1 || 0,
+    const isAddFreeEnabled = window.objVc && window.objVc.adfree_campign_isactive || 0,
+        isExpiredUser = window.objUser.permissions.some(function (item: any) {
+          return !item.includes("etadfree") && item.includes("expired_subscription");
+        }),
+        getSSOID = window.objUser?.ssoid || getCookie('_grx'),
         addFreeCampignRef = jStorage.get('adFreeCampign_'+getSSOID);
   
         if(isExpiredUser && Number(isAddFreeEnabled)) {
-          setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, ticketId, dispatch);
+          setAdFreeData(window.objVc && window.objVc.adfree_campign_counter || 30, getSSOID, window.objUser?.ticketId, dispatch);
       }
       
       if(!Number(isAddFreeEnabled)) {
@@ -46,31 +50,70 @@ const Login = ({headertext}) => {
 
   const verifyLoginSuccessCallback = async () => {
     try {
-      //document.body.classList.add("isprimeuser");
-      // window.objUser.isPink = true; 
-      // window.objUser.isPink && document.body.classList.add("isprimeuser");
-      const primeRes = await loadPrimeApi();
-      if (primeRes?.status === "SUCCESS") {
+      
+      const docRef = document.referrer;
+      const getStorePrimeDetial = jStorage.get('prime_' + window.objUser?.ticketId);
+      const otrCookieExist = getCookie('OTR');
+      const refreshFlag = window.localStorage && localStorage.getItem("etsub_refreshTokenFlag");
+
+      if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
+        document.body.classList.add("isprimeuser");
+        window.objUser.isPink = true;
+        window.objUser.isPink && document.body.classList.add("isprimeuser");
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            isPink: window.objUser.isPink
+          },
+        });
+      }
+
+      if(docRef.indexOf('/plans_success') > -1 || docRef.indexOf('?transcode') > -1 || docRef.indexOf('buy.indiatimes.com/') > -1 || 
+      refreshFlag == 'true' || getParameterByName('fromsrc') == 'etprime' || !otrCookieExist ||
+      !getStorePrimeDetial){
+        localStorage.removeItem("etsub_refreshTokenFlag");
+        jStorage.deleteKey('tokenDataExist');
+        jStorage.deleteKey('et_profilelog'); 
+      }
+
+      const isTokenDataExist = jStorage.get('tokenDataExist');
+      const primeRes = isTokenDataExist ? getStorePrimeDetial : await loadPrimeApiNew();
+      
+      if (primeRes?.code === "200") {
+        const resObj = primeRes?.data.productDetails.filter((item: any) => {
+          return item.productCode == "ETPR";
+        });
+        const oauthAPiRes = resObj[0];
         const isPrime =
-          primeRes?.data &&
-          primeRes?.data.permissions.some(function (item: any) {
+          primeRes.data &&
+          oauthAPiRes.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("subscribed");
           });
         const isExpired =
           primeRes?.data &&
-          primeRes?.data.permissions.some(function (item: any) {
+          oauthAPiRes.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("expired_subscription");
           });  
-        window.objUser.permissions = primeRes?.data?.permissions || [];
+
+        jStorage.set('prime_' +window.objUser?.ticketId, primeRes, {TTL: 2*60*60*1000}); 
+        jStorage.set('tokenDataExist', 1, {TTL: isPrime ? 2*60*60*1000 : 5*60*1000});
+
+        window.objUser.permissions = oauthAPiRes.permissions || [];
         window.objUser.accessibleFeatures =
-          primeRes.data.accessibleFeatures || [];
-        window.objUser.primeInfo = primeRes?.data;
+          oauthAPiRes.accessibleFeatures || [];
+        window.objUser.userAcquisitionType =
+          oauthAPiRes.subscriptionDetail &&
+          "userAcquisitionType" in oauthAPiRes.subscriptionDetail
+            ? oauthAPiRes.subscriptionDetail.userAcquisitionType
+            : "free";
+        window.objUser.primeInfo = oauthAPiRes;
         window.objUser.isPrime = isPrime;
         window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
         if (primeRes && primeRes?.data?.token) {
           setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, ".indiatimes.com");
         }
+        setCookieToSpecificTime("etprc", oauthAPiRes.prc, 30, 0, 0);
 
         
         (isPink || isPrime) && document.body.classList.add("isprimeuser");
@@ -95,6 +138,7 @@ const Login = ({headertext}) => {
       } else {
         window.objUser.permissions = [];
         window.objUser.accessibleFeatures = [];
+        window.objUser.userAcquisitionType = "free";
         window.objUser.primeInfo = {};
         window.objUser.isPrime = false;
         delete_cookie("isprimeuser");
@@ -122,7 +166,8 @@ const Login = ({headertext}) => {
           ticketId: window.objUser?.ticketId,
           isPink: window.objUser?.isPink,
           accessibleFeatures: window.objUser.accessibleFeatures,
-          //[
+          subscriptionDetails: window.objUser.primeInfo?.subscriptionDetails,
+          // [
           //   "ETSCREE",
           //   "TOIARTCL",
           //   "ETADF",
@@ -148,7 +193,7 @@ const Login = ({headertext}) => {
           //   "ETSRP",
           //   "TOISPCL",
           //   "ETSTKAN"
-          // ],
+          // ], // 
           permissions: window.objUser.permissions,
           // [
           //   "loggedin",
@@ -157,7 +202,7 @@ const Login = ({headertext}) => {
           //   "active_subscription",
           //   "etadfree_can_buy_subscription",
           //   "etredcarpet_can_buy_subscription"
-          // ], //
+          // ], // 
         },
       });
     } catch (e) {
@@ -185,7 +230,18 @@ const Login = ({headertext}) => {
   };
 
   const authFailCallback = () => {
-    //console.log("authFailCallback");
+    if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
+      document.body.classList.add("isprimeuser");
+      window.objUser.isPink = true;
+      window.objUser.isPink && document.body.classList.add("isprimeuser");
+      dispatch({
+        type: "LOGOUT",
+        payload: {
+          isPink: window.objUser.isPink
+        },
+      });
+    }
+    console.log("authFailCallback");
     dispatch({
       type: "LOGOUT",
       payload: {
@@ -199,7 +255,7 @@ const Login = ({headertext}) => {
         accessibleFeatures: [],
         permissions: [],
         isAdfree: false,
-        isPink: false
+        isPink: window.objUser.isPink || false
       },
     });
   };
@@ -312,28 +368,40 @@ const Login = ({headertext}) => {
       {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPink ? styles.pink_theme : ""}`}>
+            <a className={styles.watchlist} href="https://economictimes.indiatimes.com/watchlist?source=homepage&medium=header&campaign=watchlist">My Watchlist</a>
             {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
                 ? <>
-                  <span className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</span>
+                  {
+                    isPink ? <>
+                      <span className={styles.prime_icon}></span>
+                      <div className={styles.userDeatils}>
+                        <p className={styles.userPrime}>{isPrime ? 'Prime Member' : 'Free Member'}</p>
+                        <p className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</p>
+                      </div>
+                    </> : <>
+                      <p className={styles.free_dd} title={userInfo?.loginId}>{userInfo?.firstName[0] || ''}</p>
+                    </>
+                  }
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
+                    <p className={styles.userName}>{`Hi ${userInfo?.firstName}`}</p>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.menulist} ${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>
                         {/* <a href="" target="_blank" className="cSprite_b streamIcon jsStreamIcon hide"></a> */}
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}referrals`} rel="nofollow noreferrer" target="_blank" className={`${styles.refer} ${styles.cSprite_b}`}>Refer & Earn <img src="https://img.etimg.com/photo/107514300.cms" width="36" height="17" className={styles.new_badge} alt="New Feature"></img></a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
-                        <a href="#" onClick={handleRedeemVoucher} className={`${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</a>
-                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
-                        <a href="#" onClick={logout} className={`${styles.cSprite_b} ${styles.logOut}`}>Logout</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}plans_mysubscription.cms?fornav=1`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.subscribe} ${styles.cSprite_b}`}>My Subscriptions</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}prime_preferences.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.mypref} ${styles.cSprite_b}`}>My Preferences</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}referrals`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.refer} ${styles.cSprite_b}`}>Refer & Earn <img src="https://img.etimg.com/photo/107514300.cms" width="36" height="17" className={styles.new_badge} alt="New Feature"></img></a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}et_benefits.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.etBenefits} ${styles.cSprite_b}`}>Redeem Benefits</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}subscription`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.newsltr} ${styles.cSprite_b}`}>Manage Newsletters</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}marketstats/pageno-1,pid-501.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.wthlist} ${styles.cSprite_b}`}>My Watchlist</a>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}bookmarkslist`} rel="nofollow noreferrer" className={`${styles.menulist} ${styles.cSprite_b} ${styles.savedStories}`}>Saved Stories</a>
+                        <span onClick={handleRedeemVoucher} className={`${styles.menulist} ${styles.cSprite_b} ${styles.rdm_tab} ${styles.eu_hide}`}>Redeem Voucher</span>
+                        <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}contactus.cms`} rel="nofollow noreferrer" target="_blank" className={`${styles.menulist} ${styles.contactus} ${styles.cSprite_b}`}>Contact Us</a>
+                        <span onClick={logout} className={`${styles.menulist} ${styles.cSprite_b} ${styles.logOut}`}>Logout</span>
                       </div>
                     </div>
                   </div>

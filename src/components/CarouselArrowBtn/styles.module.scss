@@ -1,34 +1,185 @@
+.embla__button {
+  -webkit-tap-highlight-color: rgba(49, 49, 49, 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  z-index: 1;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  &.mostReadStories,
+  &.liveStreamRight {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 50%;
+    transform: translate(-50%, 0);
 
-  .embla__button {
-    -webkit-tap-highlight-color: rgba(49, 49, 49, 0.5);
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    touch-action: manipulation;
-    display: inline-flex;
-    text-decoration: none;
-    cursor: pointer;
-    width: 10px;
-    height: 10px;
-    z-index: 1;
+    &.prevbtn {
+      left: 200px;
+    }
+
+    &.nextbtn {
+      right: -24px;
+    }
+
+    .btn {
+      width: 32px;
+      height: 32px;
+      z-index: 11;
+      cursor: pointer;
+    }
+
+    .nextbtn {
+      background-position: -429px -477px;
+    }
+
+    .prevbtn {
+      background-position: -359px -477px;
+    }
+
+    &:disabled .prevbtn,
+    &:disabled .nextbtn {
+      opacity: 0.5;
+      cursor: no-drop;
+    }
+  }
+  &.liveStreamRight {
+    top: 26%;
+    &.prevbtn {
+      left: 0;
+    }
+  }
+  &.other {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 50%;
+    transform: translate(-50%, 0);
+
+    &.prevbtn {
+      left: 0;
+    }
+
+    &.nextbtn {
+      right: -30px;
+    }
+
+    .btn {
+      width: 32px;
+      height: 32px;
+      z-index: 11;
+      cursor: pointer;
+    }
+
+    .nextbtn {
+      background-position: -429px -477px;
+    }
+
+    .prevbtn {
+      background-position: -359px -477px;
+    }
+
+    &:disabled .prevbtn,
+    &:disabled .nextbtn {
+      opacity: 0.5;
+      cursor: no-drop;
+    }
+  }
+
+  &.wealthEidtion{
+    border-radius: 50%;
+    background: #F86B3E;
+    width: 19px;
+    height: 19px;
+    padding: 4px;
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+
+    &.prevbtn{
+      left: 9px;
+    }
+
+    &.nextbtn{
+      right: -9px;
+    }
+  }
+
+  &.topMFWd {
+    width: auto;
+    height: auto;
+    .btn {
+      display: inline-block;
+      width: 19px;
+      height: 19px;
+      position: relative;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      text-align: center;
+      background: #ed183b;
+      margin-left: 10px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-top: 1.6px solid #fff;
+        border-left: 1.6px solid #fff;
+        transform: rotate(135deg);
+        top: 7px;
+        right: 5px;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 1.4px;
+        height: 9px;
+        background: #fff;
+        transform: rotate(-90deg) translate(3.5px, 0);
+        top: 8.6px;
+        left: 8px;
+      }
+
+      &.prevbtn {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &.red {
+    color: #ff454f;
+  }
+
+  &.black {
     color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  }
 
-    &.red{
-      color: #ff454f;  
-    }
-    
-    &.black{
-      color: #000;
-    }
+  &.white{
+    color: #fff;
   }
-  .embla__button:disabled {
-    color: rgb(192, 192, 192);
-  }
-  .embla__button__svg {
-    width: 50%;
-    height: 50%;
-  }
+}
+.embla__button:disabled {
+  color: rgb(192, 192, 192);
+}
+.embla__button__svg {
+  width: 50%;
+  height: 50%;
+}
+
+.cSprite {
+  background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+  display: inline-block;
+  background-size: 475px;
+}

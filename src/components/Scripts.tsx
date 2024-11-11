@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
@@ -7,9 +7,9 @@ import { getCookie, sendMouseFlowEvent, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import { getUserType, trackingEvent } from "utils/ga";
-import {loadAndBeyondScript, loadTaboolaScript} from "./Ad/AdScript";
+import { loadAndBeyondScript, loadTaboolaScript } from "./Ad/AdScript";
 import { useStateContext } from "../store/StateContext";
-
+import { callJsOnAppLoad } from "utils/priority";
 
 interface Props {
   isprimeuser?: number | boolean;
@@ -24,25 +24,21 @@ declare global {
     geolocation: any;
     customDimension: any;
     grxDimension_cdp: any;
+    _gtmEventDimension: any;
+    grx:any;
     opera?: string;
     MSStream?: string;
     geoinfo: any;
     pageSeo: any;
-    e$: {
-      jStorage: {
-        set(arg1: string, arg2: any, arg3: Object): any;
-        get(arg1: string): any;
-        deleteKey(arg1: string);
-      };
-    };
-    objInts:any;
-    __APP:any;
+    CleoClient: any;
+    objInts: any;
+    __APP: any;
     google: {
       accounts: {
         id: {
           disableAutoSelect;
-        }
-      }
+        };
+      };
     };
     googletag: any;
     ispopup: any;
@@ -62,7 +58,10 @@ declare global {
     objUser: {
       ssoid?: any;
       ticketId?: any;
+      loginType?: string;
+      afterCheckUserLoginStatus?: boolean;
       email?: any;
+      primaryEmail?: any;
       prevPath?: string;
       isPink?: any;
       info?: {
@@ -73,6 +72,7 @@ declare global {
         isLogged: any;
         mobile: any;
         lastName: any;
+        email: any;
       };
       isPrime?: any;
       permissions?: any;
@@ -80,14 +80,20 @@ declare global {
       primeInfo?: any;
       afterLoginCall?: any;
       loadSsoApi?: any;
+      userAcquisitionType?: any;
     };
-    _ibeat_track?:any;
+    _ibeat_track?: any;
     _sva: any;
+    bookmarkApiHitStatus: any;
+    bookmarkApiRes: any;
+    watchListApiHitStatus: any;
+    watchListApiRes: any;
+    updateGAObserver:any;
   }
 }
 declare var JssoCrosswalk: any;
 
-const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {  
+const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -97,7 +103,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
-  
+
   let execution = 0;
   const surveyLoad = () => {
     if (window._sva && window._sva.setVisitorTraits) {
@@ -113,25 +119,17 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
       var loyalCount = 15;
       window._sva.setVisitorTraits({
         user_subscription_status: subscribeStatus,
-        user_login_status:
-          typeof window.objUser != "undefined" ? "logged-in" : "logged-out",
+        user_login_status: typeof window.objUser != "undefined" ? "logged-in" : "logged-out",
         prime_funnel_last_step: "",
         country_code: (window.geoinfo && window.geoinfo.CountryCode) || "",
-        email_id: window?.objUser?.info?.primaryEmail
-          ? window?.objUser?.info?.primaryEmail
-          : "",
+        email_id: window?.objUser?.info?.primaryEmail ? window?.objUser?.info?.primaryEmail : "",
         grx_id: getCookie("_grx"),
-        Loyal: cnt >= loyalCount ? "Yes" : "No",
+        Loyal: cnt >= loyalCount ? "Yes" : "No"
       });
     }
   };
   useEffect(() => {
     try {
-      prevPath !== null &&
-        trackingEvent("et_push_pageload", {
-          url: window.location.href,
-          prevPath: prevPath,
-        });
       setPrevPath(pathName || document.referrer);
       if (typeof window.objUser == "undefined") window.objUser = {};
       window.objUser && (window.objUser.prevPath = prevPath);
@@ -144,7 +142,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             window.isSurveyLoad = true;
             surveyLoad();
           },
-          { once: true },
+          { once: true }
         );
       }
     } catch (e) {
@@ -152,8 +150,8 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
     }
   }, [router, isPrime]);
 
-  useEffect(() => {    
-    if(typeof isPrime != "undefined" && typeof permissions!="undefined" && execution == 0){
+  useEffect(() => {
+    if (typeof isPrime != "undefined" && typeof permissions != "undefined" && execution == 0) {
       loadAndBeyondScript(isPrime);
       loadTaboolaScript(isPrime);
       execution = 1;
@@ -164,10 +162,24 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
     window.APP_ENV = APP_ENV;
     window.isDev = APP_ENV === "development";
     window._ibeat_track = {
-      "visitor_cat" : (isPrime ? 1 : isLogin ? 2 : 3),
-      "ct" : (window.tpName == 'videoshow' ? 2 : 20)
-    }
+      visitor_cat: isPrime ? 1 : isLogin ? 2 : 3,
+      ct: window.tpName == "videoshow" ? 2 : 20
+    };
     sendMouseFlowEvent();
+    callJsOnAppLoad();
+    if(window.grx){
+      trackingEvent("et_push_pageload", {
+        url: window.location.href,
+        prevPath: pathName || document.referrer
+      });
+    }else{
+    document.addEventListener("gtmLoaded",()=>{
+      trackingEvent("et_push_pageload", {
+        url: window.location.href,
+        prevPath: pathName || document.referrer
+      });
+    })
+  }
   }, []);
 
   return (
@@ -267,7 +279,16 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GLOBAL_CONFIG.gtmId}');
+            const gtmLoaded = new Event('gtmLoaded');
+            document.dispatchEvent(gtmLoaded);         
           `,
+        }}
+      />
+      <Script
+        src="https://cdn.cookielaw.org/consent/9c436ed7-68da-4e62-86c3-bc55a27afd97/otSDKStub.js"
+        data-domain-script="9c436ed7-68da-4e62-86c3-bc55a27afd97"
+        onLoad={() => {
+          function OptanonWrapper() { }
         }}
       />
       <Script
@@ -284,10 +305,10 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
                   grx('init', '${(GLOBAL_CONFIG as any)[APP_ENV]?.grxId}');
                   const grxLoaded = new Event('grxLoaded');
                   document.dispatchEvent(grxLoaded);               
-            `,
+            `
         }}
       />
-      {!searchParams?.get('opt') && (
+      {!searchParams?.get("opt") && (
         <>
           <Script
             id="google-analytics"
@@ -308,10 +329,14 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
           <Script strategy="lazyOnload" src="https://sb.scorecardresearch.com/beacon.js" />
 
           <Script strategy="lazyOnload" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
-          <Script strategy="lazyOnload" src="https://tvid.in/sdk/loader.js" onLoad={() => {
-            const slikeReady = new Event("slikeReady");
-            document.dispatchEvent(slikeReady);
-          }} />
+          <Script
+            strategy="lazyOnload"
+            src="https://tvid.in/sdk/loader.js"
+            onLoad={() => {
+              const slikeReady = new Event("slikeReady");
+              document.dispatchEvent(slikeReady);
+            }}
+          />
 
           {!isprimeuser && (
             <>
@@ -323,7 +348,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
                   document.dispatchEvent(gptLoaded);
                 }}
               />
-              {searchParams?.get("skip_ctn") == '1' && (
+              {searchParams?.get("skip_ctn") == "1" && (
                 <Script src="https://static.clmbtech.com/ad/commons/js/2501/colombia_v2.js" strategy="lazyOnload" />
               )}
             </>

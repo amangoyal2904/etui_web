@@ -9,12 +9,14 @@ export default async function Page({ params }: {
   params: { all: string[] }
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
+  console.log('catch all')
   const headersList = headers();
   const domain = headersList.get("host") || "";
   const isDev = getDevStatus(domain);
   const APP_ENV = isDev ? "development" : "production";  
   const slugArr = params?.all || [];
   const isprimeuser = cookies().get('isprimeuser') || false;
+  const siteCurrentTime = new Date().toISOString();
 
   let page = getPageName(slugArr),
   extraParams: any = {},
@@ -55,7 +57,7 @@ export default async function Page({ params }: {
   }
   const pageSeo = response?.seo || {};
   const versionControl = response?.version_control || {};
-  return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
+  return  <Layout page={page} dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV} siteCurrentTime={siteCurrentTime}>          
     <VideoShow {...response} objVc={versionControl} isprimeuser={isprimeuser}/>
   </Layout>;
 }
@@ -109,10 +111,10 @@ export async function generateMetadata({ params }) {
       description: seo?.description || "",
       site: '@EconomicTimes',
       images: [seo?.image], // Must be an absolute URL
-      url: seo?.url || "",
+      // url: seo?.url || "",
     },
     facebook: {
-      appId: ['21540067693', '117787264903013'],
+      // appId: [21540067693, 117787264903013],
       admins: '556964827',
     },
     icons: {

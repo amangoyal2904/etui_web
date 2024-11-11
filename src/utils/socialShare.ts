@@ -19,7 +19,8 @@ export const Share = (evt, shareParam) => {
         encodeURIComponent(
           "?utm_source=whatsapp_pwa&utm_medium=social&utm_campaign=socialsharebuttons"
         );
-      window.location.href = shareUrl;
+      // window.location.href = shareUrl;
+      window.open(shareUrl, '_blank');
     }
     if (type == "fb") {
       const fbUrl =

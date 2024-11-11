@@ -31,7 +31,7 @@ const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
     : false;
 
   return (
-    <div className={`${styles.sbnv_wrapper} ${isPink ? styles.pink_theme : ""}`}>
+    <div id="sbnv_wrapper" className={`${styles.sbnv_wrapper} ${isPink ? styles.pink_theme : ""}`}>
       <nav className={styles.subsec_nav} itemType="https://www.schema.org/SiteNavigationElement" itemScope>
         <meta content="/" itemProp="url" />
         <meta content="Home" itemProp="name" />
@@ -48,7 +48,7 @@ const SubSecNav: FC<Props> = ({ subSectionList, subsecnames }) => {
 
         {Array.isArray(sec) && sec.length > (moreCount || 0) && (
           <div className={`${styles.subLevel} ${isCurrentInMoreSection ? styles.current : ''}`}>
-            <a href="javascript:;">
+            <a href="#;">
               More
               <span className={styles.downArw}></span>
             </a>

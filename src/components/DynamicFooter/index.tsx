@@ -13,6 +13,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
 
   const { state, dispatch } = useStateContext();
   const { isPrime, isPink } = state.login;
+  const [isCCPA, setIsCCPA] = useState(false);
 
   const paymentButtonListener = () => {
     const paymentUrl = "";
@@ -169,13 +170,13 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
   const Interlinking = () => {
     let interLinkingData = dynamicFooterData?.widgets || [];
     const interLinkingList = interLinkingData?.map((i, index) => (
-      interLinkingData[index].title != "Browse Company" ?
-      <div data-attr="interlinking" className={`${styles.category} ${isExpanded[index] ? styles.visible :""}`} key={`inkl_${index}`}>
+      interLinkingData[index].title != "Browse Company" && typeof interLinkingData[index].data != "undefined" ?
+      <div data-attr="interlinking" className={`${styles.category} ${isExpanded[index] || interLinkingData[index].title == "Latest News" ? styles.visible :""}`} key={`inkl_${index}`}>
         {interLinkingData[index]["data"] && Array.isArray(interLinkingData[index]["data"]) && (
             <>
               <p>{interLinkingData[index].title}</p>
-              <div className={`${styles.show_hide_interlinking} ${isExpanded[index] ? styles.moreStyle :""}`} onClick={()=>onMoreClick(index)}>{isExpanded[index] ? 'Less' : 'More'}</div>
-              <div className={styles.content}>
+              {interLinkingData[index].title != "Latest News" && <div className={`${styles.show_hide_interlinking} ${isExpanded[index] ? styles.moreStyle :""}`} onClick={()=>onMoreClick(index)}>{isExpanded[index] ? 'Less' : 'More'}</div>}
+              <div className={`${styles.content} ${interLinkingData[index].title == "Latest News" ? styles.latestNewsContent : ""} `}>
                 {interLinkingData[index]["data"]?.map((item, key) => {
                   const noFollow = isNoFollow(item.url) && item.noFollow != "false" ? { rel: "nofollow" } : {};
                   return (
@@ -193,50 +194,56 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
     return <div className={styles.dynamicCategories}>{interLinkingList}</div>;
   };
 
-   const browseCompany = () =>{
-     const browseCompData = dynamicFooterData?.widgets?.filter((data) => data.title == "Browse Company");
-     if (browseCompData && browseCompData[0] && browseCompData[0].data && browseCompData[0].data.length) {
-       return (
-         <div className={styles.browseCompany}>
-           <div className={styles.browse}>
-             <div className={styles.browseTitle}>
-               <span>Browse</span>
-               <span className={styles.comp}>Companies:</span>
-             </div>
-             <div className={styles.compList}>
-               <div>
-                 {
-                   browseCompData[0]?.data?.map((comp, i) => {
-                     return (
-                       <a href={comp.url} key={`comp_${i}`}> {comp.title}</a>
-                     )
-                   })
-                 }
-               </div>
-               <div>
-                 {
-                   browseCompData[0]?.Numdata?.map((comp, i) => {
-                     return (
-                       <a href={comp.url} key={`comp1_${i}`}> {comp.title}</a>
-                     )
-                   })
-                 }
-               </div>
-             </div>
-           </div>
-         </div>
-       )
-     }
-   }
+  const browseCompany = () => {
+    const browseCompData = dynamicFooterData?.widgets?.filter((data) => data.title === "Browse Company");
+  
+    if (browseCompData && browseCompData[0] && browseCompData[0].data && Array.isArray(browseCompData[0].data) && browseCompData[0].data.length) {
+      return (
+        <div className={styles.browseCompany}>
+          <div className={styles.browse}>
+            <div className={styles.browseTitle}>
+              <span>Browse</span>
+              <span className={styles.comp}>Companies:</span>
+            </div>
+            <div className={styles.compList}>
+              <div className={styles.dii}>
+                {
+                  browseCompData[0].data.map((comp, i) => {
+                    return (
+                      <a href={comp.url} key={`comp_${i}`}>{comp.title}</a>
+                    )
+                  })
+                }
+              </div>
+              <div className={styles.dii}>
+                {
+                  browseCompData[0].Numdata && Array.isArray(browseCompData[0].Numdata) && browseCompData[0].Numdata.map((comp, i) => {
+                    return (
+                      <a href={comp.url} key={`comp1_${i}`}>{comp.title}</a>
+                    )
+                  })
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    return null; // Return null if no data is available
+  }
+
   return (
     <div id="footer" className={`${hide_footer ? styles.hide_footer : ""} ${isPink ? styles.pink_theme : ""}`}>
+      {
+          isPink && <div className={styles.sbr_wrap}>
+            <SearchBar footerSearch={true}/>
+            {page == "home" || page == "primehome" && browseCompany()}  
+          </div>
+        }
       <div className={styles.dynamicContainer}>
         {!isPink && <GreyDivider />}
         {
-          isPink ? <div className={styles.sbr_wrap}>
-            <SearchBar footerSearch={true}/>
-            {page == "home" && browseCompany()}  
-          </div> : <>
+          !isPink && <>
             <SearchBar footerSearch={true}/>
             {page == "home" && browseCompany()}
           </>

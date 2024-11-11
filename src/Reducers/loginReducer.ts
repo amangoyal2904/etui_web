@@ -13,7 +13,7 @@ interface LoginState {
   error: any | null;
 }
 
-type LoginAction = { type: "LOGIN_SUCCESS"; payload: any } | { type: "LOGOUT"; payload: any };
+type LoginAction = { type: "LOGIN_SUCCESS"; payload: any } | { type: "LOGOUT"; payload: any } | { type: "SETPINKTHEME"; payload: any };
 
 const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
   switch (action.type) {
@@ -31,7 +31,8 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         email: action.payload.userInfo?.primaryEmail,
         isAdfree: action.payload.isAdfree,
         isPink: action.payload.isPink,
-        error: null 
+        error: null ,
+        subscriptionDetails: action.payload.subscriptionDetails,
       };
     case "LOGOUT":
       return { 
@@ -46,9 +47,15 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         permissions: [], 
         email: "",
         isAdfree: action.payload.ssoReady,
-        isPink: false,
-        error: null
+        isPink: action.payload.isPink,
+        error: null,
+        subscriptionDetails: {}
       };
+    case "SETPINKTHEME": 
+      return {
+        ...state,
+        isPink: action.payload.isPink,
+      }; 
     default:
       return state;
   }

@@ -2,6 +2,7 @@
 
 import * as Config from "./common";
 import { getCookie } from "../utils/index"
+import { appendZero } from "./utils";
 import APIS_CONFIG from "../network/config.json"
 import Service from "../network/service";
 import GLOBAL_CONFIG from "../network/global_config.json";
@@ -133,12 +134,12 @@ export const growthRxInit = () => {
 };
 
 export const trackingEvent = (type, data) => {
-  console.log("trackingEvent------->",data, type);
+  // console.log("trackingEvent------->",data, type);
   const payload = getPageSpecificDimensions(window.pageSeo);
-  window.customDimension = { ...window.customDimension, ...payload };
+  window.customDimension = { ...window.customDimension, ...payload, ...data };
   const objGrx = generateGrxFunnel(data.prevPath);
   window.customDimension = { ...window.customDimension, ...objGrx };
-  console.log("CD_----------->",window.customDimension);
+  // console.log("CD_----------->",window.customDimension);
   let grxDimension ={};
   for (const key in window.customDimension) {
       if (grxMappingObj[key] && [key] && typeof window.customDimension[key] !== "undefined") {
@@ -148,7 +149,7 @@ export const trackingEvent = (type, data) => {
       }
   } 
   if (window.dataLayer) {
-    let _gtmEventDimension = {};
+    let _gtmEventDimension = grxDimension || {};
     _gtmEventDimension = updateGtm(_gtmEventDimension, data.prevPath);
     _gtmEventDimension["event"] = type;
     _gtmEventDimension = Object.assign(_gtmEventDimension, data);
@@ -170,6 +171,24 @@ export const trackingEvent = (type, data) => {
           checkGrxready = true;
           window.grx("track", "page_view", grxDimension);
           window.grx("track", "page_view", objCDP);
+        }
+      });
+    }
+  }else if(type == "et_push_event"){
+    const objCDP = generateCDPPageView(data.prevPath, false);
+    if (window.grx || window.isGrxLoaded) {
+      if (!checkGrxready) {
+        checkGrxready = true;
+        window.grx("track", "event", grxDimension);
+        // window.grx("track", "event", objCDP);
+      }
+    } else {
+      document.addEventListener("ready", () => {
+        if (!checkGrxready) {
+          window.isGrxLoaded = true;
+          checkGrxready = true;
+          window.grx("track", "event", grxDimension);
+          // window.grx("track", "event", objCDP);
         }
       });
     }
@@ -375,7 +394,7 @@ export const getPageName = (pageURL = "") => {
 
 export const updateGtm = (_gtmEventDimension, prevPath) => {
   try {
-    console.log("window.seo----->",window.pageSeo);
+    // console.log("window.seo----->",window.pageSeo);
     const pagePathName = window.location.pathname;
     const pageElem = window.location.pathname.split("/");
     let site_section = pagePathName.slice(1);
@@ -481,7 +500,7 @@ export const generateGrxFunnel = (prevPath) => {
     objGrx["dimension10"] =
       typeof window.objUser.info != "undefined" ? "Logged In" : "Not Logged In";
     objGrx["dimension20"] = "Web";
-    // objGrx["dimension25"] = site_section.substring(lastSlash + 1);
+    objGrx["dimension25"] = site_section.substring(lastSlash + 1);
     // objGrx["dimension26"] =
     //   site_section.indexOf("/") == -1
     //     ? site_section.substring(site_section.indexOf("/") + 1)
@@ -966,7 +985,11 @@ export const dateFormat = (dt, format = "%Y-%M-%d") => {
   return newDate;
 };
 export const getPageSpecificDimensions = (seo) => {
-  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow",authors } = seo;
+  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "",authors } = seo;
+  const pagePathName = window.location.pathname;
+  const pageElem = window.location.pathname.split("/");
+  let site_section = pagePathName.slice(1);
+  let lastSlash = site_section.lastIndexOf("/");
   const dateArray = updated.split(",");
   const dateString = dateArray[0] || "";
   const timeString = dateArray[1] || "";
@@ -983,11 +1006,11 @@ export const getPageSpecificDimensions = (seo) => {
   const payload = {
     dimension4: agency,
     dimension5: authors,
-    dimension8: formattedDate,
+    // dimension8: formattedDate,
     dimension9: subsecname2,
     dimension12: keywords,
     dimension13: timeString,
-    dimension25: page,
+    dimension25: page || site_section.substring(lastSlash + 1),
     dimension26: subsecname1,
     dimension27: sectionsList,
     dimension29: subsec1,
@@ -996,3 +1019,10 @@ export const getPageSpecificDimensions = (seo) => {
   //console.log("Date Value:-" + dimension8)
   return payload;
 };
+export const fireTracking = (type,  payload) => {
+  trackingEvent("et_push_event", {
+    event_category: payload.category, 
+    event_action: payload.action, 
+    event_label: payload.label,
+  });
+}

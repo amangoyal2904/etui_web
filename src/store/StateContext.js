@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useReducer } from "react";
 import combineReducers from "./combinedReducers";
 import loginReducer from "../Reducers/loginReducer.ts";
+import marketReducer from "../Reducers/marketReducer";
+import watchlistReducer from "../Reducers/watchlistReducer.ts";
 
 const initialState = {
   login: {
@@ -17,7 +19,16 @@ const initialState = {
     permissions: [],
     isAdfree: "",
     isPink: false
-  }
+  },
+  marketStatus: {
+    currentMarketStatus: "",
+    marketStatus: "",
+    error: null,
+  },
+  watchlistStatus: {
+    watchlist: [],
+    error: null,
+  },
 };
 
 const StateContext = createContext();
@@ -25,7 +36,9 @@ const StateContext = createContext();
 export function StateProvider({ children }) {
   const [state, dispatch] = useReducer(
     combineReducers({
-      login: loginReducer
+      login: loginReducer,
+      marketStatus: marketReducer,
+      watchlistStatus: watchlistReducer,
     }),
     initialState,
   );

@@ -1,0 +1,62 @@
+.psec_r_box {
+    width: 250px;
+    float: left;
+    background-color: #fff6f2;
+    padding: 15px;
+    h4 {
+        font-family: Montserrat;
+        font-size: 15px;
+        font-weight: 800;
+        text-transform: uppercase;
+        text-align: center;
+    }
+    h4:after {
+        content: '';
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        top: -1px;
+        left: 2px;
+        border-top: 2px solid #ed193b;
+        border-left: 2px solid #ed193b;
+        position: relative;
+        cursor: pointer;
+        transform: rotate(135deg);
+    }
+    li{
+        list-style: none;
+        font-family: Faustina;
+        font-size: 18px;
+        font-weight: 500;
+        a.ancher{cursor: pointer;    
+            position: relative;
+            margin-top: 10px;
+            display: inline-block;}
+    }
+    .moreNews {
+        border-top: 1px solid #ddc2bb;
+        padding-top: 12px;
+        margin-top: 12px;
+        text-align: right;
+        
+        span{font-size: 12px;
+            color: #ed193b;}
+    }
+    .subSprite {
+        background: url(https://img.etimg.com/photo/msid-98203283,quality-100/subscriber-sprite.jpg) no-repeat;
+        display: inline-block;
+        background-size: 475px;
+      }
+    .slideIcon {
+        width: 14px;
+        height: 14px;
+        left: 0;
+        top: 140px;
+        position: absolute;
+        background-color: #fff;
+        padding: 3px;
+        background-position: -273px -287px;
+    }
+    
+     
+}

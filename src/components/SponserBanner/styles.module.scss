@@ -1,0 +1,23 @@
+.sponserASBannerContainer .fullCreative {border: none}
+.sponserBannerContainer {
+    background-color:#FFF4F1; display: flex; align-items: center; justify-content: space-between; height: 76px; font-family: 'Montserrat'; clear: both;
+    .sponserContainer {
+        display: flex;align-items: flex-end;flex-direction: column; width: 21%;padding-right: 30px; box-sizing: border-box; position: relative;   height: 76px; justify-content: center; clip-path: polygon(30% 0%, 97% 0, 100% 46%, 100% 50%, 97% 100%, 44% 100%, 0 100%, 0 1%); z-index: 2;
+        .sponserArw {position: absolute;height: 76px;right: 0;}
+        .sponserArw2 {position: absolute;height: 76px;right: 3px;}
+    }
+    .msgContainer {display: flex; align-items: center; height: 76px; width: 75%; min-width: 75%; justify-content: left; position: absolute; left: 20%; z-index: 0; padding: 0 20px; box-sizing: border-box;}
+    .logo {border-right: 1px dotted #727272; padding-right: 16px; margin-right: 4px;}
+    .logoBox {display: flex; align-items: center;}
+    .logoAs {border-left: 1px dotted #727272; padding-left: 16px; border-right: 0;}
+    .knowCta {min-width: 120px; height: 28px; border-radius: 4px; border: 1px solid; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 16px;background: #fff; font-family: 'Montserrat'; margin-left: 20px}
+    .knowCta:hover {text-decoration: none;}
+    .closeIconBox {width:5%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: #FFF4F1;}
+    .closeIcon {border: 1px solid rgba(0, 0, 0, 0.2); padding: 4px; border-radius: 50%; cursor: pointer; cursor: pointer;}
+    .sponserMsg {font-size: 22px; font-weight: 400; margin: 0 12px;}
+    .sponserTitle {font-size: 23px;font-weight: 500;}
+    &.imgOnlyContainer {
+        .closeIconBox {position: absolute;right: 0; height: auto;}
+        .imageOnlyBanner {margin: 0 auto; cursor: pointer;}
+    } 
+}

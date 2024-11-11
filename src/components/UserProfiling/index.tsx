@@ -109,8 +109,6 @@ const UserProfile = (onClose) => {
                         if (question?.key == 'occupation') {
                             const firstQues = question?.options?.find(() => true) || {};
                             const selectedOption = question?.options.find(option => option?.selected);
-                            console.log("@@@ firstQues", firstQues)
-                            console.log("@@@ selectedOption", selectedOption)
                             if (selectedOption === undefined) {
 
                                 setOccupation(firstQues.questions)
@@ -442,7 +440,7 @@ const UserProfile = (onClose) => {
                                     if (question.type === 'Text' && question.showQuestion && !['name', 'email', 'location'].includes(question.key)) {
                                         return <div className={styles.fieldGroup} key={`field_${i}`}>
                                             <label>{question.name}</label>
-                                            <input className={!question?.answer ? "" : styles.highLightField} type="text" id={question.key} disabled={question.key == "email"} value={profileObj[question.key]} name={question.key} onChange={(e) => onChangeHandler(e)} />
+                                            <input className={!question?.answer ? "" : styles.highLightField} type="text" id={question.key} placeholder={`Enter your ${question?.name}`} disabled={question.key == "email"} value={profileObj[question.key]} name={question.key} onChange={(e) => onChangeHandler(e)} />
                                         </div>
                                     }
 
@@ -465,7 +463,7 @@ const UserProfile = (onClose) => {
                                                         if (question.type === 'Text' && question.showQuestion) {
                                                             return <div className={styles.fieldGroup} key={`field_${i}`}>
                                                                 <label>{question.name}</label>
-                                                                <input className={question?.answer ? "" : styles.highLightField} type="text" name={question.key} value={question.answer} onChange={(e) => onChangeHandler(e)} />
+                                                                <input className={question?.answer ? "" : styles.highLightField} type="text" placeholder={`Enter your ${question?.name}`} name={question.key} value={question.answer} onChange={(e) => onChangeHandler(e)} />
                                                             </div>
                                                         }
 

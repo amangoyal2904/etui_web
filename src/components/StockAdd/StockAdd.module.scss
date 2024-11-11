@@ -1,0 +1,157 @@
+.addStockWrap {
+  text-align: center;
+  background-color: transparent;
+}
+.divOverlya {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  text-align: center;
+}
+.stockSec {
+  text-align: left;
+  z-index: 3;
+}
+.stockSec .header {
+  display: block;
+  .formGroup {
+    position: relative;
+    background: rgb(244, 244, 244);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    input {
+      width: 100%;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+      padding: 10px;
+    }
+    .searchIcon {
+      background-position: -277px -52px;
+      width: 17px;
+      height: 14px;
+      margin: 0 10px;
+      background-image: url(https://img.etimg.com/photo/msid-110869446,quality-100/common-sprite.jpg);
+      display: inline-block;
+      background-size: 500px 446px;
+    }
+  }
+}
+.bodySec {
+  padding: 10px 0 20px 0;
+  min-height: 100px;
+  .lsitItem {
+    list-style-type: none;
+    max-height: 200px;
+    overflow-y: auto;
+    li {
+      border-bottom: dotted 1px rgba(179, 179, 179, 1);
+      padding: 8px 10px 8px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      column-gap: 5px;
+      align-items: center;
+      .addRemove {
+        display: flex;
+        width: 16px;
+        height: 16px;
+        padding: 8px;
+        position: relative;
+        background: rgba(43, 116, 227, 1);
+        cursor: pointer;
+        border-radius: 3px;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 4px;
+          top: 4px;
+          margin-top: -0.5px;
+          // background: url("/marketsweb/img/whitePlus.svg") no-repeat 0 0;
+          display: inline-block;
+          vertical-align: top;
+          width: 8px;
+          height: 8px;
+        }
+      }
+      .removeRemove {
+        display: flex;
+        width: 16px;
+        height: 16px;
+        padding: 8px;
+        position: relative;
+        background: rgba(43, 116, 227, 1);
+        cursor: pointer;
+        border-radius: 3px;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 3px;
+          top: 5px;
+          margin-top: -0.5px;
+          // background: url("/marketsweb/img/whiteMines.svg") no-repeat 0 0;
+          display: inline-block;
+          vertical-align: top;
+          width: 10px;
+          height: 7px;
+        }
+      }
+    }
+  }
+}
+.noData {
+  padding: 0 20px;
+  text-align: center;
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  .loader {
+    border: 4px solid rgba(0, 0, 0, 0.4);
+    border-top: 4px solid #ffe9e2;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite; /* Animation */
+  }
+}
+.mostSearch {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  padding: 0px 0 0 10px;
+}
+.comHead {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: left;
+  padding: 10px;
+}
+/* Keyframes for the spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

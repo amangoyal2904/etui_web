@@ -10,15 +10,21 @@ import HandleHoverSecHtml from "./HandleHoverSecHtml";
 import TechNav from "./TechNav";
 import SpotlightNav from "./SpotlightNav";
 import { useStateContext } from "../../store/StateContext";
+import SponserBanner from "../SponserBanner";
+import StockTalkWidget from "../StockTalkWidget";
+import { getCookie, isWeekend } from "utils/utils";
+import jStorageReact from "utils/jStorage";
 
 interface HeaderNavProps {
   menuData: {
     sec: any[];
   };
   subsecnames: any;
+  page: any
 }
 
-const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
+const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) => {
+  const [showSponserBanner, setShowSponserBanner] = useState(false);
   const [searchBar, setSearchBar] = useState<boolean>(false);
   const [hoverSubSec, setHoverSubSec] = useState<any[]>([]); // setHoverSubSec to array of any type
   const sectionList = menuData.sec;
@@ -34,6 +40,13 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
 
   useEffect(() => {
     document.addEventListener('mousemove', handleHoverSubSec);
+    
+    /* Logic to Toggle Sponser banner for Prime Group Users only */
+    const ticketId = getCookie("TicketId");
+    const userAccountDetails = ticketId && jStorageReact.get(`prime_${ticketId}`);
+    const sponsorPartnerCode = userAccountDetails?.subscriptionDetails?.[0]?.sponsorPartnerCode || '';
+    setShowSponserBanner(sponsorPartnerCode ? true : false);
+
     return () => {
       document.removeEventListener('mousemove', handleHoverSubSec);
     };
@@ -96,13 +109,13 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
       {searchBar && <SearchBar searchBar={searchBar} setSearchBarOff={() => setSearchBar(!searchBar)}/>}
       {/* Empty div as a placeholder to maintain the layout when the element becomes sticky */}
       {isSticky && !isScrolledToTop && <div style={{ height: '35px' }}></div>}
-      <div id="topnavBlk" ref={headerRef} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPink ? styles.pink_theme : ""}`} >
+      <div id="topnavBlk" ref={headerRef} data-pink={isPink} className={`${styles.sticky} ${isSticky && !isScrolledToTop ? styles.stickyActive : ''} ${styles.nav_block} ${isPink ? styles.pink_theme : ""}`} >
         <nav id="topnav" className={`level1 ${styles.topnav}`} >
           <SideNav />
           {sectionList?.map((data, index) => {
             return (
-              <div key={`nav-l1-${index}`} className={`${styles.sec_1} ${data.hovernav ? styles.hasSubSecnav : ""}`} data-l1={data.nm} data-id={data.msid}>
-                <a className={`${subsec1 == data.msid ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''} ${data.msid === '110737294' ? `${styles.marketData_i}` : ''}`} href={data.link ? data.link  : 'javascript:'} data-ga-onclick={data.link}>
+              <div key={`nav-l1-${index}`} className={`sec_1 hasSubSecnav ${styles.sec_1} ${data.hovernav ? styles.hasSubSecnav : ""}`} data-l1={data.nm} data-id={data.msid}>
+                <a className={`${((typeof data.msid != "undefined" && subsec1 == data.msid)  || (typeof data.msid == "undefined" && page == "primehome" && data.nm == "Home")) ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''} ${data.msid === '110737294' ? `${styles.marketData_i}` : ''}`} href={data.link ? data.link  : ''} data-ga-onclick={data.link}>
                 {/* {data.nm != 'More' && <meta content={data.nm} itemProp="name" />} */}
                 {data.nm != 'More' && data.nm}
                 {data.nm === 'More' && <img src="https://img.etimg.com/photo/msid-100067830/et-logo.jpg" width="4" height="16" alt="More" />}
@@ -132,6 +145,8 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames }) => {
         </nav>
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
+      {showSponserBanner && <SponserBanner />}
+      {page == "primehome" && !isWeekend && <StockTalkWidget />}
     </>
   );
 };

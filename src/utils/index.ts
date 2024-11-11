@@ -1,7 +1,11 @@
+//@ts-nocheck
+
 import GLOBAL_CONFIG from "../network/global_config.json";
 import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
+import {dateFormat} from "./utils"
+import { getSubscriptionContent } from "utils/utils";
 
 declare global {
   interface Window {
@@ -402,14 +406,56 @@ export const loadPrimeApi = async () => {
   }
 };
 
+export const loadPrimeApiNew = async () => {
+  try {
+    const url =
+        (APIS_CONFIG as any)["AUTH_NEW_TOKEN"][window.APP_ENV] +
+        "&grantType=refresh_token",
+      oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
+      deviceId = getCookie("_grx"),
+      ticketId = getCookie("TicketId"),
+      userSsoId = window?.objUser?.ssoid || getCookie("ssoid");
+
+    const body = JSON.stringify({
+      grantType: "refresh_token",
+    });
+    const headers = {
+      accept: "application/json",
+      "Content-Type": "application/json;charset=UTF-8",
+      "X-CLIENT-ID": oauthClientId,
+      "X-DEVICE-ID": deviceId,
+      "x-sso-id": userSsoId,
+      "x-site-app-code": (GLOBAL_CONFIG as any)[window.APP_ENV]["X_SITE_CODE"],
+      "X-TICKET-ID": ticketId,
+    };
+
+    const response = await fetch(url, {
+      method: 'GET', // or 'POST' if you need to send a payload
+      headers
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response?.json();
+    // Handle the successful response data
+  } catch (e) {
+    console.log("loadPrimeApiNew: " + e);
+  }
+};
+
 export const logout = async () => {
   window?.jsso?.signOutUser(async function (response: any) {
     if (response.status == "SUCCESS") {
+      getSubscriptionContent((res)=>{
+      });
       delete_cookie("OTR");
       delete_cookie("isprimeuser");
       delete_cookie("pfuuid");
       delete_cookie("peuuid");
       delete_cookie("fpid");
+      delete_cookie("etprc");
 
       const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
         oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
@@ -454,7 +500,7 @@ export const createPeuuid = async (cb) => {
       },
     });
     const data = await res.json();
-    console.log("res", res, data);
+    // console.log("res", res, data);
     if (data && data.id != 0) {
       const peuuid: any = data.id;
       setCookieToSpecificTime("peuuid", peuuid, 365, 0, 0);
@@ -469,10 +515,12 @@ export const createPeuuid = async (cb) => {
 };
 
 export const verifyLogin = () => {
+  //@ts-nocheck
   window?.jsso?.getValidLoggedInUser(function (response: any) {
     if (response.status == "SUCCESS") {
       //console.log("SUCCESS");
-
+      getSubscriptionContent((res)=>{
+      });
       if (typeof window.objUser == "undefined") window.objUser = {};
       //generateFpid(true);
       createPeuuid({});
@@ -491,7 +539,7 @@ export const verifyLogin = () => {
   });
 };
 
-export const setUserData = () => {
+export const setUserData = () => {  
   window?.jsso?.getUserDetails(function (response: any) {
     if (response.status == "SUCCESS") {
       //console.log("SUCCESS", response);
@@ -641,11 +689,15 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
   let primeUserLoginMap:any = {};
   if (isPrime) {
     //const userData = jStorage.get('userInfo');
+  const resObj = res.productDetails.filter((item: any) => {
+    return item.productCode == "ETPR";
+  });
+  const oauthAPiRes = resObj[0];  
   var primaryEmail = userInfo.primaryEmail ? userInfo.primaryEmail : email;
   var mobile = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile && (userInfo.mobileData.Verified.code  + '-' + userInfo.mobileData.Verified.mobile) || '';
   var emailIdStatus = userInfo.emailList && userInfo.emailList[email];
     primeUserLoginMap = {
-      expiry: res.subscriptionDetails[0].expiryDate,
+      expiry: oauthAPiRes.subscriptionDetail.expiryDate,
       loginId:
           primaryEmail && emailIdStatus === 'Verified'
           ? primaryEmail
@@ -689,7 +741,7 @@ export const setAdFreeExp = (nudgeFlag, ssoid, dispatch) => {
       window.objUser.isPink = true;
       
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: "SETPINKTHEME",
         payload: {
           isAdfree: true,
           isPink: window.objUser.isPink
@@ -734,7 +786,7 @@ export const setAdFreeData = (counter, ssoid, ticketId, dispatch) => {
 }
 
 export const getPageSpecificDimensions = (seo) => {
-  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "videoshow" } = seo;
+  const { subsecnames = {}, msid, updated = "", keywords, agency, page = "" } = seo;
   const dateArray = updated.split(",");
   function formatDate(inputDate) {
     // Parse the input date string
@@ -782,4 +834,368 @@ export const getPageSpecificDimensions = (seo) => {
   };
   console.log("test for date:--" + dateString);
   return payload;
+};
+
+export const convertMilliseconds = (milliseconds) => {
+  // Convert milliseconds to total seconds
+  let totalSeconds = Math.floor(milliseconds / 1000);
+  
+  // Calculate hours, minutes, and remaining seconds
+  let hours = Math.floor(totalSeconds / 3600);
+  let minutes = Math.floor((totalSeconds % 3600) / 60);
+  let remainingSeconds = totalSeconds % 60;
+  
+  // Add leading zeros to minutes and seconds
+  minutes = String(minutes).padStart(2, '0');
+  remainingSeconds = String(remainingSeconds).padStart(2, '0');
+  
+  // Conditional formatting based on available hours and minutes
+  if (hours > 0) {
+      hours = String(hours).padStart(2, '0');
+      return `${hours}:${minutes}:${remainingSeconds}`;
+  } else if (minutes > 0) {
+      return `${minutes}:${remainingSeconds}`;
+  } else {
+      return `00:${remainingSeconds}`;
+  }
+}
+
+export function changeImageWidthHeight({imageUrl, desiredWidth, desiredHeight, desiredResizeMode = 0, quality = 0}) {
+  let newUrl = imageUrl?.replace(/width-\d+/g, `width-${desiredWidth}`).replace(/height-\d+/g, `height-${desiredHeight}`) || "";
+
+  if(desiredResizeMode) {
+    // replace if resizemode is already present, else add it
+    if(newUrl?.includes('resizemode-')) {
+      newUrl = newUrl?.replace(/resizemode-\w+/g, `resizemode-${desiredResizeMode}`);
+    } else {
+      // add after width
+      newUrl = newUrl?.replace(/(width-\d+)/g, `$1,-resizemode-${desiredResizeMode}`); 
+    }
+  } else {
+    // just remove the resizemode-<mode> part
+    newUrl = newUrl?.replace(/resizemode-\w+/g, '');
+  }
+
+  if(quality) {
+    // replace if quality is already present, else add it
+    if(newUrl.includes('quality-')) {
+      newUrl = newUrl?.replace(/quality-\d+/g, `quality-${quality}`);
+    } else {
+      // add after width
+      newUrl = newUrl?.replace(/(width-\d+)/g, `$1,-quality-${quality}`);
+    }
+    
+  } else {
+    // just remove the quality-<quality> part
+    newUrl = newUrl?.replace(/quality-\d+/g, '');
+  }
+
+  return newUrl;
+}
+
+export const formatNumber = (
+  number: number,
+  uptoDecimal: number = 2,
+  noData?: string,
+): string => {
+  if ((!!number && isNaN(number)) || number == null)
+    return !!noData ? noData : "-";
+  const isInteger = Number.isInteger(Number(number));
+  if (isInteger) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else {
+    const formatter = new Intl.NumberFormat("en-IN", {
+      style: "decimal",
+      minimumFractionDigits: uptoDecimal, // Ensure at least 2 decimal places
+      maximumFractionDigits: uptoDecimal, // Allow maximum of 2 decimal places
+    });
+
+    const formattedNumber = formatter.format(number);
+    return formattedNumber.replace(/(\d)(?=(\d{3})+\.)/g, "$1,"); // Add commas for thousands separators
+  }
+};
+
+export const getStockUrl = (
+  id: string,
+  seoName: string,
+  stockType: string,
+  subType: string = "company",
+) => {
+  if (stockType == "index") {
+    return "/markets/indices/" + seoName;
+  } else if (stockType === "sector") {
+    return "/stocks/sectors/" + seoName;
+  } else {
+    if (seoName?.indexOf(" ") >= 0) {
+      seoName = seoName
+        .replaceAll(" ", "-")
+        .replaceAll("&", "")
+        .replaceAll(".", "")
+        .toLowerCase();
+    }
+    if ((stockType == "dvr" || stockType == "pp") && id.includes("1111")) {
+      id = id.substring(0, id.length - 4);
+    }
+    let stockUrl =
+      (APIS_CONFIG as any)?.DOMAIN[window.APP_ENV] +
+      "/" +
+      seoName +
+      "/stocks/companyid-" +
+      id +
+      ".cms";
+    if (
+      stockType != "equity" &&
+      stockType !== "" &&
+      stockType !== "company" &&
+      stockType.toLowerCase() !== "etf"
+    )
+      stockUrl = stockUrl + "?companytype=" + stockType?.toLowerCase();
+
+    if (subType == "NonList") {
+      stockUrl =
+        (APIS_CONFIG as any)?.DOMAIN[window.APP_ENV] +
+        "/company/" +
+        seoName +
+        "/" +
+        id;
+    }
+    if (stockType == "ETF") {
+      stockUrl =
+        (APIS_CONFIG as any)?.DOMAIN[window.APP_ENV] +
+        "/" +
+        seoName +
+        "/mffactsheet/schemeid-" +
+        id +
+        ".cms";
+    }
+    return stockUrl;
+  }
+};
+
+export const fetchSelectedFilter = async (
+  seoNameOrIndexId?: string | number,
+) => {
+  try {
+    const data = await fetchFilters({ marketcap: true });
+    if (
+      !data ||
+      !data.keyIndices ||
+      !data.sectoralIndices ||
+      !data.otherIndices ||
+      !data.marketcap
+    ) {
+      return { name: "All Stocks", indexId: 0, seoname: "", exchange: "nse" };
+    }
+
+    const allIndices = [
+      ...(data.keyIndices.nse || []),
+      ...(data.keyIndices.bse || []),
+      ...(data.sectoralIndices.nse || []),
+      ...(data.sectoralIndices.bse || []),
+      ...(data.otherIndices.nse || []),
+      ...(data.otherIndices.bse || []),
+      ...(data.marketcap.nse || []),
+      ...(data.marketcap.bse || []),
+    ];
+
+    let foundIndex;
+    if (
+      !isNaN(seoNameOrIndexId as number) ||
+      typeof seoNameOrIndexId === "string"
+    ) {
+      foundIndex = allIndices.find(
+        (index) =>
+          index.indexId === String(seoNameOrIndexId) ||
+          index.seoname === seoNameOrIndexId,
+      );
+    }
+
+    if (foundIndex) {
+      let exchange = "";
+      if (
+        (data.keyIndices.nse || []).includes(foundIndex) ||
+        (data.sectoralIndices.nse || []).includes(foundIndex) ||
+        (data.otherIndices.nse || []).includes(foundIndex) ||
+        (data.marketcap.nse || []).includes(foundIndex)
+      ) {
+        exchange = "nse";
+      } else if (
+        (data.keyIndices.bse || []).includes(foundIndex) ||
+        (data.sectoralIndices.bse || []).includes(foundIndex) ||
+        (data.otherIndices.bse || []).includes(foundIndex) ||
+        (data.marketcap.bse || []).includes(foundIndex)
+      ) {
+        exchange = "bse";
+      }
+
+      return {
+        name: foundIndex.name,
+        indexId: foundIndex.indexId,
+        seoname: foundIndex.seoname,
+        exchange: exchange,
+      };
+    } else {
+      return { name: "All Stocks", indexId: 0, seoname: "", exchange: "nse" };
+    }
+  } catch (error) {
+    console.error("Error fetching filters:", error);
+    return { name: "All Stocks", indexId: 0, seoname: "", exchange: "nse" };
+  }
+};
+
+export const fetchFilters = async ({
+  all = false,
+  watchlist = false,
+  mostrecent = false,
+  marketcap = false,
+}) => {
+  let apiUrl = (APIS_CONFIG as any)?.["INDEX_FILTERS"][window.APP_ENV];
+  let queryParams = [];
+  if (all) queryParams.push("all=true");
+  if (watchlist) queryParams.push("watchlist=true");
+  if (mostrecent) queryParams.push("mostrecent=true");
+  if (marketcap) queryParams.push("marketcap=true");
+  const queryString = queryParams.join("&");
+  if (!!queryString) {
+    apiUrl = apiUrl + "?" + queryString;
+  }
+  const response = await fetch(apiUrl);
+  return response?.json();
+};
+
+export const getAllShortUrls = async () => {
+  const url = (APIS_CONFIG as any)["MARKET_STATS_SHORTURLS_MAPPING"][window.APP_ENV];
+  const response = await fetch(url);
+  return await response?.json();
+};
+
+export const getCurrentMarketStatus = async () => {
+  try {
+    const url = (APIS_CONFIG as any)?.MARKET_STATUS[window.APP_ENV];
+    const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (res?.status === 200) {
+      return await res.json();
+    } else {
+      saveLogs({
+        res: "error",
+        msg: "Unexpected response status",
+        status: res?.status,
+      });
+      return null;
+    }
+  } catch (e) {
+    let errorMessage = "Unknown error";
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
+    console.error("Error in fetching market status", errorMessage);
+    saveLogs({
+      type: "Mercury",
+      res: "error",
+      msg: "Error in fetching market status",
+      error: errorMessage,
+    });
+    return null;
+  }
+};
+
+export const saveStockInWatchList = async (followData: any) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  let postBodyData = {};
+  if (isLocalhost) {
+    postBodyData = {
+      _authorization: authorization,
+      followData,
+    };
+  } else {
+    postBodyData = followData;
+  }
+  const apiUrl = `${(APIS_CONFIG as any)?.WATCHLISTAPI.addWatchList[window.APP_ENV]}`;
+  const headers = new Headers({
+    Authorization: authorization,
+    "Content-Type": "application/json",
+  });
+  const options: any = {
+    method: "POST",
+    cache: "no-store",
+    headers: headers,
+    body: JSON.stringify(postBodyData),
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error saving stock in watchlist:", error);
+    throw error;
+  }
+};
+
+export const fetchAllWatchListData = async (
+  type: any,
+  usersettingsubType: any,
+) => {
+  const authorization: any = getCookie("peuuid") ? getCookie("peuuid") : "";
+  const isLocalhost = window.location.origin.includes("localhost");
+  if (authorization === "") {
+    console.log("peuuid is not getting please check cookie__", authorization);
+  }
+  const apiUrl = `${APIS_CONFIG?.WATCHLISTAPI.getAllWatchlist[window.APP_ENV]}?stype=${type}&usersettingsubType=${usersettingsubType}`;
+  const headers = new Headers({ Authorization: authorization });
+  const options: any = {
+    cache: "no-store",
+    headers: headers,
+  };
+  try {
+    const response = await fetch(apiUrl, options);
+    if (!response.ok) {
+      window.watchListApiHitStatus = 'failed';
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    window.watchListApiHitStatus = 'failed';
+    console.error("Error fetching watchlist data:", error);
+    throw error;
+  }
+};
+
+export const getOverviewData = async (indexid: number, pageno: number) => {
+  const response = await fetch(`${(APIS_CONFIG as any)?.MARKETMOODS_OVERVIEW[APP_ENV]}?indexid=${indexid}&pageno=${pageno}&pagesize=100`, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers you might need here
+      }
+  });
+  const originalJson = await response?.json();
+  return {
+    labels: originalJson.labels,
+    dataList: originalJson.dataList.map((item: any) => ({
+      date: dateFormat(item.date, "%d %MMM"),
+      indexPrice: formatNumber(item.indexPrice),
+      percentChange: item.percentChange.toFixed(2),
+      trend:
+        item.percentChange > 0
+          ? "up"
+          : item.percentChange < 0
+            ? "down"
+            : "neutral",
+      others: item.count.map((count: number, index: number) => ({
+        count: count,
+        percent: item.percent[index],
+        color: item.color[index],
+      })),
+    })),
+    pageSummary: originalJson.pageSummary,
+  };
 };
