@@ -5,6 +5,7 @@ import APIS_CONFIG from "../network/config.json";
 import service from "../network/service";
 import jStorage from "jstorage-react";
 import {dateFormat} from "./utils"
+import { getSubscriptionContent } from "utils/utils";
 
 declare global {
   interface Window {
@@ -447,6 +448,8 @@ export const loadPrimeApiNew = async () => {
 export const logout = async () => {
   window?.jsso?.signOutUser(async function (response: any) {
     if (response.status == "SUCCESS") {
+      getSubscriptionContent((res)=>{
+      });
       delete_cookie("OTR");
       delete_cookie("isprimeuser");
       delete_cookie("pfuuid");
@@ -516,7 +519,8 @@ export const verifyLogin = () => {
   window?.jsso?.getValidLoggedInUser(function (response: any) {
     if (response.status == "SUCCESS") {
       //console.log("SUCCESS");
-
+      getSubscriptionContent((res)=>{
+      });
       if (typeof window.objUser == "undefined") window.objUser = {};
       //generateFpid(true);
       createPeuuid({});
