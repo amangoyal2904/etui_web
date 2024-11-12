@@ -13,7 +13,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
 
   const { state, dispatch } = useStateContext();
   const { isPrime, isPink } = state.login;
-  const [isCCPA, setIsCCPA] = useState(false);
+  // const [isCCPA, setIsCCPA] = useState(false);
 
   const paymentButtonListener = () => {
     const paymentUrl = "";
