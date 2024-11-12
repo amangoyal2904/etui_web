@@ -1,8 +1,8 @@
 "use client";
 
 import styles from "./VideoShow.module.scss";
-import { useEffect, FC, useRef, useState } from "react";
-import { PageProps, VideoShowProps } from "types/videoshow";
+import { useEffect, useRef, useState } from "react";
+import { VideoShowProps } from "types/videoshow";
 import { getPageSpecificDimensions } from "../../utils";
 import { ET_WEB_URL, getSubsecString } from "../../utils/common";
 import { setGetPlayerConfig, dynamicPlayerConfig, handleAdEvents, handlePlayerEvents } from "../../utils/slike";
@@ -11,11 +11,8 @@ import DfpAds from "../../components/Ad/DfpAds";
 import Listing from "components/Listing";
 import ReadMore from "components/ReadMore";
 import MostViewVideos from "components/MostViewVideos";
-import { Share } from "components/Share";
 import SocialShare from "components/Videoshow/SocialShare";
 import PostComments from "components/Comments/PostComments";
-import PopulateComment from "components/Comments/PopulateComment";
-import { log } from "console";
 import Trending from "components/Trending";
 import { useStateContext } from "../../store/StateContext";
 import Bookmark from "components/Bookmark";
@@ -122,27 +119,7 @@ const VideoShow = (props) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-        <h1>{result.title}</h1>
-        <div className={styles.byline}>
-          <div>
-            {result.agency} | <time dateTime={result.date}>{result.dtline || result.date}</time>
-          </div>
-          <Bookmark msid={result.msid} hostId={result.hostid} type="5" widget={``} apiType={'single'} />
-          <PostComments />
-        </div>
-        <div className={styles.vidWrapper} ref={vidRef}>
-          <div className={styles.shareBar}>
-            <SocialShare
-              mailData={{
-                shareUrl: ET_WEB_URL +"/"+ result.url,
-                title: result.title,
-                msid: result.msid,
-                hostId: result.hostid,
-                type: "5"
-              }}
-              articleData={result}
-            />
-          </div>
+      <div className={styles.vidWrapper} ref={vidRef}>
           <div className={`vidWrapInner ${!isPopupVidClosed && isPopupVid ? styles.popupVid : ""}`}>
             {!isPopupVidClosed && isPopupVid && (
               <div>
