@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import jStorage from "jstorage-react";
 import { ET_IMG_DOMAIN } from "../../utils/common";
 import styles from "./styles.module.scss";
-import { grxEvent } from "utils/ga";
+import { fireTracking, grxEvent } from "utils/ga";
 import { currPageType } from "utils";
 import { gotoPlanPage } from "utils/utils";
 
@@ -24,7 +24,7 @@ function NudgeContainer({subsContent}) {
 
     useEffect(() => {
         if(et_topnudge_type) {
-            grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Viewed - True', 'event_label': et_topnudge_type + ' | Banner Location '+ currPageType()});
+            fireTracking("et_push_event", {category:"Platform Nudge - Web", action:"Banner Viewed - True",label:et_topnudge_type + ' | Banner Location '+ currPageType()})
         }
     }, [et_topnudge_type]);
 
@@ -32,10 +32,10 @@ function NudgeContainer({subsContent}) {
         var isCloseRef = e.target.classList.contains('info_cross');
         if(e.target.classList.contains('adFree')) {
             // customDimension.dimension1 = 'Adfree expired';
-            grxEvent('event', {'event_category': 'Subscription Flow ET',  'event_action': 'SYFT | Flow Started', 'event_label': "Adfree expired"});
+            fireTracking("et_push_event", {category:"Subscription Flow ET'", action:"SYFT | Flow Started",label:"Adfree expired"});
         }
         if(!isCloseRef) {
-            grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Click', 'event_label': et_topnudge_type + ' | Banner Location '+ currPageType()});
+            fireTracking("et_push_event", {category:"Platform Nudge - Web", action:"Banner Click",label:et_topnudge_type + ' | Banner Location '+ currPageType()})
             gotoPlanPage({url: et_topnudge_ctaLink});   
         }
     }
@@ -46,11 +46,7 @@ function NudgeContainer({subsContent}) {
             var reActivatedOn = +new Date() + (Number(frequencyVal) * 1000 * 60 * 60 * 24);
             jStorage.set('topNudgeObj', JSON.stringify({reActivatedOn: reActivatedOn}));
         }
-        
-        grxEvent('event', {'event_category': 'Platform Nudge - Web',  'event_action': 'Banner Dismiss', 'event_label': et_topnudge_type + ' | Banner Location '+ currPageType()});
-        // $("#topnavBlk").css("top", "0");
-        // $('.topUserInfoBand').slideUp();
-        // $('.topUserInfoBand').remove();
+        fireTracking("et_push_event", {category:"Platform Nudge - Web", action:"Banner Dismiss",label:et_topnudge_type + ' | Banner Location '+ currPageType()})
         setNudgeShow(false);
     }
 
