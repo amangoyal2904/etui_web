@@ -186,7 +186,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid, objVc }) 
             }
         </div>
         <div className="col3">
-          <LiveTvWidget objVc={objVc}/>
+          { objVc?.livetv?.prime_status == 1 && <LiveTvWidget objVc={objVc}/> }
           { focusArea === "market" && <>            
             <PrimeExclusives title={primeExclusives?.title || ""} data={primeExclusives?.data || []} focusArea={focusArea} />
             <Separator />
