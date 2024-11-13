@@ -57,10 +57,7 @@ export default function SponserBanner() {
   useEffect(() => {
     const ticketId = getCookie("TicketId");
     const userAccountDetails = ticketId && jStorageReact.get(`prime_${ticketId}`);
-    const resObj = userAccountDetails.productDetails.filter((item: any) => {
-      return item.productCode == "ETPR";
-    });
-    const sponsorPartnerCode = resObj[0]?.sponsorPartnerCode || '';
+    const sponsorPartnerCode = userAccountDetails?.subscriptionDetails?.[0]?.sponsorPartnerCode || '';
     var isUserClosed = jStorageReact.get('sponserBanner')?.['homepage'];
     const currDate = new Date().getDate();
     console.log(sponsorPartnerCode, 'sponsorPartnerCode');
