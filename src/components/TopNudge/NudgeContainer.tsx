@@ -64,7 +64,7 @@ function NudgeContainer({subsContent}) {
 
     return (
         <>
-            {nudgeShow && et_topnudge_show && <div id="topUserInfoBand" className={`${styles?.topUserInfoBand} ${et_topnudge_type}`} onClick={onBannerClick}>
+            {nudgeShow && et_topnudge_show && <div id="topUserInfoBand" className={`${styles?.topUserInfoBand} ${et_topnudge_type}`} data-ga-impression={`Assisted_Buying#Impression#Soft Nudge - Top Banner`} onClick={onBannerClick}>
                 {/* style={`background: ${banner_bg}`} */}
                 <div className={styles?.info_content}>
                     <span className={styles?.info_icon}>
