@@ -22,7 +22,7 @@ import BackToTopButton from "components/BackToTopButton";
 import jStorage from "jstorage-react";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 
-function PrimeHome({ searchResult, isDev, ssoid}) {  
+function PrimeHome({ searchResult, isDev, ssoid, objVc}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const marketExpertViews = searchResult?.find(item => item?.name === "market_expert_views") || {};
   const marketLiveblog = searchResult?.find(item => item?.name === "market_liveblog") || {};
@@ -88,7 +88,7 @@ function PrimeHome({ searchResult, isDev, ssoid}) {
 
   return (
     <>
-      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state?.login?.ssoid || ssoid}/>
+      <TopSectionLayout searchResult={searchResult} isDev={isDev} ssoid={state?.login?.ssoid || ssoid} objVc={objVc}/>
       <MostReadStories MostReadStoriesRes={MostReadStoriesData?.data || []} />          
       <MarketNews data={marketNews?.data || []} title={marketNews?.title || ""} podcastData={marketPodcastData?.data || []} marketExpertViews={marketExpertViews?.data || []} marketMoguls={marketMoguls?.data || []} marketLiveblog={marketLiveblog?.data || []} />
       <MutualFunds data={mutualFunds?.data || []} title={mutualFunds?.title || ""} isDev={isDev} />
