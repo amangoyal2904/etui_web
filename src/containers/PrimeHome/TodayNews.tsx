@@ -16,10 +16,12 @@ export default function TodayNews({ todayNews, focusArea }) {
         {
           topNews?.data?.map((item, index) => (
             <li key={index}>
+              {item?.title?.includes('<a') ? <RenderText text={item?.title} /> :
               <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href' >
                 {item.type == "liveblog" &&  <LiveIcon />}
                 <RenderText text={item?.title} />
               </a>
+        }
             </li>
           ))
         }
@@ -30,10 +32,12 @@ export default function TodayNews({ todayNews, focusArea }) {
         <ul>
           {
             wealthNews?.data?.map((item, index) => (
-              <li key={index}>
+              <li key={index}>                
+                {item?.title?.includes('<a') ? <RenderText text={item?.title} /> :
                 <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href'>                
                   <RenderText text={item?.title} />                  
                 </a>
+                }
               </li>
             ))
           }
@@ -48,9 +52,11 @@ export default function TodayNews({ todayNews, focusArea }) {
           {
             techNews?.data?.slice(0,7)?.map((item, index) => (
               <li key={index}>
+                {item?.title?.includes('<a') ? <RenderText text={item?.title} /> :
                 <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href'>
                   <RenderText text={item?.title} />
                 </a>
+                }
               </li>
             ))
           }
