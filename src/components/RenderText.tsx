@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import parse from 'html-react-parser';
 
 export default function RenderText({ text = "" }) {
-  const textStr = text?.toString();
+  let textStr = text?.toString();
 
   function renderText(text) {
     // replace html entities
@@ -11,6 +11,9 @@ export default function RenderText({ text = "" }) {
     text = text.replace(/&gt;/g, '>');
     return text;
   }
+
+  // remove any empty <a> tags from textStr
+  textStr = textStr?.replace(/<a[^>]*><\/a>/g, '');
 
   // if text contains html tags, render them as react elements else return text as it is
   return textStr?.includes('<') ? <Fragment>{parse(renderText(textStr))}</Fragment> : <Fragment>{renderText(textStr)}</Fragment>;

@@ -38,8 +38,10 @@ const Podcast = ({ data }) => {
                                     </label>
                                 </span>
                                 <p className="category">{item?.title?.split(":")?.[0] || ""}</p>
-                                <p className="storyTitle">
-                                {item?.title?.split(":")?.[1] || ""}
+                                <p className="storyTitle">                                
+                                {
+                                    item?.title?.split(":")?.slice(1)?.join(":") || ""
+                                }
                                 </p>
                                 <div className="timeDuration">
                                     <p className="duration">{item.duration} MIN</p>
