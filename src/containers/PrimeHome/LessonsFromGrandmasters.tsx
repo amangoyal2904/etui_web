@@ -230,6 +230,7 @@ export default function LessonsFromGrandmasters({ focusArea, isDev }) {
           &.news {
             border-left: 1px dotted #9b8680;
             margin-top: -13px;
+            padding-bottom: 25px;
           }
 
           .title {

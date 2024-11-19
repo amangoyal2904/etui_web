@@ -19,16 +19,16 @@ export default function NewsLetterSignup({ section, sid }) {
   }
 
   useEffect(() => {
-    getNewsLtrSuggestion({limit: 10}, function(newsletterSuggestions) {      
+    getNewsLtrSuggestion({}, function(newsletterSuggestions) {      
       console.log({newsletterSuggestions})
     });
 
-    if(window?.objUser?.info?.email) {
-      setEmail(window.objUser.info.email);
+    if(window?.objUser?.info?.primaryEmail) {
+      setEmail(window.objUser.info.primaryEmail);
     } else {
       document.addEventListener('getUserDetailsSuccess', function() {
         // debugger
-        setEmail(window?.objUser?.primaryEmail || "");
+        setEmail(window?.objUser?.info?.primaryEmail || "");
       });
     }
 
