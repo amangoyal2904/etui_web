@@ -135,6 +135,10 @@ function PrimeHome({ searchResult, isDev, ssoid, objVc}) {
           top: 10px;
         }
 
+        .layout1260 a:hover {
+          text-decoration: underline;
+        }
+
         @media (max-width: 1260px) {
           .layout1260 {
             padding: 0 20px;

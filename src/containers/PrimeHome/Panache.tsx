@@ -108,6 +108,10 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
               bottom: 20px;
               margin: 0 10px;
               z-index: 1;
+
+              &:hover {
+                text-decoration: underline;
+              }
             }
             .overlay {
               display: block;

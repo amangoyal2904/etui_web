@@ -83,7 +83,15 @@ export default function Slideshows({ title, data }) {
       }
       .slideshow {
         display: flex;            
-        border-top: 1px solid #9b8680;    
+        border-top: 1px solid #9b8680;   
+
+        a {
+          span {
+            &:last-child:hover {
+              text-decoration: underline;
+            }
+          }         
+        } 
 
         .left {
           border-right:  1px solid #9b8680;
