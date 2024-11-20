@@ -22,8 +22,9 @@
   }
 
   .soWrapper {
-    margin: 14px 0;
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 50px;
     .hdr_spcl_ofr {
       border: 1px solid rgba(237, 25, 59, 0.1);
       padding: 4px 0;
@@ -261,6 +262,7 @@
   &.subSign{
     display: flex;
     padding-top: 10px;
+    align-items: center;
     // &:before{
     //   background: url($subscriber-sprite) no-repeat;
     //   display: inline-block;

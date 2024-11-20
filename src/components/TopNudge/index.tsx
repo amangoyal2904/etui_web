@@ -18,12 +18,16 @@ export default function TopNudge({objVc}) {
   
   const loadSubsContent = () => {
     const getSubsContent = jStorageReact.get('subscriptioncontent');
-    if (getSubsContent) {
-      setSubsContent(JSON.parse(getSubsContent).message);
-    }else{
-      getSubscriptionContent((res)=>{
-        setSubsContent(res);
-      })
+    try{
+      if (getSubsContent) {
+        setSubsContent(JSON.parse(getSubsContent).message);
+      }else{
+        getSubscriptionContent((res)=>{
+          setSubsContent(res);
+        })
+      }
+    }catch(e){
+      console.log("getSubsContent Error:", e)
     }
   }
   useEffect(()=>{
