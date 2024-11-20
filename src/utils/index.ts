@@ -110,12 +110,14 @@ export const setCookieToSpecificTime = (
 
 export const getCookie = (name) => {
   try {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    if (typeof document !== 'undefined') {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
     }
     return null;
   } catch (e) {
@@ -456,6 +458,7 @@ export const logout = async () => {
       delete_cookie("peuuid");
       delete_cookie("fpid");
       delete_cookie("etprc");
+      jStorage.deleteKey("userInfo");
 
       const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
         oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
@@ -544,6 +547,8 @@ export const setUserData = () => {
     if (response.status == "SUCCESS") {
       //console.log("SUCCESS", response);
       window.objUser.info = response.data;
+      jStorage.deleteKey("userInfo");
+      jStorage.set("userInfo", window.objUser.info);
       window.objUser.ssoid = response.data.ssoid;
     } else {
       console.log("failure");
@@ -739,7 +744,7 @@ export const setAdFreeExp = (nudgeFlag, ssoid, dispatch) => {
   if(isAdFreeExpRef.eligible && !isAdFreeExpRef.availed) {
       //objAd.type == 'adfree';
       window.objUser.isPink = true;
-      
+      document.body.classList.add("isprimeuser");
       dispatch({
         type: "SETPINKTHEME",
         payload: {

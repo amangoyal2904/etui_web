@@ -99,7 +99,7 @@ const Layout:FC<Props> = ({ page, className = "", dynamicFooterData, menuData, o
         <BreadCrumb data={data?.seo?.breadcrumb} />
         <BreakingNews APP_ENV={APP_ENV} />
         <div className={`${className ? className : 'layout'}`}>{children}</div>
-        <Scripts objVc={objVc} isprimeuser={isPink} APP_ENV={APP_ENV}/>
+        <Scripts objVc={objVc} isprimeuser={isPink} APP_ENV={APP_ENV} page={page} />
         {!isPink && <DfpAds adInfo={{ key: "btf728" }} objVc={objVc} />}
         <Footer dynamicFooterData={dynamicFooterData} page={page} APP_ENV={APP_ENV}/>
         <RedeemVoucher />

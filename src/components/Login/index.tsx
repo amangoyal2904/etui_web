@@ -57,13 +57,12 @@ const Login = ({headertext}) => {
       const refreshFlag = window.localStorage && localStorage.getItem("etsub_refreshTokenFlag");
 
       if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
-        document.body.classList.add("isprimeuser");
         window.objUser.isPink = true;
         window.objUser.isPink && document.body.classList.add("isprimeuser");
         dispatch({
-          type: "LOGIN_SUCCESS",
+          type: "SETPINKTHEME",
           payload: {
-            isPink: window.objUser.isPink
+            isPink: true
           },
         });
       }
@@ -214,8 +213,8 @@ const Login = ({headertext}) => {
     dispatch({
       type: "LOGIN_SUCCESS",
       payload: {
-        // ssoReady: true,
-        // isLogin: true,
+        ssoReady: true,
+        isLogin: true,
         isPrime: window.objUser.isPrime,
         userInfo: window.objUser?.info,
         ssoid: window.objUser?.ssoid,
@@ -231,13 +230,12 @@ const Login = ({headertext}) => {
 
   const authFailCallback = () => {
     if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
-      document.body.classList.add("isprimeuser");
       window.objUser.isPink = true;
       window.objUser.isPink && document.body.classList.add("isprimeuser");
       dispatch({
-        type: "LOGOUT",
+        type: "SETPINKTHEME",
         payload: {
-          isPink: window.objUser.isPink
+          isPink: true
         },
       });
     }

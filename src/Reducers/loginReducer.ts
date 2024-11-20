@@ -30,7 +30,6 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         permissions: action.payload.permissions, 
         email: action.payload.userInfo?.primaryEmail,
         isAdfree: action.payload.isAdfree,
-        isPink: action.payload.isPink,
         error: null ,
         subscriptionDetails: action.payload.subscriptionDetails,
       };
@@ -47,7 +46,6 @@ const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
         permissions: [], 
         email: "",
         isAdfree: action.payload.ssoReady,
-        isPink: action.payload.isPink,
         error: null,
         subscriptionDetails: {}
       };
