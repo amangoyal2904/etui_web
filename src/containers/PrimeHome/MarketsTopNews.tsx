@@ -64,6 +64,10 @@ export default function MarketsTopNews({ data, focusArea }) {
             font-family: Faustina;
             font-size: 18px;          
             line-height: 23px;
+
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }

@@ -144,7 +144,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid, objVc }) 
                   }}>
                     <i className={focusArea === "news" ? "left" : "right"}></i>
                   </span>
-                  <span className={focusArea === "market" ? "active" : ""} onClick={() => saveFocusAreaPreference("market")}>MARKET FOCUS</span>
+                  <span className={focusArea === "market" ? "active" : ""} onClick={() => saveFocusAreaPreference("market")}>MARKETS FOCUS</span>
                 </span>
               </div>
               <PrimeBenefitsBucket focusArea={focusArea}/>

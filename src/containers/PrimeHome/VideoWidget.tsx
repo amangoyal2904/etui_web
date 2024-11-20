@@ -290,6 +290,10 @@ const VideoWidget = ({ VideoWidgetData, isDev }) => {
                       line-height: 18px;
                       margin-top: 8px;
                       display: inline-block;
+
+                      &:hover {
+                        text-decoration: underline;
+                      }
                     }
                     .imgdiv {
                       position: relative;

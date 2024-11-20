@@ -97,6 +97,12 @@ export default function TodayNews({ todayNews, focusArea }) {
             &:last-child {
               border-bottom: none;
             }
+
+            a {
+              &:hover {
+                text-decoration: underline;
+              }
+            }
           }
         }
 
