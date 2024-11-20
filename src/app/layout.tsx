@@ -33,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   console.log("Current URL:", pageUrl); // Log the current URL (for debugging)
   return (
-    <html lang="en">
+    <html lang="en" className={`${isDefaultPrime ? 'pg_hide' : ''}`}>
       <body className={`${isDefaultPrime ? 'isprimeuser' : ''}`}>
         <StateProvider>
           <StyledJsxRegistry>{children}</StyledJsxRegistry>

@@ -21,6 +21,7 @@ import { useStateContext } from "store/StateContext";
 import BackToTopButton from "components/BackToTopButton";
 import jStorage from "jstorage-react";
 import GLOBAL_CONFIG from "../../network/global_config.json";
+import { getCookie } from "../../utils"
 
 function PrimeHome({ searchResult, isDev, ssoid, objVc}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -55,6 +56,9 @@ function PrimeHome({ searchResult, isDev, ssoid, objVc}) {
   const { isLogin } = state.login;
 
   useEffect(() => {
+    if (window.objUser) {
+      window.objUser.isPink = true; // Changed from optional chaining to a conditional check
+    }
     dispatch({
       type: "SETPINKTHEME",
       payload: {
@@ -62,8 +66,9 @@ function PrimeHome({ searchResult, isDev, ssoid, objVc}) {
       },
     });
     if(typeof window != "undefined"){
-    window.customDimension = window.customDimension || {};
-    window.customDimension["dimension48"] = "2160010";
+      document.body.classList.add("isprimeuser");
+      window.customDimension = window.customDimension || {};
+      window.customDimension["dimension48"] = "2160010";
     }
   }, []);
 
@@ -73,10 +78,12 @@ function PrimeHome({ searchResult, isDev, ssoid, objVc}) {
       const ssoidValue = state?.login?.ssoid || ssoid; // Extracted for clarity
       const adFreeCampaign = jStorage.get(`adFreeCampign_${ssoidValue}`);
       const isExpiredUserEligible = adFreeCampaign && adFreeCampaign.eligible || 0;
+      const primeHtmlTag = document.getElementsByTagName('html')[0];
 
       if (isLogin != null) {
         if (devCheck || (isLogin || isExpiredUserEligible)) {
           // ... existing logic ...
+          primeHtmlTag.classList.remove("pg_hide")
         } else {
           location.href = GLOBAL_CONFIG[APP_ENV]["ET_WEB_URL"];
         }
