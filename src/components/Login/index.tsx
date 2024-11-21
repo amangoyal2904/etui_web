@@ -94,7 +94,7 @@ const Login = ({headertext}) => {
             return !item.includes("etadfree") && item.includes("expired_subscription");
           });    
 
-        jStorage.set('prime_' +window.objUser?.ticketId, Object.assign({}, primeRes.response.data || {}, oauthAPiRes, primeRes?.code), {TTL: 2*60*60*1000}); 
+        jStorage.set('prime_' +window.objUser?.ticketId, Object.assign({}, primeRes.data || {}, oauthAPiRes, primeRes?.code), {TTL: 2*60*60*1000}); 
         jStorage.set('tokenDataExist', 1, {TTL: isPrime ? 2*60*60*1000 : 5*60*1000});
 
         window.objUser.permissions = oauthAPiRes.permissions || [];
