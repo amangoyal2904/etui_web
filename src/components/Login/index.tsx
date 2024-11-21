@@ -92,9 +92,9 @@ const Login = ({headertext}) => {
           primeRes?.data &&
           oauthAPiRes.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("expired_subscription");
-          });  
+          });    
 
-        jStorage.set('prime_' +window.objUser?.ticketId, primeRes, {TTL: 2*60*60*1000}); 
+        jStorage.set('prime_' +window.objUser?.ticketId, Object.assign({}, primeRes.response.data || {}, oauthAPiRes, primeRes?.code), {TTL: 2*60*60*1000}); 
         jStorage.set('tokenDataExist', 1, {TTL: isPrime ? 2*60*60*1000 : 5*60*1000});
 
         window.objUser.permissions = oauthAPiRes.permissions || [];
@@ -115,7 +115,16 @@ const Login = ({headertext}) => {
         setCookieToSpecificTime("etprc", oauthAPiRes.prc, 30, 0, 0);
 
         
-        (isPink || isPrime) && document.body.classList.add("isprimeuser");
+        if(isPink || isPrime){
+          window.objUser.isPink = true;
+          window.objUser.isPink && document.body.classList.add("isprimeuser");
+          dispatch({
+            type: "SETPINKTHEME",
+            payload: {
+              isPink: true
+            },
+          });
+        } 
 
         if(isExpired){
           adFreeEx();
