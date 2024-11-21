@@ -79,40 +79,37 @@ const Login = ({headertext}) => {
       const primeRes = isTokenDataExist ? getStorePrimeDetial : await loadPrimeApiNew();
       
       if (primeRes?.code === "200") {
-        const resObj = primeRes?.data.productDetails.filter((item: any) => {
-          return item.productCode == "ETPR";
-        });
-        const oauthAPiRes = resObj[0];
-        const isPrime =
-          primeRes.data &&
-          oauthAPiRes.permissions.some(function (item: any) {
+
+        // const resObj = primeRes?.productDetails.filter((item: any) => {
+        //   return item.productCode == "ETPR";
+        // });
+        // const oauthAPiRes = resObj[0];
+        const isPrime = primeRes?.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("subscribed");
           });
-        const isExpired =
-          primeRes?.data &&
-          oauthAPiRes.permissions.some(function (item: any) {
+        const isExpired = primeRes?.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("expired_subscription");
           });    
 
-        jStorage.set('prime_' +window.objUser?.ticketId, Object.assign({}, primeRes.data || {}, oauthAPiRes, {code: primeRes?.code}), {TTL: 2*60*60*1000}); 
+        jStorage.set('prime_' +window.objUser?.ticketId, primeRes, {TTL: 2*60*60*1000}); 
         jStorage.set('tokenDataExist', 1, {TTL: isPrime ? 2*60*60*1000 : 5*60*1000});
 
-        window.objUser.permissions = oauthAPiRes.permissions || [];
+        window.objUser.permissions = primeRes.permissions || [];
         window.objUser.accessibleFeatures =
-          oauthAPiRes.accessibleFeatures || [];
+        primeRes.accessibleFeatures || [];
         window.objUser.userAcquisitionType =
-          oauthAPiRes.subscriptionDetail &&
-          "userAcquisitionType" in oauthAPiRes.subscriptionDetail
-            ? oauthAPiRes.subscriptionDetail.userAcquisitionType
+        primeRes.subscriptionDetail &&
+          "userAcquisitionType" in primeRes.subscriptionDetail
+            ? primeRes.subscriptionDetail.userAcquisitionType
             : "free";
-        window.objUser.primeInfo = oauthAPiRes;
+        window.objUser.primeInfo = primeRes;
         window.objUser.isPrime = isPrime;
         window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
-        if (primeRes && primeRes?.data?.token) {
-          setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, ".indiatimes.com");
+        if (primeRes && primeRes?.token) {
+          setCookieToSpecificTime("OTR", primeRes?.token, 30, 0, 0, ".indiatimes.com");
         }
-        setCookieToSpecificTime("etprc", oauthAPiRes.prc, 30, 0, 0);
+        setCookieToSpecificTime("etprc", primeRes.prc, 30, 0, 0);
 
         
         if(isPink || isPrime){
@@ -132,7 +129,7 @@ const Login = ({headertext}) => {
 
         const primeUserLoginMap_check = Number(localStorage.getItem("primeUserLoginMap_check")) == 1 || false;
         if(primeUserLoginMap_check){
-          userMappingData({res: primeRes?.data, userInfo : window.objUser?.info, isPrime, email: window.objUser?.info?.primaryEmail})
+          userMappingData({res: primeRes, userInfo : window.objUser?.info, isPrime, email: window.objUser?.info?.primaryEmail})
           localStorage.removeItem("primeUserLoginMap_check");
         }
 
@@ -150,7 +147,7 @@ const Login = ({headertext}) => {
         window.objUser.primeInfo = {};
         window.objUser.isPrime = false;
         delete_cookie("isprimeuser");
-        if (primeRes && primeRes?.data?.token) {
+        if (primeRes && primeRes?.token) {
           delete_cookie("OTR");
         }
         saveLogs({

@@ -57,10 +57,10 @@ export default function SponserBanner() {
   useEffect(() => {
     const ticketId = getCookie("TicketId");
     const userAccountDetails = ticketId && jStorageReact.get(`prime_${ticketId}`);
-    const sponsorPartnerCode = userAccountDetails?.subscriptionDetails?.[0]?.sponsorPartnerCode || '';
+    const sponsorPartnerCode = userAccountDetails?.subscriptionDetail?.sponsorPartnerCode || '';
     var isUserClosed = jStorageReact.get('sponserBanner')?.['homepage'];
     const currDate = new Date().getDate();
-    console.log(sponsorPartnerCode, 'sponsorPartnerCode');
+    console.log(sponsorPartnerCode, 'sponsorPartnerCode', userAccountDetails);
 
     if(sponsorPartnerCode && ((isUserClosed ? isUserClosed !== currDate : true))) {
       fetchData(sponsorPartnerCode);
