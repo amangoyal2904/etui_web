@@ -439,13 +439,13 @@ export const loadPrimeApiNew = async () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const primeRes = response?.json(),
+    const primeRes = await response.json(), // Await the JSON response
     primeResObj = primeRes?.data?.productDetails?.filter((item: any) => {
       return item.productCode == "ETPR";
-    }),
+    }) || [], // Ensure primeResObj is an array
     oauthAPiResObj = primeResObj[0] || [];
 
-    return Object.assign({}, primeRes.data || {}, oauthAPiResObj, {code: primeRes?.code});
+    return Object.assign({}, primeRes.data || {}, oauthAPiResObj, { code: primeRes?.code });
     // Handle the successful response data
   } catch (e) {
     console.log("loadPrimeApiNew: " + e);
