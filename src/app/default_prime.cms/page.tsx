@@ -1,7 +1,7 @@
 import { headers, cookies } from 'next/headers';
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
-import PrimeHome from 'containers/PrimeHome';
+import PrimeHome from 'containers/SubscriberHome';
 
 
 export default async function Page({ params }: {

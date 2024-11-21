@@ -1,4 +1,4 @@
-import MoreFromLink from 'containers/PrimeHome/MoreFromLink'
+import MoreFromLink from 'containers/SubscriberHome/MoreFromLink'
 import styles from './styles.module.scss';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
