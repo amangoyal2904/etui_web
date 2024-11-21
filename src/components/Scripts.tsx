@@ -399,7 +399,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV, page }) => {
           )}
         </>
       )}
-      {page == "primehome" && <Script id="page-redirection" strategy="beforeInteractive"
+      {page == "subscriberhome" && <Script id="page-redirection" strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
           try {
