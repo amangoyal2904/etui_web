@@ -191,11 +191,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV, page }) => {
       grx = getCookie('_grx'),
       ssoid = getCookie('ssoid') || (jStorage.get('userInfo')?.ssoid),
       userData = jStorage.get(`prime_${tdId}`) || {},
-      resObj = userData?.data?.productDetails?.filter((item: any) => {
-        return item.productCode == "ETPR";
-      }),
-      oauthAPiRes = resObj?.[0] || [],
-      isPrimeUser = userData.data && oauthAPiRes.permissions.some(function (item: any) {
+      isPrimeUser = userData?.permissions?.some(function (item: any) {
         return !item.includes("etadfree") && item.includes("subscribed");
       }),
       isExpiredUserEligible = typeof ssoid != "undefined" && jStorage.get('adFreeCampign_'+ssoid) && jStorage.get('adFreeCampign_'+ssoid).eligible || 0,
@@ -208,11 +204,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV, page }) => {
       const hitPrimeApi = async () => {
         const primeRes = await loadPrimeApiNew();
         if (primeRes?.code === "200") {
-          const primeResObj = primeRes?.data?.productDetails?.filter((item: any) => {
-            return item.productCode == "ETPR";
-          }),
-          oauthAPiResObj = primeResObj[0] || [],
-          isPrime = primeRes?.data && oauthAPiResObj?.permissions.some(function (item: any) {
+          const isPrime = primeRes?.permissions?.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("subscribed");
           });
            if(isPrime){

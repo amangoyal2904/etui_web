@@ -44,9 +44,10 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
     /* Logic to Toggle Sponser banner for Prime Group Users only */
     const ticketId = getCookie("TicketId");
     const userAccountDetails = ticketId && jStorageReact.get(`prime_${ticketId}`);
-    const sponsorPartnerCode = userAccountDetails?.subscriptionDetails?.[0]?.sponsorPartnerCode || '';
+    const sponsorPartnerCode = userAccountDetails?.subscriptionDetail?.sponsorPartnerCode || '';
     setShowSponserBanner(sponsorPartnerCode ? true : false);
-
+    console.log(sponsorPartnerCode, 'sponsorPartnerCode', userAccountDetails);
+    
     return () => {
       document.removeEventListener('mousemove', handleHoverSubSec);
     };

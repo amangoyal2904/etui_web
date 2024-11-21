@@ -439,8 +439,13 @@ export const loadPrimeApiNew = async () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const primeRes = await response.json(), // Await the JSON response
+    primeResObj = primeRes?.data?.productDetails?.filter((item: any) => {
+      return item.productCode == "ETPR";
+    }) || [], // Ensure primeResObj is an array
+    oauthAPiResObj = primeResObj[0] || [];
 
-    return response?.json();
+    return Object.assign({}, primeRes.data || {}, oauthAPiResObj, { code: primeRes?.code });
     // Handle the successful response data
   } catch (e) {
     console.log("loadPrimeApiNew: " + e);
@@ -694,15 +699,15 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
   let primeUserLoginMap:any = {};
   if (isPrime) {
     //const userData = jStorage.get('userInfo');
-  const resObj = res.productDetails.filter((item: any) => {
-    return item.productCode == "ETPR";
-  });
-  const oauthAPiRes = resObj[0];  
+  // const resObj = res.productDetails.filter((item: any) => {
+  //   return item.productCode == "ETPR";
+  // });
+  // const oauthAPiRes = resObj[0];  
   var primaryEmail = userInfo.primaryEmail ? userInfo.primaryEmail : email;
   var mobile = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile && (userInfo.mobileData.Verified.code  + '-' + userInfo.mobileData.Verified.mobile) || '';
   var emailIdStatus = userInfo.emailList && userInfo.emailList[email];
     primeUserLoginMap = {
-      expiry: oauthAPiRes.subscriptionDetail.expiryDate,
+      expiry: res.subscriptionDetail.expiryDate,
       loginId:
           primaryEmail && emailIdStatus === 'Verified'
           ? primaryEmail
