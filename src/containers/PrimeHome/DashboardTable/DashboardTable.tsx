@@ -78,11 +78,14 @@ const DashBoardTable = ({
     document.body.style.overflow = "";
   };
 
-  const onTabClick = (item: any) => {
+  useEffect(() => {
     setProcessingLoader(true);
+}, [activeTab]);
+
+const onTabClick = (item: any) => {
     setActiveTab(item?.key);
     setSelectedTab(item);
-  };
+};
 
   const updateTableData = async () => {
     const filter = !!niftyFilterData.indexId ? [niftyFilterData.indexId] : [];
@@ -165,20 +168,23 @@ const DashBoardTable = ({
             isCenter="true"
           />
           <div className={styles.stockData}>
-            {isLogin != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? (
-              tableData.map((item: any, index: any) => (
-                <DashboardStockData
-                  key={index}
-                  item={item}
-                  highlightLtp={!!currentMarketStatus && currentMarketStatus != "CLOSED"}
-                  focusArea={focusArea}
-                  wdName={wdName}
-                />
-              ))
-            ) : (
+            {isLogin != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? <>
+              {
+                tableData.map((item: any, index: any) => (
+                  <DashboardStockData
+                    key={index}
+                    item={item}
+                    highlightLtp={!!currentMarketStatus && currentMarketStatus != "CLOSED"}
+                    focusArea={focusArea}
+                    wdName={wdName}
+                  />
+                ))
+              }
+              {wdName != "My Watchlist" && <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />}
+            </> : (
               <Blocker type={wdName == "My Watchlist" ? "noStocks" : "noDataFound"} />
             ))}
-            <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />
+            {wdName == "My Watchlist" && <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />}
           </div>
         </div>
       </div>
