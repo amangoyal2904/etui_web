@@ -169,7 +169,7 @@ const onTabClick = (item: any) => {
           />
           <div className={styles.stockData}>
             {isLogin != null && !isLogin && wdName == "My Watchlist" ? <Blocker type={"loginBlocker"} /> : (tableData?.length ? <>
-              {
+              <div className="dflex dflex_wrp">{
                 tableData.map((item: any, index: any) => (
                   <DashboardStockData
                     key={index}
@@ -180,6 +180,7 @@ const onTabClick = (item: any) => {
                   />
                 ))
               }
+              </div>
               {wdName != "My Watchlist" && <ViewAllLink text={selectedTab.cta} link={`${ET_WEB_URL}${linkHref}`} />}
             </> : (
               <Blocker type={wdName == "My Watchlist" ? "noStocks" : "noDataFound"} />
@@ -202,6 +203,9 @@ const onTabClick = (item: any) => {
       <style jsx>{`
         .dflex {
           display: flex;
+        }
+        .dflex_wrp{
+          flex-wrap: wrap;
         }
         .news{
           .head_dashboard{
