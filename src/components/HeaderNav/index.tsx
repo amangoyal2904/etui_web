@@ -116,7 +116,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
           {sectionList?.map((data, index) => {
             return (
               <div key={`nav-l1-${index}`} className={`sec_1 hasSubSecnav ${styles.sec_1} ${data.hovernav ? styles.hasSubSecnav : ""}`} data-l1={data.nm} data-id={data.msid}>
-                <a className={`${((typeof data.msid != "undefined" && subsec1 == data.msid)  || (typeof data.msid == "undefined" && page == "primehome" && data.nm == "Home")) ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''} ${data.msid === '110737294' ? `${styles.marketData_i}` : ''}`} href={data.link ? data.link  : ''} data-ga-onclick={data.link}>
+                <a className={`${((typeof data.msid != "undefined" && subsec1 == data.msid)  || (typeof data.msid == "undefined" && page == "subscriberhome" && data.nm == "Home")) ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''} ${data.msid === '110737294' ? `${styles.marketData_i}` : ''}`} href={data.link ? data.link  : ''} data-ga-onclick={data.link}>
                 {/* {data.nm != 'More' && <meta content={data.nm} itemProp="name" />} */}
                 {data.nm != 'More' && data.nm}
                 {data.nm === 'More' && <img src="https://img.etimg.com/photo/msid-100067830/et-logo.jpg" width="4" height="16" alt="More" />}
@@ -147,7 +147,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
       </div>
       {subSectionList?.length > 0 && <SubSecNav subsecnames={subsecnames} subSectionList={subSectionList} />}
       {showSponserBanner && <SponserBanner />}
-      {page == "primehome" && !isWeekend && <StockTalkWidget />}
+      {page == "subscriberhome" && !isWeekend && <StockTalkWidget />}
     </>
   );
 };

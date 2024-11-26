@@ -237,7 +237,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
       {
           isPink && <div className={styles.sbr_wrap}>
             <SearchBar footerSearch={true}/>
-            {page == "home" || page == "primehome" && browseCompany()}  
+            {page == "home" || page == "subscriberhome" && browseCompany()}  
           </div>
         }
       <div className={styles.dynamicContainer}>
