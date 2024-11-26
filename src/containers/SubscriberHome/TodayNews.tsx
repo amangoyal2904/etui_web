@@ -45,7 +45,7 @@ export default function TodayNews({ todayNews, focusArea }) {
       </>
       }
 
-      { focusArea === 'market' && techNews?.data?.length > 0 && <>
+      { techNews?.data?.length > 0 && <>
         <Separator height={2}/>
         <div className="wealthTitle">{techNews?.title}</div>
         <ul>

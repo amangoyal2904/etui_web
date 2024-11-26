@@ -1,28 +1,72 @@
-import React, { useEffect, useState } from 'react'
+//@ts-nocheck
+
+import React, { useEffect, useState, useRef } from 'react'
 import HeadingWithRightArrow from './HeadingWithRightArrow';
 import Separator from 'components/Separator';
 import { ET_IMG_DOMAIN } from "utils/common";
-import useEmblaCarousel from 'embla-carousel-react';
-import {
-    PrevButton,
-    NextButton,
-    usePrevNextButtons
-  } from '../../components/CarouselArrowBtn'
 
 const WealthEditionList = () => {
     const [wealthEditionList, setWealthEditionList] = useState<any>([]);
-    const OPTIONS = {loop: true}
-    const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
+    const sliderRef = useRef(null);
+    const innerRef = useRef(null);
+    const [x, setX] = useState(0);
+    const [isPrevDisabled, setPrevDisabled] = useState(true);
+    const [isNextDisabled, setNextDisabled] = useState(false);
 
-    const {
-        prevBtnDisabled,
-        nextBtnDisabled,
-        onPrevButtonClick,
-        onNextButtonClick
-    } = usePrevNextButtons(emblaApi)
+    function onNextPrevButtonClick(type) {  
+        let scrollBy = 251  ; 
+        if(innerRef.current && sliderRef.current) {       
+            const viewportWidth = sliderRef.current.offsetWidth;
+            const innerWidth = innerRef.current.offsetWidth;
+            const scrollableWidth = innerWidth - viewportWidth;
+
+            let scrollAmount = 0;
+
+            if(type == "next"){
+                let remaingScrollableWidth = scrollableWidth + x;
+
+                if(remaingScrollableWidth < scrollBy) {
+                    scrollBy = remaingScrollableWidth;
+                }
+            }
+
+            if(type == "prev") {
+                if(-x < scrollBy) {
+                    scrollBy = -x;
+                }
+            }
+                        
+            if(type === "prev") {
+                scrollAmount = x + scrollBy;
+                setX(scrollAmount);
+            } else {
+                scrollAmount = x - scrollBy;
+                setX(scrollAmount);
+            }
+
+            if(scrollAmount < 0) {
+                setPrevDisabled(false);
+            } else {
+                setPrevDisabled(true);
+            }
+                
+            if(-scrollAmount + viewportWidth == innerWidth) {
+                setNextDisabled(true);
+            } else {
+                setNextDisabled(false);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if(innerRef.current) {
+          innerRef.current.style.transform = `translate3d(${x}px, 0px, 0px)`;      
+          innerRef.current.style.transition = `transform 0.5s ease 0s`;
+        }
+    }, [x]);
 
     const wealthEditionListApi = async () => {
-        const apilink = `https://etdev8243.indiatimes.com/wealtheditionlist_api.cms?feedtype=etjson`;
+        const apilink = `https://${window.isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/wealtheditionlist_api.cms?feedtype=etjson`;
     
         try {
             const response = await fetch(apilink);
@@ -48,14 +92,13 @@ const WealthEditionList = () => {
         <div className='wealthedition_list'>
             <Separator />
             <span className='title'></span>
-            <HeadingWithRightArrow title={`Wealth Edition`} href="https://epaper.indiatimes.com/wealth_edition.cms"/>
-            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} color={'white'} widget={`wealthEidtion`}  />
-            <div ref={emblaRef} className={`embla wdListWrp `}>
-                <ul className={`embla__container`}>
+            <HeadingWithRightArrow title={`Wealth Edition`} href="https://epaper.indiatimes.com/wealth_edition.cms"/>            
+            <div ref={sliderRef} className={`slider wdListWrp `}>
+                <ul ref={innerRef} className={`itemWrap`}>
                     {
                         wealthEditionList?.map((value, index) => {
                             return (
-                                <li  className={`embla__slide wdWrp`} key={`wealthEditionList_${index}`}>
+                                <li  className={`wdWrp`} key={`wealthEditionList_${index}`}>
                                     <a className='wdInfoWrp' target="_blank" href={`https://epaper.indiatimes.com/${value.seopath}/wealth_editionshow/${value.msid}.cms`}>
                                         <div className='editionHeading'>{index == 0 ? 'Latest Edition:' : 'Previous Edition:'}</div>
                                         <div className='editionDate'>{value?.editionDate}</div>
@@ -70,7 +113,8 @@ const WealthEditionList = () => {
                     }
                 </ul>
             </div>
-            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} color={'white'} widget={`wealthEidtion`}   />
+            <span className={`prev arr ${isPrevDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("prev")}></span>
+            <span className={`next arr ${isNextDisabled ? 'disabled' : ''}`} onClick={() => onNextPrevButtonClick("next")}></span>
         </div>
         <style jsx>{`
             .wealthedition_list{
@@ -79,6 +123,17 @@ const WealthEditionList = () => {
                 position: relative;
                 margin-top: -13px;
                 padding-bottom: 25px;
+
+                .slider {
+                    overflow: hidden;
+                    margin-top: 10px;
+                    min-height: 400px;
+                }
+
+                .itemWrap {
+                    display: inline-flex;
+                    gap: 13px;
+                }
 
                 .title {
                     border-bottom: 1px solid#9b8680;
@@ -89,15 +144,15 @@ const WealthEditionList = () => {
                     text-transform: uppercase;
 
                     &:before {
-                    content: "";
-                    left: -7px;
-                    top: 22px;
-                    position: absolute;
-                    width: 16px;
-                    height: 17px;
-                    background: url("https://img.etimg.com/photo/109967743.cms");              
-                    background-size: 500px;
-                    background-position: -395px -135px;
+                        content: "";
+                        left: -7px;
+                        top: 22px;
+                        position: absolute;
+                        width: 16px;
+                        height: 17px;
+                        background: url("https://img.etimg.com/photo/109967743.cms");              
+                        background-size: 500px;
+                        background-position: -395px -135px;
                     }
                 }
 
@@ -106,8 +161,47 @@ const WealthEditionList = () => {
                     margin-top: 18px;
                 }
 
-                .wdWrp{
-                    padding-left: 13px;
+                .arr {
+                    width: 18px;
+                    height: 18px;
+                    display: inline-block;
+                    background: #DA4617CC;
+                    border-radius: 50%;
+                    position: absolute;            
+                    cursor: pointer;
+                    pointer-events: all;
+                    top: calc(50% + 18px);   
+
+                    &.disabled {
+                        opacity: 0.4;              
+                        cursor: no-drop;
+                        pointer-events: none;
+                    }
+
+                    &:after {
+                        content: '';
+                        display: inline-block;
+                        width: 6px;
+                        height: 6px;
+                        border-top: 1px solid #fff;
+                        border-left: 1px solid #fff;
+                        transform: rotate(-45deg);
+                        position: absolute;                        
+                        left: 7px;
+                        top: 6px;                        
+                    }
+
+                    &.prev {
+                        left: 3px;                    
+                    }
+
+                    &.next {
+                        right: -7px;                    
+                        transform: rotate(180deg);
+                    }
+                }
+
+                .wdWrp{                    
                     transform: translate3d(0, 0, 0);
                     flex: 0 0 243px;
                     min-width: 0;
@@ -121,8 +215,7 @@ const WealthEditionList = () => {
                         gap: 13px;
                         border-radius: 9.31px;
                         background: #FFFFFF;
-                        max-width: 230px;
-                        // display: block;
+                        max-width: 230px;                        
                     }
 
 
