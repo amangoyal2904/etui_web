@@ -78,7 +78,7 @@ const Login = ({headertext}) => {
       const isTokenDataExist = jStorage.get('tokenDataExist');
       const primeRes = isTokenDataExist ? getStorePrimeDetial : await loadPrimeApiNew();
       
-      if (primeRes?.code === "200") {
+      if (primeRes && Object.keys(primeRes).length > 0) {
 
         // const resObj = primeRes?.productDetails.filter((item: any) => {
         //   return item.productCode == "ETPR";
@@ -151,7 +151,7 @@ const Login = ({headertext}) => {
           delete_cookie("OTR");
         }
         saveLogs({
-          type: "Mercury",
+          type: "Desktop Migration",
           res: "Fail",
           msg: "verifyLoginSuccessCallback",
           resData: primeRes,

@@ -1104,7 +1104,7 @@ export const getCurrentMarketStatus = async () => {
     }
     console.error("Error in fetching market status", errorMessage);
     saveLogs({
-      type: "Mercury",
+      type: "Desktop Migration",
       res: "error",
       msg: "Error in fetching market status",
       error: errorMessage,
