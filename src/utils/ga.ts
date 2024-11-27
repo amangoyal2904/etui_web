@@ -368,22 +368,12 @@ export const getPageName = (pageURL = "") => {
   const pagePathName = pageURL || (window && window.location.pathname);
   let pageName = "";
   let pageDetails = { pageName: "", featureName: "" };
-  if (pagePathName.includes("/stockreports")) {
-    pageName = "Stock Report";
-  } else if (pagePathName.includes("/stockreportscategory") || pagePathName.includes("/stockreports_benefits")) {
-    pageName = "Mercury_StockReportPlus";
-  } else if (pagePathName.includes("/stocks")) {
-    pageName = "Mercury_CompanyPage";
-  } else if (pagePathName.includes("/default")) {
+  if (pagePathName.includes("/default")) {
     pageName = "homepage";
-  } else if (pagePathName.includes("/print_edition")) {
-    pageName = "HP_ePaper_Print";
   } else if (pagePathName.includes("/etgrandmasters")) {
     pageName = "Grandmaster";
   } else if (pagePathName.includes("/videoshow")) {
     pageName = "videoshow";
-  } else if (pagePathName.includes("/articleshow_exclusive") || pagePathName.includes("/articleshow_exclusive2")) {
-    pageName = "Premium";
   } else if (pagePathName.includes("/articleshow")) {
     pageName = "articleshow";
   } else {
@@ -399,7 +389,7 @@ export const updateGtm = (_gtmEventDimension, prevPath) => {
     const pageElem = window.location.pathname.split("/");
     let site_section = pagePathName.slice(1);
     let lastSlash = site_section.lastIndexOf("/");
-    _gtmEventDimension["feature_name"] = getPageName().replace("Mercury_", "");
+    _gtmEventDimension["feature_name"] = getPageName();
     _gtmEventDimension["site_section"] =
       site_section.indexOf("/") == -1
         ? site_section.substring(site_section.indexOf("/") + 1)
@@ -529,7 +519,7 @@ export const generateGrxFunnel = (prevPath) => {
         ? getUserType(window.objUser.permissions)
         : "Free User";
     objGrx["dimension145"] = getPageName();
-    objGrx["dimension148"] = getPageName().replace("Mercury_", "");
+    objGrx["dimension148"] = getPageName();
     objGrx["dimension149"] = "";
     objGrx["dimension150"] =
       typeof window.objUser != "undefined" && window.objUser?.ssoid
@@ -553,7 +543,7 @@ export const generateCDPPageView = (prevPath, redirect) => {
     const arr = pageElem.shift();
     let site_section = pagePathName.slice(1);
     let lastSlash = site_section.lastIndexOf("/");
-    cdpObj["feature_name"] = getPageName().replace("Mercury_", "");
+    cdpObj["feature_name"] = getPageName();
     cdpObj["level_1"] = pageElem[0] != undefined ? pageElem[0] : "";
     cdpObj["level_2"] = pageElem[1] != undefined ? pageElem[1] : "";
     cdpObj["level_3"] = pageElem[2] != undefined ? pageElem[2] : "";
@@ -614,7 +604,7 @@ export const generateCDPPageView = (prevPath, redirect) => {
     cdpObj["business"] = "et";
     cdpObj["embedded"] = "";
     cdpObj["paywalled"] = "n";
-    cdpObj["product"] = "mercury";
+    cdpObj["product"] = "et";
     cdpObj["client_source"] = "cdp";
     cdpObj["dark_mode"] = "n";
     cdpObj["monetizable"] =
