@@ -33,8 +33,8 @@ const blockerList: any = {
   },
   noStocks: {
     id: 3,
-    message: "Looks like your watchlist is empty",
-    submessage: "Add stocks to get personalised alerts",
+    message: "No Stocks Yet!",
+    submessage: "Add your favorite stocks to track their performance easily.",
     cta: "Add Stocks Now",
     action: "",
     icon: 114656418,
