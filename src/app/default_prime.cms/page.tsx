@@ -1,7 +1,7 @@
 import { headers, cookies } from 'next/headers';
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
-import PrimeHome from 'containers/PrimeHome';
+import SubscriberHome from 'containers/SubscriberHome';
 
 
 export default async function Page({ params }: {
@@ -44,8 +44,8 @@ export default async function Page({ params }: {
   }
   const pageSeo = response?.seo || {};
   const versionControl = response?.searchResult?.find(item => item?.name === "common_config")?.data || {};
-  return  <Layout page="primehome" className="layout1260" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV} siteCurrentTime={siteCurrentTime}>          
-    <PrimeHome {...response} objVc={versionControl} isprimeuser={isprimeuser} isDev={isDev} ssoid={ssoid} />
+  return  <Layout page="subscriberhome" className="layout1260" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV} siteCurrentTime={siteCurrentTime}>          
+    <SubscriberHome {...response} objVc={versionControl} isprimeuser={isprimeuser} isDev={isDev} ssoid={ssoid} />
   </Layout>;
 }
 

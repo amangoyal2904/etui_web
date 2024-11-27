@@ -682,7 +682,7 @@ export const initSSOWidget = () => {
 
 export const currPageType = () =>  {
   let type = 'home_page';
-  const tpNameListArr = ['articlelist','primehome','markets','newshome','politicsnation','personalfinance','mutual_funds','techhome','opinionshome','nri','panache','videohome']
+  const tpNameListArr = ['articlelist','subscriberhome','markets','newshome','politicsnation','personalfinance','mutual_funds','techhome','opinionshome','nri','panache','videohome']
   const pn = window.location.pathname;
 
   if(pn.includes('articleshow')) {

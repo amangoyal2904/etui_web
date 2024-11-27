@@ -28,9 +28,9 @@ const EditionTimeStamp = ({ APP_ENV, page, siteCurrentTime }) => {
               <a className={styles.edHin} target="_blank" rel="noopener dofollow noreferrer" href="https://telugu.economictimes.com/?utm_source=logo&utm_medium=referral&utm_campaign=et">తెలుగు</a>
           </span>
         </div>
-        <span className={`${page == "home" || page == "primehome" ? '' : styles.hide}`}> | </span>
+        <span className={`${page == "home" || page == "subscriberhome" ? '' : styles.hide}`}> | </span>
         {
-          (page == "home" || page == "primehome") && <time suppressHydrationWarning={true}>{siteDateTime}</time>
+          (page == "home" || page == "subscriberhome") && <time suppressHydrationWarning={true}>{siteDateTime}</time>
         }
         <span> | </span>
         <div>
@@ -43,7 +43,7 @@ const EditionTimeStamp = ({ APP_ENV, page, siteCurrentTime }) => {
 const getETLogo = (page) => {
   switch(page){
     case "home":
-    case "primehome":  
+    case "subscriberhome":  
       return {etLogo: LOGO.ethomelogo, etLogoWidth: 464, etLogoHeight: 51}
     case "articleshow":
     case "primearticleshow": 

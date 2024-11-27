@@ -23,7 +23,7 @@ import jStorage from "jstorage-react";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import { getCookie } from "../../utils"
 
-function PrimeHome({ searchResult, isDev, ssoid, objVc}) {  
+function SubscriberHome({ searchResult, isDev, ssoid, objVc}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
   const marketExpertViews = searchResult?.find(item => item?.name === "market_expert_views") || {};
   const marketLiveblog = searchResult?.find(item => item?.name === "market_liveblog") || {};
@@ -160,4 +160,4 @@ function PrimeHome({ searchResult, isDev, ssoid, objVc}) {
   )
 }
 
-export default PrimeHome;
+export default SubscriberHome;
