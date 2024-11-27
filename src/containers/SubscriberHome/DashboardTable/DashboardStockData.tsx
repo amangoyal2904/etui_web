@@ -30,9 +30,9 @@ const DashboardStockData = ({ item, highlightLtp, focusArea, wdName }: any) => {
   const percentChange = item?.data?.find(item => item.keyId == "percentChange")?.value;
   const percentChange_trend = item?.data?.find(item => item.keyId == "percentChange")?.trend;
   const netChange = item?.data?.find(item => item.keyId == "netChange")?.value;
-  const sr_targetVsCurrent = item?.data?.find(item => item.keyId == "sr_targetVsCurrent")?.value;
+  const sr_targetVsCurrent = item?.data?.find(item => item.keyId == "sr_targetVsCurrent")?.value || "NA";
   const sr_targetVsCurrent_trend = item?.data?.find(item => item.keyId == "sr_targetVsCurrent")?.trend;
-  const sr_avgScore = item?.data?.find(item => item.keyId == "sr_avgScore")?.value;
+  const sr_avgScore = item?.data?.find(item => item.keyId == "sr_avgScore")?.value || "NA";
   const colorCls = percentChange_trend;
 
   return (
@@ -126,7 +126,7 @@ const DashboardStockData = ({ item, highlightLtp, focusArea, wdName }: any) => {
                     ? "green"
                     : sr_targetVsCurrent_trend == "down"
                       ? "red"
-                      : ""}`}>{sr_targetVsCurrent}</span>
+                      : "naCase"}`}>{` ${sr_targetVsCurrent}`}</span>
             </> : <span className="s_line_text pointer" onClick={gotoPlanPage}>Upgrade to Prime</span>}</div>
           </div>
           <p className={`numberFonts ${colorCls} ${styles.change} dflex align-items-center`}>
@@ -184,6 +184,10 @@ const DashboardStockData = ({ item, highlightLtp, focusArea, wdName }: any) => {
 
         .green{
             color: #147014;
+        }
+
+        .naCase{
+          margin-left: 3px;
         }
         .arrow_sprite{
           background-image: url("https://img.etimg.com/photo/109967743.cms");
