@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import { formatNumber, chartIntervals, durationOptions } from 'utils/market';
 import HeadingWithRightArrow from '../HeadingWithRightArrow';
 import { dateFormat } from 'utils/utils';
 import { ET_WEB_URL } from 'utils/common';
 import { fireTracking, trackingEvent } from 'utils/ga';
+import useIntervalApiCall from 'utils/useIntervalApiCall';
 
 export default function IndicesWidget({ isDev, focusArea }) {
   const [indicesData, setIndicesData]: any = useState([]);
@@ -12,17 +13,16 @@ export default function IndicesWidget({ isDev, focusArea }) {
   const [period, setPeriod] = useState("1d");
   const [changePeriod, setChangePeriod] = useState("netChange");
   const [percentChange, setPercentChange] = useState("percentChange");
-  const [chartURL, setChartURL] = useState("");
-  // const [asOnDate, setAsOnDate] = useState("");
+  const [chartURL, setChartURL] = useState("");  
 
+  const indicesDivRef = useRef(null);
   const howMany = focusArea == "news" ? 3 : 6;
 
   function getIndicesData() {
     fetch('https://etapi.indiatimes.com/et-screener/index-byid?indexids=2369,2365,2371,1913,186,13602')
     .then(response => response.json())
     .then(data => {
-      setIndicesData(data);
-      // console.log('Success:', data);
+      setIndicesData(data);      
     })
     .catch(error => {
       console.error('Error:', error);
@@ -35,6 +35,10 @@ export default function IndicesWidget({ isDev, focusArea }) {
   useEffect(() => {
     getIndicesData();
   }, []);
+
+  useIntervalApiCall(() => {
+    getIndicesData();
+  }, 7000, [], indicesDivRef);
 
   useEffect(() => {
 
@@ -51,7 +55,7 @@ export default function IndicesWidget({ isDev, focusArea }) {
   }
   return (
     <>
-      <div className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Market Indices widget impression#`}>
+      <div ref={indicesDivRef} className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Market Indices widget impression#`}>
         <div className={styles.top}>
           <HeadingWithRightArrow title="Indices" href="/markets/indices"/>
           <span className="statusNDate">
