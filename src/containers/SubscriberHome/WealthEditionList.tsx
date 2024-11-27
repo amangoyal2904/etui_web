@@ -14,49 +14,52 @@ const WealthEditionList = () => {
     const [isNextDisabled, setNextDisabled] = useState(false);
 
     function onNextPrevButtonClick(type) {  
-        let scrollBy = 251  ; 
+        let scrollBy = 250; 
         if(innerRef.current && sliderRef.current) {       
-            const viewportWidth = sliderRef.current.offsetWidth;
-            const innerWidth = innerRef.current.offsetWidth;
-            const scrollableWidth = innerWidth - viewportWidth;
-
-            let scrollAmount = 0;
-
-            if(type == "next"){
-                let remaingScrollableWidth = scrollableWidth + x;
-
-                if(remaingScrollableWidth < scrollBy) {
-                    scrollBy = remaingScrollableWidth;
-                }
+          const viewportWidth = sliderRef.current.offsetWidth;
+          const innerWidth = innerRef.current.offsetWidth;          
+    
+          const scrollableWidth = innerWidth - viewportWidth;          
+          let scrollAmount = 0;
+    
+          if(type == "next"){
+            let remaingScrollableWidth = scrollableWidth + x;
+    
+            if(remaingScrollableWidth < scrollBy) {
+              scrollBy = remaingScrollableWidth;
             }
-
-            if(type == "prev") {
-                if(-x < scrollBy) {
-                    scrollBy = -x;
-                }
+          }
+    
+          if(type == "prev") {
+            if(-x < scrollBy) {
+              scrollBy = -x;
             }
-                        
-            if(type === "prev") {
-                scrollAmount = x + scrollBy;
-                setX(scrollAmount);
-            } else {
-                scrollAmount = x - scrollBy;
-                setX(scrollAmount);
-            }
-
-            if(scrollAmount < 0) {
-                setPrevDisabled(false);
-            } else {
-                setPrevDisabled(true);
-            }
-                
-            if(-scrollAmount + viewportWidth == innerWidth) {
-                setNextDisabled(true);
-            } else {
-                setNextDisabled(false);
-            }
+          }
+          
+          // debugger
+          if(type === "prev") {
+            scrollAmount = x + scrollBy;
+            setX(scrollAmount);
+          } else {
+            scrollAmount = x - scrollBy;
+            setX(scrollAmount);
+          }          
+    
+          if(scrollAmount < 0) {
+            setPrevDisabled(false);
+          } else {
+            setPrevDisabled(true);
+          }
+    
+          // debugger;
+          if(-scrollAmount + viewportWidth == innerWidth) {
+            setNextDisabled(true);
+          } else {
+            setNextDisabled(false);
+          }
+    
         }
-    }
+      }
 
     useEffect(() => {
         if(innerRef.current) {
@@ -202,12 +205,12 @@ const WealthEditionList = () => {
                 }
 
                 .wdWrp{                    
-                    transform: translate3d(0, 0, 0);
-                    flex: 0 0 243px;
+                    transform: translate3d(0, 0, 0);                    
                     min-width: 0;
                     list-style: none;
                     display: flex;
                     gap: 13px;
+                    width: 243px;
 
                     .wdInfoWrp{
                         border: 1px solid #C99F8E;
