@@ -7,10 +7,13 @@ import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
 import { ET_WEB_URL } from 'utils/common';
 import PrimeIcon from 'components/Icons/PrimeIcon';
+import Loading from 'components/Loading';
 
 export default function StockReportPlus({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
+  const [fetchingData, setFetchingData] = useState(false);
+
   const tabs = ["High Upside", "Top Score Companies", "Score Upgrade"];
   const tabLinks = [
     "/markets/stockreportsplus/high-upside/stockreportscategory/screenerid-2554.cms",
@@ -102,6 +105,7 @@ export default function StockReportPlus({ focusArea }) {
       filterValue: [],
     };
 
+    setFetchingData(true);
     fetch(api, {
       method: "POST",
       headers: {
@@ -116,6 +120,8 @@ export default function StockReportPlus({ focusArea }) {
       })
       .catch((error) => {
         console.error("Error:", error);
+      }).finally(() => {
+        setFetchingData(false);
       });
 
     setX(0);
@@ -141,8 +147,9 @@ export default function StockReportPlus({ focusArea }) {
         ></span>
 
         <div className="slider" ref={sliderRef}>
-          <div className="cardsWrapper" ref={innerRef}>
-          {data?.dataList?.slice(0, howMany)?.map((item, index) => {
+          <div className="cardsWrapper" ref={innerRef} style={fetchingData ? {width: "100%"} : {}}>
+          {fetchingData && <Loading />}
+          {!fetchingData && data?.dataList?.slice(0, howMany)?.map((item, index) => {
             const expectedReturn = item?.data?.find((d: any) => d?.keyId === "sr_targetVsCurrent") || {};
             const target = item?.data?.find((d: any) => d?.keyId === "sr_priceTargetMean") || {};
             const currentPrice = item?.data?.find((d: any) => d?.keyId === "lastTradedPrice") || {};
@@ -231,7 +238,8 @@ export default function StockReportPlus({ focusArea }) {
         }
         .cardsWrapper {
           display: inline-flex;
-          flex-direction: column;                
+          flex-direction: column;  
+          min-height: 186px;              
         }
         .card {          
           position: relative;          
@@ -243,7 +251,7 @@ export default function StockReportPlus({ focusArea }) {
           display: flex;
           gap: 10px;
           box-sizing: border-box;
-          width: 320px;
+          width: 320px;          
 
           .left {
             flex: 1;

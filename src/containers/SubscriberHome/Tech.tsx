@@ -224,7 +224,7 @@ function MarketChange({ niftyITData }) {
         <span>{compnData.netChange} ({compnData.perChange}%)</span>
         </span>
       </h5>
-      <iframe className="lazyIframe" style={{border: 'none'}} width="246" height="139" src="https://etdev8243.indiatimes.com/renderchart.cms?type=index&symbol=CNXIT&exchange=50&height=139&reverseaxis=0&transparentBg=1"></iframe>
+      <iframe className="lazyIframe" style={{border: 'none'}} width="246" height="139" src={`https://${window.isDev ? 'etdev8243' : 'economictimes'}.indiatimes.com/renderchart.cms?type=index&symbol=CNXIT&exchange=50&height=139&reverseaxis=0&transparentBg=1`}></iframe>
       <div className="dataTable">
         {compnData?.companies?.map((data, index) => (
           <div className="dataTableBox" key={`niftyITCompany_${index}`}>

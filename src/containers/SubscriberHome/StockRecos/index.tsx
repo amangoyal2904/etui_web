@@ -1,20 +1,22 @@
 // @ts-nocheck
-import RightArrow from 'components/Icons/RightArrow';
 import styles from './styles.module.scss';
 import HeadingWithRightArrow from '../HeadingWithRightArrow';
-import { useState, useEffect, useRef, act } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Tabs from '../Tabs';
 import ViewAllCta from '../ViewAllCta';
 import ViewReportCta from '../ViewReportCta';
 import API_CONFIG from '../../../network/config.json';
 import { ET_WEB_URL } from 'utils/common';
 import { dateFormat } from 'utils/utils';
+import { formatNumber } from 'utils/market';
 import WatchlistAddition from "components/WatchlistAddition";
+import Loading from 'components/Loading';
 
 export default function StockRecos({ focusArea }) {
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData]: any = useState([]);
-  const tabs = ["New Recos", "Most Buys", "Most Sells"];
+  const [fetchingData, setFetchingData] = useState(false);
+  const tabs = ["New Recos", "High Upside", "High Downside"];
 
   const tabLinks = [
     "/markets/stock-recos/newrecos/all",
@@ -102,6 +104,7 @@ export default function StockRecos({ focusArea }) {
       apiVersion: 2
     };
 
+    setFetchingData(true);
     fetch(api, {
       method: "POST",
       headers: {
@@ -115,6 +118,8 @@ export default function StockRecos({ focusArea }) {
       })
       .catch((error) => {
         console.error("Error:", error);
+      }).finally(() => {
+        setFetchingData(false);
       });
 
     setX(0);
@@ -140,11 +145,13 @@ export default function StockRecos({ focusArea }) {
         ></span>
 
         <div className="slider" ref={sliderRef}>
-          <div className="cardsWrapper" ref={innerRef}>
+          <div className="cardsWrapper" ref={innerRef} style={fetchingData ? {width: "100%"} : {}}>
+            {fetchingData && <Loading />}
             {
+              !fetchingData &&
               data?.slice(0, howMany)?.map((item, index) => (
                 <div className={`${styles.card} card`} key={index}>
-                  { activeTab == 0 && <div className={styles.firstRow}><span className={styles.cat}>{item?.recoType}</span> | Call Date: {dateFormat(item?.priceAtRecosDate || "", "%MMM %d, %Y")}</div>}
+                  { activeTab == 0 && <div className={styles.firstRow}><span className={`${styles.cat} ${item?.potentialDirection?.toLowerCase() == 'down' ? 'catdown' : '' }`}>{item?.recoType}</span> | Call Date: {dateFormat(item?.priceAtRecosDate || "", "%MMM %d, %Y")}</div>}
                   <div className={`${styles.title} ${activeTab > 0 ? styles['thisTop'] : ''} ${activeTab > 0 ? 'thisTop' : ''}`}>
                     <a href={`${ET_WEB_URL}/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank"  data-ga-onclick={`Subscriber Homepage#Stock Recos click#${item?.companyName}`}>{item?.companyName}</a>
                     <span className={styles.watchlistIcWrp}>
@@ -160,26 +167,26 @@ export default function StockRecos({ focusArea }) {
                     </span>
                   </div>
                   <div className={styles.row}>
-                    <div className={`${styles.col} ${styles.up} ${activeTab == 2 ? 'down' : ''}`}>
+                    <div className={`${styles.col} ${styles.up} ${activeTab == 2 || item?.potentialDirection?.toLowerCase() == 'down' ? 'down' : ''}`}>
                       {item?.potentialText}
-                      <span className={`${styles.number} ${activeTab == 2 ? 'red' : ''}`}>{item?.potentialValue}%</span>
+                      <span className={`${styles.number} ${activeTab == 2 || item?.potentialDirection?.toLowerCase() == 'down' ? 'red' : ''}`}>{item?.potentialValue}%</span>
                     </div>
                     { activeTab == 0 && <>
                       <div className={styles.col}>
                         <span>
                         Target
-                        <span className="bold">{item?.target}</span>
+                        <span className="bold">{formatNumber(item?.target || 0)}</span>
                         </span>
                         
                         <span>
                           Price @ Recos
-                          <span>{item?.priceAtRecos}</span>
+                          <span>{formatNumber(item?.priceAtRecos || 0)}</span>
                         </span>
                       </div>
                       <div className={styles.col}>
                         <span className={styles.first}>
                           Current Price
-                          <span>{item?.currentPrice}</span>
+                          <span>{formatNumber(item?.currentPrice || 0)}</span>
                         </span>
                         <ViewReportCta url={item?.pdfUrl} widget="Stock Recos"/>
                       </div>  
@@ -215,8 +222,7 @@ export default function StockRecos({ focusArea }) {
                     </div>
                   }
                 </div>
-              ))
-              
+              ))              
             }
           </div>
         </div>
@@ -229,11 +235,16 @@ export default function StockRecos({ focusArea }) {
             display: none;
           }
         }
+
+        .catdown {
+          color: #d51131;
+        }
         .market {
           position: relative;
           .cardsWrapper {
             display: inline-flex;
-            gap: 20px;            
+            gap: 20px;       
+            min-height: 157px;     
 
             .card {
               min-width: 320px;
