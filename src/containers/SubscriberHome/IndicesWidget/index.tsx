@@ -55,7 +55,7 @@ export default function IndicesWidget({ isDev, focusArea }) {
   }
   return (
     <>
-      <div ref={indicesDivRef} className={`${focusArea}`} data-ga-impression={`Subscriber Homepage#Market Indices widget impression#`}>
+      <div ref={indicesDivRef} className={`indices ${focusArea}`} data-ga-impression={`Subscriber Homepage#Market Indices widget impression#`}>
         <div className={styles.top}>
           <HeadingWithRightArrow title="Indices" href="/markets/indices"/>
           <span className="statusNDate">
@@ -149,6 +149,9 @@ export default function IndicesWidget({ isDev, focusArea }) {
         </div>
       </div>    
       <style jsx>{`
+        .indices {
+          min-height: 385px;
+        }
         .numberFonts {
           font-size: 10.5px;
           font-weight: 500;

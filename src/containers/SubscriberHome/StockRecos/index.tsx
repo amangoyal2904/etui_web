@@ -151,7 +151,7 @@ export default function StockRecos({ focusArea }) {
               !fetchingData &&
               data?.slice(0, howMany)?.map((item, index) => (
                 <div className={`${styles.card} card`} key={index}>
-                  { activeTab == 0 && <div className={styles.firstRow}><span className={`${styles.cat} ${item?.potentialDirection?.toLowerCase() == 'down' ? 'catdown' : '' }`}>{item?.recoType}</span> | Call Date: {dateFormat(item?.priceAtRecosDate || "", "%MMM %d, %Y")}</div>}
+                  { activeTab == 0 && <div className={styles.firstRow}><span className={`${styles.cat} ${item?.recoTypeColour?.toLowerCase()}`}>{item?.recoType}</span> | Call Date: {dateFormat(item?.priceAtRecosDate || "", "%MMM %d, %Y")}</div>}
                   <div className={`${styles.title} ${activeTab > 0 ? styles['thisTop'] : ''} ${activeTab > 0 ? 'thisTop' : ''}`}>
                     <a href={`${ET_WEB_URL}/${item?.companySeoName}/stocks/companyid-${item?.companyId}.cms`} target="_blank"  data-ga-onclick={`Subscriber Homepage#Stock Recos click#${item?.companyName}`}>{item?.companyName}</a>
                     <span className={styles.watchlistIcWrp}>
@@ -197,11 +197,11 @@ export default function StockRecos({ focusArea }) {
                       activeTab > 0 && <div className={`${styles.col} innerRow`}>
                         <span>
                           Avg. Target
-                          <span className="bold">{item?.target}</span>
+                          <span className="bold">{formatNumber(item?.target || 0)}</span>
                         </span>
                         <span>
                           Current Price
-                          <span>{item?.currentPrice}</span>
+                          <span>{formatNumber(item?.currentPrice || 0)}</span>
                         </span>
                       </div>
                     }
@@ -239,8 +239,14 @@ export default function StockRecos({ focusArea }) {
           }
         }
 
-        .catdown {
+        .red {
           color: #d51131;
+        }
+        .green {
+          color: #009060;
+        }
+        .grey {
+          color: #4d4d4d;
         }
         .market {
           position: relative;
