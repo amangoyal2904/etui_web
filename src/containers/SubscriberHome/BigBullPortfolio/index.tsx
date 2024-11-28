@@ -166,7 +166,8 @@ export default function BigBullPortfolio({ focusArea }) {
         <div className="slider" ref={sliderRef}>
           <div className="cards" ref={innerRef} style={fetchingData ? {width: "100%"} : {}}>
             {fetchingData && <Loading />}
-            {portfolios?.map((item, index) => (
+            { !fetchingData &&
+             portfolios?.map((item, index) => (
               activeTab == 2 ? <AllInvestorsCard item={item} key={index} /> : <BestPicksRecentDealsCard item={item} key={index} activeTab={activeTab} />
             ))}
           </div>
@@ -179,7 +180,7 @@ export default function BigBullPortfolio({ focusArea }) {
             display: none;
           }
 
-          &.cards {
+          .cards {
             min-height: 350px;
           }
         } 

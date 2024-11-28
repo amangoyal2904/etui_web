@@ -150,6 +150,11 @@ export default function StockReportPlus({ focusArea }) {
           <div className="cardsWrapper" ref={innerRef} style={fetchingData ? {width: "100%"} : {}}>
           {fetchingData && <Loading />}
           {!fetchingData && data?.dataList?.slice(0, howMany)?.map((item, index) => {
+
+            if(activeTab > 0) {
+              return <TopScoreCompaniesScoreUpgradeCard item={item}/>;
+            }
+
             const expectedReturn = item?.data?.find((d: any) => d?.keyId === "sr_targetVsCurrent") || {};
             const target = item?.data?.find((d: any) => d?.keyId === "sr_priceTargetMean") || {};
             const currentPrice = item?.data?.find((d: any) => d?.keyId === "lastTradedPrice") || {};
@@ -231,6 +236,9 @@ export default function StockReportPlus({ focusArea }) {
         .news {
           .arr {
             display: none;
+          }
+          .cardsWrapper {
+            min-height: 422px;
           }
         }       
         .slider {
@@ -412,6 +420,277 @@ export default function StockReportPlus({ focusArea }) {
             gap: 20px;            
           }          
         }      
+      `}</style>
+    </>
+  )
+}
+
+function TopScoreCompaniesScoreUpgradeCard({item}) {  
+  const prevScore = item?.data?.find((d: any) => d?.keyId === "sr_avgScore3m")?.value?.split(".")[0];
+  const avgScore = item?.data?.find((d: any) => d?.keyId === "sr_avgScore")?.value?.split(".")[0];
+
+  const earnings = item?.data?.find((d: any) => d?.keyId === "sr_analystScore")?.value?.split(".")[0];  
+  const fundamentals = item?.data?.find((d: any) => d?.keyId === "sr_fundScore")?.value?.split(".")[0];
+  const relativeValuation = item?.data?.find((d: any) => d?.keyId === "sr_rvScore")?.value?.split(".")[0];
+  const risk = item?.data?.find((d: any) => d?.keyId === "sr_riskScore")?.value?.split(".")[0];
+  const priceMomentum = item?.data?.find((d: any) => d?.keyId === "sr_techScore")?.value?.split(".")[0];
+
+  const metrics = [
+    {
+      title: "Earnings",
+      value: earnings
+    },
+    {
+      title: "Fundamentals",
+      value: fundamentals
+    },
+    {
+      title: "Relative Valuation",
+      value: relativeValuation
+    },
+    {
+      title: "Risk",
+      value: risk
+    },
+    {
+      title: "Price Momentum",
+      value: priceMomentum
+    }
+  ];
+
+  return (
+    <>
+      <div className="card">
+        <div className="companyName">
+          <a href={`${ET_WEB_URL}/${item?.seoName}/stocks/companyid-${item?.companyID}.cms`} target="_blank">
+            {item?.name || ""}
+          </a>
+        </div>
+        <div className="middle">
+          <div className="left">
+            <a className="scorebox" title="Stock Score" href={`${ET_WEB_URL}/${item?.seoName}/stockreports/reportid-${item?.companyID}.cms`} target="_blank">
+              <div className="score">
+                <span className="big">{avgScore}</span>
+                <span className="slash">/</span>
+                10
+              </div>
+              <div className="label">Stock Score</div>
+              <div className="pdf"><span className="icon"></span> View Report</div>
+            </a>
+            <div className="colorIndicators">
+              <div>
+                <span className="color nr"></span>
+                <span>No Rating (NR)</span>
+              </div>
+              <div>
+                <span className="color negative"></span>
+                <span>Negative</span>
+              </div>
+              <div>
+                <span className="color neutral"></span>
+                <span>Neutral</span>
+              </div>
+              <div>
+                <span className="color positive"></span>
+                <span>Positive</span>
+              </div>
+            </div>
+          </div>
+          <div className="right">
+            <div className="metricWrap">
+              {/* <div className="label">Earnings</div>
+              <div className="metric">
+                <span className="value">8</span>
+              </div> */}
+              {
+                metrics.map((metric, index) => (
+                  <div className="metricWrap" key={index}>
+                    <div className="label">{metric.title}</div>
+                    <div className="metric">
+                      <span className="value" style={{left: `${(metric.value / 10) * 100}%`}}>{metric.value}</span>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+        <div className="prevScore">Previous Score: <strong>{prevScore}/10</strong></div>
+      </div>
+      <style jsx>{`
+        .card {
+          position: relative;
+          border: 1px solid #d5d5d5;          
+          border-radius: 8px;
+          padding: 10px;
+          padding-bottom: 30px;
+          background: #fff;
+          margin: 10px 0;                                      
+          box-sizing: border-box;
+          width: 320px;
+
+          .companyName {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.25;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          .middle {
+            display: flex;
+            gap: 20px;
+
+            .right {
+              flex: 1;
+            }
+
+            .metricWrap {
+              margin-top: 10px;
+
+              .label {
+                font-size: 12px;
+                font-weight: 500;
+                display: inline-block;
+                padding-bottom: 4px;
+              }
+
+              .metric {
+                background-image: linear-gradient(90deg,#9a9cc3,#ec4843 15%,#f3a655 35%,#b7b7b7 50%,#ccc 65%,#56bc7c 95%,#3d8b87);
+                height: 6px;
+                width: 100%;
+                position: relative;
+
+                .value {
+                  display: inline-flex;
+                  justify-content: center;
+                  align-items: center;
+                  position: absolute;
+                  width: 20px;
+                  height: 20px;
+                  font-weight: 600;
+                  line-height: 16px;
+                  background: #b2b2b2;
+                  border: 1px solid #fff;
+                  border-radius: 2px;
+                  color: #fff;                  
+                  top: -7px;
+                  text-align: center;
+                  margin-left: -14px;
+                }
+              }
+            }
+          }
+
+          .scorebox {
+            display: inline-block;            
+            position: relative;
+            background: url('https://img.etimg.com/photo/msid-106122142/score-box.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            text-align: center;
+            padding: 0;
+            margin-top: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            width: 99px;
+            height: 74px;
+
+            .score {
+              font-size: 12px;
+              font-weight: 500;
+
+              .big {
+                font-size: 30px;
+                font-weight: 400;
+              }
+
+              .slash {
+                font-size: 20px;
+              }              
+            }
+
+            .label {
+              font-size: 8px;
+              font-weight: 400;
+              line-height: 1.5;
+              text-transform: uppercase;
+            }
+
+            .pdf {
+              font-size: 10px;
+              background: #183651;
+              color: #fff;
+              padding: 3px 0 3px 18px;           
+              border-bottom-right-radius: 8px;
+              border-bottom-left-radius: 8px;
+              margin-top: 10px; 
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+
+              .icon {
+                left: 4px;
+                top: -4px;
+                position: absolute;
+                width: 11px;
+                height: 12px;
+                background: url("https://img.etimg.com/photo/109967743.cms");
+                -webkit-background-size: 500px;
+                -moz-background-size: 500px;
+                -o-background-size: 500px;
+                background-size: 500px;
+                background-position: -107px -374px;
+                zoom: 1.5;
+              }
+            }
+          }
+
+          .colorIndicators {
+            font-size: 10px;
+            margin-top: 20px;
+
+            > div {
+              margin: 8px 0;
+            }
+
+            .color {
+              width: 6px;
+              height: 6px;
+              display: inline-block;
+              border-radius: 50%;
+              margin-right: 2px;              
+            }
+            .nr {
+              background: #53568f;
+            }
+            .negative {
+              background: #ed193b;
+            }
+            .neutral {
+              background: #b2b2b2;
+            }
+            .positive {
+              background: #009060;
+            }            
+          }
+
+          .prevScore {
+            background: #f8f8f8;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 5px 15px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 12px;
+          }
+        }
       `}</style>
     </>
   )
