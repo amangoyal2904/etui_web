@@ -152,7 +152,7 @@ export default function StockReportPlus({ focusArea }) {
           {!fetchingData && data?.dataList?.slice(0, howMany)?.map((item, index) => {
 
             if(activeTab > 0) {
-              return <TopScoreCompaniesScoreUpgradeCard item={item}/>;
+              return <TopScoreCompaniesScoreUpgradeCard item={item} key={index} />
             }
 
             const expectedReturn = item?.data?.find((d: any) => d?.keyId === "sr_targetVsCurrent") || {};
@@ -498,10 +498,6 @@ function TopScoreCompaniesScoreUpgradeCard({item}) {
           </div>
           <div className="right">
             <div className="metricWrap">
-              {/* <div className="label">Earnings</div>
-              <div className="metric">
-                <span className="value">8</span>
-              </div> */}
               {
                 metrics.map((metric, index) => (
                   <div className="metricWrap" key={index}>
