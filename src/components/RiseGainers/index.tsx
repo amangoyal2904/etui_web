@@ -55,15 +55,15 @@ const MarketGainers = ({ isDev }) => {
         <div className={styles.marketChangeMain}>
           <h3 className={styles.marketChangeTitle}>
             <span className={styles.h_name}>{activeSlide === "gainer" ? "Gainers" : "Losers"}</span>
-            <div className={`${styles.btn_wrp}, ${styles.flr}`}>
+            <div className={`${styles.btn_wrp} ${styles.flr}`}>
               <span
-                className={`${styles.ar_btn}, ${styles.gl_prev}`}
+                className={`${styles.ar_btn} ${styles.gl_prev} ${activeSlide === "gainer" ? styles.disabled : ""}`}
                 onClick={() => {
                   setSlide("gainer");
                 }}
               ></span>
               <span
-                className={`${styles.ar_btn}, ${styles.gl_next}`}
+                className={`${styles.ar_btn} ${styles.gl_next} ${activeSlide === "loser" ? styles.disabled : ""}`}
                 onClick={() => {
                   setSlide("loser");
                 }}

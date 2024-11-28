@@ -78,13 +78,12 @@ const Login = ({headertext}) => {
       const refreshFlag = window.localStorage && localStorage.getItem("etsub_refreshTokenFlag");
 
       if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
-        document.body.classList.add("isprimeuser");
         window.objUser.isPink = true;
         window.objUser.isPink && document.body.classList.add("isprimeuser");
         dispatch({
-          type: "LOGIN_SUCCESS",
+          type: "SETPINKTHEME",
           payload: {
-            isPink: window.objUser.isPink
+            isPink: true
           },
         });
       }
@@ -100,44 +99,50 @@ const Login = ({headertext}) => {
       const isTokenDataExist = jStorage.get('tokenDataExist');
       const primeRes = isTokenDataExist ? getStorePrimeDetial : await loadPrimeApiNew();
       
-      if (primeRes?.code === "200") {
-        const resObj = primeRes?.data.productDetails.filter((item: any) => {
-          return item.productCode == "ETPR";
-        });
-        const oauthAPiRes = resObj[0];
-        const isPrime =
-          primeRes.data &&
-          oauthAPiRes.permissions.some(function (item: any) {
+      if (primeRes && Object.keys(primeRes).length > 0) {
+
+        // const resObj = primeRes?.productDetails.filter((item: any) => {
+        //   return item.productCode == "ETPR";
+        // });
+        // const oauthAPiRes = resObj[0];
+        const isPrime = primeRes?.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("subscribed");
           });
-        const isExpired =
-          primeRes?.data &&
-          oauthAPiRes.permissions.some(function (item: any) {
+        const isExpired = primeRes?.permissions.some(function (item: any) {
             return !item.includes("etadfree") && item.includes("expired_subscription");
-          });  
+          });    
 
         jStorage.set('prime_' +window.objUser?.ticketId, primeRes, {TTL: 2*60*60*1000}); 
         jStorage.set('tokenDataExist', 1, {TTL: isPrime ? 2*60*60*1000 : 5*60*1000});
 
-        window.objUser.permissions = oauthAPiRes.permissions || [];
+        window.objUser.permissions = primeRes.permissions || [];
         window.objUser.accessibleFeatures =
-          oauthAPiRes.accessibleFeatures || [];
+        primeRes.accessibleFeatures || [];
         window.objUser.userAcquisitionType =
-          oauthAPiRes.subscriptionDetail &&
-          "userAcquisitionType" in oauthAPiRes.subscriptionDetail
-            ? oauthAPiRes.subscriptionDetail.userAcquisitionType
+        primeRes.subscriptionDetail &&
+          "userAcquisitionType" in primeRes.subscriptionDetail
+            ? primeRes.subscriptionDetail.userAcquisitionType
             : "free";
-        window.objUser.primeInfo = oauthAPiRes;
+        window.objUser.primeInfo = primeRes;
         window.objUser.isPrime = isPrime;
         window.objUser.isPink = isPrime ? true : false;
         setCookieToSpecificTime("isprimeuser", isPrime, 30, 0, 0, "");
-        if (primeRes && primeRes?.data?.token) {
-          setCookieToSpecificTime("OTR", primeRes?.data?.token, 30, 0, 0, ".indiatimes.com");
+        if (primeRes && primeRes?.token) {
+          setCookieToSpecificTime("OTR", primeRes?.token, 30, 0, 0, ".indiatimes.com");
         }
-        setCookieToSpecificTime("etprc", oauthAPiRes.prc, 30, 0, 0);
+        setCookieToSpecificTime("etprc", primeRes.prc, 30, 0, 0);
 
         
-        (isPink || isPrime) && document.body.classList.add("isprimeuser");
+        if(isPink || isPrime){
+          window.objUser.isPink = true;
+          window.objUser.isPink && document.body.classList.add("isprimeuser");
+          dispatch({
+            type: "SETPINKTHEME",
+            payload: {
+              isPink: true
+            },
+          });
+        } 
 
         if(isExpired){
           adFreeEx();
@@ -145,7 +150,7 @@ const Login = ({headertext}) => {
 
         const primeUserLoginMap_check = Number(localStorage.getItem("primeUserLoginMap_check")) == 1 || false;
         if(primeUserLoginMap_check){
-          userMappingData({res: primeRes?.data, userInfo : window.objUser?.info, isPrime, email: window.objUser?.info?.primaryEmail})
+          userMappingData({res: primeRes, userInfo : window.objUser?.info, isPrime, email: window.objUser?.info?.primaryEmail})
           localStorage.removeItem("primeUserLoginMap_check");
         }
 
@@ -163,11 +168,11 @@ const Login = ({headertext}) => {
         window.objUser.primeInfo = {};
         window.objUser.isPrime = false;
         delete_cookie("isprimeuser");
-        if (primeRes && primeRes?.data?.token) {
+        if (primeRes && primeRes?.token) {
           delete_cookie("OTR");
         }
         saveLogs({
-          type: "Mercury",
+          type: "Desktop Migration",
           res: "Fail",
           msg: "verifyLoginSuccessCallback",
           resData: primeRes,
@@ -235,8 +240,8 @@ const Login = ({headertext}) => {
     dispatch({
       type: "LOGIN_SUCCESS",
       payload: {
-        // ssoReady: true,
-        // isLogin: true,
+        ssoReady: true,
+        isLogin: true,
         isPrime: window.objUser.isPrime,
         userInfo: window.objUser?.info,
         ssoid: window.objUser?.ssoid,
@@ -252,13 +257,12 @@ const Login = ({headertext}) => {
 
   const authFailCallback = () => {
     if (typeof window !== "undefined" && window.location.href.includes("default_prime.cms")) {
-      document.body.classList.add("isprimeuser");
       window.objUser.isPink = true;
       window.objUser.isPink && document.body.classList.add("isprimeuser");
       dispatch({
-        type: "LOGOUT",
+        type: "SETPINKTHEME",
         payload: {
-          isPink: window.objUser.isPink
+          isPink: true
         },
       });
     }
@@ -390,14 +394,26 @@ const Login = ({headertext}) => {
       {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPink ? styles.pink_theme : ""}`}>
+            <a className={styles.watchlist} href="https://economictimes.indiatimes.com/watchlist?source=homepage&medium=header&campaign=watchlist">My Watchlist</a>
             {!isPrime && etatf_right_cta_display && <span className={`${styles.subscribe}`} onClick={() => gotoPlanPage({url: etatf_right_cta_link})}>{etatf_right_cta_text}</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
                 ? <>
-                  <span className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</span>
+                  {
+                    isPink ? <>
+                      <span className={styles.prime_icon}></span>
+                      <div className={styles.userDeatils}>
+                        <p className={styles.userPrime}>{isPrime ? 'Prime Member' : 'Free Member'}</p>
+                        <p className={styles.dd} title={userInfo?.loginId}>{userInfo?.firstName}</p>
+                      </div>
+                    </> : <>
+                      <p className={styles.free_dd} title={userInfo?.loginId}>{userInfo?.firstName[0] || ''}</p>
+                    </>
+                  }
                   <div className={styles.signMenu}>
                     <div className={styles.outerContainer}>
+                    <p className={styles.userName}>{`Hi ${userInfo?.firstName}`}</p>
                       <p className={styles.emailLbl}>{userInfo?.loginId}</p>
                       <div className={styles.bgWhite}>
                         <a href={`${APIS_CONFIG.DOMAIN[window.APP_ENV]}userprofile.cms`} rel="noreferrer" target="_blank" className={`${styles.menulist} ${styles.cSprite_b} ${styles.edit}`}>Edit Profile {profileStatus && <span className={styles.incomplete_badge}>INCOMPLETE<span>!</span></span>}</a>

@@ -1,4 +1,4 @@
-import MoreFromLink from "containers/PrimeHome/MoreFromLink";
+import MoreFromLink from "containers/SubscriberHome/MoreFromLink";
 import styles from "./styles.module.scss";
 import { ET_WAP_URL, ET_WEB_URL } from "../../utils/common";
 

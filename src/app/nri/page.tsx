@@ -105,6 +105,7 @@ const NRIPage =  async ()=>{
     const versionControl = response?.version_control || {};
     const tabsCanadaData = await fetchContent(110522920);
     const tabsUSData = await fetchContent(108463119);
+    const siteCurrentTime = new Date().toISOString();
   
     const investData = await resData(79038765);
     const visitData = await resData(79038785);
@@ -119,7 +120,7 @@ const NRIPage =  async ()=>{
     //  End University Rankings Slider data and Msid--------------------
 
     return (
-    <Layout page="NRI" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV}>          
+    <Layout page="NRI" dynamicFooterData={dynamicFooterData} menuData={menuData} objVc={versionControl} data={response} isprimeuser={isprimeuser} pageSeo={pageSeo} APP_ENV={APP_ENV} siteCurrentTime={siteCurrentTime}>          
         <NRIClientPage 
           dynamicFooterData={dynamicFooterData} 
           menuData={menuData} 

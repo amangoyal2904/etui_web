@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import React, { useEffect, useState } from 'react';
@@ -9,7 +10,7 @@ import {
     logout
   } from "../../utils";
 
-const PrimeLoginMap = (onClose) => {
+const PrimeLoginMap = ({onClose}) => {
     const { state, dispatch } = useStateContext();
     const { isLogin, userInfo, ssoReady, isPrime, ssoid, email, isPink } = state.login;
     const [primeSavedEmail, setPrimeSavedEmail] = useState("");

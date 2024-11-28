@@ -51,16 +51,16 @@ function NudgeContainer({subsContent}) {
     }
 
     useEffect(() => {
-        const userInfoBand = document.querySelector('#topUserInfoBand');
+        const userInfoBand = document.querySelector<HTMLElement>('#topUserInfoBand');
         const topnavBlk = document.getElementById('topnavBlk');
-        
 
         if (topnavBlk) {
-            const height = (userInfoBand as HTMLElement)?.offsetHeight || 78; // Get the height of the topUserInfoBand
-            setTopValue(nudgeShow ? `${height}px` : '0px'); // Set top value based on nudgeShow
-            topnavBlk.style.top = nudgeShow ? `${height}px` : '0px'; // Apply the style directly
+            const height = userInfoBand?.offsetHeight || 78; // Get the height of the topUserInfoBand
+            const newHeight = userInfoBand ? `${height}px` : '0px'; // Determine the new height
+            setTopValue(newHeight); // Set top value based on nudgeShow
+            topnavBlk.style.top = newHeight; // Apply the style directly
         }
-    }, [nudgeShow]);
+    }, [nudgeShow, et_topnudge_show]);
 
     return (
         <>
@@ -76,7 +76,7 @@ function NudgeContainer({subsContent}) {
                     </div>
                     <a className={styles?.info_cta} data-url={et_topnudge_ctaLink}>{et_topnudge_ctaText}</a>
                 </div>
-                {et_topnudge_crossFrequency && <span className={styles?.info_cross} data-frequency={et_topnudge_crossFrequency} onClick={onCloseClick} />}
+                {et_topnudge_crossFrequency && <span className={styles?.info_cross} data-frequency={et_topnudge_crossFrequency} onClick={(e) => { e.stopPropagation(); onCloseClick(e); }}  />}
             </div>}
         </>
     );

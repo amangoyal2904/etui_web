@@ -1,0 +1,88 @@
+.card {
+  border: 1px solid #c4c4c4;
+  background: #FFFFFF;
+  border-radius: 10px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  position: relative;
+
+  > div {
+    padding: 10px;
+  }
+
+  .cat {
+    color: #009060;
+    font-weight: 600;
+    text-transform: uppercase;    
+  }
+
+  .title {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    &:not(.thisTop){
+      .watchlistIcWrp{
+        margin-top:-10px
+      }
+    }
+  }
+
+  .firstRow {
+    padding-bottom: 5px;
+    
+  }
+
+  .row {
+    display: flex;
+    gap: 1rem;
+
+    .col{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 7px;
+
+      &:first-child{
+        width: 65px;
+      }
+
+      .bold {
+        font-weight: 600;
+      }
+      
+    }
+
+    span {
+      display: block;
+    }
+
+    .up {
+      background: #EDFFF9;
+      padding: 7px;
+
+      .number {
+        display: block;
+        margin-top: 10px;
+        color: #009060;
+        font-weight: 700;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .footer {
+    background: #F4F4F4;
+    color: #777;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 5px 10px;
+    font-size: 10px;
+
+    a {
+      color: #000;
+      text-decoration: underline;
+    }
+  }
+}

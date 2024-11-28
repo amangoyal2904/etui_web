@@ -8,11 +8,12 @@ import Global_Config from "../../network/global_config.json";
 
 const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> = ({ dynamicFooterData, page, APP_ENV }) => {
   const [isExpanded, setIsExpanded] = useState({});
+  const [isCCPA, setIsCCPA] = useState(false);
   const hide_footer = false;
 
   const { state, dispatch } = useStateContext();
   const { isPrime, isPink } = state.login;
-  const [isCCPA, setIsCCPA] = useState(false);
+  // const [isCCPA, setIsCCPA] = useState(false);
 
   const paymentButtonListener = () => {
     const paymentUrl = "";
@@ -20,15 +21,15 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
   };
 
   const handleCCPA = () => {
-    try {
+    try{
       const checkCCPA =
-        typeof window != "undefined" &&
+        typeof window != "undefined" && 
         window.geoinfo &&
         window.geoinfo.geolocation == "2" &&
         window.geoinfo.region_code == "CA";
       setIsCCPA(checkCCPA);
-    } catch (err) {
-      console.log("handleCCPA Error: ", err);
+    }catch(err){
+      console.log('error in handleCCPA', err);
     }
   };
 
@@ -133,24 +134,23 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
     return (
       <div className={styles.row}>
         <div className={`copyright ${styles.copyright}`}>
-          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a data-ga-onclick="Times Syndication Service - href" href="https://timescontent.timesgroup.com/" target="_blank" rel="nofollow">Times Syndication Service</a>{isCCPA && <button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>}
+          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a target="_blank" href="https://timescontent.timesgroup.com/">Times Syndication Service</a>
+          {isCCPA && (
+            <button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>
+          )}
         </div>
-
         <style jsx>{`
-          .copyright{
-            margin-top: 10px;
-
-            #ot-sdk-btn{
-              &.ot-sdk-show-settings{
+          .copyright {
+            #ot-sdk-btn {
+              &.ot-sdk-show-settings {
                 border: 0;
                 color: #9b9b9b;
                 text-decoration: underline;
                 font-size: 14px;
                 line-height: 1;
                 padding: 0 0 0 10px;
-
                 &:hover {
-                    background-color: transparent;
+                  background: 0;
                 }
               }
             }
@@ -237,7 +237,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
       {
           isPink && <div className={styles.sbr_wrap}>
             <SearchBar footerSearch={true}/>
-            {page == "home" || page == "primehome" && browseCompany()}  
+            {page == "home" || page == "subscriberhome" && browseCompany()}  
           </div>
         }
       <div className={styles.dynamicContainer}>

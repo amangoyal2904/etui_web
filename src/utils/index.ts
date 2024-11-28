@@ -110,12 +110,14 @@ export const setCookieToSpecificTime = (
 
 export const getCookie = (name) => {
   try {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    if (typeof document !== 'undefined') {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
     }
     return null;
   } catch (e) {
@@ -437,8 +439,13 @@ export const loadPrimeApiNew = async () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const primeRes = await response.json(), // Await the JSON response
+    primeResObj = primeRes?.data?.productDetails?.filter((item: any) => {
+      return item.productCode == "ETPR";
+    }) || [], // Ensure primeResObj is an array
+    oauthAPiResObj = primeResObj[0] || [];
 
-    return response?.json();
+    return Object.assign({}, primeRes.data || {}, oauthAPiResObj, { code: primeRes?.code });
     // Handle the successful response data
   } catch (e) {
     console.log("loadPrimeApiNew: " + e);
@@ -456,6 +463,7 @@ export const logout = async () => {
       delete_cookie("peuuid");
       delete_cookie("fpid");
       delete_cookie("etprc");
+      jStorage.deleteKey("userInfo");
 
       const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
         oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
@@ -544,6 +552,8 @@ export const setUserData = () => {
     if (response.status == "SUCCESS") {
       //console.log("SUCCESS", response);
       window.objUser.info = response.data;
+      jStorage.deleteKey("userInfo");
+      jStorage.set("userInfo", window.objUser.info);
       window.objUser.ssoid = response.data.ssoid;
     } else {
       console.log("failure");
@@ -672,7 +682,7 @@ export const initSSOWidget = () => {
 
 export const currPageType = () =>  {
   let type = 'home_page';
-  const tpNameListArr = ['articlelist','primehome','markets','newshome','politicsnation','personalfinance','mutual_funds','techhome','opinionshome','nri','panache','videohome']
+  const tpNameListArr = ['articlelist','subscriberhome','markets','newshome','politicsnation','personalfinance','mutual_funds','techhome','opinionshome','nri','panache','videohome']
   const pn = window.location.pathname;
 
   if(pn.includes('articleshow')) {
@@ -689,15 +699,15 @@ export const userMappingData = ({res, userInfo, isPrime, email}) => {
   let primeUserLoginMap:any = {};
   if (isPrime) {
     //const userData = jStorage.get('userInfo');
-  const resObj = res.productDetails.filter((item: any) => {
-    return item.productCode == "ETPR";
-  });
-  const oauthAPiRes = resObj[0];  
+  // const resObj = res.productDetails.filter((item: any) => {
+  //   return item.productCode == "ETPR";
+  // });
+  // const oauthAPiRes = resObj[0];  
   var primaryEmail = userInfo.primaryEmail ? userInfo.primaryEmail : email;
   var mobile = userInfo.mobileData && userInfo.mobileData.Verified && userInfo.mobileData.Verified.mobile && (userInfo.mobileData.Verified.code  + '-' + userInfo.mobileData.Verified.mobile) || '';
   var emailIdStatus = userInfo.emailList && userInfo.emailList[email];
     primeUserLoginMap = {
-      expiry: oauthAPiRes.subscriptionDetail.expiryDate,
+      expiry: res.subscriptionDetail.expiryDate,
       loginId:
           primaryEmail && emailIdStatus === 'Verified'
           ? primaryEmail
@@ -739,9 +749,9 @@ export const setAdFreeExp = (nudgeFlag, ssoid, dispatch) => {
   if(isAdFreeExpRef.eligible && !isAdFreeExpRef.availed) {
       //objAd.type == 'adfree';
       window.objUser.isPink = true;
-      
+      document.body.classList.add("isprimeuser");
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: "SETPINKTHEME",
         payload: {
           isAdfree: true,
           isPink: window.objUser.isPink
@@ -1094,7 +1104,7 @@ export const getCurrentMarketStatus = async () => {
     }
     console.error("Error in fetching market status", errorMessage);
     saveLogs({
-      type: "Mercury",
+      type: "Desktop Migration",
       res: "error",
       msg: "Error in fetching market status",
       error: errorMessage,

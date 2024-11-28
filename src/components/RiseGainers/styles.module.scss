@@ -127,6 +127,11 @@
       margin-top: 4px;
       float: right;
     }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 
       

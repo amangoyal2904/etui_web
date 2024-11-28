@@ -16,22 +16,26 @@
 
         ul{list-style: none;
 
-            li{position: relative;
+            li{
+              position: relative;
                 counter-increment: list;
                 font-size: 16px;
                 font-family: Faustina;
                 list-style: none;
                 width: 100%;
-                display: table;
+                display: flex;
+                gap: 10px;
+                               
+                a {
+                  &:first-child {                    
+                    flex: 0 0 100px;
+                  }
+                }
+
                 a.imglink{
                   position: relative;
-                  display: inline-block;
-                  float:left;
-                }
-                img{
-                    float:left;
-                    margin-right: 10px;
-                }
+                  display: inline-block;                  
+                }                
             }
         }
         li+li {
@@ -61,7 +65,7 @@
       height: 20px;
       position: absolute;
       background-position: -273px -286px;
-      bottom: 0;
+      top: 55px;
       left: 0;
   }
   

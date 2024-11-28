@@ -310,16 +310,77 @@
   }
 
   .copyright {
-    text-align: center;
-    height: 50px;
+    text-align: center;    
     font-size: 14px;
+    height: 40px;
+    padding-bottom: 50px;
 
-    a{
+    a {      
       text-decoration: underline;
     }
   }
 
-  
+  .browseCompany {
+    border-bottom: 1px solid #3a3a3a;
+    padding: 17px 0;
+
+    .browse {
+      margin: 0 auto;
+      width: 94%;
+
+      .browseTitle {
+        display: inline-block;
+        vertical-align: middle;
+
+        span {
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
+        &:first-child {
+          font-size: 18px;
+        }
+
+        .comp {
+          display: block;
+          font-size: 13px;
+        }
+      }
+
+      .compList {
+        display: inline-block;
+        border-left: 2px solid #373737;
+        padding-left: 14px;
+        margin-left: 8px;
+        vertical-align: middle;
+
+        a {
+          color: #9a9a9a;
+          font-size: 14px;
+          background-color: #191919;
+          border: 1px solid #333;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 4px;
+          width: 26px;
+          height: 26px;
+          text-align: center;
+          line-height: 24px;
+        }
+
+        a:hover {
+          text-decoration: none;
+          background: #333;
+        }
+
+        div {
+          &:last-child {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .pink_theme {

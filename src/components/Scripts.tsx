@@ -3,18 +3,20 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { FC, useEffect, useState } from "react";
-import { getCookie, sendMouseFlowEvent, updateDimension } from "../utils";
+import { getCookie, loadPrimeApiNew, sendMouseFlowEvent, updateDimension } from "../utils";
 import * as Config from "../utils/common";
 import GLOBAL_CONFIG from "../network/global_config.json";
 import { getUserType, trackingEvent } from "utils/ga";
 import { loadAndBeyondScript, loadTaboolaScript } from "./Ad/AdScript";
 import { useStateContext } from "../store/StateContext";
 import { callJsOnAppLoad } from "utils/priority";
+import jStorage from "jstorage-react";
 
 interface Props {
   isprimeuser?: number | boolean;
   objVc?: object;
   APP_ENV: string;
+  page?: any;
 }
 
 declare global {
@@ -93,7 +95,7 @@ declare global {
 }
 declare var JssoCrosswalk: any;
 
-const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
+const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV, page }) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -103,6 +105,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   const jsIntsURL = `${jsDomain}/js_ints_web.cms?v=${objVc["js_interstitial"]}&minify=${minifyJS}&x=1`;
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, permissions } = state.login;
+  const ET_WEB_URL = GLOBAL_CONFIG[APP_ENV]["ET_WEB_URL"];
 
   let execution = 0;
   const surveyLoad = () => {
@@ -182,6 +185,47 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
   }
   }, []);
 
+  const _redirectPage = () => {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      const tdId = getCookie('TicketId'),
+      grx = getCookie('_grx'),
+      ssoid = getCookie('ssoid') || (jStorage.get('userInfo')?.ssoid),
+      userData = jStorage.get(`prime_${tdId}`) || {},
+      isPrimeUser = userData?.permissions?.some(function (item: any) {
+        return !item.includes("etadfree") && item.includes("subscribed");
+      }),
+      isExpiredUserEligible = typeof ssoid != "undefined" && jStorage.get('adFreeCampign_'+ssoid) && jStorage.get('adFreeCampign_'+ssoid).eligible || 0,
+      b = document.getElementsByTagName('html')[0], lsKey = 'et_nhp_' + ssoid, 
+      bucket = window.localStorage && localStorage.getItem(lsKey) || '', 
+      bucketArr = bucket.split('-');
+      const _redirect = () => {
+        window.location.href = ET_WEB_URL; // Ensure ET_WEB_URL is defined
+      }
+      const hitPrimeApi = async () => {
+        const primeRes = await loadPrimeApiNew();
+        if (primeRes?.code === "200") {
+          const isPrime = primeRes?.permissions?.some(function (item: any) {
+            return !item.includes("etadfree") && item.includes("subscribed");
+          });
+           if(isPrime){
+            b.classList.add("prime_header");
+            b.classList.remove("pg_hide")
+           }else{
+            _redirect(); 
+           }
+        }else{
+          _redirect()  
+        }
+      }
+      if(window.location.search.indexOf('dev=1') != -1 || (isPrimeUser || isExpiredUserEligible)) {
+          b.classList.add("prime_header");
+          b.classList.remove("pg_hide")
+      } else if(ssoid) {
+        hitPrimeApi();
+      } else {_redirect()}
+    }
+  }
+
   return (
     <>
       <Script id="main-script">
@@ -252,28 +296,15 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
             const geoLoaded = new Event("geoLoaded");
             document.dispatchEvent(geoLoaded);
           }
-
-          document.addEventListener("geoLoaded", () => {
-            if (window.geoinfo && window.geoinfo.CountryCode != "IN") {
-                function loadOnetrustSdk() {
-                  const script = document.createElement('script');
-                  script.src = 'https://cdn.cookielaw.org/consent/9c436ed7-68da-4e62-86c3-bc55a27afd97/otSDKStub.js';
-                  script.async = true; 
-                  script.charSet = 'UTF-8';
-                  script.setAttribute('data-domain-script', '9c436ed7-68da-4e62-86c3-bc55a27afd97');
-                  document.head.appendChild(script);
-                }
-                if('requestIdleCallback' in window){
-                  window.requestIdleCallback(function(){          
-                    loadOnetrustSdk();
-                  }, { timeout: 2500 })
-                } else {
-                  loadOnetrustSdk();
-                }
-            }
-          });
         `}
       </Script>
+      <Script
+        src="https://cdn.cookielaw.org/consent/9c436ed7-68da-4e62-86c3-bc55a27afd97/otSDKStub.js"
+        data-domain-script="9c436ed7-68da-4e62-86c3-bc55a27afd97" strategy="lazyOnload"
+        onLoad={() => {
+          function OptanonWrapper() {}
+        }}
+      />
       <Script
         src="https://survey.survicate.com/workspaces/0be6ae9845d14a7c8ff08a7a00bd9b21/web_surveys.js"
         strategy="lazyOnload"
@@ -368,6 +399,19 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV }) => {
           )}
         </>
       )}
+      {page == "subscriberhome" && <Script id="page-redirection" strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          try {
+            if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+              ${_redirectPage()}
+            }
+          } catch (e) {
+            console.log("Error Redirection -- ", e);
+          }
+        `
+        }}
+      />}
     </>
   );
 };

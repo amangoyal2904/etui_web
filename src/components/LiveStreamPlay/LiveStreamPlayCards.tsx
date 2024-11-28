@@ -37,7 +37,7 @@ const LiveStreamCards = ({
   const streamid = slide?.eventId || "";
   const streamURL =
     streamid &&
-    `${(APIS_CONFIG as any)?.DOMAIN[APP_ENV]}/markets/etmarkets-live/streams${
+    `${(APIS_CONFIG as any)?.DOMAIN[APP_ENV]}markets/etmarkets-live/streams${
       !isLive ? "recorded" : ""
     }/streamid-${streamid},expertid-${expertId}.cms${utmSource}`;
   const viewsText = isLive ? slide.concurrentViewsText : slide.totalViewsText;

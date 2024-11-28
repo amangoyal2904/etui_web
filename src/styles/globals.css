@@ -233,6 +233,10 @@ a {
   position: relative;
 }
 
+.pg_hide{
+  display: none;
+}
+
 @media screen and (max-width: 1024px) and (max-height: 600px) {
   .customModule .moduleWrap {
     margin-top: 20px;
