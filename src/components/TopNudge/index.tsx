@@ -31,8 +31,11 @@ export default function TopNudge({objVc}) {
     }
   };
   useEffect(()=>{
-    loadSubsContent();
-  },[])
+    if(Object.keys(subsContent)?.length == 0){
+      loadSubsContent();
+    }
+  })
+  console.log("@@@@-->",subsContent);
   return (
     <>   {subsContent &&    
       <div className={`${styles.topNudgeWrp} ${isPink ? styles.pink_theme : ""}`}>
