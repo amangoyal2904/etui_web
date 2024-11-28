@@ -134,7 +134,7 @@ const DynamicFooter: FC<{ dynamicFooterData: any, page: any, APP_ENV: string }> 
     return (
       <div className={styles.row}>
         <div className={`copyright ${styles.copyright}`}>
-          Copyright © {new Date().getFullYear()} Bennett Coleman & Co. All rights reserved. Powered by Indiatimes.
+          Copyright © {new Date().getFullYear()} Bennett, Coleman & Co. Ltd. All rights reserved. For reprint rights: <a target="_blank" href="https://timescontent.timesgroup.com/">Times Syndication Service</a>
           {isCCPA && (
             <button id="ot-sdk-btn" className="ot-sdk-show-settings"></button>
           )}

@@ -310,11 +310,14 @@
   }
 
   .copyright {
-    text-align: center;
-    color: #9b9b9b;
+    text-align: center;    
     font-size: 14px;
-    height: 50px;
+    height: 40px;
     padding-bottom: 50px;
+
+    a {      
+      text-decoration: underline;
+    }
   }
 
   .browseCompany {
