@@ -22,6 +22,7 @@ import BackToTopButton from "components/BackToTopButton";
 import jStorage from "jstorage-react";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import { getCookie } from "../../utils"
+import PageRefresh from "components/PageRefresh";
 
 function SubscriberHome({ searchResult, isDev, ssoid, objVc}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -112,6 +113,7 @@ function SubscriberHome({ searchResult, isDev, ssoid, objVc}) {
       <Explainers data={explainers?.data || []} title={explainers?.title || ""} />
       <MoreFromEconomicTimes data={moreFromeEconomicTimes} />
       <BackToTopButton />
+      <PageRefresh refreshTime={36E4}/>
       <style jsx global>{`
         body {
           background: #ffe9e2;
