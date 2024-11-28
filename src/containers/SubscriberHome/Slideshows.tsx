@@ -8,6 +8,7 @@ import {
     usePrevNextButtons
   } from '../../components/CarouselArrowBtn';
   import { changeImageWidthHeight } from 'utils';
+import { ET_WAP_URL, ET_WEB_URL } from 'utils/common';
 
 export default function Slideshows({ title, data }) {
   const OPTIONS = {loop: false}
@@ -43,7 +44,7 @@ export default function Slideshows({ title, data }) {
                   {
                     subset.map((item, index1) => {
                       return (
-                        <a href={item?.url} target="_blank" className="item" key={index1}
+                        <a href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" className="item" key={index1}
                           data-ga-onclick={`Subscriber Homepage#Slideshows widget click#${index+1} - href`}
                           >
                           <span className="imgWrap">
