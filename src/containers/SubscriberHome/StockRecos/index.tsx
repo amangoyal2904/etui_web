@@ -234,6 +234,9 @@ export default function StockRecos({ focusArea }) {
           .arr {
             display: none;
           }
+          .cardsWrapper {
+            min-height: 319px;
+          }
         }
 
         .catdown {
