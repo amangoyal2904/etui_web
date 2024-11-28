@@ -24,6 +24,7 @@ const AddStockComponent = ({ moduelClose, updateTableHandler }: any) => {
   const viewWraperRef = useRef<HTMLDivElement>(null);
   const [showTextDefault, setShowTextDefault] = useState(false);
   const addStockModuleHandler = () => {
+    document.body.style.overflow = '';
     moduelClose(false);
   };
 
@@ -180,6 +181,7 @@ const AddStockComponent = ({ moduelClose, updateTableHandler }: any) => {
     }
   }, [debouncedSearchTerm]);
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
     fetchWatchListStocks();
   }, []);
   // useEffect(() => {
@@ -190,7 +192,7 @@ const AddStockComponent = ({ moduelClose, updateTableHandler }: any) => {
       <div className={`customModule ${styles.addStockWrap}`}>
         <div
           className={styles.divOverlya}
-          onClick={() => moduelClose(false)}
+          onClick={addStockModuleHandler}
         ></div>
         <div className={`moduleWrap ${styles.stockSec}`} ref={viewWraperRef}>
           <div className={`moduleHeader ${styles.header}`}>
