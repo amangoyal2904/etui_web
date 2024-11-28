@@ -17,22 +17,25 @@ export default function TopNudge({objVc}) {
   const [subsContent, setSubsContent] = useState<any>({});
   
   const loadSubsContent = () => {
-    const getSubsContent = jStorageReact.get('subscriptioncontent');
-    try{
+    try {
+      const getSubsContent = jStorageReact.get("subscriptioncontent");
       if (getSubsContent) {
         setSubsContent(JSON.parse(getSubsContent).message);
-      }else{
-        getSubscriptionContent((res)=>{
+      } else {
+        getSubscriptionContent((res) => {
           setSubsContent(res);
-        })
+        });
       }
-    }catch(e){
-      console.log("getSubsContent Error:", e)
+    } catch (er) {
+      console.log("Error in content fetching", er);
     }
-  }
+  };
   useEffect(()=>{
-    loadSubsContent();
-  },[])
+    if(Object.keys(subsContent)?.length == 0){
+      loadSubsContent();
+    }
+  })
+  console.log("@@@@-->",subsContent);
   return (
     <>   {subsContent &&    
       <div className={`${styles.topNudgeWrp} ${isPink ? styles.pink_theme : ""}`}>

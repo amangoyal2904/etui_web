@@ -19,13 +19,34 @@ import { useStateContext } from "../../store/StateContext";
 import GLOBAL_CONFIG from "../../network/global_config.json";
 import Image from "next/image";
 import APIS_CONFIG from "../../network/config.json";
-import { getParameterByName, gotoPlanPage } from '../../utils/utils';
+import { getParameterByName, getSubscriptionContent, gotoPlanPage } from '../../utils/utils';
 import jStorage from "jstorage-react";
+import jStorageReact from "jstorage-react";
 
 const Login = ({headertext}) => {
   const { state, dispatch } = useStateContext();
   const { isLogin, userInfo, ssoReady, isPrime, isPink, isAdfree, permissions, ssoid, ticketId, email } = state.login;
   const [profileStatus, setProfileStatus] = useState(false);
+  const [subsContent, setSubsContent] = useState<any>({});
+  const {
+    etatf_right_cta_display,
+    etatf_right_cta_text,
+    etatf_right_cta_link
+  } = subsContent || {};
+  const loadSubsContent = () => {
+    try {
+      const getSubsContent = jStorageReact.get("subscriptioncontent");
+      if (getSubsContent) {
+        setSubsContent(JSON.parse(getSubsContent).message);
+      } else {
+        getSubscriptionContent((res) => {
+          setSubsContent(res);
+        });
+      }
+    } catch (er) {
+      console.log("Error in content fetching", er);
+    }
+  };
 
   //console.log(state.login);
 
@@ -312,6 +333,7 @@ const Login = ({headertext}) => {
   }, [isPrime])
 
   useEffect(() => {
+    loadSubsContent();
     document.addEventListener("jssoLoaded", jssoLoadedCallback);
     document.addEventListener("verifyLoginSuccess", verifyLoginSuccessCallback);
     document.addEventListener("verifyLoginFail", authFailCallback);
@@ -373,7 +395,7 @@ const Login = ({headertext}) => {
         ssoReady ? (
           <div className={`${styles.flr} ${styles.subSign} ${isPink ? styles.pink_theme : ""}`}>
             <a className={styles.watchlist} href="https://economictimes.indiatimes.com/watchlist?source=homepage&medium=header&campaign=watchlist">My Watchlist</a>
-            {!isPrime && <span className={`${styles.subscribe}`} onClick={gotoPlanPage}>Subscribe</span>}
+            {!isPrime && etatf_right_cta_display && <span className={`${styles.subscribe}`} onClick={() => gotoPlanPage({url: etatf_right_cta_link})}>{etatf_right_cta_text}</span>}
             <div className={`${styles.dib} ${styles.loginBoxWrap}`}>
               {
                 isLogin 
