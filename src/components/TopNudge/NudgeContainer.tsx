@@ -23,6 +23,20 @@ function NudgeContainer({subsContent}) {
     } = subsContent || {};
 
     useEffect(() => {
+        const storedNudge = jStorage.get('topNudgeObj');
+        if (storedNudge) {
+            try {
+                const { reActivatedOn } = JSON.parse(storedNudge);
+                const currentTime = +new Date();
+                if (reActivatedOn && currentTime < reActivatedOn) {
+                    setNudgeShow(false);
+                    return;
+                }
+            } catch (e) {
+                console.error('Invalid topNudgeObj format:', e);
+            }
+        }
+
         if(et_topnudge_type) {
             fireTracking("et_push_event", {category:"Platform Nudge - Web", action:"Banner Viewed - True",label:et_topnudge_type + ' | Banner Location '+ currPageType()})
         }
