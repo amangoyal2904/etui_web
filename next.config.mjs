@@ -11,20 +11,7 @@ const nextConfig = {
     ];
   },
   async headers() {
-    return [      
-      {
-        source: "/default_prime.cms",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, s-maxage=300, must-revalidate, stale-while-revalidate=600"
-          },
-          {
-            key: "Expires",
-            value: new Date(Date.now() + 300 * 1000).toUTCString()
-          }
-        ]
-      },
+    return [            
       {
         source: "/(.*)",
         headers: [
@@ -46,7 +33,20 @@ const nextConfig = {
             value: "public, max-age=31536000, s-maxage=31536000, immutable"
           }
         ]
-      }
+      },
+      {
+        source: "/default_prime.cms",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, s-maxage=300, must-revalidate, stale-while-revalidate=600"
+          },
+          {
+            key: "Expires",
+            value: new Date(Date.now() + 300 * 1000).toUTCString()
+          }
+        ]
+      },
     ];
   },
   compress: false,
