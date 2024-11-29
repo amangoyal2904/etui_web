@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ET_WAP_URL, ET_WEB_URL } from "utils/common";
 const CryptoExpert = ({ data, title = "" }) => {
   if (!Array.isArray(data) || data.length === 0) {
     return null;
@@ -14,7 +15,7 @@ const CryptoExpert = ({ data, title = "" }) => {
                 <img alt={ele?.title} src={ele?.img} loading="lazy" height="56" width="56" decoding="async"></img>
                 <div className="details">
                   <a
-                    href={ele?.url}
+                    href={ele?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                     title={ele?.title}
                     className="article"
                     target="_blank"
@@ -24,7 +25,7 @@ const CryptoExpert = ({ data, title = "" }) => {
                   </a>
                   {ele.authors && Array.isArray(ele.authors) && ele.authors.length && (
                     <a
-                      href={ele?.authors[0]?.url}
+                      href={ele?.authors[0]?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                       title={ele?.authors[0]?.title}
                       className="author"
                       target="_blank"

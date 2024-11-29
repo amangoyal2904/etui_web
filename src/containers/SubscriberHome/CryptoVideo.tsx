@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ET_WAP_URL, ET_WEB_URL } from "utils/common";
 const CryptoVideo = ({ data, title = "", isDev }) => {
   if (!Array.isArray(data) || data.length === 0) {
     return null;
@@ -20,7 +21,7 @@ const CryptoVideo = ({ data, title = "", isDev }) => {
         ></iframe>
         <a
           target="_blank"
-          href={data[0]?.url}
+          href={data[0]?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
           title={data[0]?.title}
           data-ga-onclick={`Subscriber Homepage#Cryptocurrency News widget click#Crypto TV - href`}
         >

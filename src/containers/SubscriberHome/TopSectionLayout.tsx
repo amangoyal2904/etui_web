@@ -120,7 +120,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid, objVc }) 
   useEffect(() => {
     const primeHomeFocusArea2024OnLoad = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};  
     if(primeHomeFocusArea2024OnLoad) {
-      if(primeHomeFocusArea2024OnLoad.focusArea !== focusArea) {
+      if(primeHomeFocusArea2024OnLoad.focusArea && primeHomeFocusArea2024OnLoad.focusArea !== focusArea) {
         setFocusArea(primeHomeFocusArea2024OnLoad.focusArea);
       }
     }
