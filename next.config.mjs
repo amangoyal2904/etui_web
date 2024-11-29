@@ -11,7 +11,20 @@ const nextConfig = {
     ];
   },
   async headers() {
-    return [
+    return [      
+      {
+        source: "/default_prime.cms",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, s-maxage=300, must-revalidate, stale-while-revalidate=600"
+          },
+          {
+            key: "Expires",
+            value: new Date(Date.now() + 300 * 1000).toUTCString()
+          }
+        ]
+      },
       {
         source: "/(.*)",
         headers: [
