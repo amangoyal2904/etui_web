@@ -36,15 +36,27 @@ const Login = ({headertext}) => {
   const loadSubsContent = () => {
     try {
       const getSubsContent = jStorageReact.get("subscriptioncontent");
-      if (getSubsContent) {
-        setSubsContent(JSON.parse(getSubsContent).message);
+      if (getSubsContent && typeof getSubsContent === 'string') {
+        try {
+          const parsedContent = JSON.parse(getSubsContent);
+          if (parsedContent?.message) {
+            setSubsContent(parsedContent.message);
+          } else {
+            throw new Error('Invalid content structure');
+          }
+        } catch (parseError) {
+          console.error("Error parsing stored content:", parseError);
+          getSubscriptionContent((res) => {
+            setSubsContent(res);
+          });
+        }
       } else {
         getSubscriptionContent((res) => {
           setSubsContent(res);
         });
       }
     } catch (er) {
-      console.log("Error in content fetching", er);
+      console.error("Error in content fetching:", er);
     }
   };
 
