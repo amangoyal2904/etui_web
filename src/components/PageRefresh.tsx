@@ -19,7 +19,7 @@ const PageRefresh: React.FC<PageRefreshProps> = ({ refreshTime = 180000 }) => {
 
   const reloadPage = () => {
     const _ifOnline = () => {
-      const doNotRefreshPage = sessionStorage.getItem("doNotRefreshPage");
+      const doNotRefreshPage = false; //sessionStorage.getItem("doNotRefreshPage");
       if (!doNotRefreshPage) {
         const expTime = Date.now() + 120000; // 2 minutes
         document.cookie = `popout_autorefresh_open=true; expires=${new Date(expTime).toUTCString()}; path=/; domain=.indiatimes.com`;
