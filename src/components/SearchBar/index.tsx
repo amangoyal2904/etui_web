@@ -154,7 +154,7 @@ const SearchBar = (props) => {
               {!footerSearch ? <>
                 <div className={styles.srch_btn} onClick={handleSearchClick}>Search</div>
                 <div className={styles.srch_close} onClick={setSearchBarOff}>+</div>
-              </> : <span className={`cSprite_a ${styles.searchIcon} ${searchLoading ? styles.searchLoading : ""}`} />
+              </> : <span className={`cSprite_a ${styles.searchIcon} ${searchLoading ? styles.searchLoading : ""}`} onClick={handleSearchClick} />
               }
 
               {searchData.length > 0 &&
