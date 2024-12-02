@@ -1,11 +1,34 @@
 import useNewsletterSubscription from "components/useNewsletterSubscription";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import API_CONFIG from "../../network/config.json";
 
 export default function NewsLetterSignup({ section, sid }) {
   const [email, setEmail] = useState('');
   const [subs, setSubs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { initSubscription, getNewsLtrSuggestion } = useNewsletterSubscription();
+  const { initSubscription } = useNewsletterSubscription();
+
+  useEffect(() => {
+    debugger
+    const apiEndPoint = API_CONFIG.nlSubEndPoint[window.APP_ENV];
+
+    fetch(`${apiEndPoint}/chkStatus/5f5a00075651d4e45e1b67d6`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: window?.objUser?.info?.primaryEmail || "" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          console.log('Newsletter subscription status', data);
+        }
+      })
+      .catch((err) => {
+        console.error('Error getting newsletter subscription status', err);
+      });
+  }, []);
   
   function handleSubscription(e, sid) {    
     e.preventDefault();
@@ -19,10 +42,6 @@ export default function NewsLetterSignup({ section, sid }) {
   }
 
   useEffect(() => {
-    getNewsLtrSuggestion({}, function(newsletterSuggestions) {      
-      console.log({newsletterSuggestions})
-    });
-
     if(window?.objUser?.info?.primaryEmail) {
       setEmail(window.objUser.info.primaryEmail);
     } else {
@@ -44,8 +63,8 @@ export default function NewsLetterSignup({ section, sid }) {
       <div className="newsletter" data-name="Tech">
         <p className="sub_text">Subscribe to our { section } Newsletter</p>
         <div className="email_box">
-          <input type="email" placeholder="Enter your email address" maxLength={70} value={email} onChange={(e) => setEmail(e.target.value)} />
-          <button onClick={(e) => handleSubscription(e, sid)} disabled={isLoading}>{subs ? 'Subscribed' : isLoading ? 'Subscribing...' : 'Subscribe'}</button>
+          <input type="email" placeholder="Enter your email address" maxLength={70} value={email} onChange={(e) => setEmail(e.target.value)} disabled={subs} />
+          <button onClick={(e) => handleSubscription(e, sid)} disabled={isLoading || subs}>{subs ? 'Subscribed' : isLoading ? 'Subscribing...' : 'Subscribe'}</button>
         </div>
       </div>
       <style jsx>{`

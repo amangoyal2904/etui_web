@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getCookie, setCookieToSpecificTime } from 'utils';
 import { useStateContext } from "../../store/StateContext";
+import API_CONFIG from "../../network/config.json";
 
 // Define request headers
 const reqHeader: HeadersInit = {
@@ -32,7 +33,7 @@ const mapingSid = (sid: string | number): string => {
 };
 
 // Endpoint and channel ID for newsletter subscription
-const nlSubEndPoint = `https://etmailstg.indiatimes.com/et-mailing-subscription/ok`;
+// const nlSubEndPoint = `https://etmailstg.indiatimes.com/et-mailing-subscription/ok`;
 const nlChannelId = '5f5a00075651d4e45e1b67d6';
 
 // Hook for managing newsletter subscription actions
@@ -42,13 +43,13 @@ const useNewsletterSubscription = () => {
   const { isLogin, userInfo, ssoReady, isPrime, isPink } = state.login;
 
   // Function to initialize newsletter subscription
-  const initSubscription = async (config: any, callback: (cbData: any) => void) => {
+  const initSubscription = async (config: any, callback: (cbData: any) => void) => {    
     if (config && !isLoading) {
       setIsLoading(true);
       config.sid = mapingSid(config.sid);
 
       try {
-        const response = await fetch(`${nlSubEndPoint}/subscription/${nlChannelId}`, {
+        const response = await fetch(`${API_CONFIG['nlSubEndPoint'][window.APP_ENV]}/subscription/${nlChannelId}`, {
           method: 'POST',
           headers: reqHeader,
           body: JSON.stringify({
@@ -103,7 +104,7 @@ const useNewsletterSubscription = () => {
     if (config) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${nlSubEndPoint}/getnewssuggest/${nlChannelId}`, {
+        const response = await fetch(`${API_CONFIG['nlSubEndPoint'][window.APP_ENV]}/getnewssuggest/${nlChannelId}`, {
           method: 'POST',
           headers: reqHeader,
           body: JSON.stringify({
@@ -151,7 +152,7 @@ const useNewsletterSubscription = () => {
     if (config) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${nlSubEndPoint}/chkStatus/${nlChannelId}`, {
+        const response = await fetch(`${API_CONFIG['nlSubEndPoint'][window.APP_ENV]}/chkStatus/${nlChannelId}`, {
           method: 'POST',
           headers: reqHeader,
           body: JSON.stringify({
@@ -214,7 +215,7 @@ const useNewsletterSubscription = () => {
       const userEmail = userInfo?.primaryEmail || config.email || sessionStorage.getItem("tempEmail");
 
       try {
-        const response = await fetch(`${nlSubEndPoint}/unsub/${nlChannelId}`, {
+        const response = await fetch(`${API_CONFIG['nlSubEndPoint'][window.APP_ENV]}/unsub/${nlChannelId}`, {
           method: 'POST',
           headers: reqHeader,
           body: JSON.stringify({
