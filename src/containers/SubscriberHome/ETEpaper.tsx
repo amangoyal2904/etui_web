@@ -24,7 +24,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
         { focusArea === "news" ? <span className='title'></span> : <PrimeIcon style={{zoom: 0.7, marginRight: '7px', top: '4px'}}/> }
         <HeadingWithRightArrow title={`ET ePaper`} href="https://epaper.indiatimes.com/timesepaper/publication-the-economic-times,city-delhi.cms"/>
         {
-          dayName !== "Mon" ? (
+          true ? (
             focusArea === "news" ? (
               <div className="printBox">
                 <a href={epaperUrl} className='printBoxWrp' data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Card - href'>
@@ -69,7 +69,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
                   <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
                 </a>
               </div>
-              <div className="epaper-card epaper_wealth">
+              {/* <div className="epaper-card epaper_wealth">
                 <a href={wealthEditionUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#Wealth - Explore - href'>
                   <p className="wdText">Wealth Edition</p>
                   <p className="txt"><b>Latest Edition: </b>September 23-29, 2024</p>
@@ -79,7 +79,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
                   </div>
                   <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
                 </a>
-              </div>
+              </div> */}
             </div>
           )
         }
