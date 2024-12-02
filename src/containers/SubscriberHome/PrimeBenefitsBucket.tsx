@@ -322,7 +322,7 @@ export default function PrimeBenefitsBucket({focusArea}) {
 
               .icon {
                 margin-bottom: 7px;
-                background: url("https://img.etimg.com/photo/msid-114662409,quality-100/benefits-icon-sprite.jpg") no-repeat;
+                background: url("https://img.etimg.com/photo/msid-115899559,quality-100/benefits-icon-sprite.jpg") no-repeat;
                 display: inline-block;
                 background-size: 402px 308px;
                 width: 24px;
