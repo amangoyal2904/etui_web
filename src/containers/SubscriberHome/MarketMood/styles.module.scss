@@ -40,7 +40,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 10px;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
   
     .info {
       font-family: Montserrat;
@@ -49,13 +49,13 @@
       line-height: 11.42px;
       text-align: center;
       color: #D17D00;
-      border-left: 2px solid #ccc;
+      border-left: 1px solid #ccc;
     }
   
     thead {
       tr:last-child {
         th:not(:first-child) {
-          border: 2px solid #ccc;
+          border: 1px solid #ccc;
         }
       }
     }
@@ -79,7 +79,7 @@
       }
   
       td {
-        border: 2px solid #ccc;
+        border: 1px solid #ccc;
         padding: 8px;
         font-family: Montserrat;
         font-size: 13px;
