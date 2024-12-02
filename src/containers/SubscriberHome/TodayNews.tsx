@@ -9,6 +9,8 @@ export default function TodayNews({ todayNews, focusArea }) {
   const techNews = todayNews?.data?.find(item => item.section == "tech") || {};
   const briefNews = todayNews?.data?.find(item => item.section == "brief") || {};
 
+  const howManyTechNews = focusArea == "news" ? 5 : 7;
+
   return (
     <div data-ga-impression={`Subscriber Homepage#Today news widget impression#`}>
       <div className="title">{todayNews?.title}</div>
@@ -50,7 +52,7 @@ export default function TodayNews({ todayNews, focusArea }) {
         <div className="wealthTitle">{techNews?.title}</div>
         <ul>
           {
-            techNews?.data?.slice(0,7)?.map((item, index) => (
+            techNews?.data?.slice(0, howManyTechNews)?.map((item, index) => (
               <li key={index}>
                 {item?.title?.includes('<a') ? <RenderText text={item?.title} /> :
                 <a href={item?.url} target="_blank" data-ga-onclick='Subscriber Homepage#Today news widget click#href'>
