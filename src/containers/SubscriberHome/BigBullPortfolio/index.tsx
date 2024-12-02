@@ -372,7 +372,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
           border-radius: 7px; 
           position: relative;
           background: #fff; 
-          width: 332px;  
+          width: 320px;  
           box-sizing: border-box;
 
           .comWrp{
@@ -456,6 +456,8 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
           } 
 
           .return3M {
+            max-width: 80px;
+            
             &.UP {
               background: #EDFFF9;
               color: #147014;
