@@ -49,7 +49,8 @@ const LiveStreamPlay = (props: any) => {
       conditions: [
         { fieldName: "eventStatus", value: [3, 5], operation: "in" },
         { fieldName: "streamFlag", value: [1, 2], operation: "in" },
-        { fieldName: "paidEvent", value: true, operation: "notEqual" }
+        { fieldName: "paidEvent", value: true, operation: "notEqual" },
+        {fieldName:"dayCount",value:0,operation:"equal"}
       ],
       multiSort: [
         { field: "eventStatus", type: "asc" },
