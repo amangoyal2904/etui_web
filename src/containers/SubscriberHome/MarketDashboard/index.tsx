@@ -144,7 +144,7 @@ export default function MarketDashboard({isDev, ssoid, focusArea}) {
         ssoid={ssoid}
         APP_ENV={APP_ENV}
         wdName={"Markets Dashboard"}
-        wdHref="/stocks/marketstats/top-gainers"
+        wdHref="/markets/live-coverage"
       />
     </>
   )
