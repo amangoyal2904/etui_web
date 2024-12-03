@@ -1,34 +1,13 @@
 import useNewsletterSubscription from "components/useNewsletterSubscription";
-import { useCallback, useEffect, useState } from "react";
-import API_CONFIG from "../../network/config.json";
+import { useEffect, useState } from "react";
+import { useStateContext } from "store/StateContext";
 
 export default function NewsLetterSignup({ section, sid }) {
   const [email, setEmail] = useState('');
   const [subs, setSubs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { initSubscription } = useNewsletterSubscription();
-
-  useEffect(() => {
-    debugger
-    const apiEndPoint = API_CONFIG.nlSubEndPoint[window.APP_ENV];
-
-    fetch(`${apiEndPoint}/chkStatus/5f5a00075651d4e45e1b67d6`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: window?.objUser?.info?.primaryEmail || "" }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 200) {
-          console.log('Newsletter subscription status', data);
-        }
-      })
-      .catch((err) => {
-        console.error('Error getting newsletter subscription status', err);
-      });
-  }, []);
+  const { state } = useStateContext();
   
   function handleSubscription(e, sid) {    
     e.preventDefault();
@@ -57,6 +36,13 @@ export default function NewsLetterSignup({ section, sid }) {
       });
     }
   }, []);
+
+  if(state?.newsletterSubStatus?.newsletterSub?.length > 0) {
+    const isSubscribed = state?.newsletterSubStatus?.newsletterSub?.find((sub) => sub.serviceId == sid && sub?.subscriptionStatus?.toLowerCase() == "active");
+    if(isSubscribed) {
+      return null;
+    }
+  }
 
   return (
     <>

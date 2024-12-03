@@ -21,8 +21,8 @@ import { useStateContext } from "store/StateContext";
 import BackToTopButton from "components/BackToTopButton";
 import jStorage from "jstorage-react";
 import GLOBAL_CONFIG from "../../network/global_config.json";
-import { getCookie } from "../../utils"
 import PageRefresh from "components/PageRefresh";
+import API_CONFIG from "../../network/config.json";
 
 function SubscriberHome({ searchResult, isDev, ssoid, objVc}) {  
   const marketNews = searchResult?.find(item => item?.name === "market_news") || {};
@@ -72,6 +72,34 @@ function SubscriberHome({ searchResult, isDev, ssoid, objVc}) {
       window.customDimension["dimension48"] = "2160010";
     }
   }, []);
+
+  useEffect(() => {
+    if(!isLogin) return;
+
+    const apiEndPoint = API_CONFIG.nlSubEndPoint[window.APP_ENV];
+
+    fetch(`${apiEndPoint}/chkStatus/5f5a00075651d4e45e1b67d6`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ssoId: window?.objUser?.info?.primaryEmail || "", key: "" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch({
+            type: "SET_NEWSLETTER_SUBSCRIPTION_STATUS",
+            payload: {
+              newsletterSub: data?.subscriptionStatus?.subscriptions || []
+            }
+          })
+        }
+      })
+      .catch((err) => {
+        console.error('Error getting newsletter subscription status', err);
+      });
+  }, [isLogin]);
 
   useEffect(() => {    
     try {
