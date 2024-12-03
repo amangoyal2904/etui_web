@@ -67,9 +67,9 @@ export default function StockTalkWidget() {
             const lsWidgetConditionCheck = (skipInfo ? skipInfo[session_type] && !skipInfo[session_type]['full'] : true) && !morningTimerCondition && !eveningTimerCondition && (morningLSCondition || eveningLSCondition);
             
             let gaElegible = false;
-            if(true) {
+            if(timerConditionCheck) {
                 const counterTS = session_type === "evening" ? eveningTS : morningTS;
-                setCounterTime(1733205724853);
+                setCounterTime(counterTS);
                 setShowWidget(true);
                 gaElegible = true;
             } else if(lsWidgetConditionCheck) {
