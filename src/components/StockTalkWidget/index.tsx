@@ -24,7 +24,7 @@ export default function StockTalkWidget() {
 
     useEffect(() => {
         const widgetEnabled = typeof allMetaData?.PrimaryTag != undefined && allMetaData?.PrimaryTag?.toLowerCase() === "on";
-        if(widgetEnabled) {
+        if(true) {
             widgetCondition();
             setTimeout(() => {
                 streamData();
@@ -137,9 +137,12 @@ export default function StockTalkWidget() {
         setShowTimer(false);
         setStartingSoon(true);
         const data = await fetchList();
-        const streamDataFromAPI = data?.livestreamdata?.result?.[0];
+        let streamDataFromAPI = data?.livestreamdata?.result?.[0];
+        if(streamDataFromAPI) {
+            streamDataFromAPI = data?.result?.[0];
+        }
 
-        // console.log('stream data', streamDataFromAPI);
+        console.log('stream data', streamDataFromAPI);
         if(streamDataFromAPI) {
             setStartingSoon(false);
             setLiveStreamStarted(true);
