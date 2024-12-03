@@ -104,7 +104,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid, objVc }) 
       .then((response) => response.json())
       .then((data) => {        
         if(data?.statusCode === 200) {
-          const variant = data?.enableMarketFocus === "market" ? "Variant 2- Direct Landing Market Focus" : "Variant 1- Direct Landing News Focus";
+          const variant = data?.enableMarketFocus ? "Variant 2- Direct Landing Market Focus" : "Variant 1- Direct Landing News Focus";
           window.customDimension['experiment_variant_name'] = variant;
             window._gtmEventDimension = {};
             window._gtmEventDimension['experiment_variant_name'] = variant;
