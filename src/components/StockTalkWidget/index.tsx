@@ -27,9 +27,9 @@ export default function StockTalkWidget() {
         const widgetEnabled = typeof allMetaData?.PrimaryTag != undefined && allMetaData?.PrimaryTag?.toLowerCase() === "on";
         if(widgetEnabled) {
             widgetCondition();
-            setTimeout(() => {
+            /* setTimeout(() => {
                 streamData();
-            }, 2000);
+            }, 2000); */
         }
     }, [allMetaData])
 
