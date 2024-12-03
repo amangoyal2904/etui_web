@@ -225,7 +225,32 @@ export default function PrimeExclusives({ title, data, focusArea }) {
           margin-top: 1rem;
           padding-bottom: 1.5rem;
         }
-        
+
+        &.news {
+          .grid {
+            .row {
+              .col {
+                border-top: 1px solid #e8d2cb;
+
+                .innerCol {
+                  .text {
+                    a:last-child {
+                      padding-bottom: 0;
+                    }
+                  }
+                }              
+              }
+
+              &:last-child {
+                .col {
+                  border-bottom: 1px solid #e8d2cb;
+                  padding-bottom: 12px;
+                  margin-top: 12px;
+                }
+              }
+            }
+          }
+        }
         &.market {
             .first {
               flex-direction: column;
