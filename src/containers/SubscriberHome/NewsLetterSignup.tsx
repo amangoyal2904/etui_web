@@ -1,11 +1,13 @@
 import useNewsletterSubscription from "components/useNewsletterSubscription";
 import { useEffect, useState } from "react";
+import { useStateContext } from "store/StateContext";
 
 export default function NewsLetterSignup({ section, sid }) {
   const [email, setEmail] = useState('');
   const [subs, setSubs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { initSubscription, getNewsLtrSuggestion } = useNewsletterSubscription();
+  const { initSubscription } = useNewsletterSubscription();
+  const { state } = useStateContext();
   
   function handleSubscription(e, sid) {    
     e.preventDefault();
@@ -19,10 +21,6 @@ export default function NewsLetterSignup({ section, sid }) {
   }
 
   useEffect(() => {
-    getNewsLtrSuggestion({}, function(newsletterSuggestions) {      
-      console.log({newsletterSuggestions})
-    });
-
     if(window?.objUser?.info?.primaryEmail) {
       setEmail(window.objUser.info.primaryEmail);
     } else {
@@ -39,13 +37,20 @@ export default function NewsLetterSignup({ section, sid }) {
     }
   }, []);
 
+  if(state?.newsletterSubStatus?.newsletterSub?.length > 0) {
+    const isSubscribed = state?.newsletterSubStatus?.newsletterSub?.find((sub) => sub.serviceId == sid && sub?.subscriptionStatus?.toLowerCase() == "active");
+    if(isSubscribed) {
+      return null;
+    }
+  }
+
   return (
     <>
       <div className="newsletter" data-name="Tech">
         <p className="sub_text">Subscribe to our { section } Newsletter</p>
         <div className="email_box">
-          <input type="email" placeholder="Enter your email address" maxLength={70} value={email} onChange={(e) => setEmail(e.target.value)} />
-          <button onClick={(e) => handleSubscription(e, sid)} disabled={isLoading}>{subs ? 'Subscribed' : isLoading ? 'Subscribing...' : 'Subscribe'}</button>
+          <input type="email" placeholder="Enter your email address" maxLength={70} value={email} onChange={(e) => setEmail(e.target.value)} disabled={subs} />
+          <button onClick={(e) => handleSubscription(e, sid)} disabled={isLoading || subs}>{subs ? 'Subscribed' : isLoading ? 'Subscribing...' : 'Subscribe'}</button>
         </div>
       </div>
       <style jsx>{`
