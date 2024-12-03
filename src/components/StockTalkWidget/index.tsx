@@ -24,7 +24,7 @@ export default function StockTalkWidget() {
 
     useEffect(() => {
         const widgetEnabled = typeof allMetaData?.PrimaryTag != undefined && allMetaData?.PrimaryTag?.toLowerCase() === "on";
-        if(true) {
+        if(widgetEnabled) {
             widgetCondition();
             setTimeout(() => {
                 streamData();
