@@ -13,6 +13,7 @@ export default function StockTalkWidget() {
     const [startingSoon, setStartingSoon] = useState(false);
     const [streamingData, setStreamingData] = useState('');
     const [allMetaData, setAllMeta] = useState<any>({});
+    const [eventData, setEventData] = useState<any>([]);
     const [showWidget, setShowWidget] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState('');
     const [counterTime, setCounterTime] = useState(0);
@@ -66,9 +67,9 @@ export default function StockTalkWidget() {
             const lsWidgetConditionCheck = (skipInfo ? skipInfo[session_type] && !skipInfo[session_type]['full'] : true) && !morningTimerCondition && !eveningTimerCondition && (morningLSCondition || eveningLSCondition);
             
             let gaElegible = false;
-            if(timerConditionCheck) {
+            if(true) {
                 const counterTS = session_type === "evening" ? eveningTS : morningTS;
-                setCounterTime(counterTS);
+                setCounterTime(1733205724853);
                 setShowWidget(true);
                 gaElegible = true;
             } else if(lsWidgetConditionCheck) {
@@ -90,7 +91,7 @@ export default function StockTalkWidget() {
     }
 
     const getTimeStamp = (time) => {
-        const timeUpdate = time.toString().length === 3 ? '0'+time : time;
+        const timeUpdate = time?.toString().length === 3 ? '0'+time : time;
         const date = new Date();
         if(time) {
             date.setHours(timeUpdate.toString().substr(0,2));
@@ -119,27 +120,28 @@ export default function StockTalkWidget() {
             const apiUrl = (APIS_CONFIG as any)?.liveStream[window.APP_ENV] + "/getEventData";
             //const apiUrl = "http://localhost:3002/api/livestream";
             const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data),
-            cache: "no-store"
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                cache: "no-store"
             });
             const newData = await response.json();
+            setEventData(newData?.result);
             return newData;
         } catch (error) {
             console.error("Error:", error);            
         }
-      };
+    };
 
     const streamData = async() => {
         setShowTimer(false);
         setStartingSoon(true);
-        const data = await fetchList();
+        const data = await fetchList() || eventData;
         let streamDataFromAPI = data?.livestreamdata?.result?.[0];
-        if(streamDataFromAPI) {
-            streamDataFromAPI = data?.result?.[0];
+        if(!streamDataFromAPI) {
+            streamDataFromAPI = data?.result?.[0] || data?.[0];
         }
 
         console.log('stream data', streamDataFromAPI);
