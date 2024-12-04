@@ -2,9 +2,10 @@ import { headers, cookies } from 'next/headers';
 import Layout from '../../components/Layout';
 import { getDevStatus } from 'utils/utils';
 import SubscriberHome from 'containers/SubscriberHome';
+import { ET_WEB_URL } from 'utils/common';
 
 
-export default async function Page({ params }: {
+export default async function Page({ searchParams }: {
   params: { all: string[] }
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
@@ -12,27 +13,24 @@ export default async function Page({ params }: {
   const domain = headersList.get("host") || "";
   const isDev = getDevStatus(domain);
   const APP_ENV = isDev ? "development" : "production";  
-  const slugArr = params?.all || [];
   const isprimeuser = cookies().get('isprimeuser')?.value || false;
   const cookieStore = cookies();
   const ssoid = cookieStore.get("ssoid")?.value;
-  const siteCurrentTime = new Date().toISOString();
+  const siteCurrentTime = new Date().toISOString();  
 
-  console.log("ssoid --- ", ssoid);
-
-  let extraParams: any = {},
-  response: any = {},
+  let response: any = {},
   menuData: any = {},
   dynamicFooterData: any = {};
 
   try {     
-    //==== gets page data =====            
-    response = await getData(isDev);
+    //==== gets page data =====      
+    // if query parameter has upcache=2, send it to getData
+    const isUpcache2 = searchParams?.upcache === "2" ? true : false;
+    response = await getData(isDev, isUpcache2);
   
     //==== gets dyanmic footer data =====    
     const baseUrl = `https://${isDev ? "etdev8243" : "economictimes"}.indiatimes.com`;
     
-    const extraParamsQuery = Object.keys(extraParams).map(key => `${key}=${extraParams[key]}`).join('&');
     const footerMenuApi = `${baseUrl}/reactfeed_footermenu.cms?platform=web&feedtype=etjson&subsec1=0&subsec2=0&quicklink=1&pageType=&pageName=default_prime&section_id=0&template_name=articlelist&sub_type=0`;
     const navBarApi = `${baseUrl}/reactfeed_menu.cms?platform=web&feedtype=etjson`
     const promiseApis = [footerMenuApi, navBarApi];    
@@ -54,13 +52,10 @@ export async function generateMetadata({ params }) {
   const domain = headersList.get("host") || "";
   const isDev = getDevStatus(domain);
 
-  const slugArr = params?.all || [];
-
-  const data = await getData(isDev);  
-
+  const data = await getData(isDev, false, true);
 
   const seo = data?.searchResult?.find(item => item?.name === "seo")?.data || {};
-  // console.log("seo", seo);
+  
   if(seo.title === undefined || seo.title === null || seo.title === ""){
     return {
       title: "Economic Times"
@@ -68,7 +63,6 @@ export async function generateMetadata({ params }) {
   }
 
   const m_actualURL = seo?.actualURL?.replace("https://economictimes.indiatimes.com/", "https://m.economictimes.com/") || "";
-  const amp_actualURL = m_actualURL?.replace("/videoshow/", "/amp_videoshow/") || "";
 
   return {
     title: seo?.title || "",
@@ -93,10 +87,13 @@ export async function generateMetadata({ params }) {
   };
 }
 
-async function getData(isDev) {
-  const baseUrl = `https://etpwaapi${isDev ? "pre" : ""}.economictimes.com`;
-  // const baseUrl = `http://localhost:1300`;
+async function getData(isDev, isUpcache2 = false,  isSEOCall = false) {
+  const baseUrl = `https://etpwaapi${isDev ? "pre" : ""}.economictimes.com`;  
   let apiEndPoint = `${baseUrl}/request?type=web_subscriberhome`;
+
+  if(isUpcache2){
+    apiEndPoint += "&upcache=2";
+  }
 
   const res = await fetch(apiEndPoint);
 
@@ -104,5 +101,20 @@ async function getData(isDev) {
     throw new Error("Failed to fetch prime home web data");
   }
 
+  if(isUpcache2 && !isSEOCall){     
+    const clearCacheUrl = `${baseUrl}/cache/clear`;
+    const clearCacheBody = {
+      fullurl: ET_WEB_URL + "/default_prime.cms"
+    };
+
+    await fetch(clearCacheUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(clearCacheBody)
+    });
+  }
+  
   return res.json();
 }

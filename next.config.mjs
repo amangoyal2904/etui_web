@@ -35,6 +35,15 @@ const nextConfig = {
         ]
       },
       {
+        source: "/etnextweball/_next/static/css/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, s-maxage=31536000, immutable"
+          }
+        ]
+      },
+      {
         source: "/default_prime.cms",
         headers: [
           {
