@@ -462,8 +462,18 @@ export const logout = async () => {
       delete_cookie("pfuuid");
       delete_cookie("peuuid");
       delete_cookie("fpid");
-      delete_cookie("etprc");
-      jStorage.deleteKey("userInfo");
+      delete_cookie("etprc");      
+
+      try {
+        var arrKeys = jStorage.index().filter(function (i) {return i.indexOf('prime_') == -1 ? 0 : 1});
+        arrKeys.forEach(function (key, i) {
+          jStorage.deleteKey(key);
+        });
+        jStorage.deleteKey('userInfo');
+        jStorage.deleteKey('userInfo_r');
+        jStorage.deleteKey('tokenDataExist');
+        // objUser.removeCookies();
+      } catch (e) {}
 
       const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
         oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
