@@ -6,6 +6,7 @@ import HeadingWithRightArrow from './HeadingWithRightArrow';
 import Bookmark from 'components/Bookmark';
 import { ET_WEB_URL } from 'utils/common'
 import { trackingEvent } from 'utils/ga';
+import RenderText from 'components/RenderText';
 
 export default function PrimeExclusives({ title, data, focusArea }) {
   const firstRow = data[0] || {};
@@ -32,7 +33,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
             <div className="content">
               <div className="text">
                 <a href={firstRow.categoryLink} className="category" target="_blank">{firstRow.categoryName}</a>
-                <a href={firstRow.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - 1 - ${firstRow.url}`)} >{firstRow.title}</a>
+                <a href={firstRow.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - 1 - ${firstRow.url}`)} ><RenderText text={firstRow.title} /></a>
               </div>
               {
               focusArea == 'news' && <div className="meta">
@@ -56,7 +57,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                           <div className="content">
                             <div className="text">
                               <a className="category" href={item?.categoryLink} target="_blank">{item.categoryName}</a>
-                              <a href={item.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - ${index+innerIndex+2} - ${item.url}`)}>{item.title}</a>
+                              <a href={item.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - ${index+innerIndex+2} - ${item.url}`)}> <RenderText text={item.title} /></a>
                             </div>                
                           </div>
                           <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />

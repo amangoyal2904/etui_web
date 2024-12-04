@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import APIS_CONFIG from "../../network/config.json";
 import { dateFormat } from "utils/utils";
 import { ET_WEB_URL } from "../../utils/common";
+import RenderText from "components/RenderText";
 
 const Podcast = ({ data }) => {
     const [selectedAudio, setSelectedAudio] = useState<any>("");
@@ -40,7 +41,7 @@ const Podcast = ({ data }) => {
                                 <p className="category">{item?.title?.split(":")?.[0] || ""}</p>
                                 <p className="storyTitle">                                
                                 {
-                                    item?.title?.split(":")?.slice(1)?.join(":") || ""
+                                    <RenderText text={item?.title?.split(":")?.slice(1)?.join(":") || ""} />
                                 }
                                 </p>
                                 <div className="timeDuration">
