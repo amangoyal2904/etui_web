@@ -480,7 +480,8 @@ export const logout = async () => {
             }
           }
         
-          localStorage.setItem(jStorageKey, JSON.stringify(allKeys));
+          const allKeysCopy = JSON.parse(JSON.stringify(allKeys));
+          localStorage.setItem(jStorageKey, JSON.stringify(allKeysCopy));
         }
         deleteJStorageCustom('prime_');
         deleteJStorageCustom('userInfo');

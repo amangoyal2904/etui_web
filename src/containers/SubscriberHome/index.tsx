@@ -114,7 +114,7 @@ function SubscriberHome({ searchResult, isDev, ssoid, objVc}) {
           // ... existing logic ...
           primeHtmlTag.classList.remove("pg_hide")
         } else {
-          location.href = GLOBAL_CONFIG[APP_ENV]["ET_WEB_URL"];
+          // location.href = GLOBAL_CONFIG[APP_ENV]["ET_WEB_URL"];
         }
       }
     } catch (error) {
