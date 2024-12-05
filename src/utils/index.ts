@@ -464,6 +464,8 @@ export const logout = async () => {
       delete_cookie("fpid");
       delete_cookie("etprc");      
 
+      window.objUser.info = {};
+      
       try {
         var arrKeys = jStorage.index().filter(function (i) {return i.indexOf('prime_') == -1 ? 0 : 1});
         arrKeys.forEach(function (key, i) {
@@ -499,7 +501,7 @@ export const logout = async () => {
       });
 
       //const logoutSuccess = await response?.json();
-      window.location.reload();
+      window.location.reload(true);
     } else {
       console.log("failure");
     }
