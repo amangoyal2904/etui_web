@@ -82,7 +82,7 @@ function NudgeContainer({subsContent}) {
                 {/* style={`background: ${banner_bg}`} */}
                 <div className={styles?.info_content}>
                     <span className={styles?.info_icon}>
-                        <img height="100%" src={et_topnudge_icon} />
+                        <img loading="lazy"  height="100%" src={et_topnudge_icon} />
                     </span>
                     <div className={styles?.tac}>
                         <p className={styles?.info_text}>{et_topnudge_header}</p>

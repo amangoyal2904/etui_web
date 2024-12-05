@@ -174,7 +174,7 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
                             <a href={data.link['@href']}>{data.stname}</a>
                           </h3>
                           <a href={data.link['@href']}>
-                            <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
+                            <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} loading="lazy"  />
                           </a>
                           <p className={`${styles.wrapLines} ${styles.l5}`}>{data.strsyn}</p>
                         </div>
@@ -188,7 +188,7 @@ const TechNav: React.FC<TechNavProps> = ({ sec, count, msid }) => {
                           {(obj.msid == 94299203 ? (
                             <div className={styles.navBlock}>
                               <a target="_blank" rel="noreferrer" href={data.link['@href']}>
-                                <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} />
+                                <img src={data.im} width="120" height={90} className={styles.tech_im} alt={data.stname} loading="lazy"  />
                               </a>
                               <a target="_blank" rel="noreferrer" className={styles.eventsBlockTechLinks} href={data.link['@href']}>
                                 {data.stname}

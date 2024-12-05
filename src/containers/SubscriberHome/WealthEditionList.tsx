@@ -106,7 +106,7 @@ const WealthEditionList = () => {
                                         <div className='editionHeading'>{index == 0 ? 'Latest Edition:' : 'Previous Edition:'}</div>
                                         <div className='editionDate'>{value?.editionDate}</div>
                                         <div className='editionImg'>
-                                            <img width={`100%`}  src={`${ET_IMG_DOMAIN}thumb/msid-${value.msid},width-187,height-251/a.jpg`} />
+                                            <img width={`100%`}  src={`${ET_IMG_DOMAIN}thumb/msid-${value.msid},width-187,height-251/a.jpg`} loading="lazy"  />
                                         </div>
                                         <div className='editionTitle'>{value?.title}</div>
                                     </a>

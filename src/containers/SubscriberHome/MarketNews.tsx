@@ -198,6 +198,7 @@ function StockScreeners() {
                   src={stockScreener?.screenerHighlightImageUrl}
                   width={20}
                   alt={stockScreener?.screenerName}
+                  loading="lazy" 
                 />
               </div>
               <div className="content">
@@ -496,7 +497,7 @@ function ExpertViews({ data }) {
       {data.map((item, index) => (
       <div className="content" key={`expertViews_content_key_${index}`}>
         <a href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Expert Views - ${index+1} - href`}>
-          <img width="56" height="56" alt={item?.title || ""} src={changeImageWidthHeight({imageUrl: item?.img, desiredHeight: 56, desiredWidth: 56})} />
+          <img loading="lazy"  width="56" height="56" alt={item?.title || ""} src={changeImageWidthHeight({imageUrl: item?.img, desiredHeight: 56, desiredWidth: 56})} />
         </a>
         
         <span className="right">
@@ -580,7 +581,7 @@ function MarketMoguls({ data }) {
           return (
             <div className="content" key={`marketMoguls_content_key_${index}`}>
               <a href={item?.url} target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Market Moguls - Author - ${author?.title}`}>
-                <img width="56" height="56" alt={author?.title}  src={changeImageWidthHeight({imageUrl: author?.img, desiredHeight: 56, desiredWidth: 56})} />              
+                <img width="56" height="56" alt={author?.title}  src={changeImageWidthHeight({imageUrl: author?.img, desiredHeight: 56, desiredWidth: 56})} loading="lazy"  />              
               </a>
               <span className="right">
                 <a href={author.url || ""} className="author" target="_blank" data-ga-onclick={`Subscriber Homepage#Market News widget click#Market Moguls - Author - ${author?.title}`}>{author?.title || ""}</a>

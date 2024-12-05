@@ -39,7 +39,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
         }
 
         <a href={firstRow.url} target="_blank" className="first" onClick={()=>fireTracking(`InvestmentIdeas - 1 - ${firstRow.url}`)} >
-          <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
+          <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} loading="lazy"  />
           <RenderText text={firstRow.title} />
         </a>        
         {
@@ -52,7 +52,7 @@ export default function InvestmentIdeas({ data, focusArea }) {
                       { focusArea === "news" && <span className="counter">{(index + 1) * 2 + index1}</span> }
                       <a target="_blank" className="hl" href={item.url} data-conttype="100" onClick={()=>fireTracking(`InvestmentIdeas - ${index1+1} - ${item.url}`)} >
                         <RenderText text={item.title} />
-                        { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} /> }
+                        { focusArea === "market" && <img width="100" height="75" title={item.title} alt={item.title} src={item.img} loading="lazy"  /> }
                       </a>                      
                     </div>
                   )

@@ -23,7 +23,7 @@ const GridScreen = ({ data, slideIndex, totalSlide, handleContinueBtn, showQues 
             const boxHtml = option.iconUrl ? (
               <React.Fragment>
                 <div className={styles.ovel}>
-                  <img height="45" src={option.iconUrl} />
+                  <img height="45" src={option.iconUrl} loading="lazy" />
                 </div>
                 <div className={styles.chkText}>
                   <h4>{option.name}</h4>

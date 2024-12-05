@@ -142,7 +142,7 @@ function NewsLetters({ newsLetterData }) {
                 href={item?.url?.replace(ET_WAP_URL, ET_WEB_URL)}
                 data-ga-onclick={`Subscriber Homepage#Tech widget click#Newsletters - ${index+1} - href`}
                 >
-                <img height="191" width="255" className="lazy" alt={item.title} src={changeImageWidthHeight({ imageUrl: item.img, desiredWidth: 255, desiredHeight: 191 })} />
+                <img height="191" width="255" className="lazy" alt={item.title} src={changeImageWidthHeight({ imageUrl: item.img, desiredWidth: 255, desiredHeight: 191 })} loading="lazy"  />
               </a>
             </div>
           ))}

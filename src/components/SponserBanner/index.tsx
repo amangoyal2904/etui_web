@@ -79,24 +79,24 @@ export default function SponserBanner() {
                 <div className={styles.sponserContainer}>
                   <span>{bannersDetail?.homeBanner?.sponsorText}</span>
                   <span className={styles.sponserTitle}>{bannersDetail?.homeBanner?.sponsorName}</span>
-                  <img height='76' src='https://economictimes.indiatimes.com/photo/110959062.cms' className={styles.sponserArw} />
-                  <img height='76' src='https://economictimes.indiatimes.com/photo/110959062.cms' className={styles.sponserArw2} />
+                  <img loading="lazy"  height='76' src='https://economictimes.indiatimes.com/photo/110959062.cms' className={styles.sponserArw} />
+                  <img loading="lazy"  height='76' src='https://economictimes.indiatimes.com/photo/110959062.cms' className={styles.sponserArw2} />
                 </div>
                 <div className={styles.msgContainer}>
-                  <img className={styles.logo} height='48' src={bannersDetail?.homeBanner?.logo} />
+                  <img loading="lazy"  className={styles.logo} height='48' src={bannersDetail?.homeBanner?.logo} />
                   <span className={styles.sponserMsg}>{bannersDetail?.homeBanner?.sponsorMsg}</span>
                   <a href={bannersDetail?.homeBanner?.ctaUrl} className={styles.knowCta} target='_blank'>{bannersDetail?.homeBanner?.ctaText}</a>
                 </div>
                 <div className={styles.closeIconBox}>
-                  <img className={styles.closeIcon} height='14' src='https://economictimes.indiatimes.com/photo/105255513.cms' onClick={hideBannerCB} />
+                  <img loading="lazy"  className={styles.closeIcon} height='14' src='https://economictimes.indiatimes.com/photo/105255513.cms' onClick={hideBannerCB} />
                 </div>
               </div>
             :
             (bannersDetail?.homeBanner?.logo && bannersDetail?.homeBanner.ctaUrl) &&
               <div id='bannerBox' className={`${styles.sponserBannerContainer} ${styles.imgOnlyContainer}`}>
-                <img onClick={() => onRedirect(bannersDetail?.homeBanner.ctaUrl)} className={styles.imageOnlyBanner} height='76' src={bannersDetail?.homeBanner?.logo} />
+                <img loading="lazy"  onClick={() => onRedirect(bannersDetail?.homeBanner.ctaUrl)} className={styles.imageOnlyBanner} height='76' src={bannersDetail?.homeBanner?.logo} />
                 <div className={styles.closeIconBox}>
-                  <img className={styles.closeIcon} height='14' src='https://economictimes.indiatimes.com/photo/105255513.cms' onClick={hideBannerCB}/>
+                  <img loading="lazy"  className={styles.closeIcon} height='14' src='https://economictimes.indiatimes.com/photo/105255513.cms' onClick={hideBannerCB}/>
                 </div>
               </div>
           }

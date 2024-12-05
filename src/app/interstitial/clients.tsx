@@ -98,7 +98,7 @@ function goBack(){
         <>
         <div className={styles.header}>
           <a className={styles.et_logo} href="https://economictimes.indiatimes.com" >
-              <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" width="330"/>
+              <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" width="330" loading="lazy" />
           </a>
           <a className={styles.pg_link} href="#" onClick={goBack}>
           <div className={styles.tm_text} >

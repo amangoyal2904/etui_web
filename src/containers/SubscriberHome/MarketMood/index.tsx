@@ -58,12 +58,12 @@ export default function MarketMood({ focusArea }) {
       <div className={`${styles.marketMoodContainer} ${styles[focusArea]}`} data-ga-impression={`Subscriber Homepage#Market Mood widget impression#`}>
         <div className={styles.mmHeadWrap}>
           <div className={styles.dflex}>
-            <img src="https://img.etimg.com/photo/114042208.cms" alt='Market Mood' className={styles.logo_mm} />
+            <img src="https://img.etimg.com/photo/114042208.cms" alt='Market Mood' className={styles.logo_mm} loading="lazy"  />
             <HeadingWithRightArrow title="Market Mood" href="/markets/stock-market-mood" />
           </div>
           <div>
             <span className={styles.filterNseBse} onClick={() => showFilterMenu(true)} data-ga-onclick={`Subscriber Homepage#Market Mood click#Filter`}>
-              <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
+              <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" loading="lazy"  />
               <span>{niftyFilterData?.name || 'Select Filter'}</span>
             </span>
           </div>

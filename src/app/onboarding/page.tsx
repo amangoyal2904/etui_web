@@ -53,7 +53,7 @@ export default async function Page() {
     return <>
         <header className={`${styles.headerWrp} ${styles.tac}`}>
             <a href="/" title="The Economic Times">
-                <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" alt="The Economic Times" width="255" />  
+                <img src="https://img.etimg.com/photo/msid-74451948,quality-100/et-logo.jpg" alt="The Economic Times" width="255" loading="lazy"  />  
             </a>
         </header>
         <Suspense fallback={<div>Loading...</div>}>

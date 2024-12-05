@@ -30,11 +30,11 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
                 <a href={epaperUrl} className='printBoxWrp' data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Card - href'>
                   <div className="lft">
                     <span>
-                      <img className="im" src={epaperImage} width="266" height="210" alt="Today's Paper" />
+                      <img loading="lazy"  className="im" src={epaperImage} width="266" height="210" alt="Today's Paper" />
                     </span>
                   </div>
                   <div className="rht">
-                    <img src={`${imgDomain}/photo/110526566.cms`} alt="Today's Paper" width="223" height="36" />
+                    <img loading="lazy"  src={`${imgDomain}/photo/110526566.cms`} alt="Today's Paper" width="223" height="36" />
                     <p className="empw">Empower your mornings.</p>
                     <p className="read">Read your favourite newspaper, the digital way.</p>
                     <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
@@ -45,11 +45,11 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
               <div className="epaper-cards">
                 <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>
                   <div className="epaper-card epaper_news">
-                    <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
+                    <img loading="lazy"  height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
                     <p className="empw">Empower your mornings.</p>
                     <p className="read">Read your favourite newspaper, the digital way.</p>
                     <div className="mainImg">
-                      <img title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
+                      <img loading="lazy"  title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
                     </div>
                     <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
                   </div>
@@ -60,11 +60,11 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
             <div className="epaper-cards">
               <div className="epaper-card epaper_news">
                 <a href={epaperUrl} data-ga-onclick='Subscriber Homepage#ET prime widget click#ePaper - Explore - href'>
-                  <img height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
+                  <img loading="lazy"  height="24" width="150" title="Today's Paper" alt="Today's Paper" src={`${imgDomain}/photo/110526566.cms`} className="logo" />
                   <p className="empw">Empower your mornings.</p>
                   <p className="read">Read your favourite newspaper, the digital way.</p>
                   <div className="mainImg">
-                    <img title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
+                    <img loading="lazy"  title="Today's Paper" alt="Today's Paper" height="152" width="178" src={epaperImage} className="im" />
                   </div>
                   <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
                 </a>
@@ -75,7 +75,7 @@ export default function ETEpaper({ focusArea, etEpaperData, isDev }) {
                   <p className="txt"><b>Latest Edition: </b>September 23-29, 2024</p>
                   <p className="read">Your weekly money management guide</p>
                   <div className="mainImg">
-                    <img title="Wealth Edition" alt="Wealth Edition" height="152" width="178" src={wealthImage} className="im" />
+                    <img loading="lazy"  title="Wealth Edition" alt="Wealth Edition" height="152" width="178" src={wealthImage} className="im" />
                   </div>
                   <span className="explore_cta">Explore<span className="dbl_arw"></span></span>
                 </a>

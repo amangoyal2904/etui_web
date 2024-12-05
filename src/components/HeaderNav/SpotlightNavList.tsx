@@ -34,7 +34,7 @@ const SpotlightNavList = ( props ) => {
                                     return (                                        
                                         <div className={styles.spotlightContent} key={index2}>
                                             <a href={value2.link ? value2.link : '#;'}>
-                                            <img src={value2.im} width="120" height="70" alt={value2.nm} />
+                                            <img src={value2.im} width="120" height="70" alt={value2.nm} loading="lazy"  />
                                             </a>
                                             <a className={styles.txt} href={value2.link ? value2.link : '#;'}>
                                             {value2.nm}

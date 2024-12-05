@@ -39,7 +39,7 @@ export default function WebStories({ title, data }) {
                     subset.map((item, index1) => {
                       return (
                         <a href={item?.url} target="_blank" className="item" key={`${index}_${index1}`} data-ga-onclick={`Subscriber Homepage#Web Stories widget click#${index+1} - href`}>
-                          <img alt={item?.title} width={240} height={427} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 240, desiredHeight: 427})} />
+                          <img alt={item?.title} width={240} height={427} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 240, desiredHeight: 427})} loading="lazy"  />
                           <span className="title">
                             <span className="subSprite webStIcon"></span>
                             {item?.title || ""}

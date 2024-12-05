@@ -60,7 +60,7 @@ const MoreNav: React.FC<MoreNavProps> = ({ sec }) => {
                     <div key={`brand-solution-${index}-${index2}`} className={`${styles.BSChild}`}>
                       {/* only render the image if the "im" property exists */}
                       {subSection.im && <a href={subSection.link ? subSection.link : '#;'} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>
-                        <img src={subSection.im} width="77" height="63" alt={subSection.nm} />
+                        <img src={subSection.im} width="77" height="63" alt={subSection.nm} loading="lazy"  />
                       </a>}
                       <h5>
                         <a href={subSection.link ? subSection.link : '#;'} className={styles.subsec2} target="_blank" rel={`noreferrer ${subSection.rel && subSection.rel}`}>{subSection.nm}</a>

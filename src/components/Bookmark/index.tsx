@@ -173,7 +173,7 @@ const Bookmark: FC<BookmarkProps> = ({ msid, hostId, type, widget, apiType }) =>
         <span className={`${widget == 'mostread_primehome' ? 'mostread_bookmark' : 'bookmark'}  ${isBookmarked ? 'saved' : ''}`} onClick={saveBookmark}>
             {
                 apiType == "all" ? <span className={`cSprite bookmark-icon ${isBookmarked ? 'saved' : ''}`}></span> :
-                <img src={`https://img.etimg.com/photo/${isBookmarked ? '63696446' : '63696304'}.cms`} alt="bookmark icon" />
+                <img src={`https://img.etimg.com/photo/${isBookmarked ? '63696446' : '63696304'}.cms`} alt="bookmark icon" loading="lazy"  />
             }
             <style jsx>{`
                 .bookmark {

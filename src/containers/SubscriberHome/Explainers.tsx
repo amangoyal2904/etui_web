@@ -44,6 +44,7 @@ export default function Explainers({ data, title }) {
                           height={192}
                           title={item?.title}
                           src={changeImageWidthHeight({ imageUrl: item?.img, desiredWidth: 256, desiredHeight: 192 })}
+                          loading="lazy" 
                         />
                         <RenderText text={item?.title} />
                       </a>

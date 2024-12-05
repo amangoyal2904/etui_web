@@ -20,7 +20,7 @@ export default function Listing({ type, title, data }: ListProps) {
                 <li key={type + index}>
                   <div>
                     <a href={item.url}>                    
-                      <img src={item.img} alt={item.title} width={80} height={60} />
+                      <img src={item.img} alt={item.title} width={80} height={60} loading="lazy"  />
                     </a>
                     {/* <span className={styles.duration}>{item.duration }</span> */}
                   </div>

@@ -62,7 +62,7 @@ const ETSecLogo = (props) => {
       LOGO[subsec1]?.im 
       ?
       <span>
-        <img src={LOGO[subsec1].im} width={LOGO[subsec1].width} height={LOGO[subsec1].height || "auto"} />
+        <img src={LOGO[subsec1].im} width={LOGO[subsec1].width} height={LOGO[subsec1].height || "auto"} loading="lazy"  />
       </span>
       : <span className={styles.sec_name}>{sectiondetail?.title}</span>
     }
@@ -79,7 +79,7 @@ const HeaderLogo = (props) => {
     <div className={`${styles.logo_part} ${isPink ? styles.pink_theme : ""}`}>
       <div id="headerWrap" className={`${styles.headerWrap}`}>
         <a title="The Economic Times" href="/">
-          <img src={etLogo} width={etLogoWidth} height={etLogoHeight} className="dib" alt="The Economic Times"/>
+          <img src={etLogo} width={etLogoWidth} height={etLogoHeight} className="dib" alt="The Economic Times" loading="lazy" />
         </a>
         {page != "home" && 
         <a className={`${styles.sec_logo} ${styles.head_name}`} href={sectiondetail?.url} title={sectiondetail?.title}>

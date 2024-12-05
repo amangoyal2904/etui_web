@@ -28,7 +28,7 @@ const Opinion = ({OpinionData, focusArea}) => {
                                 <p className="line_6 listSyn">{value.synopsis}</p>
                                 {
                                     value.authors && value.authors[0].title && <div className="auInfo">
-                                        {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} />}
+                                        {value.authors[0]?.img && <img className="flt" width="35" height="35" src={value.authors[0]?.img} loading="lazy"  />}
                                         <span className="auName">{`${!value.authors[0]?.img ? "By" : ""} ${value.authors[0].title}`}</span>
                                     </div>
                                 }
