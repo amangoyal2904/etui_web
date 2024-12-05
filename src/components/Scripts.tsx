@@ -201,8 +201,10 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV, page }) => {
       bucket = window.localStorage && localStorage.getItem(lsKey) || '', 
       bucketArr = bucket.split('-');
       const _redirect = () => {
-        window.location.href = ET_WEB_URL; // Ensure ET_WEB_URL is defined
+        console.log("jstorage in _redirect", JSON.parse(localStorage.getItem('jStorage') || ""));
+        // window.location.href = ET_WEB_URL; // Ensure ET_WEB_URL is defined
       }
+      console.log("jstorage after _redirect func", JSON.parse(localStorage.getItem('jStorage') || ""));
       const hitPrimeApi = async () => {
         const primeRes = await loadPrimeApiNew();
         if (primeRes?.code === "200") {
