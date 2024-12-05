@@ -333,8 +333,7 @@ export default function TopSectionLayout({ searchResult, isDev, ssoid, objVc }) 
 function FocusAreaNotification({ focusArea }) {
   const [showNotification, setShowNotification] = useState(false);
 
-  useEffect(() => {
-    window.jstorage = jStorageReact;
+  useEffect(() => {    
     const primeHomeFocusArea2024 = jStorageReact.get("primeHomeFocusArea2024") ? JSON.parse(jStorageReact.get("primeHomeFocusArea2024")) : {};
 
     // on first load and if time elapsed is 2 days, show notification
