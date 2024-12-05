@@ -21,6 +21,7 @@ interface Props {
 
 declare global {
   interface Window {
+    jStorageData: any;
     optCheck: boolean;
     dataLayer: [];
     geolocation: any;
@@ -162,6 +163,7 @@ const Scripts: FC<Props> = ({ isprimeuser, objVc = {}, APP_ENV, page }) => {
   }, [isPrime, permissions]);
 
   useEffect(() => {
+    window.jStorageData = jStorage;
     window.APP_ENV = APP_ENV;
     window.isDev = APP_ENV === "development";
     window._ibeat_track = {
