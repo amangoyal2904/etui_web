@@ -458,6 +458,8 @@ export const logout = async () => {
       getSubscriptionContent((res)=>{
       });
 
+      console.log("jstorage before", JSON.parse(localStorage.getItem('jStorage')));
+
       try {
         delete_cookie("OTR");
         delete_cookie("isprimeuser");
@@ -485,6 +487,8 @@ export const logout = async () => {
         deleteJStorageCustom('userInfo_r');
         deleteJStorageCustom('tokenDataExist');
 
+        console.log("jstorage after", JSON.parse(localStorage.getItem('jStorage')));
+
         const url = (APIS_CONFIG as any)["LOGOUT_AUTH_TOKEN"][window.APP_ENV],
           oauthClientId = (GLOBAL_CONFIG as any)[window.APP_ENV]["X_CLIENT_ID"],
           deviceId = getCookie("_grx"),
@@ -510,7 +514,7 @@ export const logout = async () => {
 
         //const logoutSuccess = await response?.json();
         setTimeout(() => {
-          window.location.reload(true);
+          // window.location.reload(true);
         }, 300);      
       } catch (e) {
         console.log("logout: " + e);
