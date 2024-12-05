@@ -143,14 +143,14 @@ const onTabClick = (item: any) => {
           </div>
           {wdName != "My Watchlist" && <div className="filterBtnWrp">
             <span className={styles.filterNseBse} onClick={() => { showFilterMenu(true); onClickTracking("Filter")}} >
-              <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" />
+              <img src="https://img.etimg.com/photo/114042416.cms" width={20} height={20} alt="Stock Filter" loading="lazy"  />
               <span>{niftyFilterData?.name}</span>
             </span>
             {(selectedTab.viewId == 6925 || selectedTab.viewId == 6926) && focusArea == "market" && (
               <div className={`prel dayflWrp`}>
                 <span className="roundBtn" onClick={() => setDayFilterShow(!dayFilterShow)}>
                   {dayFilterData.label}
-                  <img src="https://img.etimg.com/photo/114042583.cms" width={20} height={20} alt="Stock Filter" />
+                  <img src="https://img.etimg.com/photo/114042583.cms" width={20} height={20} alt="Stock Filter" loading="lazy"  />
                 </span>
                 {dayFilterShow && <DayFilter setDayFilterShow={setDayFilterShow} dayList={dayList} dayFilterData={dayFilterData} setDayFilterData={setDayFilterData} />}
               </div>

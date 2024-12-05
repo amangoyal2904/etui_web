@@ -119,7 +119,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ menuData, subsecnames, page }) =>
                 <a className={`${((typeof data.msid != "undefined" && subsec1 == data.msid)  || (typeof data.msid == "undefined" && page == "subscriberhome" && data.nm == "Home")) ? styles.current : ''} ${data.msid === '74912912' ? `${styles.navP} ${styles.cSprite_b}` : ''} ${data.msid === '110737294' ? `${styles.marketData_i}` : ''}`} href={data.link ? data.link  : undefined} data-ga-onclick={data.link}>
                 {/* {data.nm != 'More' && <meta content={data.nm} itemProp="name" />} */}
                 {data.nm != 'More' && data.nm}
-                {data.nm === 'More' && <img src="https://img.etimg.com/photo/msid-100067830/et-logo.jpg" width="4" height="16" alt="More" />}
+                {data.nm === 'More' && <img src="https://img.etimg.com/photo/msid-100067830/et-logo.jpg" width="4" height="16" alt="More" loading="lazy"  />}
                 </a>
                 {
                   data.hovernav && <div className={styles.subsecnav}>

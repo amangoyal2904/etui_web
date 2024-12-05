@@ -187,7 +187,7 @@ export default function StockTalkWidget() {
             <div className={styles.inner_container}>
                 <div>
                     <p className={styles.st_heading}>
-                        <img width="122" alt="Stock Talk" src="https://img.etimg.com/photo/msid-109535402,quality-100/stock-talk.jpg" />
+                        <img loading="lazy"  width="122" alt="Stock Talk" src="https://img.etimg.com/photo/msid-109535402,quality-100/stock-talk.jpg" />
                         Exclusively for <strong>ETPrime Members</strong>
                     </p>
                     <p className={styles.st_subheading}>{allMetaData?.Matchid}</p>
@@ -202,7 +202,7 @@ export default function StockTalkWidget() {
                         <Timer time={counterTime} streamData={streamData} />}
                     </>
                 }
-                <img onClick={closeWidget} width="85" alt="Close" className={styles.close_ls} src="https://img.etimg.com/photo/msid-109535409,quality-100/close.jpg" />
+                <img loading="lazy"  onClick={closeWidget} width="85" alt="Close" className={styles.close_ls} src="https://img.etimg.com/photo/msid-109535409,quality-100/close.jpg" />
             </div>
         </div>}
     </>

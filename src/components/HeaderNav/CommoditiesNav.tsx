@@ -75,7 +75,7 @@ const CommoditiesNav: React.FC<CommoditiesNavProps> = ({ sec }) => {
                       return (
                         <div key={`viewsCommoditiesData-${story.msid}-${index}`} className={styles.commodity_news}>
                           <a href={`/${story.seolocation}/articleshow/${story.msid}.cms`}>
-                            <img height="60" width="60" src={`https://img.etimg.com/thumb/msid-${story.msid},width-60,height-60/${story.seolocation}.jpg`} alt={story.stname} />
+                            <img loading="lazy"  height="60" width="60" src={`https://img.etimg.com/thumb/msid-${story.msid},width-60,height-60/${story.seolocation}.jpg`} alt={story.stname} />
                           </a>
                           <a href={`/${story.seolocation}/articleshow/${story.msid}.cms`}>{story.stname}</a>
                         </div> 

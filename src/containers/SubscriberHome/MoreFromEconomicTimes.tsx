@@ -31,7 +31,7 @@ export default function MoreFromEconomicTimes({ data }) {
                           data-ga-onclick={`Subscriber Homepage#More from ET widget click#${item?.category} - ${index+1} - href`}
                         >
                           {index === 0 && (
-                            <img src={child?.img} alt={child?.title} width={256} height={192} title={child?.title} />
+                            <img src={child?.img} alt={child?.title} width={256} height={192} title={child?.title} loading="lazy"  />
                           )}
                           {child?.title || ""}
                         </a>

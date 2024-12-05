@@ -29,7 +29,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
         { focusArea == 'market' ? <h2 className="title"><PrimeIcon /> {title}</h2> : <><HeadingWithRightArrow title={title} href="/prime"/> <span className="title"></span> </> }
         <div className="grid">
           <div className="col first">            
-            <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} />
+            <img width="248" height="186" title={firstRow.title} alt={firstRow.title} src={firstRow.img} loading="lazy"  />
             <div className="content">
               <div className="text">
                 <a href={firstRow.categoryLink} className="category" target="_blank">{firstRow.categoryName}</a>
@@ -60,7 +60,7 @@ export default function PrimeExclusives({ title, data, focusArea }) {
                               <a href={item.url} className="heading" target="_blank" onClick={() => fireTracking(`Exclusives - ${index+innerIndex+2} - ${item.url}`)}> <RenderText text={item.title} /></a>
                             </div>                
                           </div>
-                          <img width="100" height="75" title={item.title} alt={item.title} src={item.img} />
+                          <img width="100" height="75" title={item.title} alt={item.title} src={item.img} loading="lazy"  />
                         </div>
                         {focusArea == 'news' &&
                         <div className="meta">

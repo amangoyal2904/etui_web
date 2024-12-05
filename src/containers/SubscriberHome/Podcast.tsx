@@ -31,7 +31,7 @@ const Podcast = ({ data }) => {
                         }, index:Number) => (
                             <li key={`${index}story`} className="podcastCard" onClick={() => playAudio(item)}>
                                 <span className="stryImg" >
-                                    <img height="124" width="165" className="lazy" title="" alt="" src={item.img} />
+                                    <img height="124" width="165" className="lazy" title="" alt="" src={item.img} loading="lazy"  />
                                     <label>
                                         <span className="subSprite listenIcon"></span>
                                         <span className="separator"></span>

@@ -38,7 +38,7 @@ const NriList = (props) => {
   return (
     <>
       <div className="banner">
-        <img width="994" height="107" alt="top banner" src="https://img.etimg.com/photo/114221839.cms" />
+        <img loading="lazy"  width="994" height="107" alt="top banner" src="https://img.etimg.com/photo/114221839.cms" />
       </div>
       {/* <NriPagenav/> */}
       <section className={styles.nrilistTop}>

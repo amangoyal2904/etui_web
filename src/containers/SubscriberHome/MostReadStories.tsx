@@ -61,7 +61,8 @@ const MostReadStories = ({MostReadStoriesRes}) => {
                                                         width="100" 
                                                         height="75" 
                                                         alt={item.title} 
-                                                        title={item.title}  
+                                                        title={item.title} 
+                                                        loading="lazy"  
                                                         className="im lazy" />
                                                 </a>
                                                 <div className="info_box">

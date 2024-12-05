@@ -22,6 +22,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
                 width={335}
                 height={507}
                 title={first?.title}
+                loading="lazy" 
               />
               <figcaption>{first?.title}</figcaption>
             </figure>
@@ -39,6 +40,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
                     width={255}
                     height={162}
                     title={item?.title}
+                    loading="lazy" 
                   />
                 </a>
               );
@@ -56,6 +58,7 @@ export default function Panache({ title, data, panacheVideosSlideshows }) {
                     width={70}
                     height={54}
                     title={item?.title}
+                    loading="lazy" 
                   />
                 </a>
               );

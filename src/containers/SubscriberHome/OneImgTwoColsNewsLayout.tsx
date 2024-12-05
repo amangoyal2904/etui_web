@@ -13,7 +13,7 @@ export default function OneImgTwoColsNewsLayout({ data, more = {text: "", link: 
       <div className="wrap">
         <div className="first">
           <a href={first?.url?.replace(ET_WAP_URL, ET_WEB_URL)} target="_blank" data-ga-onclick={`Subscriber Homepage#${widget} widget click#1 - href`}>
-            <img alt={first?.title} width={335} height={291} src={changeImageWidthHeight({imageUrl: first?.img, desiredWidth: 335, desiredHeight: 291, quality: 100})} />
+            <img alt={first?.title} width={335} height={291} src={changeImageWidthHeight({imageUrl: first?.img, desiredWidth: 335, desiredHeight: 291, quality: 100})} loading="lazy"  />
             <h3><RenderText text={first?.title} /> </h3>
           </a>
           <p>{first?.synopsis}</p>

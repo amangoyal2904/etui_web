@@ -106,7 +106,7 @@ const PrimeLoginMap = ({onClose}) => {
               <div className={styles.BottomNudgePopUp}>
                 <div className={styles.BottomNudgePopUpContent}>
                   <span className={styles.CloseIcon} onClick={() => closeDialog()}>
-                    <img src="https://img.etimg.com/photo/msid-102770784,quality-100/close.jpg" width="75" alt="Close" />
+                    <img src="https://img.etimg.com/photo/msid-102770784,quality-100/close.jpg" width="75" alt="Close" loading="lazy"  />
                   </span>
                   <div className={styles.HeaderText}>Prime Account Detected!</div>
                   <div className={styles.HeaderText2}>It seems like you're already an ETPrime member with</div>

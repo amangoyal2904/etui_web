@@ -15,7 +15,7 @@ const MostPopularNews = (props: { data: any }) => {
               <a href={item.url}>{item.title}</a>
             </div>
             <div className={styles.img}>
-              <img src={item.img} width="100" height="75" alt={item.title} title={item.title} />
+              <img src={item.img} width="100" height="75" alt={item.title} title={item.title} loading="lazy"  />
               <span className={styles.timeFrame}>
                 <span>{item.duration}</span>
               </span>

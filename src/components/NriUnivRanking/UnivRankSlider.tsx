@@ -8,7 +8,7 @@ const UnivRankSlider = ({data}:any) => {
             return(
             <li key={`country_${index}`}>
               <span className={styles.countryTitle}>{country.title}</span>
-              <img src={`https://img.etimg.com/thumb/width-30,height-20,imgsize-${country.thumbsize},msid-${country.msid}.jpg`} alt={country.title}/>
+              <img src={`https://img.etimg.com/thumb/width-30,height-20,imgsize-${country.thumbsize},msid-${country.msid}.jpg`} alt={country.title} loading="lazy" />
             </li>
             )
           })}

@@ -17,7 +17,7 @@ const MostViewVideos = (props: { data: any }) => {
             </div>
             <div className={styles.img}>
               <a href={_urlVal}>
-                <img src={item.img} width="80" height="60" alt={item.title} title={item.title} />
+                <img src={item.img} width="80" height="60" alt={item.title} title={item.title} loading="lazy"  />
               </a>
               <span className={styles.timeFrame}>{item.duration}</span>
             </div>

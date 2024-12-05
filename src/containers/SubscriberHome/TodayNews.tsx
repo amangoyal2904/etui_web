@@ -132,7 +132,7 @@ function MorningEveningBrief({ briefNews }) {
         <div className="stry font_faus">
           <a target="_blank" href={data?.url} data-ga-onclick='Subscriber Homepage#LHS ET morning brief click#href'>
             <RenderText text={data?.title} />
-            <img title={data?.title} alt={data?.title} height={48} width={64} src={data?.img}/>            
+            <img title={data?.title} alt={data?.title} height={48} width={64} src={data?.img} loading="lazy" />            
           </a>
           </div>
         <div className="tac">

@@ -30,6 +30,7 @@ const CommentCard = (props: any) => {
               width={40}
               height={40}
               src={imgprofile}
+              loading="lazy" 
             />
           </a>
         </div>
@@ -63,7 +64,7 @@ const CommentCard = (props: any) => {
         </div>
         <div className={styles.commentText}>
           <p className="">{commentText}</p>
-          {showOffensiveMark ? <img src="https://etdev8243.indiatimes.com/photo/5878111.cms" alt=""/> : <div className={styles.commentUserInputs}>
+          {showOffensiveMark ? <img src="https://etdev8243.indiatimes.com/photo/5878111.cms" alt="" loading="lazy"  /> : <div className={styles.commentUserInputs}>
             <a className={styles.agree}>
               <span className={styles.commentSprite} />
               <span className={styles.val}>1</span>

@@ -55,7 +55,7 @@ const NewsletterList = ({option, handleChangeEvent, elmTrigger, createRes}) => {
               key={option.key}
             >
               <div className={styles.nl_icon}>
-                <img width="65" height="65" src={option.imageUrl} alt={option.value} />
+                <img width="65" height="65" src={option.imageUrl} alt={option.value} loading="lazy"  />
               </div>
               <div className={styles.nl_ctn}>
                 <div className={styles.nl_nm}>{option.value}</div>

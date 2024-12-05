@@ -150,8 +150,8 @@ export default function BigBullPortfolio({ focusArea }) {
     <>
       <div className={`bigbull ${focusArea}`} data-ga-impression={`Subscriber Homepage#BigBull Portfolio widget impression#`}>        
         <a className='dflex align-center' href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/individual`} target='_blank'>
-          <img className='mr-6' width={24} src="https://img.etimg.com/photo/114352551.jpg" />
-          <img width={138} src="https://img.etimg.com/photo/114352673.jpg" />
+          <img className='mr-6' width={24} src="https://img.etimg.com/photo/114352551.jpg" loading="lazy"  />
+          <img width={138} src="https://img.etimg.com/photo/114352673.jpg" loading="lazy"   />
           <RightArrow />
         </a>
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} focusArea={focusArea} widget="BigBull Portfolio"/>
@@ -355,7 +355,7 @@ function BestPicksRecentDealsCard({ item, activeTab }) {
         </div>
         <a className="investorRow" href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/${item?.investorIntro?.sharkSeoName},expertid-${item?.investorIntro?.sharkID}`} target="_blank">
           <div className="left">
-            <img src={item?.investorIntro?.imageURL} alt="Investor Logo" width={42} height={42}/>
+            <img src={item?.investorIntro?.imageURL} alt="Investor Logo" width={42} height={42} loading="lazy" />
           </div>
           <div className="right">
             <span className={`best ${item?.dealSignal}`}>{investorDid}</span>
@@ -483,7 +483,7 @@ function AllInvestorsCard({ item }) {
       <div className="card">        
         <a className="investorRow" href={`${ET_WEB_URL}/markets/top-india-investors-portfolio/${item?.investorIntro?.sharkSeoName},expertid-${item?.investorIntro?.sharkID}`} target="_blank">
           <div className="left">
-            <img src={item?.investorIntro?.imageURL} alt="Investor Logo" width={42} height={42}/>
+            <img src={item?.investorIntro?.imageURL} alt="Investor Logo" width={42} height={42} loading="lazy"  />
           </div>
           <div className="right">
             {item?.investorIntro?.name}

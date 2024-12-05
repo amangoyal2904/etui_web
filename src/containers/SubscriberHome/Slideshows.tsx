@@ -48,7 +48,7 @@ export default function Slideshows({ title, data }) {
                           data-ga-onclick={`Subscriber Homepage#Slideshows widget click#${index+1} - href`}
                           >
                           <span className="imgWrap">
-                            <img alt={item?.title} width={165} height={124} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 165, desiredHeight: 124})} />
+                            <img alt={item?.title} width={165} height={124} title={item?.title} src={changeImageWidthHeight({imageUrl: item?.img, desiredWidth: 165, desiredHeight: 124})} loading="lazy"  />
                             <span className="subSprite webStIcon"></span>                    
                           </span>
                           <span className="caption">{item?.title || ""}</span>

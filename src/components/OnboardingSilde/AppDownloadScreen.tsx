@@ -115,10 +115,10 @@ const AppDownloadScreen = ({ data, type, slideIndex, totalSlide, handleContinueB
             <span className={styles.app_d}>5M+<span className={styles.dw_t}>DOWNLOADS</span></span>
           </div>
           <div className={styles.app_scrn_wrp}>
-            <img src={`https://img.etimg.com/photo/${img_f}.cms`} alt="App Screenshot 1" />
-            <img src={`https://img.etimg.com/photo/${img_t}.cms`} alt="App Screenshot 2" />
-            <img src={`https://img.etimg.com/photo/${img_th}.cms`} alt="App Screenshot 3" />
-            <img src={`https://img.etimg.com/photo/${img_fut}.cms`} alt="App Screenshot 4" />
+            <img src={`https://img.etimg.com/photo/${img_f}.cms`} alt="App Screenshot 1" loading="lazy"  />
+            <img src={`https://img.etimg.com/photo/${img_t}.cms`} alt="App Screenshot 2" loading="lazy"  />
+            <img src={`https://img.etimg.com/photo/${img_th}.cms`} alt="App Screenshot 3" loading="lazy"  />
+            <img src={`https://img.etimg.com/photo/${img_fut}.cms`} alt="App Screenshot 4" loading="lazy"  />
           </div>
         </div>
         <div className={styles.btnBox}>

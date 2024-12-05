@@ -171,6 +171,7 @@ const RedeemVoucher = () => {
                 : ET_IMG_DOMAIN +"/photo/76647778.cms"
             }
             alt={success ? "Success" : "Coupon"}
+            loading="lazy" 
           />
           <p className={styles.heading}>
             {success ? "Voucher redeemed successfully" : "REDEEM VOUCHER"}
